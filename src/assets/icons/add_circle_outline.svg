@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="add_circle_outline" transform="translate(18272 -1772)">
+    <g id="remove_circle_outline" transform="translate(-18272 1772)">
+      <path id="Path_1623" data-name="Path 1623" d="M0,0H24V24H0Z" fill="none"/>
+      <path id="Path_1624" data-name="Path 1624" d="M7,11v2H17V11Zm5-9A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z" fill="#ff9100"/>
+    </g>
+    <rect id="Rectangle_17477" data-name="Rectangle 17477" width="10" height="2" transform="translate(-18259 1779) rotate(90)" fill="#ff9100"/>
+  </g>
+</svg>

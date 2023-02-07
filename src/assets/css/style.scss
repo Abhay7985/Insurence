@@ -1,0 +1,78 @@
+section {
+    overflow: hidden;
+}
+
+.banner-title {
+    padding-top: 60px;
+    padding-bottom: 42px;
+}
+
+// ************************************Boat Details section****************************
+.banner-image {
+    max-height: 100vh;
+
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+.banner-content {
+    min-height: 100vh;
+    max-height: 100vh;
+}
+
+.banner-footer {
+    padding: 20px 0;
+
+    .btn {
+        font-weight: 600;
+    }
+
+    .back-btn {
+        color: $primary-color !important;
+        border: none;
+        position: relative;
+
+        &::before {
+            position: absolute;
+            content: "";
+            background: url('../icons/arrow_back.svg') no-repeat;
+            height: 100%;
+            width: 100%;
+            left: -7px;
+        }
+    }
+}
+
+// ************************************Add Passenger section****************************
+.add-passenger {
+    input {
+        width: 10px;
+        padding: 0;
+        border: 0;
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    p {
+        font-size: 18px;
+        font-weight: normal;
+    }
+}
+
+// ************************************Place Location section****************************
+.location {
+    box-shadow: 0px 4px 8px #00000014;
+    border: 1px solid $light-gray;
+    padding: 24px;
+}
+.specific-location{
+    .form-check-input{
+        padding: 10px 0;
+    }
+    a{
+        color: $light-black;
+    }
+}

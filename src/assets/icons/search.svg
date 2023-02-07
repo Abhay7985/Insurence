@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
+  <g id="search" opacity="0.8">
+    <path id="Path_1" data-name="Path 1" d="M0,0H22V22H0Z" fill="none"/>
+    <path id="Path_2" data-name="Path 2" d="M14.458,13.083h-.724l-.257-.248a5.967,5.967,0,1,0-.642.642l.248.257v.724l4.583,4.574,1.366-1.366Zm-5.5,0a4.125,4.125,0,1,1,4.125-4.125A4.119,4.119,0,0,1,8.958,13.083Z" transform="translate(-0.25 -0.25)" fill="#495057"/>
+  </g>
+</svg>
