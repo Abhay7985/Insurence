@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Fragment } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import TheLayout from './layout/TheLayout';
+import Home from './pages/home';
+import SignIn from './pages/auth/signin';
+import About from './pages/about';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+        {/* {authState.access_token ? */}
+          <Fragment>
+            <Route path="*" element={<TheLayout />}>
+              <Route index element={<Home />}/>
+              <Route path="about" element={<About/>}/>
+            </Route>
+          </Fragment>
+          :
+
+           <Route path="/signin" element={<SignIn />} />
+        {/* } */}
+      </Routes>
+    </>
   );
 }
 
