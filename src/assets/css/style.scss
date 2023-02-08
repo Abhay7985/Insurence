@@ -151,21 +151,23 @@
 
 // ************************************add Photos section****************************
 
-.text-area{
-  min-height: 120px !important;
+.text-area {
+    min-height: 120px !important;
 }
+
 // ************************************Morning Panormic section****************************
-.morning-banner{
-    img{
+.morning-banner {
+    img {
         height: 100%;
         width: 100%;
     }
 }
 
-.price-card{
+.price-card {
     box-shadow: 0px 4px 14px #0000001A;
     border-radius: 10px;
 }
+
 .ant-picker {
     box-shadow: none !important;
     border-radius: $radius;
@@ -173,19 +175,23 @@
     padding: 14px 20px;
     width: 100%;
 }
-.morning-content{
-    ul{
-        li{
+
+.morning-content {
+    ul {
+        li {
             padding-block: 7px;
         }
     }
-    .map{
+
+    .map {
         border-radius: 6px;
     }
-    .location-icon{
+
+    .location-icon {
         width: fit-content;
     }
-    .location-text{
+
+    .location-text {
         width: fit-content;
         height: fit-content;
         background: $white;
@@ -195,36 +201,75 @@
 }
 
 // ************************************Boat Listing section****************************
-.table{
- th,td{
-    padding: 15px;
-    vertical-align: middle;
-  }
-  th{
-    font-size: 12px;
-    font-weight: bold;
-  }
-  td{
-    font-size: 16px;
-  }
-  .thead{
-    background: #F8F8F8;
-  }
+.table {
+
+    th,
+    td {
+        padding: 15px;
+        vertical-align: middle;
+    }
+
+    th {
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    td {
+        font-size: 16px;
+    }
+
+    .thead {
+        background: #F8F8F8;
+    }
 }
-.boat-image{
+
+.boat-image {
     height: 58px;
     width: 90px;
     overflow: hidden;
     border-radius: $radius;
-    img{
+
+    img {
         height: 100%;
         width: 100%;
         object-fit: cover;
     }
 }
-.status-dot{
+
+.status-dot {
     height: 12px;
     width: 12px;
     border-radius: 50%;
     background: $primary-color;
+}
+
+.ant-tabs {
+    .ant-tabs-tab {
+        font-size: 18px;
+        padding-inline: 10px;
+        &:hover{
+            color: $light-black;
+        }
+        &:focus{
+            color: $light-black;
+        }
+        &:active{
+            color: $light-black;
+        }
+    }
+}
+
+.ant-tabs {
+    .ant-tabs-tab.ant-tabs-tab-active {
+        .ant-tabs-tab-btn {
+            color: $dark-black;
+            border-color: $dark-black;
+        }
+    }
+}
+
+.ant-tabs {
+    .ant-tabs-ink-bar {
+        background: $dark-black;
+    }
 }

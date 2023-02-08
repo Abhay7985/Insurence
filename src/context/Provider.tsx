@@ -47,7 +47,7 @@ type GlobleContextProviderProps = {
 function GlobalProvider(props: GlobleContextProviderProps) {
     const location = useLocation()
     const [loading, setLoading] = React.useState(false)
-    const [colorPrimary, setColorPrimary] = React.useState(props?.theme?.colorPrimary || '#32cd32')
+    const [colorPrimary, setColorPrimary] = React.useState(props?.theme?.colorPrimary || '#FF9100')
     const [locale, setLocale] = React.useState(enUS)
     const [isDarkMode, setIsDarkMode] = React.useState(false)
 

@@ -13,7 +13,7 @@ const EditImage = () => {
                 <div className="container">
                     <div className="row gy-4">
                         <div className="col-lg-6">
-                            <div className="row">
+                            <div className="row gy-4">
                                 <div className="col-12">
                                     <HenceforthIcons.LeftArrow />
                                 </div>
@@ -32,7 +32,7 @@ const EditImage = () => {
                                             <div className="upload-icon text-center mb-2">
                                                 <img src={uploadIcon} alt="upload" className='img-fluid' />
                                             </div>
-                                            <button className='btn btn-yellow'>Uploads Photos</button>
+                                            <button className='btn btn-outline-yellow'>Uploads Photos</button>
                                         </label>
 
                                     </div>
@@ -77,7 +77,26 @@ const EditImage = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-12">
+                                        <div className="col-md-6">
+                                            <div className="uploaded-image position-relative">
+                                                <div className="upload-images">
+                                                    <img src={uploadImage} alt="img" className='img-fluid' />
+                                                </div>
+                                                <div className="modify-image d-flex gap-2 position-absolute justify-content-end">
+
+                                                    <div className="modify-btn d-flex gap-2">
+                                                        <button className='btn edit'>
+                                                            <img src={editIcon} alt="icon" />
+                                                        </button>
+
+                                                        <button className='btn edit'>
+                                                            <img src={deleteIcon} alt="icon" />
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6">
                                             <div className="uploaded-image position-relative">
                                                 <div className="upload-images">
                                                     <img src={uploadImage} alt="img" className='img-fluid' />

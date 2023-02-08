@@ -58,6 +58,12 @@ p {
 .bg-yellow {
     background: $primary-color !important;
 }
+.bg-white {
+    background: $white !important;
+}
+.text-yellow{
+    color: $primary-color !important;
+}
 
 label {
     color: $light-black;
@@ -69,6 +75,13 @@ label {
     background: $primary-color !important;
     color: $white !important;
     border: 0;
+    border-radius: 4px;
+}
+
+.btn-outline-yellow {
+    background: $white !important;
+    color: $primary-color !important;
+    border: 1px solid $primary-color !important;
     border-radius: 4px;
 }
 
