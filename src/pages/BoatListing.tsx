@@ -2,6 +2,7 @@ import addIcon from '../assets/icons/plus_white.svg'
 import search from '../assets/icons/search.svg'
 import boatImage from '../assets/images/boat_four.png'
 import { Select, Space } from 'antd';
+import { Link } from 'react-router-dom';
 
 const handleChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -18,10 +19,12 @@ const BoatListing = () => {
                             <div className="boat-listing-header d-flex justify-content-between">
                                 <h2>3 boats</h2>
                                 <div className="add-boat-btn">
-                                    <button className='btn btn-yellow d-flex align-items-center gap-2'>
-                                        <img src={addIcon} alt="icon" className='img-fluid' height='15px' width="15px" />
-                                        <span>Add New Boat</span>
-                                    </button>
+                                    <Link to={`/boat/add/info`}>
+                                        <button className='btn btn-yellow d-flex align-items-center gap-2'>
+                                            <img src={addIcon} alt="icon" className='img-fluid' height='15px' width="15px" />
+                                            <span>Add New Boat</span>
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +71,7 @@ const BoatListing = () => {
                                         <td>
                                             <div className="boats d-flex gap-2 align-items-center">
                                                 <div className="boat-image">
-                                                  <img src={boatImage} alt="img" className='img-fluid' />
+                                                    <img src={boatImage} alt="img" className='img-fluid' />
                                                 </div>
                                                 <p>Morning Panoramic</p>
                                             </div>

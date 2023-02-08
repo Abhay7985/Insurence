@@ -8,7 +8,7 @@ const handleChange = (value: string) => {
     console.log(`selected ${value}`);
 };
 
-const BoatDetails = () => {
+const BoatInfo = () => {
     const [size, setSize] = useState<SizeType>('middle')
     return (
         // boat-details
@@ -79,7 +79,7 @@ const BoatDetails = () => {
                                             <Link to='/boat-details' className='btn back-btn border-0'>Back</Link>
                                         </li>
                                         <li>
-                                            <Link to='/select-passenger' className='btn btn-yellow px-3'>Next</Link>
+                                            <Link to='/boat/id/passenger-bedrooms' className='btn btn-yellow px-3'>Next</Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -98,4 +98,4 @@ const BoatDetails = () => {
     )
 }
 
-export default BoatDetails
+export default BoatInfo

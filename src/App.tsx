@@ -1,10 +1,9 @@
 import { Fragment, useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import TheLayout from './layout/TheLayout';
-import Home from './pages/home';
 import SignIn from './pages/auth/signin';
 import About from './pages/about';
-import BoatDetails from './pages/BoatDetails';
+import BoatInfo from './pages/BoatInfo';
 import SelectPassenger from './pages/SelectPassenger';
 import PlaceLocated from './pages/PlaceLocated';
 import ConfirmAddress from './pages/ConfirmAddress';
@@ -21,21 +20,20 @@ const App = () => {
   return (
     <>
       <Routes>
-        {authState?.access_token ?
+        {!authState?.access_token ?
           <Fragment>
             <Route path="*" element={<TheLayout />}>
-              <Route index element={<Home />} />
+              <Route index element={<BoatListing />} />
               <Route path="about" element={<About />} />
-              <Route path="boat-details" element={<BoatDetails />} />
-              <Route path="select-passenger" element={<SelectPassenger />} />
+              <Route path="boat/add/info" element={<BoatInfo />} />
+              <Route path="boat/:id/passenger-bedrooms" element={<SelectPassenger />} />
               <Route path="place-located" element={<PlaceLocated />} />
               <Route path="confirm-address" element={<ConfirmAddress />} />
-              <Route path="boat-listing" element={<BoatListing/>}/>
-              <Route path="aminities-offer" element={<AminitiesOffer/>}/>
-              <Route path="add-photos" element={<AddPhotos/>}/>
-              <Route path="safety-question" element={<SafetyQuestions/>}/>
-              <Route path="boat-price" element={<BoatPrice/>}/>
-              <Route path="morning-panormic" element={<MorningPanormic/>}/>
+              <Route path="aminities-offer" element={<AminitiesOffer />} />
+              <Route path="add-photos" element={<AddPhotos />} />
+              <Route path="safety-question" element={<SafetyQuestions />} />
+              <Route path="boat-price" element={<BoatPrice />} />
+              <Route path="morning-panormic" element={<MorningPanormic />} />
             </Route>
           </Fragment>
           :
