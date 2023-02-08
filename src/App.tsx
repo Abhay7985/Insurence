@@ -15,13 +15,14 @@ import AddPhotos from './pages/AddPhotos';
 import SafetyQuestions from './pages/SafetyQuestions';
 import BoatPrice from './pages/BoatPrice';
 import MorningPanormic from './pages/MorningPanormic';
+import EditImage from './pages/EditImage';
 
 const App = () => {
   const { authState } = useContext(GlobalContext)
   return (
     <>
       <Routes>
-        {authState?.access_token ?
+        {!authState?.access_token ?
           <Fragment>
             <Route path="*" element={<TheLayout />}>
               <Route index element={<Home />} />
@@ -36,6 +37,7 @@ const App = () => {
               <Route path="safety-question" element={<SafetyQuestions/>}/>
               <Route path="boat-price" element={<BoatPrice/>}/>
               <Route path="morning-panormic" element={<MorningPanormic/>}/>
+              <Route path="edit-image" element={<EditImage/>}/>
             </Route>
           </Fragment>
           :

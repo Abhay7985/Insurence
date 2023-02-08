@@ -2,6 +2,7 @@ import addIcon from '../assets/icons/plus_white.svg'
 import search from '../assets/icons/search.svg'
 import boatImage from '../assets/images/boat_four.png'
 import { Select, Space } from 'antd';
+import HenceforthIcons from '../assets/icons/HenceforthIcons';
 
 const handleChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -35,8 +36,8 @@ const BoatListing = () => {
                                 </div>
                                 <div className="add-boat-btn">
                                     <Select
-                                        defaultValue="lucy"
-                                        style={{ width: 120 }}
+                                        defaultValue="Listing status"
+                                        style={{ width: 150 }}
                                         onChange={handleChange}
                                         options={[
                                             { value: 'jack', label: 'Jack' },
@@ -53,7 +54,7 @@ const BoatListing = () => {
                         <div className="col-12 table-responsive">
                             <table className="table">
                                 <thead>
-                                    <tr>
+                                    <tr className='thead'>
                                         <th scope="col">SR. NO.</th>
                                         <th scope="col">BOATS</th>
                                         <th scope="col">STATUS</th>
@@ -68,36 +69,75 @@ const BoatListing = () => {
                                         <td>
                                             <div className="boats d-flex gap-2 align-items-center">
                                                 <div className="boat-image">
-                                                  <img src={boatImage} alt="img" className='img-fluid' />
+                                                    <img src={boatImage} alt="img" className='img-fluid' />
                                                 </div>
                                                 <p>Morning Panoramic</p>
                                             </div>
                                         </td>
                                         <td>
-                                            <div className="status">
+                                            <div className="status d-flex gap-2 align-items-center">
                                                 <div className="status-dot"></div>
                                                 <p>Listed</p>
                                             </div>
                                         </td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
+                                        <td>$30</td>
+                                        <td>Today</td>
+                                        <td>
+                                            <div className="action d-flex gap-2">
+                                                <button className='btn p-0 border-0'> <HenceforthIcons.ViewIcon /></button>
+                                                <button className='btn p-0 border-0'> <HenceforthIcons.EditIcon /></button>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th scope="row">02</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                        <td>@fat</td>
-                                        <td>@fat</td>
+                                        <td>
+                                            <div className="boats d-flex gap-2 align-items-center">
+                                                <div className="boat-image">
+                                                    <img src={boatImage} alt="img" className='img-fluid' />
+                                                </div>
+                                                <p>Morning Panoramic</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className="status d-flex gap-2 align-items-center">
+                                                <div className="status-dot bg-red"></div>
+                                                <p>Unlisted</p>
+                                            </div>
+                                        </td>
+                                        <td>$30</td>
+                                        <td>Today</td>
+                                        <td>
+                                            <div className="action d-flex gap-2">
+                                                <button className='btn p-0 border-0'> <HenceforthIcons.ViewIcon /></button>
+                                                <button className='btn p-0 border-0'> <HenceforthIcons.EditIcon /></button>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th scope="row">03</th>
-                                        <td >Larry the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
+                                        <td>
+                                            <div className="boats d-flex gap-2 align-items-center">
+                                                <div className="boat-image">
+                                                    <img src={boatImage} alt="img" className='img-fluid' />
+                                                </div>
+                                                <p>Morning Panoramic</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className="status d-flex gap-2 align-items-center">
+                                                <div className="status-dot"></div>
+                                                <p>Listed</p>
+                                            </div>
+                                        </td>
+                                        <td>$30</td>
+                                        <td>Today</td>
+                                        <td>
+                                            <div className="action d-flex gap-2">
+                                                <button className='btn p-0 border-0'> <HenceforthIcons.ViewIcon /></button>
+                                                <button className='btn p-0 border-0'> <HenceforthIcons.EditIcon /></button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

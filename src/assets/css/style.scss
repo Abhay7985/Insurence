@@ -207,6 +207,9 @@
   td{
     font-size: 16px;
   }
+  .thead{
+    background: #F8F8F8;
+  }
 }
 .boat-image{
     height: 58px;
@@ -218,4 +221,10 @@
         width: 100%;
         object-fit: cover;
     }
+}
+.status-dot{
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: $primary-color;
 }

@@ -51,6 +51,14 @@ p {
     color: $light-black;
 }
 
+.bg-red {
+    background: $red !important;
+}
+
+.bg-yellow {
+    background: $primary-color !important;
+}
+
 label {
     color: $light-black;
     font-size: 16px;
@@ -102,6 +110,28 @@ label {
 
 .form-check-input:focus {
     border-color: $primary-color;
+}
+
+.ant-input {
+    box-shadow: none !important;
+    border-radius: $radius;
+    border: 1px solid $light-gray;
+    padding: 14px 20px;
+}
+
+.ant-input:hover {
+    border-color: $primary-color !important;
+}
+
+.ant-input-affix-wrapper {
+    box-shadow: none !important;
+    border-radius: $radius;
+    border: 1px solid $light-gray;
+    padding: 14px 20px;
+}
+
+.ant-input-affix-wrapper:hover {
+    border-color: $primary-color !important;
 }
 
 ul {
