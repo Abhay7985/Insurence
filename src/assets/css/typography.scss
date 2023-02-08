@@ -17,9 +17,27 @@ h3 {
     font-size: 26px;
     color: $light-black;
 }
+
 h4 {
+    font-size: 22px;
+    color: $light-black;
+}
+
+h5 {
     font-size: 20px;
     color: $light-black;
+}
+
+.fs-14 {
+    font-size: 14px !important;
+}
+
+.fs-16 {
+    font-size: 16px !important;
+}
+
+.fs-18 {
+    font-size: 18px !important;
 }
 
 .btn {
@@ -69,7 +87,12 @@ label {
 
 .form-check-input {
     box-shadow: none !important;
-    border-radius: 4px;
+    border-radius: 2px !important;
+}
+
+.form-check-radio {
+    box-shadow: none !important;
+    border-radius: 50% !important;
 }
 
 .form-check-input:checked {
@@ -105,6 +128,7 @@ ul {
     }
 
 }
+
 .form-switch .form-check-input:focus {
     background-image: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%27-4 -4 8 8%27%3e%3ccircle r=%273%27 fill=%27rgba%280, 0, 0, 0.25%29%27/%3e%3c/svg%3e');
 }

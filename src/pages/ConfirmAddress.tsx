@@ -78,10 +78,10 @@ const ConfirmAddress = () => {
                                 <div className="col-11 col-lg-11">
                                     <ul className='d-flex justify-content-between'>
                                         <li>
-                                            <Link to='/place-located' className='btn back-btn border-0'>Back</Link>
+                                            <Link to='/select-passenger' className='btn back-btn border-0'>Back</Link>
                                         </li>
                                         <li>
-                                            <Link to='/select-passenger' className='btn btn-yellow px-3'>Next</Link>
+                                            <Link to='/aminities-offer' className='btn btn-yellow px-3'>Next</Link>
                                         </li>
                                     </ul>
                                 </div>

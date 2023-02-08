@@ -1,7 +1,3 @@
-section {
-    overflow: hidden;
-}
-
 .banner-title {
     padding-top: 60px;
     padding-bottom: 42px;
@@ -10,6 +6,7 @@ section {
 // ************************************Boat Details section****************************
 .banner-image {
     max-height: 100vh;
+    overflow: hidden;
 
     img {
         height: 100%;
@@ -21,6 +18,8 @@ section {
 .banner-content {
     min-height: 100vh;
     max-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .banner-footer {
@@ -68,11 +67,155 @@ section {
     border: 1px solid $light-gray;
     padding: 24px;
 }
-.specific-location{
-    .form-check-input{
+
+.specific-location {
+    .form-check-input {
         padding: 10px 0;
     }
-    a{
+
+    a {
         color: $light-black;
+    }
+}
+
+// ************************************add Photos section****************************
+.upload-image {
+    min-height: 176px;
+    border: 2px dashed #343A404D;
+    position: relative;
+    border-radius: 8px;
+
+    .form-control {
+        min-height: 176px;
+    }
+
+    label {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: fit-content;
+        height: fit-content;
+    }
+
+    input {
+        opacity: 0;
+    }
+}
+
+.uploaded-image {
+    min-height: 176px;
+
+    img {
+        height: 100%;
+        min-height: 176px;
+    }
+}
+
+.modify-image {
+    width: 100%;
+    right: 0px;
+    padding-inline: 10px;
+    top: 10px;
+}
+
+.edit {
+    height: 36px;
+    width: 36px;
+    background: $white;
+    border: 1px solid $light-gray;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        height: 30px;
+        width: 30px;
+    }
+}
+
+.cover-image {
+    width: fit-content;
+    height: fit-content;
+    background: #00000099;
+    border-radius: 2px;
+    font-size: 12px;
+    color: $white;
+    padding: 2px 5px;
+}
+
+// ************************************add Photos section****************************
+
+.text-area{
+  min-height: 120px !important;
+}
+// ************************************Morning Panormic section****************************
+.morning-banner{
+    img{
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.price-card{
+    box-shadow: 0px 4px 14px #0000001A;
+    border-radius: 10px;
+}
+.ant-picker {
+    box-shadow: none !important;
+    border-radius: $radius;
+    border: 1px solid $light-gray;
+    padding: 14px 20px;
+    width: 100%;
+}
+.morning-content{
+    ul{
+        li{
+            padding-block: 7px;
+        }
+    }
+    .map{
+        border-radius: 6px;
+    }
+    .location-icon{
+        width: fit-content;
+    }
+    .location-text{
+        width: fit-content;
+        height: fit-content;
+        background: $white;
+        padding: 14px 26px;
+        border-radius: $radius;
+    }
+}
+
+// ************************************Boat Listing section****************************
+.table{
+ th,td{
+    padding: 15px;
+    vertical-align: middle;
+  }
+  th{
+    font-size: 12px;
+    font-weight: bold;
+  }
+  td{
+    font-size: 16px;
+  }
+}
+.boat-image{
+    height: 58px;
+    width: 90px;
+    overflow: hidden;
+    border-radius: $radius;
+    img{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
     }
 }

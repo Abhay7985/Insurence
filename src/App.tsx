@@ -9,6 +9,12 @@ import SelectPassenger from './pages/SelectPassenger';
 import PlaceLocated from './pages/PlaceLocated';
 import ConfirmAddress from './pages/ConfirmAddress';
 import { GlobalContext } from './context/Provider';
+import BoatListing from './pages/BoatListing';
+import AminitiesOffer from './pages/AminitiesOffer';
+import AddPhotos from './pages/AddPhotos';
+import SafetyQuestions from './pages/SafetyQuestions';
+import BoatPrice from './pages/BoatPrice';
+import MorningPanormic from './pages/MorningPanormic';
 
 const App = () => {
   const { authState } = useContext(GlobalContext)
@@ -24,6 +30,12 @@ const App = () => {
               <Route path="select-passenger" element={<SelectPassenger />} />
               <Route path="place-located" element={<PlaceLocated />} />
               <Route path="confirm-address" element={<ConfirmAddress />} />
+              <Route path="boat-listing" element={<BoatListing/>}/>
+              <Route path="aminities-offer" element={<AminitiesOffer/>}/>
+              <Route path="add-photos" element={<AddPhotos/>}/>
+              <Route path="safety-question" element={<SafetyQuestions/>}/>
+              <Route path="boat-price" element={<BoatPrice/>}/>
+              <Route path="morning-panormic" element={<MorningPanormic/>}/>
             </Route>
           </Fragment>
           :

@@ -16,12 +16,12 @@ function PlaceLocated() {
                                 </div>
                                 <div className="col-11 col-lg-11">
                                     <input type="text" className="form-control" placeholder="Enter your address" />
-                                    <div className="location border mt-1 d-flex gap-3 align-items-center">
+                                    <Link to='' className="location border mt-1 d-flex gap-3 align-items-center nav-link">
                                         <div className="location-icon">
                                             <img src={locationIcon} alt="icon" className="img-fluid" />
                                         </div>
                                         <p>Use my current location</p>
-                                    </div>
+                                    </Link>
                                 </div>
                             </div>
                             <div className="row banner-footer border-top mt-auto justify-content-end">
