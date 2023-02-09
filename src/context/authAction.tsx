@@ -31,7 +31,6 @@ const logout = (payload: any) => (dispatch: any) => {
     })
 }
 const setProvider = (payload: any) => (dispatch: any) => {
-    debugger
     dispatch({
         type: SOCIAL_TYPE_PROVIDER,
         payload: payload

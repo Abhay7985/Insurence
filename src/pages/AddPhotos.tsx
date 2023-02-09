@@ -6,6 +6,7 @@ import editIcon from '../assets/icons/edit_pencil.svg';
 import deleteIcon from '../assets/icons/delete.svg';
 
 const AddPhotos = () => {
+    
     return (
         <>
             {/* Aminities-offer */}

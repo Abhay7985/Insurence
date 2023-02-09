@@ -1,9 +1,4 @@
-import { ReactNode } from "react";
 
-export const COOKIES_USER_ACCESS_TOKEN = "COOKIES_USER_ACCESS_TOKEN";
-export const COOKIES_USER_THEME = "COOKIES_USER_THEME";
-export const COOKIES_USER_RESET_EMAIL = "USER_RESET_EMAIL";
-export const COOKIES_COUPON_CODE = "COOKIES_COUPON_CODE";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
@@ -34,21 +29,11 @@ export const FIXED_PRICE_AUCTION_ID = "0x01";
 export const UNLIMITED_PRICE_AUCTION_ID = "0x02";
 export const TIMED_AUCTION_AUCTION_ID = "0x03";
 
-export const REVIEW_1 = '1';
-export const REVIEW_2 = '2';
-export const REVIEW_3 = '3';
-export const REVIEW_4 = '4';
-export const IN_STOCK = 'IN_STOCK';
-
-export const DISCOUNT_10 = '10';
-export const DISCOUNT_20 = '20';
-export const DISCOUNT_30 = '30';
-export const DISCOUNT_40 = '40';
-export const DISCOUNT_50 = '50';
-export const DISCOUNT_60 = '60';
-export const DISCOUNT_70 = '70';
-export const DISCOUNT_80 = '80';
-
+export const NFT_STEP_0 = 0;
+export const NFT_STEP_1 = 1;
+export const NFT_STEP_2 = 2;
+export const NFT_STEP_3 = 3;
+export const NFT_STEP_4 = 4;
 export const WALLET_ADDRESS_SLICE_FROM = 5;
 
 export const REDIRECT_PROFILE = "profile/vault";
@@ -81,14 +66,3 @@ export const RECENTLY_ADDED = "RECENTLY_ADDED";
 export const PRICE_HIGH_TO_LOW = "PRICE_HIGH_TO_LOW";
 export const PRICE_LOW_TO_HIGH = "PRICE_LOW_TO_HIGH";
 export const AUCTION_ENDING_SOON = "AUCTION_ENDING_SOON";
-
-export const TAB_PROFILE = "TAB_PROFILE";
-export const TAB_ADDRESS = "TAB_ADDRESS";
-export const TAB_CARD = "TAB_CARD";
-
-export type GlobleContextProviderProps = {
-    children: ReactNode;
-    tab?: string;
-    showSave?: boolean;
-    type?: string
-}

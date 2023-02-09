@@ -53,6 +53,13 @@ p {
     color: $light-black;
 }
 
+.rounded{
+    border-radius: $radius !important;
+}
+.rounded-2{
+    border-radius: 2px !important;
+}
+
 .bg-red {
     background: $red !important;
 }

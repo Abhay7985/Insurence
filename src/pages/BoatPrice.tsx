@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import bannerImage from '../assets/images/image_one.png';
 
 const BoatPrice = () => {
+    
     return (
         <>
             {/* Boat-Price */}
