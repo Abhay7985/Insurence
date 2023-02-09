@@ -4,14 +4,16 @@ import boatImage from '../assets/images/boat_four.png'
 import { Select, Space } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import henceforthApi from '../utils/henceforthApi';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { boatListingData } from '../interfaces';
+import { GlobalContext } from '../context/Provider';
 
 
 
 
 const BoatListing = () => {
+    const {authState}=React.useContext(GlobalContext)
 
     const [state, setState] = useState({
         current_page: 0,
@@ -23,6 +25,7 @@ const BoatListing = () => {
     const searchparams = new URLSearchParams()
 
     const navigate = useNavigate()
+
 
     const handleChange = (value: string) => {
         console.log(`selected ${value}`);
@@ -38,6 +41,8 @@ const BoatListing = () => {
     }
 
     const boatListing = async () => {
+    henceforthApi.setToken(authState?.access_token)
+
         try {
             let res = await henceforthApi.Boat.getBoatListing()
             setState(res.data)

@@ -1,5 +1,11 @@
 import React from 'react'
+import increase from '../assets/icons/add_circle_outline.svg';
+import decrease from '../assets/icons/remove_circle_outline.svg';
+import { Input, Select } from 'antd';
 
+const handleChange = (value: string) => {
+    console.log(`selected ${value}`);
+};
 const MorningPanormicListing = () => {
     return (
         <>
@@ -9,7 +15,7 @@ const MorningPanormicListing = () => {
                     <div className="row">
                         <div className="col-12">
                             <div className="tab-box d-flex align-items-start py-5 gap-3">
-                                <div className="nav flex-column nav-pills bg-white" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                <div className="nav flex-column nav-pills bg-white h-100" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                     {/* Listing accordian */}
                                     <button className="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
                                         {/* Listing accordian */}
@@ -160,11 +166,57 @@ const MorningPanormicListing = () => {
                                                 <h4>Location</h4>
                                             </div>
                                             <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
-                                                <div className="listing-content">
+                                                <div className="listing-content w-100">
                                                     <h6 className='mb-2'>Address</h6>
                                                     <p>Angra dos Reis - Rio de Janeiro</p>
+                                                    {/* edit-email */}
+                                                    <div className="edit-input mt-3">
+                                                        <div className="row">
+                                                            <div className="col-12">
+                                                                <div className="address mb-3">
+                                                                    <label className="form-label">Street address</label>
+                                                                    <Input placeholder="House name/number +street /road" />
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div className="col-12">
+                                                                <div className="address mb-3">
+                                                                    <label className="form-label">Flat, suite. (Optional)</label>
+                                                                    <Input placeholder="Flat, suite, building access code" />
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-lg-6">
+                                                                <div className="address mb-3">
+                                                                    <label className="form-label">City</label>
+                                                                    <Input placeholder="Enter City" />
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-lg-6">
+                                                                <div className="address mb-3">
+                                                                    <label className="form-label">State</label>
+                                                                    <Input placeholder="Enter State" />
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-lg-6">
+                                                                <div className="address mb-3">
+                                                                    <label className="form-label">Postcode</label>
+                                                                    <Input placeholder="Enter Postcode" />
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-lg-6">
+                                                                <div className="address mb-3">
+                                                                    <label className="form-label">Country</label>
+                                                                    <Input placeholder="Enter Country" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="save-btn">
+                                                            <button className='btn btn-yellow rounded-2'>Save</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className="edit-photo">
+                                                <div className="edit-photo ps-4">
                                                     <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
                                                 </div>
                                             </div>
@@ -174,26 +226,186 @@ const MorningPanormicListing = () => {
                                             <div className="photo-header d-flex justify-content-between mb-3">
                                                 <h4>Boat & passengers</h4>
                                             </div>
-                                            <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1 mb-3">
-                                                <div className="listing-content">
-                                                    <h6 className='mb-2'>Boat Detail</h6>
-                                                    <p className='mb-2'>Category: Speedboat</p>
-                                                    <p className='mb-2'>Manufacturer: ACM</p>
-                                                    <p className='mb-2'>Model: 2014</p>
-                                                    <p className='mb-2'>Size: 25 feet</p>
+                                            <div className="photo-header d-flex justify-content-between border px-4 py-4 rounded-1 mb-3">
+                                                <div className="edit-details">
+                                                    <div className="listing-content">
+                                                        <h6 className='mb-3'>Boat Detail</h6>
+                                                        <p className='mb-2'>Category: Speedboat</p>
+                                                        <p className='mb-2'>Manufacturer: ACM</p>
+                                                        <p className='mb-2'>Model: 2014</p>
+                                                        <p className='mb-2'>Size: 25 feet</p>
+
+                                                    </div>
+                                                    {/* edit */}
+                                                    <div className="edit-input mt-3">
+                                                        <div className="row">
+                                                            <div className="col-12">
+                                                                <div className="address mb-3">
+                                                                    <label className="form-label">Category</label>
+                                                                    <div className="select">
+                                                                        <Select
+                                                                            defaultValue="Speedboat"
+                                                                            className='w-100'
+                                                                            onChange={handleChange}
+                                                                            options={[
+                                                                                { value: 'jack', label: 'Jack' },
+                                                                                { value: 'lucy', label: 'Lucy' },
+                                                                                { value: 'Yiminghe', label: 'yiminghe' },
+                                                                                { value: 'disabled', label: 'Disabled', disabled: true },
+                                                                            ]}
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-12">
+                                                                <div className="address mb-3">
+                                                                    <label className="form-label">Manufacturer</label>
+                                                                    <div className="select">
+                                                                        <Select
+                                                                            defaultValue="ACM"
+                                                                            className='w-100'
+                                                                            onChange={handleChange}
+                                                                            options={[
+                                                                                { value: 'jack', label: 'Jack' },
+                                                                                { value: 'lucy', label: 'Lucy' },
+                                                                                { value: 'Yiminghe', label: 'yiminghe' },
+                                                                                { value: 'disabled', label: 'Disabled', disabled: true },
+                                                                            ]}
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div className="col-12">
+                                                                <div className="address mb-3">
+                                                                    <label className="form-label">Model</label>
+                                                                    <Input placeholder="2014" />
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-12">
+                                                                <div className="address mb-3">
+                                                                    <label className="form-label">Size</label>
+                                                                    <Input placeholder="Size" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="save-btn pt-3">
+                                                            <button className='btn btn-yellow rounded-2'>Save</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
+
+
                                                 <div className="edit-photo">
                                                     <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
                                                 </div>
                                             </div>
-                                            <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
-                                                <div className="listing-content">
-                                                    <h6 className='mb-2'>Boat Detail</h6>
+                                            <div className="photo-header d-flex justify-content-between border px-4 py-4 rounded-1">
+                                             <div className="edit-address">
+                                             <div className="listing-content">
+                                                    <h6 className='mb-3'>Passengers & Bedrooms</h6>
                                                     <p className='mb-2'>Category: Speedboat</p>
                                                     <p className='mb-2'>Manufacturer: ACM</p>
                                                     <p className='mb-2'>Model: 2014</p>
                                                     <p className='mb-2'>Size: 25 feet</p>
                                                 </div>
+                                                <div className="row gy-2 pt-2">
+                                                    <div className="col-7">
+                                                        <div className="add-passenger d-flex justify-content-between align-items-center">
+                                                            <p>Number of Passengers (Day)</p>
+                                                            <div className="add-btn">
+                                                                <ul className='d-flex gap-1 align-items-center'>
+                                                                    <li>
+                                                                        <button className='btn border-0'>
+                                                                            <img src={decrease} alt="icon" />
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <input type="text" className='form-control' value={1} />
+                                                                    </li>
+                                                                    <li>
+                                                                        <button className='btn border-0'>
+                                                                            <img src={increase} alt="icon" />
+                                                                        </button>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-7">
+                                                        <div className="add-passenger d-flex justify-content-between align-items-center">
+                                                            <p>Number of Passengers (Night)</p>
+                                                            <div className="add-btn">
+                                                                <ul className='d-flex gap-1 align-items-center'>
+                                                                    <li>
+                                                                        <button className='btn border-0'>
+                                                                            <img src={decrease} alt="icon" />
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <input type="text" className='form-control' value={1} />
+                                                                    </li>
+                                                                    <li>
+                                                                        <button className='btn border-0'>
+                                                                            <img src={increase} alt="icon" />
+                                                                        </button>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-7">
+                                                        <div className="add-passenger d-flex justify-content-between align-items-center">
+                                                            <p>Number of Bedrooms</p>
+                                                            <div className="add-btn">
+                                                                <ul className='d-flex gap-1 align-items-center'>
+                                                                    <li>
+                                                                        <button className='btn border-0'>
+                                                                            <img src={decrease} alt="icon" />
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <input type="text" className='form-control' value={1} />
+                                                                    </li>
+                                                                    <li>
+                                                                        <button className='btn border-0'>
+                                                                            <img src={increase} alt="icon" />
+                                                                        </button>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-7">
+                                                        <div className="add-passenger d-flex justify-content-between align-items-center">
+                                                            <p>Number of Bathrooms</p>
+                                                            <div className="add-btn">
+                                                                <ul className='d-flex gap-1 align-items-center'>
+                                                                    <li>
+                                                                        <button className='btn border-0'>
+                                                                            <img src={decrease} alt="icon" />
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <input type="text" className='form-control' value={1} />
+                                                                    </li>
+                                                                    <li>
+                                                                        <button className='btn border-0'>
+                                                                            <img src={increase} alt="icon" />
+                                                                        </button>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-7">
+                                                        <div className="save-btn pt-3">
+                                                            <button className='btn btn-yellow rounded-2'>Save</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                             </div>
                                                 <div className="edit-photo">
                                                     <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
                                                 </div>
