@@ -3,6 +3,7 @@ const SuperagentPromise = require('superagent-promise');
 const superagent = SuperagentPromise(_superagent, global.Promise);
 
 const API_ROOT = `http://192.168.0.115:8080/api/`;
+
 const INSTAGRAM_API_ROOT = 'https://graph.instagram.com/'; //live
 
 const BUCKET_ROOT = `https://demoserver3.sgp1.digitaloceanspaces.com/`;
@@ -18,10 +19,10 @@ const encode = encodeURIComponent;
 const responseBody = (res: any) => res.body;
 
 let token: any = null;
+
 const tokenPlugin = (req: any) => {
   if (token) {
     req.set('authorization', `Bearer ${token}`);
-    // req.set('token', token);
   }
 }
 
@@ -39,6 +40,7 @@ const requests = {
   file: (url: string, key: string, file: any) =>
     superagent.post(`${API_ROOT}${url}`).attach(key, file).use(tokenPlugin).then(responseBody)
 };
+
 const instagramApi = {
   del: (url: string) =>
     superagent.del(`${INSTAGRAM_API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
@@ -79,8 +81,8 @@ const Auth = {
     requests.post('User/connect/wallet', info),
   connectSocialAccount: (info: any) =>
     requests.post('User/connect/social_account', info),
-  changePassword:(info:any)=>
-    requests.post('change-password',info),  
+  changePassword: (info: any) =>
+    requests.post('change-password', info),
   fortgetPassword: (info: any) =>
     requests.post('forgot-password', info),
   forgotChangePassword: (info: any) =>
@@ -101,10 +103,15 @@ const Auth = {
     requests.post('User/verify/phone_no', info),
 };
 
-const Boat ={
-  getBoatListing:() =>
-  requests.get(`provider/boats`)
+
+const Boat = {
+  getBoatListing: () =>
+    requests.get(`provider/boats`)
 }
+
+
+
+
 
 const Search = {
   pagination: (search: string, nft_type: string) =>

@@ -115,3 +115,11 @@ export interface couponListing {
     _id: string
     showCopy: boolean
 }
+
+export interface boatListingData {
+    id: number,
+    name: string,
+    cover_image: string,
+    status: string,
+    updated_at: string
+}
