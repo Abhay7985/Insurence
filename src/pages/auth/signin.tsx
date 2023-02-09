@@ -16,14 +16,13 @@ const SignIn = () => {
 
   const onhandleSubmit = async () => {
     setLoading(true)
-    const { email, password } = state
     const data = {
-      email,
-      password
+      email: state.email,
+      password: state.password
     }
     try {
       let apiRes = await henceforthApi.Auth.login(data)
-      loginSuccess(apiRes)(authDispatch)
+      loginSuccess({ ...apiRes.data, access_token: apiRes.token })(authDispatch)
       console.log('apiRes', apiRes)
       henceforthApi.setToken(apiRes?.token)
 

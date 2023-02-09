@@ -27,7 +27,9 @@ h5 {
     font-size: 20px;
     color: $light-black;
 }
-
+.fs-12 {
+    font-size: 12px !important;
+}
 .fs-14 {
     font-size: 14px !important;
 }
@@ -49,6 +51,13 @@ p {
     margin: 0;
     font-size: 16px;
     color: $light-black;
+}
+
+.rounded{
+    border-radius: $radius !important;
+}
+.rounded-2{
+    border-radius: 2px !important;
 }
 
 .bg-red {

@@ -49,7 +49,7 @@ const BoatListing = () => {
                             <div className="boat-listing-header d-flex justify-content-between">
                                 <h2>{state.total} Boats</h2>
                                 <div className="add-boat-btn">
-                                    <Link to={`/boat/add/info`}>
+                                    <Link to={`/boat/add/info`} className='nav-link'>
                                         <button className='btn btn-yellow d-flex align-items-center gap-2'>
                                             <img src={addIcon} alt="icon" className='img-fluid' height='15px' width="15px" />
                                             <span>Add New Boat</span>

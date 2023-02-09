@@ -247,13 +247,16 @@
     .ant-tabs-tab {
         font-size: 18px;
         padding-inline: 10px;
-        &:hover{
+
+        &:hover {
             color: $light-black;
         }
-        &:focus{
+
+        &:focus {
             color: $light-black;
         }
-        &:active{
+
+        &:active {
             color: $light-black;
         }
     }
@@ -272,4 +275,109 @@
     .ant-tabs-ink-bar {
         background: $dark-black;
     }
+}
+
+// ************************************Profile section****************************
+
+.user-profile {
+    border: 1px solid $light-gray;
+    padding-block: 41px;
+
+    .profile-image {
+        height: 120px;
+        width: 120px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-bottom: 24px;
+
+        img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+}
+
+.name {
+    border: 1px solid $light-gray;
+    border-radius: $radius;
+    padding: 20px 24px;
+}
+
+
+// ************************************Morning panormic lisiting section****************************
+.morning-panormic-listing {
+    .tab-box {
+        height: 90vh;
+        overflow: hidden;
+
+        // overflow: hidden;
+        .tab-content {
+            height: 100%;
+            overflow: auto;
+        }
+
+        .nav {
+            min-width: 300px;
+            width: 300px;
+            padding: 20px 20px;
+            height: 100%;
+        }
+    }
+
+    .nav-link {
+        background: transparent;
+        color: $light-black !important;
+        font-weight: bold;
+        padding: 0;
+    }
+
+    .nav-pills .nav-link.active {
+        background: transparent;
+        color: $light-black !important;
+    }
+
+    .accordion-item {
+        border: none;
+    }
+
+    .accordion-button {
+        background: transparent;
+        color: $light-black !important;
+        box-shadow: none !important;
+        font-weight: bold;
+    }
+
+    .accordion-button::after {
+        display: none;
+    }
+
+    .accordion-body {
+        li {
+            border-left: 1px solid $light-gray;
+        }
+
+        .nav-link {
+            font-weight: normal;
+            font-size: 14px;
+            padding: 10px 12px;
+            border-radius: 0;
+            color: $light-black;
+            border-left: 2px solid transparent;
+            outline: none;
+
+            &:focus {
+                border-left: 2px solid $primary-color;
+            }
+        }
+    }
+}
+
+.amenities-list {
+    li {
+        padding-block: 7px;
+    }
+}
+.Pricing{
+    padding: 40px;
 }
