@@ -10,9 +10,21 @@ const MorningPanormicListing = () => {
     return (
         <>
             {/* morning-panormic-listing */}
-            <section className='morning-panormic-listing'>
+            <section className='morning-panormic-listing py-5'>
                 <div className="container">
                     <div className="row">
+                        <div className="col-12">
+                            <div className="title d-flex justify-content-between">
+                                <h2>Morning Panoramic</h2>
+                                <div className="list-btn d-flex gap-4">
+                                    <a href="#" className='d-flex gap-2 align-items-center text-dark'>
+                                        <div className="status-dot bg-green"></div>
+                                        <span>Listed</span>
+                                    </a>
+                                    <button className='btn btn-outline-yellow'>Preview Listing</button>
+                                </div>
+                            </div>
+                        </div>
                         <div className="col-12">
                             <div className="tab-box d-flex align-items-start py-5 gap-3">
                                 <div className="nav flex-column nav-pills bg-white h-100" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -207,11 +219,23 @@ const MorningPanormicListing = () => {
                                                             <div className="col-lg-6">
                                                                 <div className="address mb-3">
                                                                     <label className="form-label">Country</label>
-                                                                    <Input placeholder="Enter Country" />
+                                                                    <div className="select">
+                                                                        <Select
+                                                                            defaultValue="Country"
+                                                                            className='w-100'
+                                                                            onChange={handleChange}
+                                                                            options={[
+                                                                                { value: 'jack', label: 'Jack' },
+                                                                                { value: 'lucy', label: 'Lucy' },
+                                                                                { value: 'Yiminghe', label: 'yiminghe' },
+                                                                                { value: 'disabled', label: 'Disabled', disabled: true },
+                                                                            ]}
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="save-btn">
+                                                        <div className="save-btn pt-2">
                                                             <button className='btn btn-yellow rounded-2'>Save</button>
                                                         </div>
                                                     </div>
@@ -290,7 +314,7 @@ const MorningPanormicListing = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="save-btn pt-3">
+                                                        <div className="save-btn pt-2">
                                                             <button className='btn btn-yellow rounded-2'>Save</button>
                                                         </div>
                                                     </div>
@@ -302,110 +326,110 @@ const MorningPanormicListing = () => {
                                                 </div>
                                             </div>
                                             <div className="photo-header d-flex justify-content-between border px-4 py-4 rounded-1">
-                                             <div className="edit-address">
-                                             <div className="listing-content">
-                                                    <h6 className='mb-3'>Passengers & Bedrooms</h6>
-                                                    <p className='mb-2'>Category: Speedboat</p>
-                                                    <p className='mb-2'>Manufacturer: ACM</p>
-                                                    <p className='mb-2'>Model: 2014</p>
-                                                    <p className='mb-2'>Size: 25 feet</p>
+                                                <div className="edit-address">
+                                                    <div className="listing-content">
+                                                        <h6 className='mb-3'>Passengers & Bedrooms</h6>
+                                                        <p className='mb-2'>Category: Speedboat</p>
+                                                        <p className='mb-2'>Manufacturer: ACM</p>
+                                                        <p className='mb-2'>Model: 2014</p>
+                                                        <p className='mb-2'>Size: 25 feet</p>
+                                                    </div>
+                                                    <div className="row gy-2 pt-2">
+                                                        <div className="col-7">
+                                                            <div className="add-passenger d-flex justify-content-between align-items-center">
+                                                                <p>Number of Passengers (Day)</p>
+                                                                <div className="add-btn">
+                                                                    <ul className='d-flex gap-1 align-items-center'>
+                                                                        <li>
+                                                                            <button className='btn border-0'>
+                                                                                <img src={decrease} alt="icon" />
+                                                                            </button>
+                                                                        </li>
+                                                                        <li>
+                                                                            <input type="text" className='form-control' value={1} />
+                                                                        </li>
+                                                                        <li>
+                                                                            <button className='btn border-0'>
+                                                                                <img src={increase} alt="icon" />
+                                                                            </button>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-7">
+                                                            <div className="add-passenger d-flex justify-content-between align-items-center">
+                                                                <p>Number of Passengers (Night)</p>
+                                                                <div className="add-btn">
+                                                                    <ul className='d-flex gap-1 align-items-center'>
+                                                                        <li>
+                                                                            <button className='btn border-0'>
+                                                                                <img src={decrease} alt="icon" />
+                                                                            </button>
+                                                                        </li>
+                                                                        <li>
+                                                                            <input type="text" className='form-control' value={1} />
+                                                                        </li>
+                                                                        <li>
+                                                                            <button className='btn border-0'>
+                                                                                <img src={increase} alt="icon" />
+                                                                            </button>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-7">
+                                                            <div className="add-passenger d-flex justify-content-between align-items-center">
+                                                                <p>Number of Bedrooms</p>
+                                                                <div className="add-btn">
+                                                                    <ul className='d-flex gap-1 align-items-center'>
+                                                                        <li>
+                                                                            <button className='btn border-0'>
+                                                                                <img src={decrease} alt="icon" />
+                                                                            </button>
+                                                                        </li>
+                                                                        <li>
+                                                                            <input type="text" className='form-control' value={1} />
+                                                                        </li>
+                                                                        <li>
+                                                                            <button className='btn border-0'>
+                                                                                <img src={increase} alt="icon" />
+                                                                            </button>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-7">
+                                                            <div className="add-passenger d-flex justify-content-between align-items-center">
+                                                                <p>Number of Bathrooms</p>
+                                                                <div className="add-btn">
+                                                                    <ul className='d-flex gap-1 align-items-center'>
+                                                                        <li>
+                                                                            <button className='btn border-0'>
+                                                                                <img src={decrease} alt="icon" />
+                                                                            </button>
+                                                                        </li>
+                                                                        <li>
+                                                                            <input type="text" className='form-control' value={1} />
+                                                                        </li>
+                                                                        <li>
+                                                                            <button className='btn border-0'>
+                                                                                <img src={increase} alt="icon" />
+                                                                            </button>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-7">
+                                                            <div className="save-btn pt-2">
+                                                                <button className='btn btn-yellow rounded-2'>Save</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className="row gy-2 pt-2">
-                                                    <div className="col-7">
-                                                        <div className="add-passenger d-flex justify-content-between align-items-center">
-                                                            <p>Number of Passengers (Day)</p>
-                                                            <div className="add-btn">
-                                                                <ul className='d-flex gap-1 align-items-center'>
-                                                                    <li>
-                                                                        <button className='btn border-0'>
-                                                                            <img src={decrease} alt="icon" />
-                                                                        </button>
-                                                                    </li>
-                                                                    <li>
-                                                                        <input type="text" className='form-control' value={1} />
-                                                                    </li>
-                                                                    <li>
-                                                                        <button className='btn border-0'>
-                                                                            <img src={increase} alt="icon" />
-                                                                        </button>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-7">
-                                                        <div className="add-passenger d-flex justify-content-between align-items-center">
-                                                            <p>Number of Passengers (Night)</p>
-                                                            <div className="add-btn">
-                                                                <ul className='d-flex gap-1 align-items-center'>
-                                                                    <li>
-                                                                        <button className='btn border-0'>
-                                                                            <img src={decrease} alt="icon" />
-                                                                        </button>
-                                                                    </li>
-                                                                    <li>
-                                                                        <input type="text" className='form-control' value={1} />
-                                                                    </li>
-                                                                    <li>
-                                                                        <button className='btn border-0'>
-                                                                            <img src={increase} alt="icon" />
-                                                                        </button>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-7">
-                                                        <div className="add-passenger d-flex justify-content-between align-items-center">
-                                                            <p>Number of Bedrooms</p>
-                                                            <div className="add-btn">
-                                                                <ul className='d-flex gap-1 align-items-center'>
-                                                                    <li>
-                                                                        <button className='btn border-0'>
-                                                                            <img src={decrease} alt="icon" />
-                                                                        </button>
-                                                                    </li>
-                                                                    <li>
-                                                                        <input type="text" className='form-control' value={1} />
-                                                                    </li>
-                                                                    <li>
-                                                                        <button className='btn border-0'>
-                                                                            <img src={increase} alt="icon" />
-                                                                        </button>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-7">
-                                                        <div className="add-passenger d-flex justify-content-between align-items-center">
-                                                            <p>Number of Bathrooms</p>
-                                                            <div className="add-btn">
-                                                                <ul className='d-flex gap-1 align-items-center'>
-                                                                    <li>
-                                                                        <button className='btn border-0'>
-                                                                            <img src={decrease} alt="icon" />
-                                                                        </button>
-                                                                    </li>
-                                                                    <li>
-                                                                        <input type="text" className='form-control' value={1} />
-                                                                    </li>
-                                                                    <li>
-                                                                        <button className='btn border-0'>
-                                                                            <img src={increase} alt="icon" />
-                                                                        </button>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-7">
-                                                        <div className="save-btn pt-3">
-                                                            <button className='btn btn-yellow rounded-2'>Save</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                             </div>
                                                 <div className="edit-photo">
                                                     <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
                                                 </div>
@@ -522,9 +546,29 @@ const MorningPanormicListing = () => {
                                             </div>
                                             {/* smoking */}
                                             <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1 mb-3">
-                                                <div className="listing-content">
-                                                    <h6 className='mb-2'>Smoking Allowed</h6>
-                                                    <p>No</p>
+                                                <div className="edit-field">
+                                                    <div className="listing-content">
+                                                        <h6 className='mb-2'>Smoking Allowed</h6>
+                                                        <p>No</p>
+                                                    </div>
+                                                    {/* edit */}
+                                                    <div className="edit-input mt-2">
+                                                        <div className="form-check mb-2">
+                                                            <input className="form-check-input form-check-radio" type="radio" name="flexRadioDefault" id="smoking" />
+                                                            <label className="form-check-label" htmlFor="smoking">
+                                                                Yes
+                                                            </label>
+                                                        </div>
+                                                        <div className="form-check mb-4">
+                                                            <input className="form-check-input form-check-radio" type="radio" name="flexRadioDefault" id="smoking2" />
+                                                            <label className="form-check-label" htmlFor="smoking2">
+                                                                No
+                                                            </label>
+                                                        </div>
+                                                        <div className="save-btn">
+                                                            <button className='btn btn-yellow rounded-2'>Save</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div className="edit-photo">
                                                     <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
@@ -532,9 +576,29 @@ const MorningPanormicListing = () => {
                                             </div>
                                             {/* pets */}
                                             <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1 mb-3">
-                                                <div className="listing-content">
-                                                    <h6 className='mb-2'>Pets Allowed</h6>
-                                                    <p>No</p>
+                                                <div className="edit-pets">
+                                                    <div className="listing-content">
+                                                        <h6 className='mb-2'>Pets Allowed</h6>
+                                                        <p>No</p>
+                                                    </div>
+                                                    {/* edit */}
+                                                    <div className="edit-input mt-2">
+                                                        <div className="form-check mb-2">
+                                                            <input className="form-check-input form-check-radio" type="radio" name="flexRadioDefault2" id="pet" />
+                                                            <label className="form-check-label" htmlFor="pet">
+                                                                Yes
+                                                            </label>
+                                                        </div>
+                                                        <div className="form-check mb-4">
+                                                            <input className="form-check-input form-check-radio" type="radio" name="flexRadioDefault2" id="pet2" />
+                                                            <label className="form-check-label" htmlFor="pet2">
+                                                                No
+                                                            </label>
+                                                        </div>
+                                                        <div className="save-btn">
+                                                            <button className='btn btn-yellow rounded-2'>Save</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div className="edit-photo">
                                                     <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
@@ -542,9 +606,18 @@ const MorningPanormicListing = () => {
                                             </div>
                                             {/* Rules and Security */}
                                             <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
-                                                <div className="listing-content">
-                                                    <h6 className='mb-2'>Rules and Security</h6>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in nunc vel purus sollicitudin fringilla in vel odio. Proin nec lobortis nulla.</p>
+                                                <div className="edit-listing">
+                                                    <div className="listing-content">
+                                                        <h6 className='mb-2'>Rules and Security</h6>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in nunc vel purus sollicitudin fringilla in vel odio. Proin nec lobortis nulla.</p>
+                                                    </div>
+                                                    {/* edit */}
+                                                    <div className="edit-input mt-4">
+                                                        <textarea name="" id="" className='form-control'></textarea>
+                                                        <div className="save-btn mt-4">
+                                                            <button className='btn btn-yellow rounded-2'>Save</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div className="edit-photo ps-4">
                                                     <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>

@@ -70,6 +70,9 @@ p {
 .bg-white {
     background: $white !important;
 }
+.bg-green {
+    background: $green !important;
+}
 .text-yellow{
     color: $primary-color !important;
 }
@@ -123,6 +126,12 @@ label {
 .form-check-radio {
     box-shadow: none !important;
     border-radius: 50% !important;
+}
+.form-check-toggle {
+    box-shadow: none !important;
+    border-radius: 25px !important;
+    height: 25px;
+    width: 41px !important;
 }
 
 .form-check-input:checked {

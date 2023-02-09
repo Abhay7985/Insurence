@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Header from "../pages/common/Header";
+import Footer from "../pages/common/Footer"
 
 const TheLayout = () => {
     return (
@@ -8,7 +9,9 @@ const TheLayout = () => {
                 <Header/>
             </header>
             <main><Outlet /></main>
-            {/* <footer className="mt-auto">Footer</footer> */}
+            <footer className="mt-auto">
+                <Footer/>
+            </footer>
         </div>
     )
 }

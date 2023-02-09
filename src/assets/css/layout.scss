@@ -51,3 +51,21 @@ header {
         object-position: center;
     }
 }
+
+.footer{
+    background: $dark-blue;
+    padding: 32px;
+    h5{
+        color: $white;
+    }
+    li{
+        padding-block: 10px;
+    }
+    .nav-link{
+        color: $white;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        font-size: 14px;
+    }
+}
