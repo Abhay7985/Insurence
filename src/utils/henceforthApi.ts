@@ -56,7 +56,7 @@ const instagramApi = {
 
 const Auth = {
   login: (info: any) =>
-    requests.post('login', info),
+    requests.post('provider/login', info),
   loginAsUser: (info: any) =>
     requests.post('Admin/users/login_as_user', info),
   signUp: (info: any) =>

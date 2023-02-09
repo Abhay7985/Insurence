@@ -1,5 +1,4 @@
 import React, { createContext, ReactNode, SetStateAction, useEffect, useReducer, useState } from 'react'
-import { COOKIES_USER_ACCESS_TOKEN } from './actionTypes';
 import { ConfigProvider, message, FloatButton, theme } from 'antd';
 import enUS from 'antd/locale/en_US';
 import ar_EG from 'antd/locale/ar_EG';
@@ -7,7 +6,8 @@ import 'dayjs/locale/zh-cn';
 import { UserInfoInterface } from '../interfaces';
 import henceforthApi from '../utils/henceforthApi';
 import auth from './reducers/auth';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import logoutSuccess from './actions/auth/logoutSuccess';
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 type Function = () => void;
@@ -19,7 +19,8 @@ interface CommonContextType {
     isDarkMode: boolean;
     setLoading: React.Dispatch<SetStateAction<boolean>>;
     authState: UserInfoInterface;
-    authDispatch: React.Dispatch<SetStateAction<any>>;
+    authDispatch: any,
+    logOutNow:Function
     setLocale: React.Dispatch<SetStateAction<any>>;
     setIsDarkMode: React.Dispatch<SetStateAction<boolean>>;
 }
@@ -38,7 +39,7 @@ export const downloadFile = (file_path: String) => {
 
 type GlobleContextProviderProps = {
     children: ReactNode;
-    theme: {
+    theme?: {
         colorPrimary: string,
         direction: string,
     }
@@ -50,10 +51,13 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     const [colorPrimary, setColorPrimary] = React.useState(props?.theme?.colorPrimary || '#FF9100')
     const [locale, setLocale] = React.useState(enUS)
     const [isDarkMode, setIsDarkMode] = React.useState(false)
+    const navigate = useNavigate()
 
     const [authState, authDispatch] = useReducer(auth, {}, () => {
         const localAuthState = localStorage.getItem("authState");
-        return localAuthState ? JSON.parse(localAuthState) : {}
+        let parsedObject = JSON.parse(localAuthState as any)
+        henceforthApi.setToken(parsedObject?.token ? parsedObject?.token : '')
+        return localAuthState ? parsedObject : {}
     })
 
     const scrollToTop = () => {
@@ -61,7 +65,10 @@ function GlobalProvider(props: GlobleContextProviderProps) {
             window.scrollTo(0, 0);
         }
     }
-
+    const logOutNow = () => {
+        logoutSuccess({})(authDispatch);
+        navigate("/", { replace: true });
+    };
 
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -87,6 +94,11 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     useEffect(() => {
         localStorage.setItem("authState", JSON.stringify(authState))
     }, [authState]);
+    useEffect(() => {
+        if (!localStorage.getItem('authState')) {
+            logOutNow()
+        }
+    }, [localStorage.getItem('authState')]);
 
     useEffect(() => {
         setIsDarkMode(true)
@@ -98,7 +110,7 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     return (
         <GlobalContext.Provider
             value={{
-                loading, setLoading, authState, authDispatch, setLocale,
+                loading, setLoading, authState, authDispatch,logOutNow, setLocale,
                 isDarkMode, setIsDarkMode, ...props
             }}>
             <ConfigProvider

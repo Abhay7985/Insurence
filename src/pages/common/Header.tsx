@@ -2,9 +2,9 @@ import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../../assets/icons/logo_header.svg'
 import { GlobalContext } from '../../context/Provider'
-
+import { Button } from 'antd';
 const Header = () => {
-    const { authState } = useContext(GlobalContext)
+    const { authState, logOutNow} = useContext(GlobalContext)
     return (
         <div className="container custom-container px-md-0">
             <nav className="navbar py-3">
@@ -17,7 +17,7 @@ const Header = () => {
                             <button className="btn btn-outline-dark" type="submit">Help</button>
                         </li>
                         <li>
-                            <button className="btn btn-yellow" type="submit">Save & Exit</button>
+                            <Button htmlType="submit" className="btn btn-yellow" onClick={logOutNow}>Save & Exit</Button>
                         </li>
                     </ul>
                 </form>

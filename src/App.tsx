@@ -22,7 +22,7 @@ const App = () => {
   const { authState } = useContext(GlobalContext)
   return (
     <Routes>
-      {!authState?.access_token ?
+      {authState?.token ?
         <Fragment>
           <Route path="*" element={<TheLayout />}>
             <Route index element={<BoatListing />} />
