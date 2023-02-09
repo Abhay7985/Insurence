@@ -30,7 +30,10 @@ const App = () => {
       {authState?.access_token ?
         <Fragment>
           <Route path="*" element={<TheLayout />}>
-            <Route index  element={<BoatListing />} />
+            <Route path="/*"  element={<BoatListing />} >
+            <Route path=":page"  element={<BoatListing />} />
+            </Route>
+
             <Route path="about" element={<About />} />
             <Route path="boat/add/info" element={<BoatInfo />} />
             <Route path="boat/:id/passenger-bedrooms" element={<SelectPassenger />} />

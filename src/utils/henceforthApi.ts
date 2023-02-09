@@ -56,6 +56,7 @@ const instagramApi = {
 const Auth = {
   login: (info: any) =>
     requests.post('provider/login', info),
+    
   loginAsUser: (info: any) =>
     requests.post('Admin/users/login_as_user', info),
   signUp: (info: any) =>
@@ -103,8 +104,8 @@ const Auth = {
 };
 
 const Boat ={
-  getBoatListing:() =>
-  requests.get(`provider/boats`)
+  getBoatListing:(search:any) =>
+  requests.get(`provider/boats?${search}`)
 }
 
 

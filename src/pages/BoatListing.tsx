@@ -2,7 +2,7 @@ import addIcon from '../assets/icons/plus_white.svg'
 import search from '../assets/icons/search.svg'
 import boatImage from '../assets/images/boat_four.png'
 import { Select, Space } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import henceforthApi from '../utils/henceforthApi';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
@@ -13,7 +13,10 @@ import { GlobalContext } from '../context/Provider';
 
 
 const BoatListing = () => {
-    const {authState}=React.useContext(GlobalContext)
+    const navigate = useNavigate()
+    const location = useLocation()
+    const { authState } = React.useContext(GlobalContext)
+    const urlSearchParams = new URLSearchParams(location.search)
 
     const [state, setState] = useState({
         current_page: 0,
@@ -21,30 +24,33 @@ const BoatListing = () => {
         from: 1,
         total: 0
     })
-
-    const searchparams = new URLSearchParams()
-
-    const navigate = useNavigate()
-
-
+    
     const handleChange = (value: string) => {
-        console.log(`selected ${value}`);
-    };
-
-    const handleSearch = (e: any) => {
-        if(e.target.value){
-            searchparams.set(e.target.name,e.target.value)
-        }else{
-            searchparams.delete(e.target.name)
+        
+        if (value) {
+            urlSearchParams.set('type', value)
+        } else {
+            urlSearchParams.delete(`type`)
         }
-        navigate({pathname:"/", search : searchparams.toString()})
+        navigate({ search: urlSearchParams.toString()})
+    };
+    
+    const handleSearch = (name:string , value:any) => {
+        if (value) {
+            urlSearchParams.set(name, value)
+        } else {
+            urlSearchParams.delete(name)
+        }
+        navigate({ search: urlSearchParams.toString()})
     }
 
     const boatListing = async () => {
     henceforthApi.setToken(authState?.access_token)
 
         try {
-            let res = await henceforthApi.Boat.getBoatListing()
+            let res = await henceforthApi.Boat.getBoatListing(
+                urlSearchParams.toString()
+            )
             setState(res.data)
             console.log(res);
         } catch (error) {
@@ -54,8 +60,20 @@ const BoatListing = () => {
 
     useEffect(() => {
         boatListing()
-    }, [searchparams.get("search")])
+    }, [urlSearchParams.get('search'), urlSearchParams.toString()])
+    // {Number(match?.params.page) == 0
+    //     ? index + 1
+    //     : (Number(match?.params.page) - 1) * limit + (index + 1)}
 
+ let dotColor = [
+    {status:"listed" , color:"green"},
+    {status:"unlisted" , color:""},
+    {status:"draft" , color:"red"},
+
+ ]
+
+//  console.log(dotColor.find((res:any) => res.name === 'draft')?.color);
+ 
 
     return (
         <>
@@ -82,18 +100,19 @@ const BoatListing = () => {
                                     <span className="input-group-text bg-transparent border-0" id="basic-addon1">
                                         <img src={search} alt="icon" />
                                     </span>
-                                    <input type="text" className="form-control border-0 ps-0 rounded-pill" name='search' placeholder="Search..." value={searchparams.get('search') as string} onChange={handleSearch} />
+                                    <input type="text" className="form-control border-0 ps-0 rounded-pill" name='search' placeholder="Search..." value={urlSearchParams.get('search') as string} onChange={(e: any)=>handleSearch(e.target.name, e.target.value)} />
                                 </div>
                                 <div className="add-boat-btn">
                                     <Select
                                         defaultValue="Listing status"
+                                        value={urlSearchParams.has("type") ? urlSearchParams.get("type") : "0" }
                                         style={{ width: 150 }}
                                         onChange={handleChange}
                                         options={[
-                                            { value: 'jack', label: 'Jack' },
-                                            { value: 'lucy', label: 'Lucy' },
-                                            { value: 'Yiminghe', label: 'yiminghe' },
-                                            { value: 'disabled', label: 'Disabled', disabled: true },
+                                            { value: '0', label: 'All' },
+                                            { value: '1', label: 'Listed' },
+                                            { value: '2', label: 'Unlisted' },
+                                            { value: '4', label: 'Draft' },
                                         ]}
                                     />
                                 </div>
@@ -117,23 +136,26 @@ const BoatListing = () => {
                                     {state?.data?.map((e: any, index: number) =>
                                         <tr>
                                             <th scope="row">{index + 1}</th>
-                                            <td key={index}>
-                                                <div className="boats d-flex gap-2 align-items-center">
+                                            <td >
+                                                <div className="boats d-flex gap-2 align-items-center" key={index}>
                                                     <div className="boat-image">
-                                                        {/* <img src={boatImage} alt="img" className='img-fluid' /> */}
+                                                    {/* <img src={e.image ? `${""}` : boatImage} alt="img" className='img-fluid' /> */}
+                                                        <img src={boatImage} alt="img" className='img-fluid' />
                                                     </div>
                                                     <p>{e?.name}</p>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div className="status">
-                                                    <div className="status-dot"></div>
-                                                    <p>{e?.status}</p>
+                                                <div className="status d-flex align-items-center">
+                                                    <div className={`status-dot bg-${dotColor.find(res => res.status === e?.status)?.color}`}></div>
+                                                    <div className="ms-1">
+                                                        <p>{e?.status}</p>
+                                                    </div>
                                                 </div>
                                             </td>
                                             <td>{e?.price}</td>
                                             <td>{moment(e?.updated_at).format('MMMM Do')}</td>
-                                            <td>@mdo</td>
+                                            <td>view/edit</td>
                                         </tr>
                                     )}
                                 </tbody>
@@ -145,5 +167,6 @@ const BoatListing = () => {
         </>
     )
 }
+
 
 export default BoatListing
