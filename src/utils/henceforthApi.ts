@@ -100,6 +100,12 @@ const Auth = {
   verifyPhone: (info: any) =>
     requests.post('User/verify/phone_no', info),
 };
+
+const Boat ={
+  getBoatListing:() =>
+  requests.get(`provider/boats`)
+}
+
 const Search = {
   pagination: (search: string, nft_type: string) =>
     requests.get(`Nft/search?search=${search}&nft_type=${nft_type}&limit=10&pagination=0&language=ENGLISH`),
@@ -306,6 +312,7 @@ const FILES = {
 const henceforthApi = {
   Order,
   Home,
+  Boat,
   token,
   Auth,
   Common,
