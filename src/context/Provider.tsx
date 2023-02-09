@@ -56,7 +56,10 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     const [authState, authDispatch] = useReducer(auth, {}, () => {
         const localAuthState = localStorage.getItem("authState");
         let parsedObject = JSON.parse(localAuthState as any)
-        henceforthApi.setToken(parsedObject?.token ? parsedObject?.token : '')
+        console.log('parsedObject',parsedObject)
+        console.log('parsedObject token',parsedObject?.token)
+        console.log('localAuthState',localAuthState)
+        henceforthApi.setToken(parsedObject?.token)
         return localAuthState ? parsedObject : {}
     })
 
@@ -93,6 +96,7 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     useEffect(scrollToTop, [location.pathname])
     useEffect(() => {
         localStorage.setItem("authState", JSON.stringify(authState))
+        henceforthApi.setToken(authState.token)
     }, [authState]);
     useEffect(() => {
         if (!localStorage.getItem('authState')) {

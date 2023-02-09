@@ -39,8 +39,6 @@ const BoatListing = () => {
     }, [])
 
 
-    
-
     return (
         <>
             {/* Boat-listing */}

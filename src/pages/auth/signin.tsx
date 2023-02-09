@@ -13,23 +13,27 @@ const SignIn = () => {
     email: "",
     password: "",
   })
+
   const onhandleSubmit = async () => {
     setLoading(true)
     const { email, password } = state
     const data = {
-      email:state.email,
-      password:state.password
+      email,
+      password
     }
     try {
       let apiRes = await henceforthApi.Auth.login(data)
       loginSuccess(apiRes)(authDispatch)
       console.log('apiRes', apiRes)
+      henceforthApi.setToken(apiRes?.token)
+
     } catch (error) {
       console.log('error', error)
     } finally {
       setLoading(false)
     }
   }
+
   const handleInput = (e: any) => {
     let name = e.target.name
     let value = e.target.value
@@ -90,10 +94,9 @@ const SignIn = () => {
                 <div className="col-11 col-lg-8">
                   <Form.Item >
                     <div className="login-btn">
-                      <Button htmlType="submit" className='btn btn-yellow w-100'>{loading?<Spinner/>:"Log In"}</Button>
+                      <Button htmlType="submit" className='btn btn-yellow w-100'>{loading ? <Spinner /> : "Log In"}</Button>
                     </div>
                   </Form.Item>
-
                 </div>
               </div>
             </Form>
