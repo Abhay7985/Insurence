@@ -1,20 +1,59 @@
 import bannerImage from '../assets/images/image_one.png';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { SizeType } from 'antd/es/config-provider/SizeContext';
 import { Select, Space } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import henceforthApi from '../utils/henceforthApi';
 
 const handleChange = (value: string) => {
     console.log(`selected ${value}`);
 };
 
 const BoatInfo = () => {
-
+    const navigate = useNavigate()
+    const location = useLocation()
     const [size, setSize] = useState<SizeType>('middle')
+    const [state, setState] = React.useState({
+        category: [],
+        manufacturer: []
+    })
+    const [boatName, setBoatName] = useState('')
+    const [boatModel, setBoatModel] = useState('')
+    const [boatSize, setBoatSize] = useState('')
+    const [category_id, setCategoryId] = useState("")
+    const [manufacturer_id, setManufacturerId] = useState("")
 
     const onSubmit = async (e: any) => {
         e.preventDefault()
+        const uRLSearchParams = new URLSearchParams()
+        uRLSearchParams.set("name", boatName)
+        uRLSearchParams.set("model", boatModel)
+        uRLSearchParams.set("size", boatSize)
+        uRLSearchParams.set("category_id", "1")
+        uRLSearchParams.set("manufacturer_id", "1")
+        navigate({
+            pathname: '/boat/passenger-bedrooms',
+            search: uRLSearchParams.toString()
+        })
+
     }
+
+    const initialise = async () => {
+        try {
+            const category = await henceforthApi.Boat.category()
+            const manufacturer = await henceforthApi.Boat.manufacturer()
+            setState({
+                category: category.data,
+                manufacturer: manufacturer.data
+            })
+        } catch (error) {
+
+        }
+    }
+
+    useEffect(() => {
+        initialise()
+    }, [])
 
     return (
         // boat-details
@@ -30,7 +69,7 @@ const BoatInfo = () => {
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-3">
                                         <label htmlFor="input1" className="form-label">Boat Name</label>
-                                        <input type="text" className="form-control" id='input1' placeholder='Enter boat name' />
+                                        <input type="text" className="form-control" id='input1' placeholder='Enter boat name' value={boatName} onChange={(e) => setBoatName(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className="col-11 col-lg-11">
@@ -40,10 +79,10 @@ const BoatInfo = () => {
                                             <Space direction="vertical" style={{ width: '100%' }}>
                                                 <Select
                                                     size={size}
-                                                    defaultValue="Select category"
-                                                    onChange={handleChange}
+                                                    defaultValue={category_id}
+                                                    onChange={setCategoryId}
                                                     style={{ width: '100%' }}
-                                                // options={options}
+                                                    options={[{ value: "", label: "Select" }, ...state?.category?.map((res: any) => { return { value: res?.id, label: res.category } })]}
                                                 />
                                             </Space>
                                         </div>
@@ -56,10 +95,10 @@ const BoatInfo = () => {
                                             <Space direction="vertical" style={{ width: '100%' }}>
                                                 <Select
                                                     size={size}
-                                                    defaultValue="Select manufacturer"
-                                                    onChange={handleChange}
+                                                    defaultValue={manufacturer_id}
+                                                    onChange={setManufacturerId}
                                                     style={{ width: '100%' }}
-                                                // options={options}
+                                                    options={[{ value: "", label: "Select" }, ...state?.manufacturer?.map((res: any) => { return { value: res?.id, label: res.manufacturer } })]}
                                                 />
                                             </Space>
                                         </div>
@@ -68,13 +107,13 @@ const BoatInfo = () => {
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-3">
                                         <label htmlFor="input4" className="form-label">Model</label>
-                                        <input type="text" className="form-control" id='input4' placeholder='Enter model' />
+                                        <input type="text" className="form-control" id='input4' placeholder='Enter model' value={boatModel} onChange={(e) => setBoatModel(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-3">
                                         <label htmlFor="input5" className="form-label">Size</label>
-                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' />
+                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) => setBoatSize(e.target.value)} />
                                     </div>
                                 </div>
                             </div>
@@ -82,10 +121,10 @@ const BoatInfo = () => {
                                 <div className="col-11 col-lg-11">
                                     <ul className='d-flex justify-content-between'>
                                         <li>
-                                            <Link to='/boat-details' className='btn back-btn border-0'>Back</Link>
+                                            <button type='button' onClick={() => window.history.back()} className='btn back-btn border-0'>Back</button>
                                         </li>
                                         <li>
-                                            <Link to='/boat/id/passenger-bedrooms' className='btn btn-yellow px-3'>Next</Link>
+                                            <button type='submit' className='btn btn-yellow px-3'>Next</button>
                                         </li>
                                     </ul>
                                 </div>

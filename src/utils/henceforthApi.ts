@@ -80,8 +80,8 @@ const Auth = {
     requests.post('User/connect/wallet', info),
   connectSocialAccount: (info: any) =>
     requests.post('User/connect/social_account', info),
-  changePassword:(info:any)=>
-    requests.post('change-password',info),  
+  changePassword: (info: any) =>
+    requests.post('change-password', info),
   fortgetPassword: (info: any) =>
     requests.post('forgot-password', info),
   forgotChangePassword: (info: any) =>
@@ -102,9 +102,15 @@ const Auth = {
     requests.post('User/verify/phone_no', info),
 };
 
-const Boat ={
-  getBoatListing:() =>
-  requests.get(`provider/boats`)
+const Boat = {
+  getBoatListing: () =>
+    requests.get(`provider/boats`),
+  category: () =>
+    requests.get(`provider/boat-category`),
+  manufacturer: () =>
+    requests.get(`provider/boat-manufacturer`),
+  create: (items: any) =>
+    requests.post(`provider/boats`, items)
 }
 
 

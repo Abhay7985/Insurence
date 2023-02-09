@@ -1,15 +1,56 @@
 import bannerImage from '../assets/images/image_two.png';
 import increase from '../assets/icons/add_circle_outline.svg';
 import decrease from '../assets/icons/remove_circle_outline.svg';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import henceforthApi from '../utils/henceforthApi';
 
 const SelectPassenger = () => {
+
+    const navigate = useNavigate()
+    const location = useLocation()
+    const uRLSearchParams = new URLSearchParams(location.search)
+
+
+    const [passengerDay, setPassengerDay] = React.useState(1)
+    const [passengerNight, setPassengerNight] = React.useState(1)
+    const [bedrooms, setBedrooms] = React.useState(1)
+    const [bathrooms, setBathrooms] = React.useState(1)
+
+
+    const onSubmit = async (e: any) => {
+        e.preventDefault()
+
+        const items = {
+            "boat": {
+                "name": uRLSearchParams.get("name"),
+                "category_id": uRLSearchParams.get("category_id"),
+                "manufacturer_id": uRLSearchParams.get("manufacturer_id"),
+                "model": uRLSearchParams.get("model"),
+                "size": uRLSearchParams.get("size"),
+                "passenger_day": passengerDay,
+                "passenger_night": passengerNight,
+                "bedrooms": bedrooms,
+                "bathrooms": bathrooms
+            }
+        }
+        try {
+            const apiRes = await henceforthApi.Boat.create(items)
+            navigate({
+                pathname: `/boat/${apiRes.boat_id}/place`
+            })
+        } catch (error) {
+            console.log('error', error);
+
+        }
+
+    }
     return (
         <>
             {/* Select-passenger */}
             <section className="select-passenger-section">
                 <div className="container-fluid">
-                    <div className="row">
+                    <form className="row" onSubmit={onSubmit}>
                         <div className="col-lg-6">
                             <div className="banner-content h-100 d-flex flex-column ">
                                 <div className="row gy-2 justify-content-center justify-content-lg-end pb-5 pb-lg-0">
@@ -22,15 +63,15 @@ const SelectPassenger = () => {
                                             <div className="add-btn">
                                                 <ul className='d-flex gap-1 align-items-center'>
                                                     <li>
-                                                        <button className='btn border-0'>
+                                                        <button type='button' className='btn border-0' onClick={() => setPassengerDay(passengerDay - 1)} disabled={passengerDay === 1}>
                                                             <img src={decrease} alt="icon" />
                                                         </button>
                                                     </li>
                                                     <li>
-                                                        <input type="text" className='form-control' value={1} />
+                                                        <input type="text" className='form-control' value={passengerDay} />
                                                     </li>
                                                     <li>
-                                                        <button className='btn border-0'>
+                                                        <button type='button' className='btn border-0' onClick={() => setPassengerDay(passengerDay + 1)} >
                                                             <img src={increase} alt="icon" />
                                                         </button>
                                                     </li>
@@ -44,15 +85,15 @@ const SelectPassenger = () => {
                                             <div className="add-btn">
                                                 <ul className='d-flex gap-1 align-items-center'>
                                                     <li>
-                                                        <button className='btn border-0'>
+                                                        <button type='button' className='btn border-0' onClick={() => setPassengerNight(passengerNight - 1)} disabled={passengerNight === 1}>
                                                             <img src={decrease} alt="icon" />
                                                         </button>
                                                     </li>
                                                     <li>
-                                                        <input type="text" className='form-control' value={1} />
+                                                        <input type="text" className='form-control' value={passengerNight} />
                                                     </li>
                                                     <li>
-                                                        <button className='btn border-0'>
+                                                        <button type='button' className='btn border-0' onClick={() => setPassengerNight(passengerNight + 1)} >
                                                             <img src={increase} alt="icon" />
                                                         </button>
                                                     </li>
@@ -66,15 +107,15 @@ const SelectPassenger = () => {
                                             <div className="add-btn">
                                                 <ul className='d-flex gap-1 align-items-center'>
                                                     <li>
-                                                        <button className='btn border-0'>
+                                                        <button type='button' className='btn border-0' onClick={() => setBedrooms(bedrooms - 1)} disabled={bedrooms === 1}>
                                                             <img src={decrease} alt="icon" />
                                                         </button>
                                                     </li>
                                                     <li>
-                                                        <input type="text" className='form-control' value={1} />
+                                                        <input type="text" className='form-control' value={bedrooms} />
                                                     </li>
                                                     <li>
-                                                        <button className='btn border-0'>
+                                                        <button type='button' className='btn border-0' onClick={() => setBedrooms(bedrooms + 1)}>
                                                             <img src={increase} alt="icon" />
                                                         </button>
                                                     </li>
@@ -88,15 +129,15 @@ const SelectPassenger = () => {
                                             <div className="add-btn">
                                                 <ul className='d-flex gap-1 align-items-center'>
                                                     <li>
-                                                        <button className='btn border-0'>
+                                                        <button type='button' className='btn border-0' onClick={() => setBathrooms(bathrooms - 1)} disabled={bathrooms === 1}>
                                                             <img src={decrease} alt="icon" />
                                                         </button>
                                                     </li>
                                                     <li>
-                                                        <input type="text" className='form-control' value={1} />
+                                                        <input type="text" className='form-control' value={bathrooms} />
                                                     </li>
                                                     <li>
-                                                        <button className='btn border-0'>
+                                                        <button type='button' className='btn border-0' onClick={() => setBathrooms(bathrooms + 1)}>
                                                             <img src={increase} alt="icon" />
                                                         </button>
                                                     </li>
@@ -109,10 +150,10 @@ const SelectPassenger = () => {
                                     <div className="col-11 col-lg-11">
                                         <ul className='d-flex justify-content-between'>
                                             <li>
-                                                <Link to='/boat-details' className='btn back-btn border-0'>Back</Link>
+                                                <button type='button' onClick={() => window.history.back()} className='btn back-btn border-0'>Back</button>
                                             </li>
                                             <li>
-                                                <Link to='/place-located' className='btn btn-yellow px-3'>Next</Link>
+                                                <button type='submit' className='btn btn-yellow px-3'>Next</button>
                                             </li>
                                         </ul>
                                     </div>
@@ -125,7 +166,7 @@ const SelectPassenger = () => {
                                 <img src={bannerImage} alt="" />
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </section>
         </>
