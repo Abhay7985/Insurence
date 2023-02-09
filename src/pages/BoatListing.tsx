@@ -2,32 +2,55 @@ import addIcon from '../assets/icons/plus_white.svg'
 import search from '../assets/icons/search.svg'
 import boatImage from '../assets/images/boat_four.png'
 import { Select, Space } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import henceforthApi from '../utils/henceforthApi';
 import { useEffect, useState } from 'react';
+import moment from 'moment';
+import { boatListingData } from '../interfaces';
+
+
 
 
 const BoatListing = () => {
 
-    const [boatListingData, setBoatListingData] = useState<any>([])
+    const [state, setState] = useState({
+        current_page: 0,
+        data: [] as Array<boatListingData>,
+        from: 1,
+        total: 0
+    })
+
+    const searchparams = new URLSearchParams()
+
+    const navigate = useNavigate()
 
     const handleChange = (value: string) => {
         console.log(`selected ${value}`);
     };
 
+    const handleSearch = (e: any) => {
+        if(e.target.value){
+            searchparams.set(e.target.name,e.target.value)
+        }else{
+            searchparams.delete(e.target.name)
+        }
+        navigate({pathname:"/", search : searchparams.toString()})
+    }
+
     const boatListing = async () => {
         try {
             let res = await henceforthApi.Boat.getBoatListing()
-            setBoatListingData(res.data.data)
+            setState(res.data)
             console.log(res);
         } catch (error) {
-
+            console.log(error);
         }
     }
 
     useEffect(() => {
         boatListing()
-    }, [])
+    }, [searchparams.get("search")])
+
 
     return (
         <>
@@ -37,7 +60,7 @@ const BoatListing = () => {
                     <div className="row gy-4">
                         <div className="col-12 mb-3">
                             <div className="boat-listing-header d-flex justify-content-between">
-                                <h2>3 boats</h2>
+                                <h2>{state.total} Boats</h2>
                                 <div className="add-boat-btn">
                                     <Link to={`/boat/add/info`} className='nav-link'>
                                         <button className='btn btn-yellow d-flex align-items-center gap-2'>
@@ -54,7 +77,7 @@ const BoatListing = () => {
                                     <span className="input-group-text bg-transparent border-0" id="basic-addon1">
                                         <img src={search} alt="icon" />
                                     </span>
-                                    <input type="text" className="form-control border-0 ps-0 rounded-pill" placeholder="Search..." />
+                                    <input type="text" className="form-control border-0 ps-0 rounded-pill" name='search' placeholder="Search..." value={searchparams.get('search') as string} onChange={handleSearch} />
                                 </div>
                                 <div className="add-boat-btn">
                                     <Select
@@ -86,10 +109,10 @@ const BoatListing = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {boatListingData.map((e: any) =>
+                                    {state?.data?.map((e: any, index: number) =>
                                         <tr>
-                                            <th scope="row">01</th>
-                                            <td>
+                                            <th scope="row">{index + 1}</th>
+                                            <td key={index}>
                                                 <div className="boats d-flex gap-2 align-items-center">
                                                     <div className="boat-image">
                                                         {/* <img src={boatImage} alt="img" className='img-fluid' /> */}
@@ -103,27 +126,11 @@ const BoatListing = () => {
                                                     <p>{e?.status}</p>
                                                 </div>
                                             </td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
+                                            <td>{e?.price}</td>
+                                            <td>{moment(e?.updated_at).format('MMMM Do')}</td>
                                             <td>@mdo</td>
                                         </tr>
                                     )}
-                                    {/* <tr>
-                                        <th scope="row">02</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                        <td>@fat</td>
-                                        <td>@fat</td>
-                                    </tr> */}
-                                    {/* <tr>
-                                        <th scope="row">03</th>
-                                        <td >Larry the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                    </tr> */}
                                 </tbody>
                             </table>
                         </div>
