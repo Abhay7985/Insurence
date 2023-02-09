@@ -56,6 +56,7 @@ const instagramApi = {
 const Auth = {
   login: (info: any) =>
     requests.post('provider/login', info),
+
   loginAsUser: (info: any) =>
     requests.post('Admin/users/login_as_user', info),
   signUp: (info: any) =>
@@ -87,7 +88,7 @@ const Auth = {
   forgotChangePassword: (info: any) =>
     requests.post('User/forgot_password/set_password', info),
   profile: () =>
-    requests.get(`profile`),
+    requests.get(`provider/profile`),
   editProfile: (info: any) =>
     requests.put('User/edit_profile', info),
   socialLogin: (info: any) =>
@@ -103,14 +104,14 @@ const Auth = {
 };
 
 const Boat = {
-  getBoatListing: () =>
-    requests.get(`provider/boats`),
   category: () =>
     requests.get(`provider/boat-category`),
   manufacturer: () =>
     requests.get(`provider/boat-manufacturer`),
   create: (items: any) =>
-    requests.post(`provider/boats`, items)
+    requests.post(`provider/boats`, items),
+  getBoatListing: (search: any) =>
+    requests.get(`provider/boats?${search}`)
 }
 
 
