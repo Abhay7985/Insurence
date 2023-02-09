@@ -12,6 +12,8 @@ import { boatListingData } from '../interfaces';
 
 
 const BoatListing = () => {
+    const searchparams = new URLSearchParams()
+    const navigate = useNavigate()
 
     const [state, setState] = useState({
         current_page: 0,
@@ -20,26 +22,26 @@ const BoatListing = () => {
         total: 0
     })
 
-    const searchparams = new URLSearchParams()
-
-    const navigate = useNavigate()
 
     const handleChange = (value: string) => {
         console.log(`selected ${value}`);
     };
 
     const handleSearch = (e: any) => {
-        if(e.target.value){
-            searchparams.set(e.target.name,e.target.value)
-        }else{
+        if (e.target.value) {
+            searchparams.set(e.target.name, e.target.value)
+        } else {
             searchparams.delete(e.target.name)
         }
-        navigate({pathname:"/", search : searchparams.toString()})
-    }
+        navigate({ pathname: "/", search: searchparams.toString() })
 
-    const boatListing = async () => {
+    }
+    console.log(searchparams.get('search'));
+    const boatListing = async () => {        
         try {
-            let res = await henceforthApi.Boat.getBoatListing()
+            let res = await henceforthApi.Boat.getBoatListing(
+                searchparams.get('search')
+            )
             setState(res.data)
             console.log(res);
         } catch (error) {
@@ -50,6 +52,7 @@ const BoatListing = () => {
     useEffect(() => {
         boatListing()
     }, [searchparams.get("search")])
+
 
 
     return (
@@ -121,9 +124,11 @@ const BoatListing = () => {
                                                 </div>
                                             </td>
                                             <td>
-                                                <div className="status">
+                                                <div className="status d-flex align-items-center">
                                                     <div className="status-dot"></div>
-                                                    <p>{e?.status}</p>
+                                                    <div className="ms-1">
+                                                        <p>{e?.status}</p>
+                                                    </div>
                                                 </div>
                                             </td>
                                             <td>{e?.price}</td>
