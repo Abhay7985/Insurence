@@ -17,7 +17,7 @@ const Header = () => {
                             <button className="btn btn-outline-dark" type="submit">Help</button>
                         </li>
                         <li>
-                            <Button htmlType="submit" className="btn btn-yellow" onClick={logOutNow}>Save & Exit</Button>
+                            <Button htmlType="submit" className="btn btn-yellow h-100" onClick={logOutNow}>Save & Exit</Button>
                         </li>
                     </ul>
                 </form>
