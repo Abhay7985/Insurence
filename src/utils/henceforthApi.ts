@@ -87,7 +87,7 @@ const Auth = {
   forgotChangePassword: (info: any) =>
     requests.post('User/forgot_password/set_password', info),
   profile: () =>
-    requests.get(`profile`),
+    requests.get(`provider/profile`),
   editProfile: (info: any) =>
     requests.put('User/edit_profile', info),
   socialLogin: (info: any) =>
