@@ -21,6 +21,9 @@ interface CommonContextType {
     authState: UserInfoInterface;
     authDispatch: any,
     logOutNow:Function
+    success:any,
+    handleError:any
+    contextHolder:any
     setLocale: React.Dispatch<SetStateAction<any>>;
     setIsDarkMode: React.Dispatch<SetStateAction<boolean>>;
 }
@@ -52,7 +55,7 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     const [locale, setLocale] = React.useState(enUS)
     const [isDarkMode, setIsDarkMode] = React.useState(false)
     const navigate = useNavigate()
-
+     
     const [authState, authDispatch] = useReducer(auth, {}, () => {
         const localAuthState = localStorage.getItem("authState");
         let parsedObject = JSON.parse(localAuthState as any)
@@ -110,7 +113,7 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     return (
         <GlobalContext.Provider
             value={{
-                loading, setLoading, authState, authDispatch,logOutNow, setLocale,
+                loading, setLoading, authState, success,authDispatch,contextHolder,logOutNow,handleError, setLocale,
                 isDarkMode, setIsDarkMode, ...props
             }}>
             <ConfigProvider

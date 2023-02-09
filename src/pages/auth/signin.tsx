@@ -8,24 +8,23 @@ import loginSuccess from '../../context/actions/auth/loginSuccess';
 import Spinner from '../common/AntSpinner';
 
 const SignIn = () => {
-  const { loading, setLoading, authDispatch } = React.useContext(GlobalContext)
+  const { loading, setLoading, authDispatch,success,handleError } = React.useContext(GlobalContext)
   const [state, setSate] = React.useState({
     email: "",
     password: "",
   })
   const onhandleSubmit = async () => {
     setLoading(true)
-    const { email, password } = state
     const data = {
-      email,
-      password
+      email: state.email,
+      password: state.password
     }
     try {
       let apiRes = await henceforthApi.Auth.login(data)
-      loginSuccess(apiRes)(authDispatch)
-      console.log('apiRes', apiRes)
+      loginSuccess({ ...apiRes.data, access_token: apiRes.token })(authDispatch)
+      success(apiRes.message)
     } catch (error) {
-      console.log('error', error)
+      handleError(error)
     } finally {
       setLoading(false)
     }
@@ -80,7 +79,7 @@ const SignIn = () => {
                   </Form.Item>
                 </div>
                 <div className="col-11 col-lg-8">
-                  <div className="form-check">
+                  <div className="form-check ps-0">
                     <Form.Item name="remember" valuePropName="checked" >
                       <Checkbox>Remember me</Checkbox>
                     </Form.Item>
