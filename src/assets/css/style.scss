@@ -247,13 +247,16 @@
     .ant-tabs-tab {
         font-size: 18px;
         padding-inline: 10px;
-        &:hover{
+
+        &:hover {
             color: $light-black;
         }
-        &:focus{
+
+        &:focus {
             color: $light-black;
         }
-        &:active{
+
+        &:active {
             color: $light-black;
         }
     }
@@ -272,4 +275,29 @@
     .ant-tabs-ink-bar {
         background: $dark-black;
     }
+}
+
+// ************************************Profile section****************************
+
+.user-profile {
+    border: 1px solid $light-gray;
+    padding-block: 41px;
+    .profile-image {
+        height: 120px;
+        width: 120px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-bottom: 24px;
+
+        img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+}
+.name{
+    border: 1px solid $light-gray;
+    border-radius: $radius;
+    padding: 20px 24px;
 }

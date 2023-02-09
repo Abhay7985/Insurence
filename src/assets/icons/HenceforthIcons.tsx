@@ -72,6 +72,13 @@ const Email = () =><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20
   <path id="Path_52085" data-name="Path 52085" d="M132.355,161.049l-5.473,3.166a.285.285,0,0,1-.29,0l-5.477-3.167v6.484a.7.7,0,0,0,.7.7h9.835a.7.7,0,0,0,.7-.7Zm-10.538-.791h9.835a.7.7,0,0,1,.523.234l-5.44,3.147-5.441-3.146A.7.7,0,0,1,121.818,160.258Z" transform="translate(-100.735 -138.247)" fill="#fff" fill-rule="evenodd"/>
 </g>
 </svg>
+const ChevronRight = () =><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+<g id="email_detail" transform="translate(0 20) rotate(-90)">
+  <path id="Path_1541" data-name="Path 1541" d="M0,0H20V20H0Z" fill="none"/>
+  <path id="Path_1542" data-name="Path 1542" d="M7.175,8.59,11,12.407,14.825,8.59,16,9.765l-5,5-5-5Z" transform="translate(-1 -1.432)" fill="#343a40"/>
+</g>
+</svg>
+
 
 
 
@@ -84,7 +91,8 @@ const HenceforthIcons = {
     LeftArrow,
     Whatsapp,
     ThreeDot,
-    Email
+    Email,
+    ChevronRight
 }
 
 export default HenceforthIcons;
