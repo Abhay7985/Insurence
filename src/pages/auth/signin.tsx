@@ -17,8 +17,8 @@ const SignIn = () => {
     setLoading(true)
     const { email, password } = state
     const data = {
-      email,
-      password
+      email:state.email,
+      password:state.password
     }
     try {
       let apiRes = await henceforthApi.Auth.login(data)
