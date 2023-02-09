@@ -2,7 +2,7 @@ import addIcon from '../assets/icons/plus_white.svg'
 import search from '../assets/icons/search.svg'
 import boatImage from '../assets/images/boat_four.png'
 import { Select, Space } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import henceforthApi from '../utils/henceforthApi';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
@@ -20,9 +20,22 @@ const BoatListing = () => {
         total: 0
     })
 
+    const searchparams = new URLSearchParams()
+
+    const navigate = useNavigate()
+
     const handleChange = (value: string) => {
         console.log(`selected ${value}`);
     };
+
+    const handleSearch = (e: any) => {
+        if(e.target.value){
+            searchparams.set(e.target.name,e.target.value)
+        }else{
+            searchparams.delete(e.target.name)
+        }
+        navigate({pathname:"/", search : searchparams.toString()})
+    }
 
     const boatListing = async () => {
         try {
@@ -36,7 +49,7 @@ const BoatListing = () => {
 
     useEffect(() => {
         boatListing()
-    }, [])
+    }, [searchparams.get("search")])
 
 
     return (
@@ -64,7 +77,7 @@ const BoatListing = () => {
                                     <span className="input-group-text bg-transparent border-0" id="basic-addon1">
                                         <img src={search} alt="icon" />
                                     </span>
-                                    <input type="text" className="form-control border-0 ps-0 rounded-pill" placeholder="Search..." />
+                                    <input type="text" className="form-control border-0 ps-0 rounded-pill" name='search' placeholder="Search..." value={searchparams.get('search') as string} onChange={handleSearch} />
                                 </div>
                                 <div className="add-boat-btn">
                                     <Select
@@ -99,7 +112,7 @@ const BoatListing = () => {
                                     {state?.data?.map((e: any, index: number) =>
                                         <tr>
                                             <th scope="row">{index + 1}</th>
-                                            <td>
+                                            <td key={index}>
                                                 <div className="boats d-flex gap-2 align-items-center">
                                                     <div className="boat-image">
                                                         {/* <img src={boatImage} alt="img" className='img-fluid' /> */}

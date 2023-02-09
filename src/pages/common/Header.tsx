@@ -17,7 +17,7 @@ const Header = () => {
                         {authState.access_token ?
                             <ul className='d-flex gap-2 flex-wrap'>
                                 <li>
-                                    <Button htmlType="submit" className="btn btn-yellow" >Profile</Button>
+                                    <Button htmlType="submit" className="btn btn-yellow h-100" >Profile</Button>
                                 </li>
                             </ul> :
                             <ul className='d-flex gap-2 flex-wrap'>

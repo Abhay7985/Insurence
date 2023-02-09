@@ -1,6 +1,6 @@
 import signinBanner from '../../assets/images/login_image.png';
 import logo from '../../assets/icons/logo_header.svg';
-import { Input, Form, Button, Spin } from 'antd';
+import { Input, Form, Button, Checkbox } from 'antd';
 import React from 'react';
 import henceforthApi from '../../utils/henceforthApi';
 import { GlobalContext } from '../../context/Provider';
@@ -8,7 +8,7 @@ import loginSuccess from '../../context/actions/auth/loginSuccess';
 import Spinner from '../common/AntSpinner';
 
 const SignIn = () => {
-  const { loading, setLoading, authDispatch } = React.useContext(GlobalContext)
+  const { loading, setLoading, authDispatch,success,handleError } = React.useContext(GlobalContext)
   const [state, setSate] = React.useState({
     email: "",
     password: "",
@@ -26,8 +26,9 @@ const SignIn = () => {
       console.log('apiRes', apiRes)
       henceforthApi.setToken(apiRes?.token)
 
+      success(apiRes.message)
     } catch (error) {
-      console.log('error', error)
+      handleError(error)
     } finally {
       setLoading(false)
     }
@@ -83,17 +84,16 @@ const SignIn = () => {
                   </Form.Item>
                 </div>
                 <div className="col-11 col-lg-8">
-                  <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                    <label className="form-check-label" htmlFor="flexCheckDefault">
-                      Remember me
-                    </label>
+                  <div className="form-check ps-0">
+                    <Form.Item name="remember" valuePropName="checked" >
+                      <Checkbox>Remember me</Checkbox>
+                    </Form.Item>
                   </div>
                 </div>
                 <div className="col-11 col-lg-8">
                   <Form.Item >
                     <div className="login-btn">
-                      <Button htmlType="submit" className='btn btn-yellow w-100'>{loading ? <Spinner /> : "Log In"}</Button>
+                      <Button htmlType="submit" className='btn btn-yellow w-100 h-100'>{loading ? <Spinner /> : "Log In"}</Button>
                     </div>
                   </Form.Item>
                 </div>
