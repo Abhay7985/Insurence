@@ -14,33 +14,38 @@ import AddPhotos from './pages/AddPhotos';
 import SafetyQuestions from './pages/SafetyQuestions';
 import BoatPrice from './pages/BoatPrice';
 import MorningPanormic from './pages/MorningPanormic';
+import EditImage from './pages/EditImage';
+import EditAmenities from './pages/EditAmenities';
+import Inquiry from './pages/Inquiry';
 
 const App = () => {
   const { authState } = useContext(GlobalContext)
   return (
-    <>
-      <Routes>
-        {!authState?.access_token ?
-          <Fragment>
-            <Route path="*" element={<TheLayout />}>
-              <Route index element={<BoatListing />} />
-              <Route path="about" element={<About />} />
-              <Route path="boat/add/info" element={<BoatInfo />} />
-              <Route path="boat/:id/passenger-bedrooms" element={<SelectPassenger />} />
-              <Route path="place-located" element={<PlaceLocated />} />
-              <Route path="confirm-address" element={<ConfirmAddress />} />
-              <Route path="aminities-offer" element={<AminitiesOffer />} />
-              <Route path="add-photos" element={<AddPhotos />} />
-              <Route path="safety-question" element={<SafetyQuestions />} />
-              <Route path="boat-price" element={<BoatPrice />} />
-              <Route path="morning-panormic" element={<MorningPanormic />} />
-            </Route>
-          </Fragment>
-          :
-          <Route index element={<SignIn />} />
-        }
-      </Routes>
-    </>
+    <Routes>
+      {!authState?.access_token ?
+        <Fragment>
+          <Route path="*" element={<TheLayout />}>
+            <Route index element={<BoatListing />} />
+            <Route path="about" element={<About />} />
+            <Route path="boat/add/info" element={<BoatInfo />} />
+            <Route path="boat/:id/passenger-bedrooms" element={<SelectPassenger />} />
+            <Route path="place-located" element={<PlaceLocated />} />
+            <Route path="confirm-address" element={<ConfirmAddress />} />
+            <Route path="boat-listing" element={<BoatListing />} />
+            <Route path="edit-image" element={<EditImage />} />
+            <Route path="aminities-offer" element={<AminitiesOffer />} />
+            <Route path="add-photos" element={<AddPhotos />} />
+            <Route path="safety-question" element={<SafetyQuestions />} />
+            <Route path="boat-price" element={<BoatPrice />} />
+            <Route path="morning-panormic" element={<MorningPanormic />} />
+            <Route path="edit-amenities" element={<EditAmenities />} />
+            <Route path="inquiry" element={<Inquiry />} />
+          </Route>
+        </Fragment>
+        :
+        <Route index element={<SignIn />} />
+      }
+    </Routes>
   );
 }
 

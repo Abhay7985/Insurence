@@ -1,9 +1,11 @@
 import signinBanner from '../../assets/images/login_image.png';
 import logo from '../../assets/icons/logo_header.svg';
-import eye from '../../assets/icons/visibility_on.svg';
-import cutEye from '../../assets/icons/visibility_off.svg';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { Input } from 'antd';
+import React from 'react';
 
 const SignIn = () => {
+  const [passwordVisible, setPasswordVisible] = React.useState(false);
   return (
     // signin-section
     <section className='signin-section position-relative'>
@@ -23,17 +25,14 @@ const SignIn = () => {
                 </div>
                 <div className="col-11 col-lg-8">
                   <div className="mb-3">
-                    <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="Email address" />
+                  <Input placeholder="Email address" />
                   </div>
                 </div>
-                <div className="col-11 col-lg-8">
-                  <div className="input-group mb-3 form-control p-0">
-                    <input type="password" className="form-control border-0" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1" />
-                    <span className="input-group-text bg-transparent border-0" id="basic-addon1">
-                      <img src={eye} alt="icon" className='img-fluid' />
-                      <img src={cutEye} alt="icon" className='img-fluid' />
-                    </span>
-                  </div>
+                <div className="col-11 col-lg-8 mb-3">
+                  <Input.Password
+                    placeholder="Password"
+                    iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                  />
                 </div>
                 <div className="col-11 col-lg-8">
                   <div className="form-check">

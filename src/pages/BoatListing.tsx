@@ -58,8 +58,8 @@ const BoatListing = () => {
                                 </div>
                                 <div className="add-boat-btn">
                                     <Select
-                                        defaultValue="lucy"
-                                        style={{ width: 120 }}
+                                        defaultValue="Listing status"
+                                        style={{ width: 150 }}
                                         onChange={handleChange}
                                         options={[
                                             { value: 'jack', label: 'Jack' },
@@ -76,7 +76,7 @@ const BoatListing = () => {
                         <div className="col-12 table-responsive">
                             <table className="table">
                                 <thead>
-                                    <tr>
+                                    <tr className='thead'>
                                         <th scope="col">SR. NO.</th>
                                         <th scope="col">BOATS</th>
                                         <th scope="col">STATUS</th>
