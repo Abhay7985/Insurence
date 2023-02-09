@@ -8,15 +8,19 @@ import "../node_modules/bootstrap/dist/js/bootstrap.bundle.js"
 // **************************CSS**************************
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import './index.scss';
+import GlobalProvider from './context/Provider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-     <Router>
-    <App />
-     </Router>
+    <Router>
+      <GlobalProvider>
+        <App />
+      </GlobalProvider>
+
+    </Router>
   </React.StrictMode>
 );
 

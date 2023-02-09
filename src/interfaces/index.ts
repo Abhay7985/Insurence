@@ -1,5 +1,5 @@
 export interface UserInfoInterface {
-    access_token?: string,
+    token?: string,
     _id?: string,
     profile_pic?: string,
     name?: string,

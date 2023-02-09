@@ -1,31 +1,33 @@
 import signinBanner from '../../assets/images/login_image.png';
 import logo from '../../assets/icons/logo_header.svg';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Input, Form, Button } from 'antd';
+import { Input, Form, Button, Spin } from 'antd';
 import React from 'react';
 import henceforthApi from '../../utils/henceforthApi';
-import { log } from 'console';
 import { GlobalContext } from '../../context/Provider';
+import loginSuccess from '../../context/actions/auth/loginSuccess';
+import Spinner from '../common/AntSpinner';
 
 const SignIn = () => {
-  const { loading, setLoading } = React.useContext(GlobalContext)
+  const { loading, setLoading, authDispatch } = React.useContext(GlobalContext)
   const [state, setSate] = React.useState({
     email: "",
     password: "",
   })
   const onhandleSubmit = async () => {
+    setLoading(true)
     const { email, password } = state
     const data = {
-      email: email,
-      password: password
+      email,
+      password
     }
     try {
       let apiRes = await henceforthApi.Auth.login(data)
-      console.log(apiRes)
+      loginSuccess(apiRes)(authDispatch)
+      console.log('apiRes', apiRes)
     } catch (error) {
-
+      console.log('error', error)
     } finally {
-
+      setLoading(false)
     }
   }
   const handleInput = (e: any) => {
@@ -88,7 +90,7 @@ const SignIn = () => {
                 <div className="col-11 col-lg-8">
                   <Form.Item >
                     <div className="login-btn">
-                      <Button htmlType="submit" className='btn btn-yellow w-100'>Log in</Button>
+                      <Button htmlType="submit" className='btn btn-yellow w-100'>{loading?<Spinner/>:"Log In"}</Button>
                     </div>
                   </Form.Item>
 
