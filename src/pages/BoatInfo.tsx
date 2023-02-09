@@ -9,12 +9,18 @@ const handleChange = (value: string) => {
 };
 
 const BoatInfo = () => {
+
     const [size, setSize] = useState<SizeType>('middle')
+
+    const onSubmit = async (e: any) => {
+        e.preventDefault()
+    }
+
     return (
         // boat-details
         <section className="boat-details-section">
             <div className="container-fluid">
-                <div className="row">
+                <form className="row" onSubmit={onSubmit}>
                     <div className="col-lg-6">
                         <div className="banner-content h-100 d-flex flex-column ">
                             <div className="row justify-content-center justify-content-lg-end">
@@ -92,7 +98,7 @@ const BoatInfo = () => {
                             <img src={bannerImage} alt="" />
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </section>
     )
