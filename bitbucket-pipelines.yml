@@ -1,0 +1,69 @@
+image: node:16
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Build
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run build
+          artifacts:
+            - build/**
+            
+      - step:
+          name: Remove Build Folder
+          script:
+            - ssh $USER@$SERVER "sudo rm -rf /var/www/html/lanchasalvadorproviderreactjs/build"
+      - step:
+          name: Add Build Folder
+          script:
+            - ssh $USER@$SERVER "sudo mkdir /var/www/html/lanchasalvadorproviderreactjs/build"
+      - step:
+          name: Add Folder Permission
+          script:
+            - ssh $USER@$SERVER "sudo chmod 777 /var/www/html/lanchasalvadorproviderreactjs/build"            
+      - step:
+          name: Deploy artifacts using SCP to PROD
+          deployment: production
+          script:
+            - pipe: atlassian/rsync-deploy:0.3.2
+              variables:
+                USER: $USER
+                SERVER: $SERVER
+                REMOTE_PATH: '/var/www/html/lanchasalvadorproviderreactjs/build'
+                LOCAL_PATH: 'build/*'
+    staging:
+      - step:
+          name: Build
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run build
+          artifacts:
+            - build/**
+            
+      - step:
+          name: Remove Build Folder
+          script:
+            - ssh $USERSTAGING@$SERVERSTAGING "sudo rm -rf /var/www/html/lanchasalvadorproviderreactjs/build"
+      - step:
+          name: Add Build Folder
+          script:
+            - ssh $USERSTAGING@$SERVERSTAGING "sudo mkdir /var/www/html/lanchasalvadorproviderreactjs/build"
+      - step:
+          name: Add Folder Permission
+          script:
+            - ssh $USERSTAGING@$SERVERSTAGING "sudo chmod 777 /var/www/html/lanchasalvadorproviderreactjs/build"            
+      - step:
+          name: Deploy artifacts using SCP to PROD
+          deployment: production
+          script:
+            - pipe: atlassian/rsync-deploy:0.3.2
+              variables:
+                USER: $USERSTAGING
+                SERVER: $SERVERSTAGING
+                REMOTE_PATH: '/var/www/html/lanchasalvadorproviderreactjs/build'
+                LOCAL_PATH: 'build/*'
