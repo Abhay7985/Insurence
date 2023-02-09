@@ -18,6 +18,7 @@ const encode = encodeURIComponent;
 const responseBody = (res: any) => res.body;
 
 let token: any = null;
+
 const tokenPlugin = (req: any) => {
   if (token) {
     req.set('authorization', `Bearer ${token}`);
@@ -105,6 +106,8 @@ const Boat ={
   getBoatListing:() =>
   requests.get(`provider/boats`)
 }
+
+
 
 const Search = {
   pagination: (search: string, nft_type: string) =>

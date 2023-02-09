@@ -5,11 +5,20 @@ import { Select, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import henceforthApi from '../utils/henceforthApi';
 import { useEffect, useState } from 'react';
+import moment from 'moment';
+import { boatListingData } from '../interfaces';
+
+
 
 
 const BoatListing = () => {
 
-    const [boatListingData, setBoatListingData] = useState<any>([])
+    const [state, setState] = useState({
+        current_page: 0,
+        data: [] as Array<boatListingData>,
+        from: 1,
+        total: 0
+    })
 
     const handleChange = (value: string) => {
         console.log(`selected ${value}`);
@@ -18,16 +27,17 @@ const BoatListing = () => {
     const boatListing = async () => {
         try {
             let res = await henceforthApi.Boat.getBoatListing()
-            setBoatListingData(res.data.data)
+            setState(res.data)
             console.log(res);
         } catch (error) {
-
+            console.log(error);
         }
     }
 
     useEffect(() => {
         boatListing()
     }, [])
+
 
     return (
         <>
@@ -37,9 +47,9 @@ const BoatListing = () => {
                     <div className="row gy-4">
                         <div className="col-12 mb-3">
                             <div className="boat-listing-header d-flex justify-content-between">
-                                <h2>3 boats</h2>
+                                <h2>{state.total} Boats</h2>
                                 <div className="add-boat-btn">
-                                    <Link to={`/boat/add/info`}>
+                                    <Link to={`/boat/add/info`} className='nav-link'>
                                         <button className='btn btn-yellow d-flex align-items-center gap-2'>
                                             <img src={addIcon} alt="icon" className='img-fluid' height='15px' width="15px" />
                                             <span>Add New Boat</span>
@@ -86,9 +96,9 @@ const BoatListing = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {boatListingData.map((e: any) =>
+                                    {state?.data?.map((e: any, index: number) =>
                                         <tr>
-                                            <th scope="row">01</th>
+                                            <th scope="row">{index + 1}</th>
                                             <td>
                                                 <div className="boats d-flex gap-2 align-items-center">
                                                     <div className="boat-image">
@@ -103,27 +113,11 @@ const BoatListing = () => {
                                                     <p>{e?.status}</p>
                                                 </div>
                                             </td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
+                                            <td>{e?.price}</td>
+                                            <td>{moment(e?.updated_at).format('MMMM Do')}</td>
                                             <td>@mdo</td>
                                         </tr>
                                     )}
-                                    {/* <tr>
-                                        <th scope="row">02</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                        <td>@fat</td>
-                                        <td>@fat</td>
-                                    </tr> */}
-                                    {/* <tr>
-                                        <th scope="row">03</th>
-                                        <td >Larry the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                    </tr> */}
                                 </tbody>
                             </table>
                         </div>

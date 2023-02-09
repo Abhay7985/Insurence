@@ -13,6 +13,7 @@ const SignIn = () => {
     email: "",
     password: "",
   })
+
   const onhandleSubmit = async () => {
     setLoading(true)
     const data = {
@@ -29,6 +30,7 @@ const SignIn = () => {
       setLoading(false)
     }
   }
+
   const handleInput = (e: any) => {
     let name = e.target.name
     let value = e.target.value
@@ -91,7 +93,6 @@ const SignIn = () => {
                       <Button htmlType="submit" className='btn btn-yellow w-100 h-100'>{loading ? <Spinner /> : "Log In"}</Button>
                     </div>
                   </Form.Item>
-
                 </div>
               </div>
             </Form>

@@ -17,6 +17,11 @@ import MorningPanormic from './pages/MorningPanormic';
 import EditImage from './pages/EditImage';
 import EditAmenities from './pages/EditAmenities';
 import Inquiry from './pages/Inquiry';
+import Profile from './pages/Profile';
+import ChangePassword from './pages/ChangePassword';
+import ProviderCalender from './pages/ProviderCalender';
+import { Calendar } from 'antd';
+import MorningPanormicListing from './pages/MorningPanormicListing';
 
 const App = () => {
   const { authState } = useContext(GlobalContext)
@@ -40,6 +45,11 @@ const App = () => {
             <Route path="morning-panormic" element={<MorningPanormic />} />
             <Route path="edit-amenities" element={<EditAmenities />} />
             <Route path="inquiry" element={<Inquiry />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="change-password" element={<ChangePassword />} />
+            <Route path="provider-calender" element={<ProviderCalender />} />
+            <Route path="morning-panormic-listing" element={<MorningPanormicListing />} />
+
           </Route>
         </Fragment>
         :
