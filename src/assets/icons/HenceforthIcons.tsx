@@ -56,28 +56,39 @@ const Whatsapp = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height
     </g>
 </svg>
 const ThreeDot = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-<g id="three_dots" transform="translate(-1148 -839)">
-  <circle id="Ellipse_345" data-name="Ellipse 345" cx="10" cy="10" r="10" transform="translate(1148 839)" fill="#ff9100"/>
-  <g id="dots" transform="translate(1149 835)">
-    <path id="XMLID_287_" d="M14.385,13a1.385,1.385,0,1,0,1.385,1.385A1.386,1.386,0,0,0,14.385,13Z" transform="translate(-5.385)" fill="#fff"/>
-    <path id="XMLID_289_" d="M4.385,13a1.385,1.385,0,1,0,1.385,1.385A1.386,1.386,0,0,0,4.385,13Z" transform="translate(0)" fill="#fff"/>
-    <path id="XMLID_291_" d="M24.385,13a1.385,1.385,0,1,0,1.385,1.385A1.386,1.386,0,0,0,24.385,13Z" transform="translate(-10.769)" fill="#fff"/>
-  </g>
-</g>
+    <g id="three_dots" transform="translate(-1148 -839)">
+        <circle id="Ellipse_345" data-name="Ellipse 345" cx="10" cy="10" r="10" transform="translate(1148 839)" fill="#ff9100" />
+        <g id="dots" transform="translate(1149 835)">
+            <path id="XMLID_287_" d="M14.385,13a1.385,1.385,0,1,0,1.385,1.385A1.386,1.386,0,0,0,14.385,13Z" transform="translate(-5.385)" fill="#fff" />
+            <path id="XMLID_289_" d="M4.385,13a1.385,1.385,0,1,0,1.385,1.385A1.386,1.386,0,0,0,4.385,13Z" transform="translate(0)" fill="#fff" />
+            <path id="XMLID_291_" d="M24.385,13a1.385,1.385,0,1,0,1.385,1.385A1.386,1.386,0,0,0,24.385,13Z" transform="translate(-10.769)" fill="#fff" />
+        </g>
+    </g>
 </svg>
-const Email = () =><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-<g id="email" transform="translate(-16 -16)">
-  <circle id="Ellipse_344" data-name="Ellipse 344" cx="10" cy="10" r="10" transform="translate(16 16)" fill="#ff5a54"/>
-  <path id="Path_52084" data-name="Path 52084" d="M136.706,165.022a10,10,0,0,1-9.193,9.2l-6.142-6.142a.7.7,0,0,1-.256-.542V161.05l1.749,1.011-1.569-1.569a.7.7,0,0,1,.523-.234h9.835a.7.7,0,0,1,.523.234Z" transform="translate(-100.735 -138.247)" fill="#db3a3c" fill-rule="evenodd"/>
-  <path id="Path_52085" data-name="Path 52085" d="M132.355,161.049l-5.473,3.166a.285.285,0,0,1-.29,0l-5.477-3.167v6.484a.7.7,0,0,0,.7.7h9.835a.7.7,0,0,0,.7-.7Zm-10.538-.791h9.835a.7.7,0,0,1,.523.234l-5.44,3.147-5.441-3.146A.7.7,0,0,1,121.818,160.258Z" transform="translate(-100.735 -138.247)" fill="#fff" fill-rule="evenodd"/>
-</g>
+const Email = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+    <g id="email" transform="translate(-16 -16)">
+        <circle id="Ellipse_344" data-name="Ellipse 344" cx="10" cy="10" r="10" transform="translate(16 16)" fill="#ff5a54" />
+        <path id="Path_52084" data-name="Path 52084" d="M136.706,165.022a10,10,0,0,1-9.193,9.2l-6.142-6.142a.7.7,0,0,1-.256-.542V161.05l1.749,1.011-1.569-1.569a.7.7,0,0,1,.523-.234h9.835a.7.7,0,0,1,.523.234Z" transform="translate(-100.735 -138.247)" fill="#db3a3c" fill-rule="evenodd" />
+        <path id="Path_52085" data-name="Path 52085" d="M132.355,161.049l-5.473,3.166a.285.285,0,0,1-.29,0l-5.477-3.167v6.484a.7.7,0,0,0,.7.7h9.835a.7.7,0,0,0,.7-.7Zm-10.538-.791h9.835a.7.7,0,0,1,.523.234l-5.44,3.147-5.441-3.146A.7.7,0,0,1,121.818,160.258Z" transform="translate(-100.735 -138.247)" fill="#fff" fill-rule="evenodd" />
+    </g>
 </svg>
-const ChevronRight = () =><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-<g id="email_detail" transform="translate(0 20) rotate(-90)">
-  <path id="Path_1541" data-name="Path 1541" d="M0,0H20V20H0Z" fill="none"/>
-  <path id="Path_1542" data-name="Path 1542" d="M7.175,8.59,11,12.407,14.825,8.59,16,9.765l-5,5-5-5Z" transform="translate(-1 -1.432)" fill="#343a40"/>
-</g>
+const ChevronRight = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+    <g id="email_detail" transform="translate(0 20) rotate(-90)">
+        <path id="Path_1541" data-name="Path 1541" d="M0,0H20V20H0Z" fill="none" />
+        <path id="Path_1542" data-name="Path 1542" d="M7.175,8.59,11,12.407,14.825,8.59,16,9.765l-5,5-5-5Z" transform="translate(-1 -1.432)" fill="#343a40" />
+    </g>
 </svg>
+const EditPencil = () => <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+    <g id="edit_pencil" transform="translate(-482 -863)">
+        <circle id="Ellipse_68" data-name="Ellipse 68" cx="18" cy="18" r="18" transform="translate(482 863)" fill="#fff" />
+        <g id="create-24px_1_" data-name="create-24px (1)" transform="translate(489.994 871)">
+            <path id="Path_26873" data-name="Path 26873" d="M0,0H20V20H0Z" fill="none" />
+            <path id="Path_26874" data-name="Path 26874" d="M3,14.874V18H6.125L15.34,8.783,12.216,5.658Zm2.433,1.458H4.666v-.767l7.549-7.549.767.767ZM17.757,5.191l-1.95-1.95a.835.835,0,0,0-1.175,0L13.107,4.766l3.125,3.125,1.525-1.525a.83.83,0,0,0,0-1.175Z" transform="translate(-0.499 -0.499)" fill="#FF9100" />
+        </g>
+    </g>
+</svg>
+
+
 
 
 
@@ -92,7 +103,8 @@ const HenceforthIcons = {
     Whatsapp,
     ThreeDot,
     Email,
-    ChevronRight
+    ChevronRight,
+    EditPencil
 }
 
 export default HenceforthIcons;
