@@ -2,7 +2,7 @@ import _superagent, { search } from 'superagent';
 const SuperagentPromise = require('superagent-promise');
 const superagent = SuperagentPromise(_superagent, global.Promise);
 
-const API_ROOT = `https://airbnbclone.henceforthsolutions.com:8081/api/`;
+const API_ROOT = `http://192.168.0.115:8080/api/`;
 const INSTAGRAM_API_ROOT = 'https://graph.instagram.com/'; //live
 
 const BUCKET_ROOT = `https://demoserver3.sgp1.digitaloceanspaces.com/`;
@@ -54,7 +54,7 @@ const instagramApi = {
 
 const Auth = {
   login: (info: any) =>
-    requests.post('login', info),
+    requests.post('provider/login', info),
   loginAsUser: (info: any) =>
     requests.post('Admin/users/login_as_user', info),
   signUp: (info: any) =>

@@ -23,7 +23,7 @@ const App = () => {
   return (
     <>
       <Routes>
-        {!authState?.access_token ?
+        {/* {!authState?.access_token ? */}
           <Fragment>
             <Route path="*" element={<TheLayout />}>
               <Route index element={<BoatListing />} />
@@ -43,9 +43,9 @@ const App = () => {
               <Route path="inquiry" element={<Inquiry />} />
             </Route>
           </Fragment>
-          :
+          {/* : */}
           <Route index element={<SignIn />} />
-        }
+        {/* } */}
       </Routes>
     </>
   );
