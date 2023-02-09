@@ -15,14 +15,13 @@ const SignIn = () => {
   })
   const onhandleSubmit = async () => {
     setLoading(true)
-    const { email, password } = state
     const data = {
-      email:state.email,
-      password:state.password
+      email: state.email,
+      password: state.password
     }
     try {
       let apiRes = await henceforthApi.Auth.login(data)
-      loginSuccess(apiRes)(authDispatch)
+      loginSuccess({ ...apiRes.data, access_token: apiRes.token })(authDispatch)
       console.log('apiRes', apiRes)
     } catch (error) {
       console.log('error', error)
@@ -90,7 +89,7 @@ const SignIn = () => {
                 <div className="col-11 col-lg-8">
                   <Form.Item >
                     <div className="login-btn">
-                      <Button htmlType="submit" className='btn btn-yellow w-100'>{loading?<Spinner/>:"Log In"}</Button>
+                      <Button htmlType="submit" className='btn btn-yellow w-100'>{loading ? <Spinner /> : "Log In"}</Button>
                     </div>
                   </Form.Item>
 
