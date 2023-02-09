@@ -22,9 +22,8 @@ const SignIn = () => {
     }
     try {
       let apiRes = await henceforthApi.Auth.login(data)
-      loginSuccess({ ...apiRes.data, access_token: apiRes.token })(authDispatch)
+      loginSuccess(apiRes.data)(authDispatch)
       console.log('apiRes', apiRes)
-      henceforthApi.setToken(apiRes?.token)
 
       success(apiRes.message)
     } catch (error) {

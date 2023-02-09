@@ -104,7 +104,7 @@ const Auth = {
 
 const Boat ={
   getBoatListing:(search:any) =>
-  requests.get(`provider/boats?${search ? `search=${search}` :""}`)
+  requests.get(`provider/boats?${search}`)
 }
 
 

@@ -2,18 +2,22 @@ import addIcon from '../assets/icons/plus_white.svg'
 import search from '../assets/icons/search.svg'
 import boatImage from '../assets/images/boat_four.png'
 import { Select, Space } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import henceforthApi from '../utils/henceforthApi';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { boatListingData } from '../interfaces';
+import { GlobalContext } from '../context/Provider';
 
 
 
 
 const BoatListing = () => {
-    const searchparams = new URLSearchParams()
     const navigate = useNavigate()
+    const location = useLocation()
+    const { authState } = React.useContext(GlobalContext)
+    henceforthApi.setToken(authState?.access_token)
+    const urlSearchParams = new URLSearchParams(location.search)
 
     const [state, setState] = useState({
         current_page: 0,
@@ -21,26 +25,24 @@ const BoatListing = () => {
         from: 1,
         total: 0
     })
-
-
+    
     const handleChange = (value: string) => {
         console.log(`selected ${value}`);
     };
-
+    
     const handleSearch = (e: any) => {
         if (e.target.value) {
-            searchparams.set(e.target.name, e.target.value)
+            urlSearchParams.set(e.target.name, e.target.value)
         } else {
-            searchparams.delete(e.target.name)
+            urlSearchParams.delete(e.target.name)
         }
-        navigate({ pathname: "/", search: searchparams.toString() })
-
+        navigate({ search: urlSearchParams.toString()})
     }
-    console.log(searchparams.get('search'));
-    const boatListing = async () => {        
+
+    const boatListing = async () => {
         try {
             let res = await henceforthApi.Boat.getBoatListing(
-                searchparams.get('search')
+                urlSearchParams.toString()
             )
             setState(res.data)
             console.log(res);
@@ -51,9 +53,7 @@ const BoatListing = () => {
 
     useEffect(() => {
         boatListing()
-    }, [searchparams.get("search")])
-
-
+    }, [urlSearchParams.get('search')])
 
     return (
         <>
@@ -80,7 +80,7 @@ const BoatListing = () => {
                                     <span className="input-group-text bg-transparent border-0" id="basic-addon1">
                                         <img src={search} alt="icon" />
                                     </span>
-                                    <input type="text" className="form-control border-0 ps-0 rounded-pill" name='search' placeholder="Search..." value={searchparams.get('search') as string} onChange={handleSearch} />
+                                    <input type="text" className="form-control border-0 ps-0 rounded-pill" name='search' placeholder="Search..." value={urlSearchParams.get('search') as string} onChange={handleSearch} />
                                 </div>
                                 <div className="add-boat-btn">
                                     <Select
@@ -88,10 +88,9 @@ const BoatListing = () => {
                                         style={{ width: 150 }}
                                         onChange={handleChange}
                                         options={[
-                                            { value: 'jack', label: 'Jack' },
-                                            { value: 'lucy', label: 'Lucy' },
-                                            { value: 'Yiminghe', label: 'yiminghe' },
-                                            { value: 'disabled', label: 'Disabled', disabled: true },
+                                            { value: 'listed', label: 'Listed' },
+                                            { value: 'unlisted', label: 'Unlisted' },
+                                            { value: 'draft', label: 'Draft' },
                                         ]}
                                     />
                                 </div>
@@ -118,7 +117,7 @@ const BoatListing = () => {
                                             <td key={index}>
                                                 <div className="boats d-flex gap-2 align-items-center">
                                                     <div className="boat-image">
-                                                        {/* <img src={boatImage} alt="img" className='img-fluid' /> */}
+                                                        <img src={boatImage} alt="img" className='img-fluid' />
                                                     </div>
                                                     <p>{e?.name}</p>
                                                 </div>
@@ -145,5 +144,6 @@ const BoatListing = () => {
         </>
     )
 }
+
 
 export default BoatListing
