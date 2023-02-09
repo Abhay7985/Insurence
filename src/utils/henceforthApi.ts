@@ -2,7 +2,7 @@ import _superagent, { search } from 'superagent';
 const SuperagentPromise = require('superagent-promise');
 const superagent = SuperagentPromise(_superagent, global.Promise);
 
-const API_ROOT = `https://airbnbclone.henceforthsolutions.com:8081/api/`;
+const API_ROOT = `http://192.168.0.115:8080/api/`;
 const INSTAGRAM_API_ROOT = 'https://graph.instagram.com/'; //live
 
 const BUCKET_ROOT = `https://demoserver3.sgp1.digitaloceanspaces.com/`;
@@ -100,6 +100,12 @@ const Auth = {
   verifyPhone: (info: any) =>
     requests.post('User/verify/phone_no', info),
 };
+
+const Boat ={
+  getBoatListing:() =>
+  requests.get(`provider/boats`)
+}
+
 const Search = {
   pagination: (search: string, nft_type: string) =>
     requests.get(`Nft/search?search=${search}&nft_type=${nft_type}&limit=10&pagination=0&language=ENGLISH`),
@@ -306,6 +312,7 @@ const FILES = {
 const henceforthApi = {
   Order,
   Home,
+  Boat,
   token,
   Auth,
   Common,

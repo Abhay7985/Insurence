@@ -3,12 +3,32 @@ import search from '../assets/icons/search.svg'
 import boatImage from '../assets/images/boat_four.png'
 import { Select, Space } from 'antd';
 import { Link } from 'react-router-dom';
+import henceforthApi from '../utils/henceforthApi';
+import { useEffect, useState } from 'react';
 
-const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
-};
 
 const BoatListing = () => {
+
+    const [boatListingData, setBoatListingData] = useState<any>([])
+
+    const handleChange = (value: string) => {
+        console.log(`selected ${value}`);
+    };
+
+    const boatListing = async () => {
+        try {
+            let res = await henceforthApi.Boat.getBoatListing()
+            setBoatListingData(res.data.data)
+            console.log(res);
+        } catch (error) {
+
+        }
+    }
+
+    useEffect(() => {
+        boatListing()
+    }, [])
+
     return (
         <>
             {/* Boat-listing */}
@@ -66,42 +86,44 @@ const BoatListing = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">01</th>
-                                        <td>
-                                            <div className="boats d-flex gap-2 align-items-center">
-                                                <div className="boat-image">
-                                                    <img src={boatImage} alt="img" className='img-fluid' />
+                                    {boatListingData.map((e: any) =>
+                                        <tr>
+                                            <th scope="row">01</th>
+                                            <td>
+                                                <div className="boats d-flex gap-2 align-items-center">
+                                                    <div className="boat-image">
+                                                        {/* <img src={boatImage} alt="img" className='img-fluid' /> */}
+                                                    </div>
+                                                    <p>{e?.name}</p>
                                                 </div>
-                                                <p>Morning Panoramic</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div className="status">
-                                                <div className="status-dot"></div>
-                                                <p>Listed</p>
-                                            </div>
-                                        </td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
+                                            </td>
+                                            <td>
+                                                <div className="status">
+                                                    <div className="status-dot"></div>
+                                                    <p>{e?.status}</p>
+                                                </div>
+                                            </td>
+                                            <td>@mdo</td>
+                                            <td>@mdo</td>
+                                            <td>@mdo</td>
+                                        </tr>
+                                    )}
+                                    {/* <tr>
                                         <th scope="row">02</th>
                                         <td>Jacob</td>
                                         <td>Thornton</td>
                                         <td>@fat</td>
                                         <td>@fat</td>
                                         <td>@fat</td>
-                                    </tr>
-                                    <tr>
+                                    </tr> */}
+                                    {/* <tr>
                                         <th scope="row">03</th>
                                         <td >Larry the Bird</td>
                                         <td>@twitter</td>
                                         <td>@twitter</td>
                                         <td>@twitter</td>
                                         <td>@twitter</td>
-                                    </tr>
+                                    </tr> */}
                                 </tbody>
                             </table>
                         </div>
