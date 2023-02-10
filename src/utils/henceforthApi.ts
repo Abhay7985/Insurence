@@ -2,10 +2,10 @@ import _superagent, { search } from 'superagent';
 const SuperagentPromise = require('superagent-promise');
 const superagent = SuperagentPromise(_superagent, global.Promise);
 
-const API_ROOT = `http://192.168.0.115:8080/api/`;
+const API_ROOT = `http://15.229.56.53:8082/api/`;
 const INSTAGRAM_API_ROOT = 'https://graph.instagram.com/'; //live
 
-const BUCKET_ROOT = `https://demoserver3.sgp1.digitaloceanspaces.com/`;
+const BUCKET_ROOT = `https://lanchastaging.s3.sa-east-1.amazonaws.com/`;
 
 const API_FILE_ROOT_MEDIUM = `${BUCKET_ROOT}medium/`;
 const API_FILE_ROOT_ORIGINAL = `${BUCKET_ROOT}original/`;
@@ -82,7 +82,7 @@ const Auth = {
   connectSocialAccount: (info: any) =>
     requests.post('User/connect/social_account', info),
   changePassword: (info: any) =>
-    requests.post('change-password', info),
+    requests.post('provider/change-password', info),
   fortgetPassword: (info: any) =>
     requests.post('forgot-password', info),
   forgotChangePassword: (info: any) =>
@@ -90,7 +90,7 @@ const Auth = {
   profile: () =>
     requests.get(`provider/profile`),
   editProfile: (info: any) =>
-    requests.put('User/edit_profile', info),
+    requests.put('provider/profile', info),
   socialLogin: (info: any) =>
     requests.post('social-login', info),
   verifyOtp: (info: any) =>
@@ -149,7 +149,7 @@ const Card = {
 }
 const Common = {
   uploadFile: (key: string, file: any) =>
-    requests.file(`Upload/do_spaces_file_upload`, key, file),
+    requests.file(`provider/upload-image`, key, file),
   nested: () =>
     requests.get(`User/nested`),
   notification: (pagination: number, limit: number) =>

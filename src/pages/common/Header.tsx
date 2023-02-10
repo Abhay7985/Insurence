@@ -2,12 +2,47 @@ import { useContext } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import logo from '../../assets/icons/logo_header.svg'
 import { GlobalContext } from '../../context/Provider'
-import { Button } from 'antd';
 import profile from '../../assets/images/image_two.png';
+import React, { Fragment } from "react";
+import { UserOutlined } from '@ant-design/icons';
+import placeholder from '../../assets/images/placeholder.png'
+import { Button, Divider, Dropdown, MenuProps, Space, Switch, theme, Tooltip, Avatar, Image, Row, Col } from "antd";
+import henceforthApi from '../../utils/henceforthApi';
 
 const Header = () => {
     const { authState, logOutNow } = useContext(GlobalContext)
     const location = useLocation()
+    const menuStyle = {
+        boxShadow: 'none',
+    };
+    const items: MenuProps['items'] = [
+        {
+            key: '1',
+            label: (
+                <Link to="/profile" >
+                    Profile
+                </Link>
+            ),
+        },
+        {
+            key: '2',
+            label: (
+                <Link to="change-password" >
+                    Change password
+                </Link>
+            ),
+        },
+        {
+            key: '3',
+            label: (
+                <Link to="" onClick={logOutNow}>
+                    Log Out
+                </Link>
+            ),
+        },
+
+    ];
+
     return (
         <>
             <header className='.header'>
@@ -75,12 +110,16 @@ const Header = () => {
                                                 <Link to='' className='nav-link'>Calender</Link>
                                             </li>
                                             <li>
-                                                <Button htmlType="submit" className="btn h-100 rounded d-flex gap-3 align-items-center border" >
-                                                    <div className="profile-image">
-                                                        <img src={profile} alt="img" className='img-fluid' />
-                                                    </div>
-                                                    <span className='text-yellow'>John Doe</span>
-                                                </Button>
+                                                <Dropdown menu={{ items }}
+                                                    dropdownRender={(menu) => (
+                                                        <div >
+                                                            {React.cloneElement(menu as React.ReactElement, { style: menuStyle })}
+                                                            <Divider style={{ margin: 0 }} />
+                                                        </div>
+                                                    )}
+                                                    arrow className="btnn h-100">
+                                                    <Button><Avatar style={{ backgroundColor: '#32CD32' }} icon={<img src={authState?.image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${authState.image}`:placeholder }/>}/>&nbsp;{authState?.name}</Button>
+                                                </Dropdown>
                                             </li>
                                         </ul> :
                                         <ul className='d-flex gap-2 flex-wrap'>
