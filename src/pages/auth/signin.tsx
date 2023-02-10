@@ -92,7 +92,7 @@ const SignIn = () => {
                 <div className="col-11 col-lg-8">
                   <Form.Item >
                     <div className="login-btn">
-                      <Button htmlType="submit" className='btn btn-yellow w-100 h-100'>{loading ? <Spinner /> : "Log In"}</Button>
+                      <Button htmlType="submit" className='btn btn-yellow w-100 h-100' disabled={loading}>{loading ? <Spinner /> : "Log In"}</Button>
                     </div>
                   </Form.Item>
                 </div>

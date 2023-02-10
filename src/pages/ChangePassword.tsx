@@ -3,16 +3,21 @@ import HenceforthIcons from '../assets/icons/HenceforthIcons'
 import { Button, Form, Input } from 'antd';
 import henceforthApi from '../utils/henceforthApi';
 import { GlobalContext } from '../context/Provider';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+import Spinner from './common/AntSpinner';
 
 const ChangePassword = () => {
     const [editEnable, setEditEnable] = React.useState(false)
     const { loading, setLoading, authDispatch, Toast } = React.useContext(GlobalContext)
-
+    const navigate = useNavigate()
     const handleSubmit = async (even: any) => {
         setLoading(true)
+        const { current_password, new_password } = even
         try {
-            let apiRes = await henceforthApi.Auth.changePassword(even)
+            let apiRes = await henceforthApi.Auth.changePassword({ current_password, new_password })
             Toast.success(apiRes.message)
+            navigate('/profile')
         } catch (error) {
             Toast.error(error)
         } finally {
@@ -27,7 +32,9 @@ const ChangePassword = () => {
                 <div className="container">
                     <div className="row gy-4">
                         <div className="col-12 mb-2">
-                            <HenceforthIcons.LeftArrow />
+                            <Link to="/profile">
+                                <HenceforthIcons.LeftArrow />
+                            </Link>
                         </div>
                         <div className="col-12 mb-2">
                             <div className="title">
@@ -55,7 +62,7 @@ const ChangePassword = () => {
                                                         ]}
                                                         hasFeedback
                                                     >
-                                                        <Input.Password />
+                                                        <Input.Password className='w-100' />
                                                     </Form.Item>
                                                 </div>
                                                 <div className="mb-3">
@@ -98,7 +105,7 @@ const ChangePassword = () => {
                                                     </Form.Item>
                                                 </div>
                                                 <div className="save-btn">
-                                                    <Button htmlType='submit' className='btn btn-yellow px-4 py-2 h-100'>Updated password</Button>
+                                                    <Button htmlType='submit' className='btn btn-yellow px-4 py-2 h-100' disabled={loading}>{loading ? <Spinner/>:"Update Password" }</Button>
                                                 </div>
                                             </div> : ""}
                                     </Form>

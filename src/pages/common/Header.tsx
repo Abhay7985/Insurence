@@ -48,45 +48,7 @@ const Header = () => {
             <header className='.header'>
 
 
-                {/* <div className="container custom-container px-md-0">
-                    <nav className="navbar py-3">
-                        <Link className="navbar-brand" to={`/`}>
-                            <img src={logo} alt="img" className='img-fluid' />
-                        </Link>
-                        {location.pathname !== "/boat/add/info" &&
-                            <form className="d-flex" role="search">
-                                {authState.access_token ?
-                                    <ul className='d-flex gap-2 flex-wrap align-items-center gap-5'>
-                                        <li>
-                                            <Link to='' className='nav-link'>Boats</Link>
-                                        </li>
-                                        <li>
-                                            <Link to='' className='nav-link'>Inquiry</Link>
-                                        </li>
-                                        <li>
-                                            <Link to='' className='nav-link'>Calender</Link>
-                                        </li>
-                                        <li>
-                                            <Button htmlType="submit" className="btn h-100 rounded d-flex gap-3 align-items-center border" >
-                                                <div className="profile-image">
-                                                    <img src={profile} alt="img" className='img-fluid' />
-                                                </div>
-                                                <span className='text-yellow'>John Doe</span>
-                                            </Button>
-                                        </li>
-                                    </ul> :
-                                    <ul className='d-flex gap-2 flex-wrap'>
-
-                                        <li>
-                                            <button className="btn btn-outline-dark" type="submit">Help</button>
-                                        </li>
-                                        <li>
-                                            <Button htmlType="submit" className="btn btn-yellow" onClick={logOutNow}>Save & Exit</Button>
-                                        </li>
-                                    </ul>}
-                            </form>}
-                    </nav>
-                </div> */}
+                
                 <div className="container">
                     <nav className="navbar navbar-expand-lg">
                         <Link className="navbar-brand" to={`/`}>
@@ -104,10 +66,10 @@ const Header = () => {
                                                 <Link to='' className='nav-link'>Boats</Link>
                                             </li>
                                             <li>
-                                                <Link to='' className='nav-link'>Inquiry</Link>
+                                                <Link to={`inquiry/${123}`} className='nav-link'>Inquiry</Link>
                                             </li>
                                             <li>
-                                                <Link to='' className='nav-link'>Calender</Link>
+                                                <Link to='/calender' className='nav-link'>Calender</Link>
                                             </li>
                                             <li>
                                                 <Dropdown menu={{ items }}

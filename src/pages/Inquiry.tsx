@@ -6,6 +6,7 @@ import TableHeading from '../Components/TableHeading';
 import boatImage from '../assets/images/boat_four.png'
 import HenceforthIcons from '../assets/icons/HenceforthIcons';
 import search from '../assets/icons/search.svg'
+import { useMatch } from 'react-router-dom';
 
 
 const handleChange = (value: string) => {
@@ -279,6 +280,7 @@ const items: TabsProps['items'] = [
 ];
 
 const Inquiry = () => {
+    const match=useMatch('/inquiry/:id')
     return (
         <>
             {/* inquiry section */}
