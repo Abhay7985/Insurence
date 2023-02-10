@@ -7,7 +7,8 @@ import type { DatePickerProps } from 'antd';
 import { DatePicker, Space } from 'antd';
 import henceforthApi from '../utils/henceforthApi';
 import { useMatch } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { GlobalContext } from '../context/Provider';
 
 
 const onChange: DatePickerProps['onChange'] = (date, dateString) => {
@@ -17,31 +18,35 @@ const onChange: DatePickerProps['onChange'] = (date, dateString) => {
 const MorningPanormic = () => {
 
     const match = useMatch(`morning-panormic/:id`)
+    const { authState } = React.useContext(GlobalContext)
+
     const [state, setState] = useState({
-        amenities:[],
-        bathrooms:0,
-        bedrooms:0,
-        cover_image:"",
-        created_at:"",
-        id:"",
-        location:"",
-        manufacturer_id:"",
-        model:"",
-        name:"",
-        passenger_day:"",
-        passenger_night:"",
-        pets_allowed:0,
-        photos:[],
-        prices:[],
-        rules:"",
-        size:"",
-        smoking_allowed:0,
-        status:"",
-        step:"",
-        updated_at:""
+        amenities: [],
+        bathrooms: 0,
+        bedrooms: 0,
+        category_id: 0,
+        cover_image: "",
+        created_at: "",
+        id: "",
+        location: "",
+        manufacturer_id: "",
+        model: "",
+        name: "",
+        passenger_day: "",
+        passenger_night: "",
+        pets_allowed: 0,
+        photos: [],
+        prices: [],
+        rules: "",
+        size: "",
+        smoking_allowed: 0,
+        status: "",
+        step: "",
+        updated_at: ""
     })
 
     const Viewpanoromic = async () => {
+        henceforthApi.setToken(authState?.access_token)
         try {
             let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
             setState(res.data);
@@ -68,7 +73,7 @@ const MorningPanormic = () => {
                                     <img src={leftArrow} alt="icon" />
                                 </div>
                                 <h3 className='mt-4 mb-2'>{state.name}</h3>
-                                <p>Speedboat • Angra dos Reis - Rio de Janeiro</p>
+                                <p>{state.category_id} • {state.location}</p>
                             </div>
                         </div>
                         <div className="col-12">
@@ -119,7 +124,7 @@ const MorningPanormic = () => {
                                     <h4 className='mb-2'>Amenities</h4>
                                     <div className="aminities-list d-flex gap-5">
                                         <ul>
-                                           {state?.amenities?.map((e: any , index: number) =><li key={index}>{e}</li> )}
+                                            {state?.amenities?.map((e: any, index: number) => <li key={index}>{e}</li>)}
                                         </ul>
                                     </div>
                                 </div>
@@ -131,13 +136,13 @@ const MorningPanormic = () => {
                                             <div className="pet-image">
                                                 <img src={petIcon} alt="icon" className='img-fluid' />
                                             </div>
-                                            <p>Pets are {state?.pets_allowed === 0 ? 'not allowed' :"allowed"}</p>
+                                            <p>Pets are {state?.pets_allowed === 0 ? 'not allowed' : "allowed"}</p>
                                         </li>
                                         <li className='d-flex gap-3 align-items-center'>
                                             <div className="smoking">
                                                 <img src={smoking} alt="icon" className='img-fluid' />
                                             </div>
-                                            <p>Smoking is {state?.smoking_allowed === 0 ? 'not allowed' :"allowed"}</p>
+                                            <p>Smoking is {state?.smoking_allowed === 0 ? 'not allowed' : "allowed"}</p>
                                         </li>
                                         <li>
                                             <p>{state?.rules}</p>
@@ -170,83 +175,25 @@ const MorningPanormic = () => {
                                     <DatePicker onChange={onChange} />
                                 </div>
                                 {/* price-list-1 */}
-                                <div className="price-list py-3 border-bottom">
-                                    <div className="price-list-title d-flex justify-content-between mb-2">
-                                        <p>Mon, 6 Jun</p>
-                                        <p className='fw-bold'>$30 <span className='fw-normal fs-14 px-1'>or</span> 10x in $4</p>
-                                    </div>
-                                    <div className="price-list-title d-flex justify-content-between">
-                                        <p className='fs-14'>Panorâmico Manhã - 9 às 13hrs <br /> (4 hours AM)</p>
-                                        <div className="choose-btn align-self-end">
-                                            <button className='btn btn-yellow fs-14 py-0'>Choose</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* price-list-1 */}
-                                <div className="price-list py-3 border-bottom">
-                                    <div className="price-list-title d-flex justify-content-between mb-2">
-                                        <p>Mon, 6 Jun</p>
-                                        <p className='fw-bold'>$30 <span className='fw-normal fs-14 px-1'>or</span> 10x in $4</p>
-                                    </div>
-                                    <div className="price-list-title d-flex justify-content-between">
-                                        <p className='fs-14'>Panorâmico Pôr do Sol - 14:30 às 18:30 <br /> (4 hours PM)</p>
-                                        <div className="choose-btn align-self-end">
-                                            <button className='btn btn-yellow fs-14 py-0'>Choose</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* price-list-1 */}
-                                <div className="price-list py-3 border-bottom">
-                                    <div className="price-list-title d-flex justify-content-between mb-2">
-                                        <p>Mon, 6 Jun</p>
-                                        <p className='fw-bold'>$30 <span className='fw-normal fs-14 px-1'>or</span> 10x in $4</p>
-                                    </div>
-                                    <div className="price-list-title d-flex justify-content-between">
-                                        <p className='fs-14'>Panorâmico 2hrs (2 hours tour)</p>
-                                        <div className="choose-btn align-self-end">
-                                            <button className='btn btn-yellow fs-14 py-0'>Choose</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* price-list-1 */}
-                                <div className="price-list py-3 border-bottom">
-                                    <div className="price-list-title d-flex justify-content-between mb-2">
-                                        <p>Mon, 6 Jun</p>
-                                        <p className='fw-bold'>$30 <span className='fw-normal fs-14 px-1'>or</span> 10x in $4</p>
-                                    </div>
-                                    <div className="price-list-title d-flex justify-content-between">
-                                        <p className='fs-14'>Panorâmico Pôr do sol + Noturno 14 às 20hrs (6 hours PM) - Panorâmico Completo - 10 às 18hrs <br /> (Full day panoramic tour - 8 hour)</p>
-                                        <div className="choose-btn align-self-end">
-                                            <button className='btn btn-yellow fs-14 py-0'>Choose</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* price-list-1 */}
-                                <div className="price-list py-3 border-bottom">
-                                    <div className="price-list-title d-flex justify-content-between mb-2">
-                                        <p>Mon, 6 Jun</p>
-                                        <p className='fw-bold'>$30 <span className='fw-normal fs-14 px-1'>or</span> 10x in $4</p>
-                                    </div>
-                                    <div className="price-list-title d-flex justify-content-between">
-                                        <p className='fs-14'>Panorâmico Noturno - 20 à meia noite <br /> (night time tour)</p>
-                                        <div className="choose-btn align-self-end">
-                                            <button className='btn btn-yellow fs-14 py-0'>Choose</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* price-list-1 */}
-                                <div className="price-list py-3">
-                                    <div className="price-list-title d-flex justify-content-between mb-2">
-                                        <p>Mon, 6 Jun</p>
-                                        <p className='fw-bold'>$30 <span className='fw-normal fs-14 px-1'>or</span> 10x in $4</p>
-                                    </div>
-                                    <div className="price-list-title d-flex justify-content-between">
-                                        <p className='fs-14'>Roteiro lIha de Itaparica - 10 às 18hrs <br /> (Island tour 2)</p>
-                                        <div className="choose-btn align-self-end">
-                                            <button className='btn btn-yellow fs-14 py-0'>Choose</button>
-                                        </div>
-                                    </div>
-                                </div>
+                                {state?.prices?.map((e: any, index: number) => {
+                                    return (
+                                        <>
+                                            <div className="price-list py-3 border-bottom">
+                                                <div className="price-list-title d-flex justify-content-between mb-2">
+                                                    <p>{e?.date}</p>
+                                                    <p className='fw-bold'>${e?.price} <span className='fw-normal fs-14 px-1'>or</span> {e?.installments}x in ${e?.installment_price}</p>
+                                                </div>
+                                                <div className="price-list-title d-flex justify-content-between">
+                                                    <p className='fs-14'>{e?.route} - 9 às 13hrs <br /> (4 hours AM)</p>
+                                                    <div className="choose-btn align-self-end">
+                                                        <button className='btn btn-yellow fs-14 py-0'>Choose</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                }
+                                )}
                             </div>
                         </div>
                     </div>
