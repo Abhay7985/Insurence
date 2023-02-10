@@ -1,5 +1,6 @@
 ::-webkit-scrollbar{
     width: 5px;
+    height: 5px;
 }
 ::-webkit-scrollbar-thumb{
     width: 5px;
@@ -223,6 +224,7 @@
     td {
         padding: 15px;
         vertical-align: middle;
+        white-space: nowrap;
     }
 
     th {

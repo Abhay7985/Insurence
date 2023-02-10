@@ -1,17 +1,14 @@
 import addIcon from '../assets/icons/plus_white.svg'
 import search from '../assets/icons/search.svg'
 import boatImage from '../assets/images/boat_four.png'
-import { Select, Space } from 'antd';
+import { Pagination, Select, Space } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import henceforthApi from '../utils/henceforthApi';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { boatListingData } from '../interfaces';
 import { GlobalContext } from '../context/Provider';
-import { Pagination } from 'antd';
-
-
-
+import HenceforthIcons from '../assets/icons/HenceforthIcons';
 
 const BoatListing = () => {
     const navigate = useNavigate()
@@ -30,7 +27,7 @@ const BoatListing = () => {
     const handleChange = (value: string) => {
         if (value) {
             urlSearchParams.set('status', value)
-            urlSearchParams.set('page','1')
+            urlSearchParams.set('page', '1')
         } else {
             urlSearchParams.delete(`status`)
         }
@@ -40,11 +37,11 @@ const BoatListing = () => {
     const handleSearch = (name: string, value: any) => {
         if (value) {
             urlSearchParams.set(name, value)
-            urlSearchParams.set('page','1')
+            urlSearchParams.set('page', '1')
         } else {
             urlSearchParams.delete(name)
         }
-        navigate({search: urlSearchParams.toString() })
+        navigate({ search: urlSearchParams.toString() })
     }
 
     const boatListing = async () => {
@@ -74,7 +71,7 @@ const BoatListing = () => {
     const onChangePagination = (value: string) => {
         if (value) {
             urlSearchParams.set('page', value)
-        } 
+        }
         else {
             urlSearchParams.delete('page')
         }
@@ -141,7 +138,7 @@ const BoatListing = () => {
                                 <tbody>
                                     {state?.data?.map((e: any, index: number) =>
                                         <tr>
-                                            <th scope="row">{Number(urlSearchParams.get("page"))==0 ? index + 1 : (Number(urlSearchParams.get("page")) - 1) * state.per_page + (index + 1)}</th>
+                                            <th scope="row">{Number(urlSearchParams.get("page")) == 0 ? index + 1 : (Number(urlSearchParams.get("page")) - 1) * state.per_page + (index + 1)}</th>
                                             <td >
                                                 <div className="boats d-flex gap-2 align-items-center" key={index}>
                                                     <div className="boat-image">
@@ -161,18 +158,30 @@ const BoatListing = () => {
                                             </td>
                                             <td>{e?.price}</td>
                                             <td>{moment(e?.updated_at).format('MMMM Do')}</td>
-                                            <td><Link to={"/morning-panormic"}>View</Link>/ <Link to={"/morning-panormic-listing"}>edit</Link> </td>
+                                            <td>
+                                                <ul className='d-flex gap-2'>
+                                                    <li>
+                                                        <Link to="">
+                                                            <HenceforthIcons.ViewIcon />
+                                                        </Link>
+                                                    </li>
+                                                    <li>
+                                                        <Link to=""> <HenceforthIcons.EditIcon /></Link>
+                                                    </li>
+
+                                                </ul>
+                                            </td>
                                         </tr>
                                     )}
                                 </tbody>
                             </table>
                         </div>
                         <div className="pagination justify-content-center">
-                            <Pagination 
-                            pageSize={state.per_page}
-                            total={state.total}
-                            current={Number(urlSearchParams.has('page') ? urlSearchParams.get('page') : "1")}
-                            onChange={(page: any) => onChangePagination(page)}
+                            <Pagination
+                                pageSize={state.per_page}
+                                total={state.total}
+                                current={Number(urlSearchParams.has('page') ? urlSearchParams.get('page') : "1")}
+                                onChange={(page: any) => onChangePagination(page)}
                             />
                         </div>
                     </div>
