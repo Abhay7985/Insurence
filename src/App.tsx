@@ -11,17 +11,17 @@ import BoatListing from './pages/BoatListing';
 import AminitiesOffer from './pages/AminitiesOffer';
 import SafetyQuestions from './pages/SafetyQuestions';
 import BoatPrice from './pages/BoatPrice';
-import MorningPanormic from './pages/MorningPanormic';
+import BoatDetails from './pages/BoatDetails';
 import EditImage from './pages/EditImage';
 import EditAmenities from './pages/EditAmenities';
 import Inquiry from './pages/Inquiry';
 import Profile from './pages/Profile';
 import ChangePassword from './pages/ChangePassword';
 import ProviderCalender from './pages/ProviderCalender';
-import MorningPanormicListing from './pages/MorningPanormicListing';
 import MainLayout from './layout/MainLayout';
 import BoatLayout from './layout/BoatLayout';
 import AddPhotos from './pages/AddPhotos';
+import EditBoatDetails from './pages/EditBoatDetails';
 
 const App = () => {
   const { authState } = useContext(GlobalContext)
@@ -42,19 +42,19 @@ const App = () => {
 
           <Route path="*" element={<MainLayout />}>
             <Route index element={<BoatListing />} />
+            <Route path="boat/:id/inquiry" element={<BoatDetails />} />
+            <Route path="boat/:id/inquiry/edit" element={<EditBoatDetails />} />
             <Route path="about" element={<About />} />
             <Route path="confirm-address" element={<ConfirmAddress />} />
             <Route path="boat-listing" element={<BoatListing />} />
             <Route path="edit-image" element={<EditImage />} />
             <Route path="aminities-offer" element={<AminitiesOffer />} />
             <Route path="add-photos" element={<AddPhotos />} />
-            <Route path="morning-panormic/:id" element={<MorningPanormic />} />
             <Route path="edit-amenities" element={<EditAmenities />} />
-            <Route path="inquiry" element={<Inquiry />} />
+            <Route path="inquiry/:id" element={<Inquiry />} />
             <Route path="profile" element={<Profile />} />
             <Route path="change-password" element={<ChangePassword />} />
             <Route path="provider-calender" element={<ProviderCalender />} />
-            <Route path="morning-panormic-listing/:id" element={<MorningPanormicListing />} />
 
           </Route>
         </Fragment>
