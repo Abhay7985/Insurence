@@ -27,7 +27,7 @@ const MorningPanormicListing = () => {
                         </div>
                         <div className="col-12">
                             <div className="tab-box d-flex align-items-start py-5 gap-3">
-                                <div className="nav flex-column nav-pills bg-white " id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                <div className="nav flex-column nav-pills bg-white" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                     {/* Listing accordian */}
                                     <button className="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
                                         {/* Listing accordian */}
@@ -157,7 +157,13 @@ const MorningPanormicListing = () => {
                                                     <div className="amenities-list d-flex gap-5">
                                                         <ul>
                                                             <li>Sheet</li>
-                                                            
+                                                            <li>Shampoo</li>
+                                                            <li>Towel</li>
+                                                        </ul>
+                                                        <ul>
+                                                            <li>Sheet</li>
+                                                            <li>Shampoo</li>
+                                                            <li>Towel</li>
                                                         </ul>
                                                     </div>
                                                 </div>
