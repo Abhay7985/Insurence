@@ -1,14 +1,32 @@
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { useLocation, useMatch, useNavigate } from 'react-router-dom';
 import bannerImage from '../assets/images/image_one.png';
+import BackNextLayout from '../Components/boat/BackNextLayout';
+import { GlobalContext } from '../context/Provider';
 
 const BoatPrice = () => {
-    
+    const navigate = useNavigate()
+    const location = useLocation()
+    const match = useMatch(`boat/:id/price`)
+    const uRLSearchParams = new URLSearchParams(location.search)
+
+    const { Toast } = React.useContext(GlobalContext)
+
+    const onSubmit = async (e: any) => {
+        e.preventDefault()
+        navigate({
+            pathname: `/boat/${match?.params.id}/inquiry`,
+            search: uRLSearchParams.toString()
+        })
+
+    }
+
     return (
         <>
             {/* Boat-Price */}
             <section className="Confirm-address-section">
                 <div className="container-fluid">
-                    <div className="row">
+                    <form className="row" onSubmit={onSubmit}>
                         <div className="col-lg-6">
                             <div className="banner-content h-100 d-flex flex-column ">
                                 <div className="row justify-content-center justify-content-lg-end gy-4 pb-5">
@@ -83,18 +101,7 @@ const BoatPrice = () => {
                                     </div>
 
                                 </div>
-                                <div className="row banner-footer border-top mt-auto justify-content-end ">
-                                    <div className="col-11 col-lg-11">
-                                        <ul className='d-flex justify-content-between'>
-                                            <li>
-                                                <Link to='/safety-question' className='btn back-btn border-0'>Back</Link>
-                                            </li>
-                                            <li>
-                                                <Link to='/morning-panormic' className='btn btn-yellow px-3'>Finish</Link>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                <BackNextLayout buttonName="Finish" />
                             </div>
 
                         </div>
@@ -103,7 +110,7 @@ const BoatPrice = () => {
                                 <img src={bannerImage} alt="" />
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </section>
         </>

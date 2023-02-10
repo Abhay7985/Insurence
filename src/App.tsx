@@ -36,6 +36,7 @@ const App = () => {
             <Route path=":id/aminities" element={<AminitiesOffer />} />
             <Route path=":id/photos" element={<AddPhotos />} />
             <Route path=":id/safety-question" element={<SafetyQuestions />} />
+            <Route path=":id/price" element={<BoatPrice />} />
 
           </Route>
 
@@ -47,7 +48,6 @@ const App = () => {
             <Route path="edit-image" element={<EditImage />} />
             <Route path="aminities-offer" element={<AminitiesOffer />} />
             <Route path="add-photos" element={<AddPhotos />} />
-            <Route path="boat-price" element={<BoatPrice />} />
             <Route path="morning-panormic/:id" element={<MorningPanormic />} />
             <Route path="edit-amenities" element={<EditAmenities />} />
             <Route path="inquiry" element={<Inquiry />} />
