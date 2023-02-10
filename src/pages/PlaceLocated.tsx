@@ -1,8 +1,49 @@
 import { Link } from "react-router-dom";
 import bannerImage from '../assets/images/image_two.png';
 import locationIcon from '../assets/icons/current_location.svg';
+import React, { Fragment } from "react";
+import { GlobalContext } from "../context/Provider";
 
 function PlaceLocated() {
+    const { Toast } = React.useContext(GlobalContext)
+    const [inputFocued, setInputFocused] = React.useState(false)
+    const [form, setForm] = React.useState({
+        location_address: "",
+        latitude: 0,
+        longitude: 0,
+    })
+
+    const handleInput = (name: string, value: string) => {
+        setForm({
+            ...form,
+            [name]: value
+        })
+    }
+    const requestCurrenctLocation = () => {
+        console.log('requestCurrenctLocation called');
+        try {
+            navigator.geolocation.getCurrentPosition((successCallback) => {
+                console.log("Latitude is :", successCallback.coords.latitude);
+                console.log("Longitude is :", successCallback.coords.longitude);
+                // router.replace({ query: { ...router.query, ...successCallback.coords } })
+
+                setForm({
+                    ...form,
+                    latitude: successCallback.coords.latitude,
+                    longitude: successCallback.coords.longitude
+                })
+
+            }, (errorCallback) => {
+                console.log('errorCallback', errorCallback.message);
+
+            });
+
+        } catch (error) {
+            console.log('requestCurrenctLocation error', error);
+
+        }
+    }
+
     return (
         //  Select-passenger 
         <section className="select-passenger-section">
@@ -14,15 +55,19 @@ function PlaceLocated() {
                                 <div className="col-11 col-lg-11">
                                     <h3 className='banner-title'>Where is your place located?</h3>
                                 </div>
-                                <div className="col-11 col-lg-11">
-                                    <input type="text" className="form-control" placeholder="Enter your address" />
-                                    <Link to='' className="location border mt-1 d-flex gap-3 align-items-center nav-link">
-                                        <div className="location-icon">
-                                            <img src={locationIcon} alt="icon" className="img-fluid" />
-                                        </div>
-                                        <p>Use my current location</p>
-                                    </Link>
-                                </div>
+                                {form.latitude == 0 ? <Fragment>
+                                    <div className="col-11 col-lg-11">
+                                        <input type="text" className="form-control" placeholder="Enter your address" onFocus={() => setInputFocused(true)} onBlur={() => setTimeout(() => setInputFocused(false), 100)} />
+
+                                        {inputFocued && <div className="location border mt-1 d-flex gap-3 align-items-center nav-link" onClick={requestCurrenctLocation}>
+                                            <div className="location-icon">
+                                                <img src={locationIcon} alt="icon" className="img-fluid" />
+                                            </div>
+                                            <p>Use my current location</p>
+                                        </div>}
+                                    </div></Fragment> : <Fragment>
+
+                                </Fragment>}
                             </div>
                             <div className="row banner-footer border-top mt-auto justify-content-end">
                                 <div className="col-11 col-lg-11">
