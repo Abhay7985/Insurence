@@ -73,7 +73,7 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     }
     const logOutNow = () => {
         logoutSuccess({})(authDispatch);
-        navigate("/1", { replace: true });
+        navigate("/", { replace: true });
     };
 
     const [messageApi, contextHolder] = message.useMessage();
