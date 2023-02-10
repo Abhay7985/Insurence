@@ -11,8 +11,7 @@ import logoutSuccess from './actions/auth/logoutSuccess';
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 type Function = () => void;
-type LoginFunction = (id: string) => void;
-
+type ToastFunction = (msg: any) => void;
 
 interface CommonContextType {
     loading: boolean;
@@ -20,10 +19,11 @@ interface CommonContextType {
     setLoading: React.Dispatch<SetStateAction<boolean>>;
     authState: UserInfoInterface;
     authDispatch: any,
-    logOutNow:Function
-    success:any,
-    handleError:any
-    contextHolder:any
+    logOutNow: Function
+    Toast: {
+        error: ToastFunction,
+        success: ToastFunction
+    },
     setLocale: React.Dispatch<SetStateAction<any>>;
     setIsDarkMode: React.Dispatch<SetStateAction<boolean>>;
 }
@@ -55,13 +55,10 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     const [locale, setLocale] = React.useState(enUS)
     const [isDarkMode, setIsDarkMode] = React.useState(false)
     const navigate = useNavigate()
-     
+
     const [authState, authDispatch] = useReducer(auth, {}, () => {
         const localAuthState = localStorage.getItem("authState");
         let parsedObject = JSON.parse(localAuthState as any)
-        console.log('parsedObject',parsedObject)
-        console.log('parsedObject token',parsedObject?.token)
-        console.log('localAuthState',localAuthState)
         henceforthApi.setToken(parsedObject?.token)
         return localAuthState ? parsedObject : {}
     })
@@ -73,24 +70,29 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     }
     const logOutNow = () => {
         logoutSuccess({})(authDispatch);
-        navigate("/1", { replace: true });
+        navigate("/", { replace: true });
     };
 
     const [messageApi, contextHolder] = message.useMessage();
 
     henceforthApi.setToken(authState?.access_token)
-    const handleError = (error: any) => {
+    const error = (error: any) => {
+        const msg = error?.response?.body?.message as string
         messageApi.open({
             type: 'error',
-            content: error?.response?.body?.message,
+            content: msg,
         });
     }
-    const success = (success: any) => {
+    const success = (success: string) => {
         messageApi.open({
             type: 'success',
             content: success,
         });
     };
+    const Toast = {
+        success,
+        error
+    }
 
     const themes = {
         dark: `${process.env.PUBLIC_URL}/dark-theme.css`,
@@ -117,7 +119,7 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     return (
         <GlobalContext.Provider
             value={{
-                loading, setLoading, authState, success,authDispatch,contextHolder,logOutNow,handleError, setLocale,
+                loading, setLoading, authState, Toast, authDispatch, logOutNow, setLocale,
                 isDarkMode, setIsDarkMode, ...props
             }}>
             <ConfigProvider
@@ -140,10 +142,10 @@ function GlobalProvider(props: GlobleContextProviderProps) {
                         }
                     },
                 }}>
-                {/* {contextHolder} */}
                 {props.children}
                 <FloatButton.BackTop />
             </ConfigProvider>
+            {contextHolder}
         </GlobalContext.Provider>
     )
 }

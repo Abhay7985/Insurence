@@ -5,12 +5,12 @@ import Footer from "../pages/common/Footer"
 const TheLayout = () => {
     return (
         <div className="layout-wrapper d-flex h-100 flex-column">
-            <header className="sticky-top">
-                <Header/>
+            <header className="sticky-top" style={{ zIndex: 10 }}>
+                <Header />
             </header>
             <main><Outlet /></main>
             <footer className="mt-auto">
-                <Footer/>
+                <Footer />
             </footer>
         </div>
     )

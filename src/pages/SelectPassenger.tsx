@@ -4,8 +4,10 @@ import decrease from '../assets/icons/remove_circle_outline.svg';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import React from 'react';
 import henceforthApi from '../utils/henceforthApi';
+import { GlobalContext } from '../context/Provider';
 
 const SelectPassenger = () => {
+    const { Toast} = React.useContext(GlobalContext)
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -36,6 +38,7 @@ const SelectPassenger = () => {
         }
         try {
             const apiRes = await henceforthApi.Boat.create(items)
+            Toast.success(apiRes.message)
             navigate({
                 pathname: `/boat/${apiRes.boat_id}/place`
             })
