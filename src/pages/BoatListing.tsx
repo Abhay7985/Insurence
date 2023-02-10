@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { boatListingData } from '../interfaces';
 import { GlobalContext } from '../context/Provider';
-import PaginationLayout from '../Components/PaginationLayout';
+import { Pagination } from 'antd';
 
 
 
@@ -30,6 +30,7 @@ const BoatListing = () => {
     const handleChange = (value: string) => {
         if (value) {
             urlSearchParams.set('status', value)
+            urlSearchParams.set('page','1')
         } else {
             urlSearchParams.delete(`status`)
         }
@@ -39,10 +40,11 @@ const BoatListing = () => {
     const handleSearch = (name: string, value: any) => {
         if (value) {
             urlSearchParams.set(name, value)
+            urlSearchParams.set('page','1')
         } else {
             urlSearchParams.delete(name)
         }
-        navigate({ search: urlSearchParams.toString() })
+        navigate({search: urlSearchParams.toString() })
     }
 
     const boatListing = async () => {
@@ -159,20 +161,18 @@ const BoatListing = () => {
                                             </td>
                                             <td>{e?.price}</td>
                                             <td>{moment(e?.updated_at).format('MMMM Do')}</td>
-                                            <td>view/edit</td>
+                                            <td><Link to={"/morning-panormic"}>View</Link>/ <Link to={"/morning-panormic-listing"}>edit</Link> </td>
                                         </tr>
                                     )}
                                 </tbody>
                             </table>
                         </div>
-                        <div className="pagination">
-                            <PaginationLayout
-                                count={state.total}
-                                data={state.data}
-                                limit={state.per_page}
-                                page={Number(urlSearchParams.has('page') ? urlSearchParams.get('page') : "1") }
-                                loading={false}
-                                onPageChange={(page: any) => onChangePagination(page)}
+                        <div className="pagination justify-content-center">
+                            <Pagination 
+                            pageSize={state.per_page}
+                            total={state.total}
+                            current={Number(urlSearchParams.has('page') ? urlSearchParams.get('page') : "1")}
+                            onChange={(page: any) => onChangePagination(page)}
                             />
                         </div>
                     </div>
