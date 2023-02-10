@@ -5,10 +5,6 @@ import { Select, Space } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import henceforthApi from '../utils/henceforthApi';
 
-const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
-};
-
 const BoatInfo = () => {
     const navigate = useNavigate()
     const location = useLocation()
@@ -29,11 +25,11 @@ const BoatInfo = () => {
         uRLSearchParams.set("name", boatName)
         uRLSearchParams.set("model", boatModel)
         uRLSearchParams.set("size", boatSize)
-        uRLSearchParams.set("category_id", "1")
-        uRLSearchParams.set("manufacturer_id", "1")
+        uRLSearchParams.set("category_id", category_id)
+        uRLSearchParams.set("manufacturer_id", manufacturer_id)
         navigate({
             pathname: '/boat/passenger-bedrooms',
-            // search: uRLSearchParams.toString()
+            search: uRLSearchParams.toString()
         })
 
     }

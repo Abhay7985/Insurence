@@ -8,8 +8,8 @@ import loginSuccess from '../../context/actions/auth/loginSuccess';
 import Spinner from '../common/AntSpinner';
 
 const SignIn = () => {
-  const { loading, setLoading, authDispatch,success,handleError,contextHolder } = React.useContext(GlobalContext)
-  const [remember,setRemember]=useState(false)
+  const { loading, setLoading, authDispatch, Toast } = React.useContext(GlobalContext)
+  const [remember, setRemember] = useState(false)
   const [state, setSate] = React.useState({
     email: "",
     password: "",
@@ -25,9 +25,9 @@ const SignIn = () => {
       let apiRes = await henceforthApi.Auth.login(data)
       loginSuccess(apiRes.data)(authDispatch)
       console.log('apiRes', apiRes)
-      success(apiRes.message)
+      Toast.success(apiRes.message)
     } catch (error) {
-      handleError(error)
+      Toast.error(error)
     } finally {
       setLoading(false)
     }
@@ -85,14 +85,13 @@ const SignIn = () => {
                 <div className="col-11 col-lg-8">
                   <div className="form-check ps-0">
                     <Form.Item name="remember" valuePropName="checked" >
-                      <Checkbox onChange={(e:any)=>setRemember(e.target.value)}>Remember me</Checkbox>
+                      <Checkbox onChange={(e: any) => setRemember(e.target.value)}>Remember me</Checkbox>
                     </Form.Item>
                   </div>
                 </div>
                 <div className="col-11 col-lg-8">
                   <Form.Item >
                     <div className="login-btn">
-                    {contextHolder}
                       <Button htmlType="submit" className='btn btn-yellow w-100 h-100'>{loading ? <Spinner /> : "Log In"}</Button>
                     </div>
                   </Form.Item>
