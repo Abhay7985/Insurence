@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { boatListingData } from '../interfaces';
 import { GlobalContext } from '../context/Provider';
+import PaginationLayout from '../Components/PaginationLayout';
 
 
 
@@ -22,31 +23,30 @@ const BoatListing = () => {
         current_page: 0,
         data: [] as Array<boatListingData>,
         from: 1,
-        total: 0
+        total: 0,
+        per_page: 0
     })
-    
+
     const handleChange = (value: string) => {
-        
         if (value) {
-            urlSearchParams.set('type', value)
+            urlSearchParams.set('status', value)
         } else {
-            urlSearchParams.delete(`type`)
+            urlSearchParams.delete(`status`)
         }
-        navigate({ search: urlSearchParams.toString()})
+        navigate({ search: urlSearchParams.toString() })
     };
-    
-    const handleSearch = (name:string , value:any) => {
+
+    const handleSearch = (name: string, value: any) => {
         if (value) {
             urlSearchParams.set(name, value)
         } else {
             urlSearchParams.delete(name)
         }
-        navigate({ search: urlSearchParams.toString()})
+        navigate({ search: urlSearchParams.toString() })
     }
 
     const boatListing = async () => {
-    henceforthApi.setToken(authState?.access_token)
-
+        henceforthApi.setToken(authState?.access_token)
         try {
             let res = await henceforthApi.Boat.getBoatListing(
                 urlSearchParams.toString()
@@ -60,20 +60,24 @@ const BoatListing = () => {
 
     useEffect(() => {
         boatListing()
-    }, [urlSearchParams.get('search'), urlSearchParams.toString()])
-    // {Number(match?.params.page) == 0
-    //     ? index + 1
-    //     : (Number(match?.params.page) - 1) * limit + (index + 1)}
+    }, [urlSearchParams.toString()])
 
- let dotColor = [
-    {status:"listed" , color:"green"},
-    {status:"unlisted" , color:""},
-    {status:"draft" , color:"red"},
+    let dotColor = [
+        { status: "listed", color: "green" },
+        { status: "unlisted", color: "" },
+        { status: "draft", color: "red" },
 
- ]
+    ]
 
-//  console.log(dotColor.find((res:any) => res.name === 'draft')?.color);
- 
+    const onChangePagination = (value: string) => {
+        if (value) {
+            urlSearchParams.set('page', value)
+        } 
+        else {
+            urlSearchParams.delete('page')
+        }
+        navigate({ search: urlSearchParams.toString() })
+    }
 
     return (
         <>
@@ -100,19 +104,19 @@ const BoatListing = () => {
                                     <span className="input-group-text bg-transparent border-0" id="basic-addon1">
                                         <img src={search} alt="icon" />
                                     </span>
-                                    <input type="text" className="form-control border-0 ps-0 rounded-pill" name='search' placeholder="Search..." value={urlSearchParams.get('search') as string} onChange={(e: any)=>handleSearch(e.target.name, e.target.value)} />
+                                    <input type="text" className="form-control border-0 ps-0 rounded-pill" name='search' placeholder="Search..." value={urlSearchParams.get('search') as string} onChange={(e: any) => handleSearch(e.target.name, e.target.value)} />
                                 </div>
                                 <div className="add-boat-btn">
                                     <Select
                                         defaultValue="Listing status"
-                                        value={urlSearchParams.has("type") ? urlSearchParams.get("type") : "0" }
+                                        value={urlSearchParams.has("status") ? urlSearchParams.get("status") : "0"}
                                         style={{ width: 150 }}
                                         onChange={handleChange}
                                         options={[
                                             { value: '0', label: 'All' },
                                             { value: '1', label: 'Listed' },
                                             { value: '2', label: 'Unlisted' },
-                                            { value: '4', label: 'Draft' },
+                                            { value: '3', label: 'Draft' },
                                         ]}
                                     />
                                 </div>
@@ -135,11 +139,11 @@ const BoatListing = () => {
                                 <tbody>
                                     {state?.data?.map((e: any, index: number) =>
                                         <tr>
-                                            <th scope="row">{index + 1}</th>
+                                            <th scope="row">{Number(urlSearchParams.get("page"))==0 ? index + 1 : (Number(urlSearchParams.get("page")) - 1) * state.per_page + (index + 1)}</th>
                                             <td >
                                                 <div className="boats d-flex gap-2 align-items-center" key={index}>
                                                     <div className="boat-image">
-                                                    {/* <img src={e.image ? `${""}` : boatImage} alt="img" className='img-fluid' /> */}
+                                                        {/* <img src={e.image ? `${""}` : boatImage} alt="img" className='img-fluid' /> */}
                                                         <img src={boatImage} alt="img" className='img-fluid' />
                                                     </div>
                                                     <p>{e?.name}</p>
@@ -161,8 +165,19 @@ const BoatListing = () => {
                                 </tbody>
                             </table>
                         </div>
+                        <div className="pagination">
+                            <PaginationLayout
+                                count={state.total}
+                                data={state.data}
+                                limit={state.per_page}
+                                page={Number(urlSearchParams.has('page') ? urlSearchParams.get('page') : "1") }
+                                loading={false}
+                                onPageChange={(page: any) => onChangePagination(page)}
+                            />
+                        </div>
                     </div>
                 </div>
+
             </section>
         </>
     )
