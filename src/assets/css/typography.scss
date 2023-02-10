@@ -113,6 +113,12 @@ label {
 .form-control:hover {
     border-color: $primary-color;
 }
+.nav-link{
+    font-weight: 600;
+}
+.nav-link:hover{
+    color: $primary-color;
+}
 
 .form-control:focus {
     border-color: $primary-color;

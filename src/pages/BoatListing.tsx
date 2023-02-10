@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { boatListingData } from '../interfaces';
 import { GlobalContext } from '../context/Provider';
+import HenceforthIcons from '../assets/icons/HenceforthIcons';
 
 
 
@@ -24,28 +25,28 @@ const BoatListing = () => {
         from: 1,
         total: 0
     })
-    
+
     const handleChange = (value: string) => {
-        
+
         if (value) {
             urlSearchParams.set('type', value)
         } else {
             urlSearchParams.delete(`type`)
         }
-        navigate({ search: urlSearchParams.toString()})
+        navigate({ search: urlSearchParams.toString() })
     };
-    
-    const handleSearch = (name:string , value:any) => {
+
+    const handleSearch = (name: string, value: any) => {
         if (value) {
             urlSearchParams.set(name, value)
         } else {
             urlSearchParams.delete(name)
         }
-        navigate({ search: urlSearchParams.toString()})
+        navigate({ search: urlSearchParams.toString() })
     }
 
     const boatListing = async () => {
-    henceforthApi.setToken(authState?.access_token)
+        henceforthApi.setToken(authState?.access_token)
 
         try {
             let res = await henceforthApi.Boat.getBoatListing(
@@ -65,15 +66,15 @@ const BoatListing = () => {
     //     ? index + 1
     //     : (Number(match?.params.page) - 1) * limit + (index + 1)}
 
- let dotColor = [
-    {status:"listed" , color:"green"},
-    {status:"unlisted" , color:""},
-    {status:"draft" , color:"red"},
+    let dotColor = [
+        { status: "listed", color: "green" },
+        { status: "unlisted", color: "" },
+        { status: "draft", color: "red" },
 
- ]
+    ]
 
-//  console.log(dotColor.find((res:any) => res.name === 'draft')?.color);
- 
+    //  console.log(dotColor.find((res:any) => res.name === 'draft')?.color);
+
 
     return (
         <>
@@ -100,12 +101,12 @@ const BoatListing = () => {
                                     <span className="input-group-text bg-transparent border-0" id="basic-addon1">
                                         <img src={search} alt="icon" />
                                     </span>
-                                    <input type="text" className="form-control border-0 ps-0 rounded-pill" name='search' placeholder="Search..." value={urlSearchParams.get('search') as string} onChange={(e: any)=>handleSearch(e.target.name, e.target.value)} />
+                                    <input type="text" className="form-control border-0 ps-0 rounded-pill" name='search' placeholder="Search..." value={urlSearchParams.get('search') as string} onChange={(e: any) => handleSearch(e.target.name, e.target.value)} />
                                 </div>
                                 <div className="add-boat-btn">
                                     <Select
                                         defaultValue="Listing status"
-                                        value={urlSearchParams.has("type") ? urlSearchParams.get("type") : "0" }
+                                        value={urlSearchParams.has("type") ? urlSearchParams.get("type") : "0"}
                                         style={{ width: 150 }}
                                         onChange={handleChange}
                                         options={[
@@ -139,7 +140,7 @@ const BoatListing = () => {
                                             <td >
                                                 <div className="boats d-flex gap-2 align-items-center" key={index}>
                                                     <div className="boat-image">
-                                                    {/* <img src={e.image ? `${""}` : boatImage} alt="img" className='img-fluid' /> */}
+                                                        {/* <img src={e.image ? `${""}` : boatImage} alt="img" className='img-fluid' /> */}
                                                         <img src={boatImage} alt="img" className='img-fluid' />
                                                     </div>
                                                     <p>{e?.name}</p>
@@ -155,7 +156,19 @@ const BoatListing = () => {
                                             </td>
                                             <td>{e?.price}</td>
                                             <td>{moment(e?.updated_at).format('MMMM Do')}</td>
-                                            <td>view/edit</td>
+                                            <td>
+                                                <ul className='d-flex gap-2'>
+                                                    <li>
+                                                       <Link to="">
+                                                       <HenceforthIcons.ViewIcon />
+                                                       </Link>
+                                                    </li>
+                                                    <li>
+                                                       <Link to=""> <HenceforthIcons.EditIcon /></Link>
+                                                    </li>
+
+                                                </ul>
+                                            </td>
                                         </tr>
                                     )}
                                 </tbody>
