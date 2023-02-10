@@ -6,9 +6,10 @@ import currentLocation from '../assets/icons/exact_location.svg';
 import type { DatePickerProps } from 'antd';
 import { DatePicker, Space } from 'antd';
 import henceforthApi from '../utils/henceforthApi';
-import { useMatch } from 'react-router-dom';
+import { Link, useMatch } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { GlobalContext } from '../context/Provider';
+import HenceforthIcons from '../assets/icons/HenceforthIcons';
 
 
 const onChange: DatePickerProps['onChange'] = (date, dateString) => {
@@ -68,39 +69,45 @@ const BoatDetails = () => {
                     {/* banner-row */}
                     <div className="row">
                         <div className="col-12">
-                            <div className="title">
-                                <div className="left-arrow">
-                                    <img src={leftArrow} alt="icon" />
+                            <div className="boat-header d-flex justify-content-between">
+                                <div className="title">
+                                    <div className="left-arrow">
+                                        <HenceforthIcons.DetailBack />
+                                    </div>
+                                    <h3 className='mt-4 mb-2'>{state.name}</h3>
+                                    <p>{state.category_id} • {state.location}</p>
                                 </div>
-                                <h3 className='mt-4 mb-2'>{state.name}</h3>
-                                <p>{state.category_id} • {state.location}</p>
+                                <div className="share-btn align-self-end d-flex gap-2 align-items-center">
+                                    <HenceforthIcons.Share />
+                                    <Link to='' className='text-black'>Share</Link>
+                                </div>
                             </div>
                         </div>
                         <div className="col-12">
                             <div className="row gy-4 py-4">
-                                <div className="col-md-6">
+                                <div className="col-md-6 ps-0">
                                     <div className="morning-banner">
                                         <img src={BannerImage} alt="img" className='img-fluid' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
-                                    <div className="row gy-4">
-                                        <div className="col-6">
+                                    <div className="row gy-2">
+                                        <div className="col-6 ps-0">
                                             <div className="morning-banner">
                                                 <img src={BannerImage} alt="img" className='img-fluid' />
                                             </div>
                                         </div>
-                                        <div className="col-6">
+                                        <div className="col-6 ps-0">
                                             <div className="morning-banner">
                                                 <img src={BannerImage} alt="img" className='img-fluid' />
                                             </div>
                                         </div>
-                                        <div className="col-6">
+                                        <div className="col-6 ps-0">
                                             <div className="morning-banner">
                                                 <img src={BannerImage} alt="img" className='img-fluid' />
                                             </div>
                                         </div>
-                                        <div className="col-6">
+                                        <div className="col-6 ps-0">
                                             <div className="morning-banner">
                                                 <img src={BannerImage} alt="img" className='img-fluid' />
                                             </div>

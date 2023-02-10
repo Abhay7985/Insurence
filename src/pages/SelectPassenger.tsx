@@ -36,6 +36,10 @@ const SelectPassenger = () => {
                 "bedrooms": bedrooms,
                 "bathrooms": bathrooms
             }
+            // navigate({
+            //     pathname: '/boat/passenger-bedrooms',
+            //     search: uRLSearchParams.toString()
+            // })
         }
         try {
             const apiRes = await henceforthApi.Boat.create(items)

@@ -321,10 +321,7 @@
 .morning-panormic-listing {
     background: $white-2;
     .tab-box {
-        height: 90vh;
-        overflow: hidden;
-
-        // overflow: hidden;
+        height: 100%;
         .tab-content {
             height: 100%;
             overflow: auto;
@@ -334,7 +331,7 @@
             min-width: 300px;
             width: 300px;
             padding: 20px 20px;
-            // height: 100%;
+            min-height: 100%;
         }
     }
 
@@ -441,4 +438,25 @@
         z-index: -1;
         cursor: pointer;
     }
+  }
+
+  // ************************************Bugs Css****************************
+  .ant-form-item{
+    margin: 0;
+  }
+  .ant-select-single.ant-select-show-arrow .ant-select-selection-item{
+    color: $light-black !important;
+  }
+  .ant-dropdown-arrow{
+    display: none !important;
+  }
+  .ant-dropdown{
+    box-shadow: 0px 0px 10px #00000014 !important;
+    border-radius: 8px; 
+  }
+  .ant-dropdown-show-arrow.ant-dropdown-placement-bottomLeft{
+    padding: 0;
+  }
+  .ant-dropdown .ant-dropdown-menu{
+    padding: 10px;
   }

@@ -1,5 +1,6 @@
 export default (props: any) => {
-    return <table className="table my-4"> <thead>
+    return <div className="table-responsive">
+        <table className="table my-4"> <thead>
         <tr className="thead">
             {props.Array.map((res: any) => <th>{res}</th>)}
         </tr>
@@ -8,5 +9,6 @@ export default (props: any) => {
         {props.children}
     </tbody>
     </table>
+    </div>
 
 }

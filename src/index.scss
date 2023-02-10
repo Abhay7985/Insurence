@@ -22,4 +22,13 @@
 body{
     font-family: 'Nunito', sans-serif;
     // background: $white-2;
+    height: 100%;
+}
+html{
+    height: 100%;
+}
+
+
+div#root {
+    height: 100%;
 }
