@@ -1,14 +1,31 @@
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useLocation, useMatch, useNavigate } from 'react-router-dom';
 import bannerImage from '../assets/images/image_one.png';
+import { GlobalContext } from '../context/Provider';
 
-const SafetyQuestions =()=> {
-    
+const SafetyQuestions = () => {
+    const navigate = useNavigate()
+    const location = useLocation()
+    const match = useMatch(`boat/:id/safety-question`)
+    const uRLSearchParams = new URLSearchParams(location.search)
+
+    const { Toast } = React.useContext(GlobalContext)
+
+    const onSubmit = async (e: any) => {
+        e.preventDefault()
+        navigate({
+            pathname: `/boat/${match?.params.id}/safety-question`,
+            search: uRLSearchParams.toString()
+        })
+
+    }
+
     return (
         <>
             {/* Aminities-offer */}
             <section className="Confirm-address-section">
                 <div className="container-fluid">
-                    <div className="row">
+                    <form className="row" onSubmit={onSubmit}>
                         <div className="col-lg-6">
                             <div className="banner-content h-100 d-flex flex-column ">
                                 <div className="row justify-content-center justify-content-lg-end gy-4 pb-5">
@@ -74,7 +91,7 @@ const SafetyQuestions =()=> {
                                 <img src={bannerImage} alt="" />
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </section>
         </>

@@ -5,9 +5,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import React from 'react';
 import henceforthApi from '../utils/henceforthApi';
 import { GlobalContext } from '../context/Provider';
+import BackNextLayout from '../Components/boat/BackNextLayout';
 
 const SelectPassenger = () => {
-    const { Toast} = React.useContext(GlobalContext)
+    const { Toast } = React.useContext(GlobalContext)
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -149,18 +150,7 @@ const SelectPassenger = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="row banner-footer border-top mt-auto justify-content-end">
-                                    <div className="col-11 col-lg-11">
-                                        <ul className='d-flex justify-content-between'>
-                                            <li>
-                                                <button type='button' onClick={() => window.history.back()} className='btn back-btn border-0'>Back</button>
-                                            </li>
-                                            <li>
-                                                <button type='submit' className='btn btn-yellow px-3'>Next</button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                <BackNextLayout />
                             </div>
 
                         </div>
