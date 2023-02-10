@@ -2,7 +2,7 @@ import _superagent, { search } from 'superagent';
 const SuperagentPromise = require('superagent-promise');
 const superagent = SuperagentPromise(_superagent, global.Promise);
 
-const API_ROOT = `http://192.168.0.115:8080/api/`;
+const API_ROOT = `http://15.229.56.53:8082/api/`;
 const INSTAGRAM_API_ROOT = 'https://graph.instagram.com/'; //live
 
 const BUCKET_ROOT = `https://demoserver3.sgp1.digitaloceanspaces.com/`;
@@ -111,7 +111,9 @@ const Boat = {
   create: (items: any) =>
     requests.post(`provider/boats`, items),
   getBoatListing: (search: any) =>
-    requests.get(`provider/boats?${search}`)
+    requests.get(`provider/boats?${search}`),
+  viewBoatDetails:(id:any)=> 
+  requests.get(`provider/boats/${id}`)
 }
 
 

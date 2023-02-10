@@ -41,10 +41,6 @@ const App = () => {
 
           <Route path="*" element={<MainLayout />}>
             <Route index element={<BoatListing />} />
-            <Route path="/*" element={<BoatListing />} >
-              <Route path=":page" element={<BoatListing />} />
-            </Route>
-
             <Route path="about" element={<About />} />
             <Route path="confirm-address" element={<ConfirmAddress />} />
             <Route path="boat-listing" element={<BoatListing />} />
@@ -52,13 +48,13 @@ const App = () => {
             <Route path="aminities-offer" element={<AminitiesOffer />} />
             <Route path="add-photos" element={<AddPhotos />} />
             <Route path="boat-price" element={<BoatPrice />} />
-            <Route path="morning-panormic" element={<MorningPanormic />} />
+            <Route path="morning-panormic/:id" element={<MorningPanormic />} />
             <Route path="edit-amenities" element={<EditAmenities />} />
             <Route path="inquiry" element={<Inquiry />} />
             <Route path="profile" element={<Profile />} />
             <Route path="change-password" element={<ChangePassword />} />
             <Route path="provider-calender" element={<ProviderCalender />} />
-            <Route path="morning-panormic-listing" element={<MorningPanormicListing />} />
+            <Route path="morning-panormic-listing/:id" element={<MorningPanormicListing />} />
 
           </Route>
         </Fragment>
