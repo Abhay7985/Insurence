@@ -54,7 +54,7 @@ const App = () => {
             <Route path="inquiry/:id" element={<Inquiry />} />
             <Route path="profile" element={<Profile />} />
             <Route path="change-password" element={<ChangePassword />} />
-            <Route path="provider-calender" element={<ProviderCalender />} />
+            <Route path="calender" element={<ProviderCalender />} />
 
           </Route>
         </Fragment>
