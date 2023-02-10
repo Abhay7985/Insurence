@@ -15,9 +15,9 @@ const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     console.log(date, dateString);
 };
 
-const MorningPanormic = () => {
+const BoatDetails = () => {
 
-    const match = useMatch(`morning-panormic/:id`)
+    const match = useMatch(`boat/:id/inquiry`)
     const { authState } = React.useContext(GlobalContext)
 
     const [state, setState] = useState({
@@ -203,4 +203,4 @@ const MorningPanormic = () => {
     )
 }
 
-export default MorningPanormic
+export default BoatDetails

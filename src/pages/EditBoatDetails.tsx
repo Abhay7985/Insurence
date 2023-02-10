@@ -6,7 +6,7 @@ import { Input, Select } from 'antd';
 const handleChange = (value: string) => {
     console.log(`selected ${value}`);
 };
-const MorningPanormicListing = () => {
+const EditBoatDetails = () => {
     return (
         <>
             {/* morning-panormic-listing */}
@@ -636,4 +636,4 @@ const MorningPanormicListing = () => {
     )
 }
 
-export default MorningPanormicListing
+export default EditBoatDetails

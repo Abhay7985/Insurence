@@ -161,12 +161,12 @@ const BoatListing = () => {
                                             <td>
                                                 <ul className='d-flex gap-2'>
                                                     <li>
-                                                        <Link to={`/morning-panormic/${e?.id}`}>
+                                                        <Link to={`/boat/${e?.id}/inquiry`}>
                                                             <HenceforthIcons.ViewIcon />
                                                         </Link>
                                                     </li>
                                                     <li>
-                                                        <Link to={`/morning-panormic-listing/${e.id}`}> <HenceforthIcons.EditIcon /></Link>
+                                                        <Link to={`/boat/${e?.id}/inquiry/edit`}> <HenceforthIcons.EditIcon /></Link>
                                                     </li>
 
                                                 </ul>
