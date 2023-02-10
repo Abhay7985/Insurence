@@ -1,13 +1,34 @@
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { useLocation, useMatch, useNavigate } from 'react-router-dom';
 import bannerImage from '../assets/images/image_one.png';
+import BackNextLayout from '../Components/boat/BackNextLayout';
+import { GlobalContext } from '../context/Provider';
 
-const AminitiesOffer =()=> {
+const AminitiesOffer = () => {
+
+    const navigate = useNavigate()
+    const location = useLocation()
+    const match = useMatch(`boat/:id/aminities`)
+    const uRLSearchParams = new URLSearchParams(location.search)
+
+    const { Toast } = React.useContext(GlobalContext)
+
+    const onSubmit = async (e: any) => {
+        e.preventDefault()
+        // uRLSearchParams.set("manufacturer_id", manufacturer_id)
+        navigate({
+            pathname: `/boat/${match?.params.id}/photos`,
+            search: uRLSearchParams.toString()
+        })
+
+    }
+
     return (
         <>
-        {/* Aminities-offer */}
+            {/* Aminities-offer */}
             <section className="Confirm-address-section">
                 <div className="container-fluid">
-                    <div className="row">
+                    <form className="row" onSubmit={onSubmit}>
                         <div className="col-lg-6">
                             <div className="banner-content h-100 d-flex flex-column ">
                                 <div className="row justify-content-center justify-content-lg-end gy-4">
@@ -112,18 +133,7 @@ const AminitiesOffer =()=> {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="row banner-footer border-top mt-auto justify-content-end">
-                                    <div className="col-11 col-lg-11">
-                                        <ul className='d-flex justify-content-between'>
-                                            <li>
-                                                <Link to='/aminities-offer' className='btn back-btn border-0'>Back</Link>
-                                            </li>
-                                            <li>
-                                                <Link to='/add-photos' className='btn btn-yellow px-3'>Next</Link>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                <BackNextLayout />
                             </div>
 
                         </div>
@@ -132,7 +142,7 @@ const AminitiesOffer =()=> {
                                 <img src={bannerImage} alt="" />
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </section>
         </>
