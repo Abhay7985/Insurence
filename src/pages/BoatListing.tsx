@@ -161,7 +161,7 @@ const BoatListing = () => {
                                             </td>
                                             <td>{e?.price}</td>
                                             <td>{moment(e?.updated_at).format('MMMM Do')}</td>
-                                            <td><Link to={"/morning-panormic"}>View</Link>/ <Link to={"/morning-panormic-listing"}>edit</Link> </td>
+                                            <td><Link to={`/morning-panormic/${e?.id}`}>View</Link>/ <Link to={`/morning-panormic-listing/${e.id}`}>edit</Link> </td>
                                         </tr>
                                     )}
                                 </tbody>

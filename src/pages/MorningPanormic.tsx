@@ -5,12 +5,56 @@ import smoking from '../assets/images/cigar.png';
 import currentLocation from '../assets/icons/exact_location.svg';
 import type { DatePickerProps } from 'antd';
 import { DatePicker, Space } from 'antd';
+import henceforthApi from '../utils/henceforthApi';
+import { useMatch } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 
 const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     console.log(date, dateString);
 };
+
 const MorningPanormic = () => {
+
+    const match = useMatch(`morning-panormic/:id`)
+    const [state, setState] = useState({
+        amenities:[],
+        bathrooms:0,
+        bedrooms:0,
+        cover_image:"",
+        created_at:"",
+        id:"",
+        location:"",
+        manufacturer_id:"",
+        model:"",
+        name:"",
+        passenger_day:"",
+        passenger_night:"",
+        pets_allowed:0,
+        photos:[],
+        prices:[],
+        rules:"",
+        size:"",
+        smoking_allowed:0,
+        status:"",
+        step:"",
+        updated_at:""
+    })
+
+    const Viewpanoromic = async () => {
+        try {
+            let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
+            setState(res.data);
+
+        } catch (error) {
+        }
+    }
+
+    useEffect(() => {
+        Viewpanoromic()
+    }, [match?.params.id])
+
+
     return (
         <>
             {/* Morning Panormic */}
@@ -23,7 +67,7 @@ const MorningPanormic = () => {
                                 <div className="left-arrow">
                                     <img src={leftArrow} alt="icon" />
                                 </div>
-                                <h3 className='mt-4 mb-2'>Morning Panoramic</h3>
+                                <h3 className='mt-4 mb-2'>{state.name}</h3>
                                 <p>Speedboat • Angra dos Reis - Rio de Janeiro</p>
                             </div>
                         </div>
@@ -67,36 +111,15 @@ const MorningPanormic = () => {
                         <div className="col-lg-6 col-xl-7">
                             <div className="morning-content">
                                 <div className="content-title border-bottom pb-4">
-                                    <h4 className='mb-2'>40-foot speedboat for up to 17 passengers</h4>
-                                    <p>17 passengers day • 4 passengers overnight • 2 rooms • 2 bathrooms</p>
+                                    <h4 className='mb-2'>{state.size}-foot speedboat for up to {state.passenger_day} passengers</h4>
+                                    <p>{state.passenger_day} passengers day • {state.passenger_night} passengers overnight • {state.bedrooms} rooms • {state.bathrooms} bathrooms</p>
                                 </div>
                                 {/* aminities */}
                                 <div className="aminities border-bottom py-4">
                                     <h4 className='mb-2'>Amenities</h4>
                                     <div className="aminities-list d-flex gap-5">
                                         <ul>
-                                            <li>Conditioner</li>
-                                            <li>Blanket</li>
-                                            <li>Pilow</li>
-                                            <li>Heating</li>
-                                            <li>Air Conditioner</li>
-                                            <li>Blower</li>
-                                        </ul>
-                                        <ul>
-                                            <li>Compass</li>
-                                            <li>Soap</li>
-                                            <li>Wine House</li>
-                                            <li>Satellite TV Antenna</li>
-                                            <li>Flag For Pole</li>
-                                            <li>Life Jacket</li>
-                                        </ul>
-                                        <ul>
-                                            <li>Soap</li>
-                                            <li>AIS</li>
-                                            <li>Radar</li>
-                                            <li>Pilow</li>
-                                            <li>Towel</li>
-                                            <li>Conditioner</li>
+                                           {state?.amenities?.map((e: any , index: number) =><li key={index}>{e}</li> )}
                                         </ul>
                                     </div>
                                 </div>
@@ -108,15 +131,19 @@ const MorningPanormic = () => {
                                             <div className="pet-image">
                                                 <img src={petIcon} alt="icon" className='img-fluid' />
                                             </div>
-                                            <p>Pets are allowed</p>
+                                            <p>Pets are {state?.pets_allowed === 0 ? 'not allowed' :"allowed"}</p>
                                         </li>
                                         <li className='d-flex gap-3 align-items-center'>
                                             <div className="smoking">
                                                 <img src={smoking} alt="icon" className='img-fluid' />
                                             </div>
-                                            <p>Smoking is allowed</p>
+                                            <p>Smoking is {state?.smoking_allowed === 0 ? 'not allowed' :"allowed"}</p>
+                                        </li>
+                                        <li>
+                                            <p>{state?.rules}</p>
                                         </li>
                                     </ul>
+
                                 </div>
                                 {/* Location */}
                                 <div className="Location py-4">
