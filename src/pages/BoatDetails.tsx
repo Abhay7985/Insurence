@@ -45,7 +45,7 @@ const BoatDetails = () => {
         updated_at: ""
     })
 
-    const Viewpanoromic = async () => {
+    const boatDetails = async () => {
         henceforthApi.setToken(authState?.access_token)
         try {
             let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
@@ -56,7 +56,7 @@ const BoatDetails = () => {
     }
 
     useEffect(() => {
-        Viewpanoromic()
+        boatDetails()
     }, [match?.params.id])
 
 
