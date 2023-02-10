@@ -82,7 +82,7 @@ const Auth = {
   connectSocialAccount: (info: any) =>
     requests.post('User/connect/social_account', info),
   changePassword: (info: any) =>
-    requests.post('provider/change-password', info),
+    requests.put('provider/change-password', info),
   fortgetPassword: (info: any) =>
     requests.post('forgot-password', info),
   forgotChangePassword: (info: any) =>
@@ -150,7 +150,7 @@ const Card = {
     requests.del(`Stripe/card/${id}`),
 }
 const Common = {
-  uploadFile: (key: string, file: any) =>
+  do_spaces_file_upload: (key: string, file: any) =>
     requests.file(`provider/upload-image`, key, file),
   nested: () =>
     requests.get(`User/nested`),

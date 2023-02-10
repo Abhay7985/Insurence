@@ -28,9 +28,9 @@ const Profile = () => {
   const [file, setFile] = useState(null)
   const [emailShow, setEmailShow] = useState(false)
   const fileRef: any = useRef();
-  const fileupload = async (file:any) => {
+  const fileupload = async (file: any) => {
     try {
-      const apiRes = await henceforthApi.Common.uploadFile("file", file)
+      const apiRes = await henceforthApi.Common.do_spaces_file_upload("image", file)
       let data = apiRes
       return data.image
     } catch (error) {
@@ -38,19 +38,21 @@ const Profile = () => {
     }
   }
 
-  const imageUpload=async(e:any)=>{
-    let file=e.target.files[0]
+  const imageUpload = async (e: any) => {
+    setLoading(true)
+    let file = e.target.files[0]
     console.log(file)
-    try{
+    try {
       const image = await fileupload(file)
-      const item={
-        photo:image
+      const item = {
+        photo: image
       }
       let apiRes = await henceforthApi.Auth.editProfile(item)
-    }catch(error){
+      loginSuccess(apiRes.data)(authDispatch)
+    } catch (error) {
       console.log(error)
-    }finally{
-   
+    } finally {
+       setLoading(false)
     }
   }
 
@@ -136,11 +138,11 @@ const Profile = () => {
             <div className="col-lg-5">
               <div className="user-profile">
                 <div className="profile-image mx-auto">
-                  <img src={file ? URL.createObjectURL(file) : authState.image? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${authState.image}`:profile } alt="img" className='img-fluid' />
+                  <img src={ authState.image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${authState.image}` : profile} alt="img" className='img-fluid' />
                 </div>
                 <div className="profile-btn text-center">
-                  <input type="file" onChange={imageUpload} hidden id='profileUpload'/>
-                  <label className='btn btn-yellow px-4'  htmlFor="profileUpload" role="button">Update photo</label>
+                  <input type="file" onChange={imageUpload} id='profileUpload' />
+                  <button className='btn btn-yellow px-4' role="button" disabled={loading}>{loading ? <Spinner/>:"Update photo" }</button>
                 </div>
               </div>
             </div>
