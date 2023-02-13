@@ -3,7 +3,7 @@ import uploadIcon from '../assets/icons/upload_photo.svg';
 import BoatPhotoView from '../Components/row/BoatPhotoView';
 import BackNextLayout from '../Components/boat/BackNextLayout';
 import { useLocation, useMatch, useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
 
@@ -14,42 +14,66 @@ const AddPhotos = () => {
     const match = useMatch(`boat/:id/photos`)
     const uRLSearchParams = new URLSearchParams(location.search)
     const { Toast } = React.useContext(GlobalContext)
-    const [image , setImage] = useState<any>({})
+    const [coverImage, setCoverImage] = useState()
+    const [image, setImage] = useState([])
 
 
-  
-    const handleImage = async(e: any) => {
-        const image = e.target.files[0]
-        const formData = new FormData()
-        formData.append("file" ,image )
-        let res = await henceforthApi.Boat.imageUpload(formData)
-        console.log(res);
-    }
-    
-    const onSubmit = async (e: any) => {
-        e.preventDefault()
-
-        let payload ={
-                image:image
-        }
- 
+    const getImage = async() => {
         try {
+            let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
+            console.log(res?.data.cover_image);
             
-            
-            // let apiRes = await henceforthApi.Boat.create(items)
-            // console.log(apiRes);
-            
-            
-            navigate({
-                pathname: `/boat/${match?.params.id}/safety-question`,
-                search: uRLSearchParams.toString()
-            })
+            setCoverImage(res.data)
         } catch (error) {
             
         }
 
+    }
 
-    
+    useEffect(() => {
+        getImage()
+    },[])
+
+
+    const handleImage = async (e: any) => {
+        const image = e.target.files[0]
+        let res = await henceforthApi.Boat.imageUpload('image', image)
+        // setImage(res.image);
+        await uploadImage([...image,res.image])
+
+    }
+
+
+    const uploadImage = async(arr:any) => {
+        let length = arr?.length - 1
+        let lastItem = arr[length]
+        console.log(lastItem);
+        
+    }
+
+    const onSubmit = async (e: any) => {
+        e.preventDefault()
+        let items = {
+            photos: {
+                boat_id: match?.params.id,
+                cover_image: coverImage,
+                photos: [...image]
+            }
+        }
+
+        try {
+            let apiRes = await henceforthApi.Boat.create(items)
+            console.log(apiRes);
+            // navigate({
+            //     pathname: `/boat/${match?.params.id}/safety-question`,
+            //     search: uRLSearchParams.toString()
+            // })
+        } catch (error) {
+
+        }
+
+
+
     }
 
     return (<section className="Confirm-address-section">
@@ -77,10 +101,10 @@ const AddPhotos = () => {
                             <div className="col-11 col-lg-11">
                                 <div className="row gy-4">
                                     <BoatPhotoView />
+                                    {/* <BoatPhotoView />
                                     <BoatPhotoView />
                                     <BoatPhotoView />
-                                    <BoatPhotoView />
-                                    <BoatPhotoView />
+                                    <BoatPhotoView /> */}
                                 </div>
                             </div>
                         </div>

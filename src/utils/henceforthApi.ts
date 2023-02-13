@@ -118,8 +118,8 @@ const Boat = {
   requests.get(`provider/boats/${id}`),
   boatAmenities:()=> 
   requests.get(`provider/boat-amenities`),
-  imageUpload:(image: any)=>
-  requests.post(`provider/upload-image`, image)
+  imageUpload:(key: string, file: any)=>
+  requests.file(`provider/upload-image`,key, file)
 }
 
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import { useLocation, useMatch, useNavigate } from 'react-router-dom';
 import bannerImage from '../assets/images/image_one.png';
 import BackNextLayout from '../Components/boat/BackNextLayout';
@@ -66,7 +66,7 @@ const AmenitiesOffer = () => {
         }
     }
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         handleAmenities()
     }, [])
 
