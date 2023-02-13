@@ -76,6 +76,9 @@ p {
 .text-yellow{
     color: $primary-color !important;
 }
+.text-black{
+    color: $light-black!important;
+}
 
 label {
     color: $light-black;
@@ -184,6 +187,9 @@ ul {
         border: 1px solid $light-gray !important;
         padding: 10px 20px !important;
         height: auto !important;
+        font-family: 'Nunito', sans-serif;
+        font-size: 16px;
+        color: $light-black !important;
 
         &:hover {
             border-color: $primary-color !important;

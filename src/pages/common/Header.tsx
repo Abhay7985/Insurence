@@ -19,7 +19,7 @@ const Header = () => {
         {
             key: '1',
             label: (
-                <Link to="/profile" >
+                <Link to="/profile"  className='nav-link'>
                     Profile
                 </Link>
             ),
@@ -27,7 +27,7 @@ const Header = () => {
         {
             key: '2',
             label: (
-                <Link to="change-password" >
+                <Link to="change-password"  className='nav-link'>
                     Change password
                 </Link>
             ),
@@ -35,7 +35,7 @@ const Header = () => {
         {
             key: '3',
             label: (
-                <Link to="" onClick={logOutNow}>
+                <Link to="" onClick={logOutNow} className='nav-link'>
                     Log Out
                 </Link>
             ),
