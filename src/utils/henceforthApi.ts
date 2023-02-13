@@ -113,7 +113,7 @@ const Boat = {
   getBoatListing: (search: any) =>
     requests.get(`provider/boats?${search}`),
   viewBoatDetails:(id:any)=> 
-  requests.get(`provider/boats/${id}`)
+  requests.get(`provider/boats/${id}`),
 }
 
 

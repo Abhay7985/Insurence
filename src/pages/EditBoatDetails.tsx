@@ -10,62 +10,62 @@ const handleChange = (value: string) => {
     console.log(`selected ${value}`);
 };
 const EditBoatDetails = () => {
- 
-        const match = useMatch(`boat/:id/inquiry/edit`)
-        const { authState } = React.useContext(GlobalContext)
-        const [state, setState] = useState({
-            amenities: [],
-            bathrooms: 0,
-            bedrooms: 0,
-            category_id: 0,
-            cover_image: "",
-            created_at: "",
-            id: "",
-            location: "",
-            manufacturer_id: "",
-            model: "",
-            name: "",
-            passenger_day: "",
-            passenger_night: "",
-            pets_allowed: 0,
-            photos: [],
-            prices: [],
-            rules: "",
-            size: "",
-            smoking_allowed: 0,
-            status: "",
-            step: "",
-            updated_at: ""
-        })
-        const [booleanState , setBooleanState] = useState({
-            hideEditName:false,
-            hideAmenities:false,
-            hideAddress:false,
-            hideBoatDetail:false,
-            hidePassengers:false
-        })
-    
-        const boatDetails = async () => {
-            henceforthApi.setToken(authState?.access_token)
-            try {
-                let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
-                setState(res.data);
-    
-            } catch (error) {
-            }
+
+    const match = useMatch(`boat/:id/inquiry/edit`)
+    const { authState } = React.useContext(GlobalContext)
+    const [state, setState] = useState({
+        amenities: [],
+        bathrooms: 0,
+        bedrooms: 0,
+        category_id: 0,
+        cover_image: "",
+        created_at: "",
+        id: "",
+        location: "",
+        manufacturer_id: "",
+        model: "",
+        name: "",
+        passenger_day: "",
+        passenger_night: "",
+        pets_allowed: 0,
+        photos: [],
+        prices: [],
+        rules: "",
+        size: "",
+        smoking_allowed: 0,
+        status: "",
+        step: "",
+        updated_at: ""
+    })
+    const [booleanState, setBooleanState] = useState({
+        hideEditName: false,
+        hideAmenities: false,
+        hideAddress: false,
+        hideBoatDetail: false,
+        hidePassengers: false
+    })
+
+    const boatDetails = async () => {
+        henceforthApi.setToken(authState?.access_token)
+        try {
+            let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
+            setState(res.data);
+
+        } catch (error) {
         }
-    
-        useEffect(() => {
-            boatDetails()
-        }, [match?.params.id])
-        
-        let dotColor = [
-            { status: "listed", color: "green" },
-            { status: "unlisted", color: "red" },
-            { status: "draft", color: "" },
-    
-        ]
-    
+    }
+
+    useEffect(() => {
+        boatDetails()
+    }, [match?.params.id])
+
+    let dotColor = [
+        { status: "listed", color: "green" },
+        { status: "unlisted", color: "red" },
+        { status: "draft", color: "" },
+
+    ]
+
     return (
         <>
             {/* morning-panormic-listing */}
@@ -194,7 +194,7 @@ const EditBoatDetails = () => {
                                                     <p>{state?.name}</p>
                                                     {/* edit-email */}
                                                     <div className="edit-input">
-                                                        <input type="text" className="form-control w-100 my-3" id="boatname" placeholder="Enter boat name" value={state.name}/>
+                                                        <input type="text" className="form-control w-100 my-3" id="boatname" placeholder="Enter boat name" value={state.name} />
                                                         <div className="save-btn">
                                                             <button className='btn btn-yellow rounded-2'>Save</button>
                                                         </div>
@@ -215,10 +215,10 @@ const EditBoatDetails = () => {
                                                     <h6 className='mb-2'>Amenities</h6>
                                                     <div className="amenities-list d-flex gap-5">
                                                         <ul>
-                                                            {state?.amenities?.map((e:any, index:number)=><li>{e}</li> )}
-                                                        
+                                                            {state?.amenities?.map((e: any, index: number) => <li>{e}</li>)}
+
                                                         </ul>
-                                                      
+
                                                     </div>
                                                 </div>
                                                 <div className="edit-photo">
@@ -341,7 +341,7 @@ const EditBoatDetails = () => {
                                                                     <label className="form-label">Manufacturer</label>
                                                                     <div className="select">
                                                                         <Select
-                                                                            
+
                                                                             className='w-100'
                                                                             value={state.manufacturer_id}
                                                                             onChange={handleChange}

@@ -1,11 +1,12 @@
 import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
 import bannerImage from '../assets/images/image_two.png';
 import locationIcon from '../assets/icons/current_location.svg';
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { GlobalContext } from "../context/Provider";
 import { Checkbox, Select, Space, Switch } from "antd";
 import BackNextLayout from "../Components/boat/BackNextLayout";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
+import henceforthApi from "../utils/henceforthApi";
 
 function PlaceLocated() {
 
@@ -21,27 +22,76 @@ function PlaceLocated() {
         latitude: 0,
         longitude: 0,
     })
+    const [state, setState] = useState({
+        street: "",
+        flat: "",
+        city: "",
+        state: "",
+        postCode: "",
+        country: "india",
+        showLocation: false,
+
+    })
+
+
+    const handleState = (e: any) => {
+        setState({
+            ...state,
+            [e.target.name]: e.target.value
+        })
+    }
 
     const onSubmit = async (e: any) => {
         e.preventDefault()
-        // uRLSearchParams.set("manufacturer_id", manufacturer_id)
-        navigate({
-            pathname: `/boat/${match?.params.id}/aminities`,
-            search: uRLSearchParams.toString()
+        let items = {
+            location: {
+                location: {
+                    latitude: form.latitude,
+                    longitude: form.longitude,
+                },
+                boat_id: match?.params.id
+            },
+            address: {
+                address1: state.street,
+                address2: state.flat,
+                city: state.city,
+                state: state.state,
+                postcode: state.postCode,
+                country: state.country,
+                show_location: state.showLocation,
+                boat_id: match?.params.id
+            }
+        }
+
+        try {
+            let apiRes = await henceforthApi.Boat.create(items)
+            Toast.success(apiRes.message)
+
+            navigate({
+                pathname: `/boat/${match?.params.id}/aminities`,
+                search: uRLSearchParams.toString()
+            })
+
+        } catch (error) {
+
+        }
+    }
+
+    const onChange = (value: any) => {
+        setState({
+            ...state,
+            showLocation: value
         })
 
-    }
-    const onChange = (e: CheckboxChangeEvent) => {
-        console.log(`checked = ${e.target.checked}`);
+
     };
-    const handleInput = (name: string, value: string) => {
-        setForm({
-            ...form,
-            [name]: value
-        })
-    }
+
     const handleChange = (value: string) => {
-        console.log(`selected ${value}`);
+        // console.log(`selected ${value}`);
+        setState({
+            ...state,
+            country: value
+        })
     };
 
     const requestCurrenctLocation = () => {
@@ -50,7 +100,7 @@ function PlaceLocated() {
             navigator.geolocation.getCurrentPosition((successCallback) => {
                 console.log("Latitude is :", successCallback.coords.latitude);
                 console.log("Longitude is :", successCallback.coords.longitude);
-                // router.replace({ query: { ...router.query, ...successCallback.coords } })
+
 
                 setForm({
                     ...form,
@@ -68,6 +118,9 @@ function PlaceLocated() {
 
         }
     }
+
+    console.log(state);
+
 
     return (
         //  Select-passenger 
@@ -94,25 +147,31 @@ function PlaceLocated() {
                                     <div className="col-11 col-lg-11">
                                         <div className="mb-3">
                                             <label htmlFor="input1" className="form-label">Street</label>
-                                            <input type="text" className="form-control" id='input1' placeholder='Enter state' />
+                                            <input type="text" className="form-control" id='input1' placeholder='Enter street' name="street" onChange={handleState} />
                                         </div>
                                     </div>
                                     <div className="col-11 col-lg-11">
                                         <div className="mb-3">
                                             <label htmlFor="input4" className="form-label">Flat, Suite, etc. (optional)</label>
-                                            <input type="text" className="form-control" id='input4' placeholder='Enter flat, suite, etc.' />
+                                            <input type="text" className="form-control" id='input4' placeholder='Enter flat, suite, etc.' name="flat" onChange={handleState} />
                                         </div>
                                     </div>
                                     <div className="col-11 col-lg-11">
                                         <div className="mb-3">
                                             <label htmlFor="input5" className="form-label">City</label>
-                                            <input type="text" className="form-control" id='input5' placeholder='Enter City' />
+                                            <input type="text" className="form-control" id='input5' placeholder='Enter City' name="city" onChange={handleState} />
+                                        </div>
+                                    </div>
+                                    <div className="col-11 col-lg-11">
+                                        <div className="mb-3">
+                                            <label htmlFor="input5" className="form-label">State (optional)</label>
+                                            <input type="text" className="form-control" id='input5' placeholder='Enter City' name="state" onChange={handleState} />
                                         </div>
                                     </div>
                                     <div className="col-11 col-lg-11">
                                         <div className="mb-3">
                                             <label htmlFor="input5" className="form-label">Postcode (optional)</label>
-                                            <input type="text" className="form-control" id='input5' placeholder='Enter postcode' />
+                                            <input type="text" className="form-control" id='input5' placeholder='Enter postcode' name="postCode" onChange={handleState} />
                                         </div>
                                     </div>
                                     <div className="col-11 col-lg-11">
@@ -138,7 +197,7 @@ function PlaceLocated() {
                                                 <p>Make it clear to guests where your place is located. <a href="#">We'll only share your address after they've made a reservation.</a></p>
                                             </div>
                                             <div className="form-check form-switch ps-sm-5">
-                                                <Switch size="small" defaultChecked />
+                                                <Switch size="small" defaultChecked onChange={onChange} />
                                             </div>
                                         </div>
                                     </div>
