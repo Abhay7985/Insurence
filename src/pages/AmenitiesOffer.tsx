@@ -4,11 +4,11 @@ import bannerImage from '../assets/images/image_one.png';
 import BackNextLayout from '../Components/boat/BackNextLayout';
 import { GlobalContext } from '../context/Provider';
 
-const AminitiesOffer = () => {
+const AmenitiesOffer = () => {
 
     const navigate = useNavigate()
     const location = useLocation()
-    const match = useMatch(`boat/:id/aminities`)
+    const match = useMatch(`boat/:id/amenities`)
     const uRLSearchParams = new URLSearchParams(location.search)
 
     const { Toast } = React.useContext(GlobalContext)
@@ -149,4 +149,4 @@ const AminitiesOffer = () => {
     )
 }
 
-export default AminitiesOffer
+export default AmenitiesOffer

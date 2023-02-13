@@ -26,7 +26,7 @@ function PlaceLocated() {
         e.preventDefault()
         // uRLSearchParams.set("manufacturer_id", manufacturer_id)
         navigate({
-            pathname: `/boat/${match?.params.id}/aminities`,
+            pathname: `/boat/${match?.params.id}/amenities`,
             search: uRLSearchParams.toString()
         })
 
