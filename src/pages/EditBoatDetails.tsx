@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import increase from '../assets/icons/add_circle_outline.svg';
-import decrease from '../assets/icons/remove_circle_outline.svg';
-import { Input, Select } from 'antd';
-import { Link, useMatch, NavLink } from 'react-router-dom';
+import { Input, Select, Spin } from 'antd';
+import { Link, useMatch } from 'react-router-dom';
 import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
-import BasicListing from '../Components/edit/Basic';
+import BasicListing from '../Components/edit/EditBasicBoat';
+import InfoPassengersBoat from '../Components/edit/EditInfoPassengersBoat';
+import EditInfoBoat from '../Components/edit/EditInfoBoat';
+import EditLocationBoat from '../Components/edit/EditLocationBoat';
 
-const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
-};
+
 const EditBoatDetails = () => {
 
     const match = useMatch(`boat/:id/inquiry/edit`)
-    const { authState } = React.useContext(GlobalContext)
+    const { authState, Toast } = React.useContext(GlobalContext)
+    const [loading, setLoading] = React.useState(false)
     const [state, setState] = useState({
         amenities: [],
         bathrooms: 0,
@@ -36,28 +36,38 @@ const EditBoatDetails = () => {
         smoking_allowed: 0,
         status: "",
         step: "",
-        updated_at: ""
-    })
-    const [booleanState, setBooleanState] = useState({
-        hideEditName: false,
-        hideAmenities: false,
-        hideAddress: false,
-        hideBoatDetail: false,
-        hidePassengers: false
+        updated_at: "",
+        address: {
+            id: 0,
+            address1: "",
+            address2: "",
+            city: "",
+            state: "",
+            postcode: "",
+            country: "",
+            show_location: 1,
+            created_at: "",
+            updated_at: ""
+        }
     })
 
-    const boatDetails = async () => {
+
+    const initialise = async (b: boolean) => {
+        setLoading(b)
         henceforthApi.setToken(authState?.access_token)
         try {
             let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
             setState(res.data);
 
         } catch (error) {
+            Toast.error(error)
+        } finally {
+            setLoading(false)
         }
     }
 
     useEffect(() => {
-        boatDetails()
+        initialise(true)
     }, [match?.params.id])
 
     let dotColor = [
@@ -68,8 +78,7 @@ const EditBoatDetails = () => {
     ]
 
     return (
-        <>
-            {/* morning-panormic-listing */}
+        <Spin spinning={loading} >
             <section className='morning-panormic-listing py-5' id='photos_tab'>
                 <div className="container">
                     <div className="row">
@@ -177,7 +186,7 @@ const EditBoatDetails = () => {
                                         {/* photos */}
                                         <div className="photos Pricing bg-white mb-4" >
                                             <div className="photo-header d-flex justify-content-between">
-                                                <h4>Photos (5)</h4>
+                                                <h4>Photos ({state.photos.length})</h4>
                                                 <div className="edit-photo" id='listing_tab'>
                                                     <Link to={`/boat/${match?.params.id}/photos/edit`} >
                                                         <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
@@ -187,7 +196,9 @@ const EditBoatDetails = () => {
                                             {/* photo-slider */}
                                         </div>
                                         {/* Listing-basics */}
-                                        <BasicListing {...state} />
+                                        {state.name &&
+                                            <BasicListing {...state} initialise={initialise} />
+                                        }
                                         {/* Amenities */}
                                         <div className="Listing-basics bg-white Pricing mb-4">
                                             <div className="photo-header d-flex justify-content-between mb-3">
@@ -211,270 +222,20 @@ const EditBoatDetails = () => {
                                             </div>
                                         </div>
                                         {/* Location */}
-                                        <div className="Location bg-white Pricing mb-4">
-                                            <div className="photo-header d-flex justify-content-between mb-3">
-                                                <h4>Location</h4>
-                                            </div>
-                                            <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
-                                                <div className="listing-content w-100">
-                                                    <h6 className='mb-2'>Address</h6>
-                                                    <p>{state.location}</p>
-                                                    {/* edit-email */}
-                                                    <div className="edit-input mt-3">
-                                                        <div className="row">
-                                                            <div className="col-12">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">Street address</label>
-                                                                    <Input placeholder="House name/number +street /road" />
-                                                                </div>
-                                                            </div>
-
-
-                                                            <div className="col-12">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">Flat, suite. (Optional)</label>
-                                                                    <Input placeholder="Flat, suite, building access code" />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-lg-6">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">City</label>
-                                                                    <Input placeholder="Enter City" />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-lg-6">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">State</label>
-                                                                    <Input placeholder="Enter State" />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-lg-6">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">Postcode</label>
-                                                                    <Input placeholder="Enter Postcode" />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-lg-6">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">Country</label>
-                                                                    <div className="select">
-                                                                        <Select
-                                                                            defaultValue="Country"
-                                                                            className='w-100'
-                                                                            onChange={handleChange}
-                                                                            options={[
-                                                                                { value: 'jack', label: 'Jack' },
-                                                                                { value: 'lucy', label: 'Lucy' },
-                                                                                { value: 'Yiminghe', label: 'yiminghe' },
-                                                                                { value: 'disabled', label: 'Disabled', disabled: true },
-                                                                            ]}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="save-btn pt-2">
-                                                            <button className='btn btn-yellow rounded-2'>Save</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="edit-photo ps-4">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        {state.name &&
+                                            <EditLocationBoat {...state.address} initialise={initialise} />
+                                        }
                                         {/* Boat & passengers */}
-                                        <div className="boat-passengers bg-white Pricing">
-                                            <div className="photo-header d-flex justify-content-between mb-3">
-                                                <h4>Boat & passengers</h4>
+                                        {state.name &&
+                                            <div className="boat-passengers bg-white Pricing">
+                                                <div className="photo-header d-flex justify-content-between mb-3">
+                                                    <h4>Boat & passengers</h4>
+                                                </div>
+                                                <EditInfoBoat {...state} initialise={initialise} />
+                                                <InfoPassengersBoat {...state} initialise={initialise} />
+
                                             </div>
-                                            <div className="photo-header d-flex justify-content-between border px-4 py-4 rounded-1 mb-3">
-                                                <div className="edit-details">
-                                                    <div className="listing-content">
-                                                        <h6 className='mb-3'>Boat Detail</h6>
-                                                        <p className='mb-2'>Category: {state.category_id}</p>
-                                                        <p className='mb-2'>Manufacturer: {state.manufacturer_id}</p>
-                                                        <p className='mb-2'>Model: {state.manufacturer_id}</p>
-                                                        <p className='mb-2'>Size: {state.size} feet</p>
-
-                                                    </div>
-                                                    {/* edit */}
-                                                    <div className="edit-input mt-3">
-                                                        <div className="row">
-                                                            <div className="col-12">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">Category</label>
-                                                                    <div className="select">
-                                                                        <Select
-                                                                            // defaultValue="Speedboat"
-                                                                            value={String(state.category_id)}
-                                                                            className='w-100'
-                                                                            onChange={handleChange}
-                                                                            options={[
-                                                                                { value: 'jack', label: 'Jack' },
-                                                                                { value: 'lucy', label: 'Lucy' },
-                                                                                { value: 'Yiminghe', label: 'yiminghe' },
-                                                                                { value: 'disabled', label: 'Disabled', disabled: true },
-                                                                            ]}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-12">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">Manufacturer</label>
-                                                                    <div className="select">
-                                                                        <Select
-
-                                                                            className='w-100'
-                                                                            value={state.manufacturer_id}
-                                                                            onChange={handleChange}
-                                                                            options={[
-                                                                                { value: 'jack', label: 'Jack' },
-                                                                                { value: 'lucy', label: 'Lucy' },
-                                                                                { value: 'Yiminghe', label: 'yiminghe' },
-                                                                                { value: 'disabled', label: 'Disabled', disabled: true },
-                                                                            ]}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-
-                                                            <div className="col-12">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">Model</label>
-                                                                    <Input placeholder="Model" value={state.model} />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-12">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">Size</label>
-                                                                    <Input placeholder="Size" value={state.size} />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="save-btn pt-2">
-                                                            <button className='btn btn-yellow rounded-2'>Save</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div className="edit-photo">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                </div>
-                                            </div>
-                                            <div className="photo-header d-flex justify-content-between border px-4 py-4 rounded-1">
-                                                <div className="edit-address">
-                                                    <div className="listing-content">
-                                                        <h6 className='mb-3'>Passengers & Bedrooms</h6>
-                                                        <p className='mb-2'>Category: {state.category_id}</p>
-                                                        <p className='mb-2'>Manufacturer: {state.manufacturer_id}</p>
-                                                        <p className='mb-2'>Model: {state.model}</p>
-                                                        <p className='mb-2'>Size: {state.size} feet</p>
-                                                    </div>
-                                                    <div className="row gy-2 pt-2">
-                                                        <div className="col-7">
-                                                            <div className="add-passenger d-flex justify-content-between align-items-center">
-                                                                <p>Number of Passengers (Day)</p>
-                                                                <div className="add-btn">
-                                                                    <ul className='d-flex gap-1 align-items-center'>
-                                                                        <li>
-                                                                            <button className='btn border-0'>
-                                                                                <img src={decrease} alt="icon" />
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <input type="text" className='form-control' value={state.passenger_day} />
-                                                                        </li>
-                                                                        <li>
-                                                                            <button className='btn border-0'>
-                                                                                <img src={increase} alt="icon" />
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-7">
-                                                            <div className="add-passenger d-flex justify-content-between align-items-center">
-                                                                <p>Number of Passengers (Night)</p>
-                                                                <div className="add-btn">
-                                                                    <ul className='d-flex gap-1 align-items-center'>
-                                                                        <li>
-                                                                            <button className='btn border-0'>
-                                                                                <img src={decrease} alt="icon" />
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <input type="text" className='form-control' value={state.passenger_night} />
-                                                                        </li>
-                                                                        <li>
-                                                                            <button className='btn border-0'>
-                                                                                <img src={increase} alt="icon" />
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-7">
-                                                            <div className="add-passenger d-flex justify-content-between align-items-center">
-                                                                <p>Number of Bedrooms</p>
-                                                                <div className="add-btn">
-                                                                    <ul className='d-flex gap-1 align-items-center'>
-                                                                        <li>
-                                                                            <button className='btn border-0'>
-                                                                                <img src={decrease} alt="icon" />
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <input type="text" className='form-control' value={state.bedrooms} />
-                                                                        </li>
-                                                                        <li>
-                                                                            <button className='btn border-0'  >
-                                                                                <img src={increase} alt="icon" />
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-7">
-                                                            <div className="add-passenger d-flex justify-content-between align-items-center">
-                                                                <p>Number of Bathrooms</p>
-                                                                <div className="add-btn">
-                                                                    <ul className='d-flex gap-1 align-items-center'>
-                                                                        <li>
-                                                                            <button className='btn border-0'>
-                                                                                <img src={decrease} alt="icon" />
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <input type="text" className='form-control' value={state.bathrooms} />
-                                                                        </li>
-                                                                        <li>
-                                                                            <button className='btn border-0'>
-                                                                                <img src={increase} alt="icon" />
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-7">
-                                                            <div className="save-btn pt-2">
-                                                                <button className='btn btn-yellow rounded-2'>Save</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="edit-photo">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        }
 
                                     </div>
                                     {/* Pricing and Availability */}
@@ -672,7 +433,7 @@ const EditBoatDetails = () => {
                     </div>
                 </div>
             </section>
-        </>
+        </Spin>
     )
 }
 
