@@ -37,7 +37,7 @@ const SelectPassenger = () => {
                 bathrooms: bathrooms
             }
             // navigate({
-            //     pathname: '/boat/passenger-bedrooms',
+            //     pathname: '/boat/passengers',
             //     search: uRLSearchParams.toString()
             // })
         }

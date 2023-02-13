@@ -62,13 +62,12 @@ function PlaceLocated() {
                 boat_id: match?.params.id
             }
         }
-
         try {
             let apiRes = await henceforthApi.Boat.create(items)
             Toast.success(apiRes.message)
 
             navigate({
-                pathname: `/boat/${match?.params.id}/aminities`,
+                pathname: `/boat/${match?.params.id}/amenities`,
                 search: uRLSearchParams.toString()
             })
 

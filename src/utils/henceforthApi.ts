@@ -110,10 +110,16 @@ const Boat = {
     requests.get(`provider/boat-manufacturer`),
   create: (items: any) =>
     requests.post(`provider/boats`, items),
+  edit: (items: any) =>
+    requests.put(`provider/boats`, items),
   getBoatListing: (search: any) =>
     requests.get(`provider/boats?${search}`),
   viewBoatDetails:(id:any)=> 
   requests.get(`provider/boats/${id}`),
+  boatAmenities:()=> 
+  requests.get(`provider/boat-amenities`),
+  imageUpload:(image: any)=>
+  requests.post(`provider/upload-image`, image)
 }
 
 
@@ -316,7 +322,7 @@ const Order = {
 const FILES = {
   audio: (filename: string) => filename?.startsWith('http') ? filename : `${API_FILE_ROOT_AUDIO}${filename}`,
   video: (filename: string) => filename?.startsWith('http') ? filename : `${API_FILE_ROOT_VIDEO}${filename}`,
-  imageOriginal: (filename: string) => filename?.startsWith('http') ? filename : `${API_FILE_ROOT_ORIGINAL}${filename}`,
+  imageOriginal: (filename: string, placeholder: any) => filename ? filename?.startsWith('http') ? filename : `${API_FILE_ROOT_ORIGINAL}${filename}` : placeholder,
   imageMedium: (filename: string) => filename?.startsWith('http') ? filename : `${API_FILE_ROOT_MEDIUM}${filename}`,
   imageSmall: (filename: string) => filename?.startsWith('http') ? filename : `${API_FILE_ROOT_SMALL}${filename}`,
 }

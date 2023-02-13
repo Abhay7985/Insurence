@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import increase from '../assets/icons/add_circle_outline.svg';
 import decrease from '../assets/icons/remove_circle_outline.svg';
 import { Input, Select } from 'antd';
-import { useMatch } from 'react-router-dom';
+import { Link, useMatch, NavLink } from 'react-router-dom';
 import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
+import BasicListing from '../Components/edit/Basic';
 
 const handleChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -69,7 +70,7 @@ const EditBoatDetails = () => {
     return (
         <>
             {/* morning-panormic-listing */}
-            <section className='morning-panormic-listing py-5'>
+            <section className='morning-panormic-listing py-5' id='photos_tab'>
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
@@ -104,10 +105,10 @@ const EditBoatDetails = () => {
                                                                 <a href="#" className='nav-link'>Photos</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" className='nav-link'>Listing basics</a>
+                                                                <a href="#listing_tab" className='nav-link'>Listing basics</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" className='nav-link'>Amenities</a>
+                                                                <a href="#amenities_tab" className='nav-link'>Amenities</a>
                                                             </li>
                                                             <li>
                                                                 <a href="#" className='nav-link'>Location</a>
@@ -174,37 +175,19 @@ const EditBoatDetails = () => {
                                     <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
 
                                         {/* photos */}
-                                        <div className="photos Pricing bg-white mb-4">
+                                        <div className="photos Pricing bg-white mb-4" >
                                             <div className="photo-header d-flex justify-content-between">
                                                 <h4>Photos (5)</h4>
-                                                <div className="edit-photo">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
+                                                <div className="edit-photo" id='listing_tab'>
+                                                    <Link to={`/boat/${match?.params.id}/photos/edit`} >
+                                                        <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
+                                                    </Link>
                                                 </div>
                                             </div>
                                             {/* photo-slider */}
                                         </div>
                                         {/* Listing-basics */}
-                                        <div className="Listing-basics bg-white Pricing mb-4">
-                                            <div className="photo-header d-flex justify-content-between mb-3">
-                                                <h4>Listing basics</h4>
-                                            </div>
-                                            <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
-                                                <div className="listing-content w-100">
-                                                    <h6 className='mb-2'>Listing Title</h6>
-                                                    <p>{state?.name}</p>
-                                                    {/* edit-email */}
-                                                    <div className="edit-input">
-                                                        <input type="text" className="form-control w-100 my-3" id="boatname" placeholder="Enter boat name" value={state.name} />
-                                                        <div className="save-btn">
-                                                            <button className='btn btn-yellow rounded-2'>Save</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="edit-photo ps-4">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <BasicListing {...state} />
                                         {/* Amenities */}
                                         <div className="Listing-basics bg-white Pricing mb-4">
                                             <div className="photo-header d-flex justify-content-between mb-3">
@@ -216,13 +199,14 @@ const EditBoatDetails = () => {
                                                     <div className="amenities-list d-flex gap-5">
                                                         <ul>
                                                             {state?.amenities?.map((e: any, index: number) => <li>{e}</li>)}
-
                                                         </ul>
-
                                                     </div>
                                                 </div>
+                                                <hr />
                                                 <div className="edit-photo">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
+                                                    <Link to={`/boat/${match?.params.id}/amenities/edit`}>
+                                                        <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>

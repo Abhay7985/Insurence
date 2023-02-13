@@ -34,7 +34,7 @@ const BoatInfo = () => {
         uRLSearchParams.set("manufacturer_id", manufacturer_id)
 
         navigate({
-            pathname: '/boat/passenger-bedrooms',
+            pathname: '/boat/passengers',
             search: uRLSearchParams.toString()
         })
 

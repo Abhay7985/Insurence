@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useLocation, useMatch, useNavigate } from 'react-router-dom';
 import bannerImage from '../assets/images/image_one.png';
 import BackNextLayout from '../Components/boat/BackNextLayout';
 import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
 
-const AminitiesOffer = () => {
+interface amenities {
+    id: number,
+    amenity:string
+}
+
+const AmenitiesOffer = () => {
 
     const navigate = useNavigate()
     const location = useLocation()
-    const match = useMatch(`boat/:id/aminities`)
+    const match = useMatch(`boat/:id/amenities`)
     const uRLSearchParams = new URLSearchParams(location.search)
     const { Toast, authState } = React.useContext(GlobalContext)
     const [amenities, setAmenities] = useState<Array<number>>([])
+    const [amenitiesOffers, setAmenitiesOffers] = useState<Array<amenities>>([])
 
     const handleChecked = (e: any) => {
         let prev = amenities;
@@ -26,8 +32,8 @@ const AminitiesOffer = () => {
         setAmenities([...prev]);
     };
 
-    console.log(amenities);
-
+  
+    
 
     const onSubmit = async (e: any) => {
         e.preventDefault()
@@ -46,26 +52,24 @@ const AminitiesOffer = () => {
                 pathname: `/boat/${match?.params.id}/photos`,
                 search: uRLSearchParams.toString()
             })
-            
-        } catch (error) {   
+
+        } catch (error) {
         }
     }
 
-    const amenitiesOffers = [
-        { id: 1, offer: "Blanket" },
-        { id: 2, offer: "Conditioner" },
-        { id: 3, offer: "Sheet" },
-        { id: 4, offer: "Toilet paper" },
-        { id: 5, offer: "Soap" },
-        { id: 6, offer: "Towel" },
-        { id: 7, offer: "Pilow" },
-        { id: 8, offer: "Shampoo" },
-        { id: 9, offer: "Wine House" },
-        { id: 10, offer: "Hot Water" },
-        { id: 11, offer: "Amplifier" },
-        { id: 12, offer: "Anchor" },
+    const handleAmenities = async () => {
+        try {
+            let res = await henceforthApi.Boat.boatAmenities()
+            console.log(res);
+            setAmenitiesOffers(res.data)
+        } catch (error) {
+        }
+    }
 
-    ]
+    useLayoutEffect(() => {
+        handleAmenities()
+    }, [])
+
     return (
         <>
             {/* Aminities-offer */}
@@ -79,12 +83,12 @@ const AminitiesOffer = () => {
                                         <h3 className='banner-title pb-3'>What amenities do you offer?</h3>
                                         <p>You will be able to add more amenities in your write up for your listing.</p>
                                     </div>
-                                    {amenitiesOffers.map((e: any) =>
-                                        <div className="col-11 col-lg-11">
+                                    {amenitiesOffers.map((e: any, index: number) =>
+                                        <div className="col-11 col-lg-11" key={index}>
                                             <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value={e.id} onChange={(e: any)=>handleChecked(e)} id="check1" />
+                                                <input className="form-check-input" type="checkbox" value={e?.id} onChange={(e: any) => handleChecked(e)} id="check1" />
                                                 <label className="form-check-label" htmlFor="check1">
-                                                    {e.offer}
+                                                    {e?.amenity}
                                                 </label>
                                             </div>
                                         </div>)}
@@ -105,4 +109,4 @@ const AminitiesOffer = () => {
     )
 }
 
-export default AminitiesOffer
+export default AmenitiesOffer
