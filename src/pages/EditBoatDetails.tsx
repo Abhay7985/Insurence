@@ -1,12 +1,71 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import increase from '../assets/icons/add_circle_outline.svg';
 import decrease from '../assets/icons/remove_circle_outline.svg';
 import { Input, Select } from 'antd';
+import { useMatch } from 'react-router-dom';
+import { GlobalContext } from '../context/Provider';
+import henceforthApi from '../utils/henceforthApi';
 
 const handleChange = (value: string) => {
     console.log(`selected ${value}`);
 };
 const EditBoatDetails = () => {
+ 
+        const match = useMatch(`boat/:id/inquiry/edit`)
+        const { authState } = React.useContext(GlobalContext)
+        const [state, setState] = useState({
+            amenities: [],
+            bathrooms: 0,
+            bedrooms: 0,
+            category_id: 0,
+            cover_image: "",
+            created_at: "",
+            id: "",
+            location: "",
+            manufacturer_id: "",
+            model: "",
+            name: "",
+            passenger_day: "",
+            passenger_night: "",
+            pets_allowed: 0,
+            photos: [],
+            prices: [],
+            rules: "",
+            size: "",
+            smoking_allowed: 0,
+            status: "",
+            step: "",
+            updated_at: ""
+        })
+        const [booleanState , setBooleanState] = useState({
+            hideEditName:false,
+            hideAmenities:false,
+            hideAddress:false,
+            hideBoatDetail:false,
+            hidePassengers:false
+        })
+    
+        const boatDetails = async () => {
+            henceforthApi.setToken(authState?.access_token)
+            try {
+                let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
+                setState(res.data);
+    
+            } catch (error) {
+            }
+        }
+    
+        useEffect(() => {
+            boatDetails()
+        }, [match?.params.id])
+        
+        let dotColor = [
+            { status: "listed", color: "green" },
+            { status: "unlisted", color: "red" },
+            { status: "draft", color: "" },
+    
+        ]
+    
     return (
         <>
             {/* morning-panormic-listing */}
@@ -18,8 +77,8 @@ const EditBoatDetails = () => {
                                 <h2>Morning Panoramic</h2>
                                 <div className="list-btn d-flex gap-4">
                                     <a href="#" className='d-flex gap-2 align-items-center text-dark'>
-                                        <div className="status-dot bg-green"></div>
-                                        <span>Listed</span>
+                                        <div className={`status-dot bg-${dotColor.find(res => res.status === state?.status)?.color}`} ></div>
+                                        <span>{state.status}</span>
                                     </a>
                                     <button className='btn btn-outline-yellow'>Preview Listing</button>
                                 </div>
@@ -27,7 +86,7 @@ const EditBoatDetails = () => {
                         </div>
                         <div className="col-12">
                             <div className="tab-box d-flex align-items-start py-5 gap-3">
-                                <div className="nav flex-column nav-pills bg-white " id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                <div className="nav flex-column nav-pills bg-white" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                     {/* Listing accordian */}
                                     <button className="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
                                         {/* Listing accordian */}
@@ -132,10 +191,10 @@ const EditBoatDetails = () => {
                                             <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
                                                 <div className="listing-content w-100">
                                                     <h6 className='mb-2'>Listing Title</h6>
-                                                    <p>Morning Panoramic</p>
+                                                    <p>{state?.name}</p>
                                                     {/* edit-email */}
                                                     <div className="edit-input">
-                                                        <input type="email" className="form-control w-100 my-3" id="editemail" placeholder="Enter email" />
+                                                        <input type="text" className="form-control w-100 my-3" id="boatname" placeholder="Enter boat name" value={state.name}/>
                                                         <div className="save-btn">
                                                             <button className='btn btn-yellow rounded-2'>Save</button>
                                                         </div>
@@ -156,9 +215,10 @@ const EditBoatDetails = () => {
                                                     <h6 className='mb-2'>Amenities</h6>
                                                     <div className="amenities-list d-flex gap-5">
                                                         <ul>
-                                                            <li>Sheet</li>
-                                                            
+                                                            {state?.amenities?.map((e:any, index:number)=><li>{e}</li> )}
+                                                        
                                                         </ul>
+                                                      
                                                     </div>
                                                 </div>
                                                 <div className="edit-photo">
@@ -174,7 +234,7 @@ const EditBoatDetails = () => {
                                             <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
                                                 <div className="listing-content w-100">
                                                     <h6 className='mb-2'>Address</h6>
-                                                    <p>Angra dos Reis - Rio de Janeiro</p>
+                                                    <p>{state.location}</p>
                                                     {/* edit-email */}
                                                     <div className="edit-input mt-3">
                                                         <div className="row">
@@ -248,10 +308,10 @@ const EditBoatDetails = () => {
                                                 <div className="edit-details">
                                                     <div className="listing-content">
                                                         <h6 className='mb-3'>Boat Detail</h6>
-                                                        <p className='mb-2'>Category: Speedboat</p>
-                                                        <p className='mb-2'>Manufacturer: ACM</p>
-                                                        <p className='mb-2'>Model: 2014</p>
-                                                        <p className='mb-2'>Size: 25 feet</p>
+                                                        <p className='mb-2'>Category: {state.category_id}</p>
+                                                        <p className='mb-2'>Manufacturer: {state.manufacturer_id}</p>
+                                                        <p className='mb-2'>Model: {state.manufacturer_id}</p>
+                                                        <p className='mb-2'>Size: {state.size} feet</p>
 
                                                     </div>
                                                     {/* edit */}
@@ -262,7 +322,8 @@ const EditBoatDetails = () => {
                                                                     <label className="form-label">Category</label>
                                                                     <div className="select">
                                                                         <Select
-                                                                            defaultValue="Speedboat"
+                                                                            // defaultValue="Speedboat"
+                                                                            value={String(state.category_id)}
                                                                             className='w-100'
                                                                             onChange={handleChange}
                                                                             options={[
@@ -280,8 +341,9 @@ const EditBoatDetails = () => {
                                                                     <label className="form-label">Manufacturer</label>
                                                                     <div className="select">
                                                                         <Select
-                                                                            defaultValue="ACM"
+                                                                            
                                                                             className='w-100'
+                                                                            value={state.manufacturer_id}
                                                                             onChange={handleChange}
                                                                             options={[
                                                                                 { value: 'jack', label: 'Jack' },
@@ -298,13 +360,13 @@ const EditBoatDetails = () => {
                                                             <div className="col-12">
                                                                 <div className="address mb-3">
                                                                     <label className="form-label">Model</label>
-                                                                    <Input placeholder="2014" />
+                                                                    <Input placeholder="Model" value={state.model} />
                                                                 </div>
                                                             </div>
                                                             <div className="col-12">
                                                                 <div className="address mb-3">
                                                                     <label className="form-label">Size</label>
-                                                                    <Input placeholder="Size" />
+                                                                    <Input placeholder="Size" value={state.size} />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -323,10 +385,10 @@ const EditBoatDetails = () => {
                                                 <div className="edit-address">
                                                     <div className="listing-content">
                                                         <h6 className='mb-3'>Passengers & Bedrooms</h6>
-                                                        <p className='mb-2'>Category: Speedboat</p>
-                                                        <p className='mb-2'>Manufacturer: ACM</p>
-                                                        <p className='mb-2'>Model: 2014</p>
-                                                        <p className='mb-2'>Size: 25 feet</p>
+                                                        <p className='mb-2'>Category: {state.category_id}</p>
+                                                        <p className='mb-2'>Manufacturer: {state.manufacturer_id}</p>
+                                                        <p className='mb-2'>Model: {state.model}</p>
+                                                        <p className='mb-2'>Size: {state.size} feet</p>
                                                     </div>
                                                     <div className="row gy-2 pt-2">
                                                         <div className="col-7">
@@ -340,7 +402,7 @@ const EditBoatDetails = () => {
                                                                             </button>
                                                                         </li>
                                                                         <li>
-                                                                            <input type="text" className='form-control' value={1} />
+                                                                            <input type="text" className='form-control' value={state.passenger_day} />
                                                                         </li>
                                                                         <li>
                                                                             <button className='btn border-0'>
@@ -362,7 +424,7 @@ const EditBoatDetails = () => {
                                                                             </button>
                                                                         </li>
                                                                         <li>
-                                                                            <input type="text" className='form-control' value={1} />
+                                                                            <input type="text" className='form-control' value={state.passenger_night} />
                                                                         </li>
                                                                         <li>
                                                                             <button className='btn border-0'>
@@ -384,10 +446,10 @@ const EditBoatDetails = () => {
                                                                             </button>
                                                                         </li>
                                                                         <li>
-                                                                            <input type="text" className='form-control' value={1} />
+                                                                            <input type="text" className='form-control' value={state.bedrooms} />
                                                                         </li>
                                                                         <li>
-                                                                            <button className='btn border-0'>
+                                                                            <button className='btn border-0'  >
                                                                                 <img src={increase} alt="icon" />
                                                                             </button>
                                                                         </li>
@@ -406,7 +468,7 @@ const EditBoatDetails = () => {
                                                                             </button>
                                                                         </li>
                                                                         <li>
-                                                                            <input type="text" className='form-control' value={1} />
+                                                                            <input type="text" className='form-control' value={state.bathrooms} />
                                                                         </li>
                                                                         <li>
                                                                             <button className='btn border-0'>

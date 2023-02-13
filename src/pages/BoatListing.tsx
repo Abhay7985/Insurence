@@ -63,8 +63,8 @@ const BoatListing = () => {
 
     let dotColor = [
         { status: "listed", color: "green" },
-        { status: "unlisted", color: "" },
-        { status: "draft", color: "red" },
+        { status: "unlisted", color: "red" },
+        { status: "draft", color: "" },
 
     ]
 

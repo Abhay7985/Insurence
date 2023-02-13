@@ -22,7 +22,7 @@ const SignIn = () => {
       password: state.password
     }
     try {
-      let apiRes = await henceforthApi.Auth.login(data)
+      let apiRes:any = await henceforthApi.Auth.login(data)
       loginSuccess(apiRes.data)(authDispatch)
       console.log('apiRes', apiRes)
       Toast.success(apiRes.message)
