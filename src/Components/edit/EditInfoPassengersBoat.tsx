@@ -28,11 +28,16 @@ const EditInfoPassengersBoat = (props: any) => {
     const onSubmit = async (e: any) => {
         e.preventDefault()
         const items = {
-            name: state.name
+            boatinfo: {
+                passenger_day: state.passenger_day,
+                passenger_night: state.passenger_night,
+                bedrooms: state.bedrooms,
+                bathrooms: state.bathrooms
+            }
         }
         setLoading(true)
         try {
-            const apiRes = await henceforthApi.Boat.edit(state.id,items)
+            const apiRes = await henceforthApi.Boat.edit(state.id, items)
             Toast.success(apiRes.message)
             setIsExpended(false)
             await props.initialise()
@@ -48,14 +53,14 @@ const EditInfoPassengersBoat = (props: any) => {
         <div className="photo-header d-flex justify-content-between border px-4 py-4 rounded-1">
             <div className="edit-address">
                 {isExpended ?
-                    <div className="row gy-2 pt-2">
+                    <form className="row gy-2 pt-2" onSubmit={onSubmit}>
                         <div className="col-7">
                             <div className="add-passenger d-flex justify-content-between align-items-center">
                                 <p>Number of Passengers (Day)</p>
                                 <div className="add-btn">
                                     <ul className='d-flex gap-1 align-items-center'>
                                         <li>
-                                            <button className='btn border-0' onClick={() => handleChange({ name: 'passenger_day', value: state.passenger_day - 1 })} disabled={state.passenger_day === 1}>
+                                            <button className='btn border-0' type="button" onClick={() => handleChange({ name: 'passenger_day', value: state.passenger_day - 1 })} disabled={state.passenger_day === 1}>
                                                 <img src={decrease} alt="icon" />
                                             </button>
                                         </li>
@@ -63,7 +68,7 @@ const EditInfoPassengersBoat = (props: any) => {
                                             <input type="text" className='form-control' value={state.passenger_day} />
                                         </li>
                                         <li>
-                                            <button className='btn border-0' onClick={() => handleChange({ name: 'passenger_day', value: state.passenger_day + 1 })}>
+                                            <button className='btn border-0' type="button" onClick={() => handleChange({ name: 'passenger_day', value: state.passenger_day + 1 })}>
                                                 <img src={increase} alt="icon" />
                                             </button>
                                         </li>
@@ -77,7 +82,7 @@ const EditInfoPassengersBoat = (props: any) => {
                                 <div className="add-btn">
                                     <ul className='d-flex gap-1 align-items-center'>
                                         <li>
-                                            <button className='btn border-0' onClick={() => handleChange({ name: 'passenger_night', value: state.passenger_night - 1 })} disabled={state.passenger_night === 1}>
+                                            <button className='btn border-0' type="button" onClick={() => handleChange({ name: 'passenger_night', value: state.passenger_night - 1 })} disabled={state.passenger_night === 1}>
                                                 <img src={decrease} alt="icon" />
                                             </button>
                                         </li>
@@ -85,7 +90,7 @@ const EditInfoPassengersBoat = (props: any) => {
                                             <input type="text" className='form-control' value={state.passenger_night} />
                                         </li>
                                         <li>
-                                            <button className='btn border-0' onClick={() => handleChange({ name: 'passenger_night', value: state.passenger_night + 1 })}>
+                                            <button className='btn border-0' type="button" onClick={() => handleChange({ name: 'passenger_night', value: state.passenger_night + 1 })}>
                                                 <img src={increase} alt="icon" />
                                             </button>
                                         </li>
@@ -99,7 +104,7 @@ const EditInfoPassengersBoat = (props: any) => {
                                 <div className="add-btn">
                                     <ul className='d-flex gap-1 align-items-center'>
                                         <li>
-                                            <button className='btn border-0' onClick={() => handleChange({ name: 'bedrooms', value: state.bedrooms - 1 })} disabled={state.bedrooms === 1}>
+                                            <button className='btn border-0' type="button" onClick={() => handleChange({ name: 'bedrooms', value: state.bedrooms - 1 })} disabled={state.bedrooms === 1}>
                                                 <img src={decrease} alt="icon" />
                                             </button>
                                         </li>
@@ -107,7 +112,7 @@ const EditInfoPassengersBoat = (props: any) => {
                                             <input type="text" className='form-control' value={state.bedrooms} />
                                         </li>
                                         <li>
-                                            <button className='btn border-0' onClick={() => handleChange({ name: 'bedrooms', value: state.bedrooms + 1 })}>
+                                            <button className='btn border-0' type="button" onClick={() => handleChange({ name: 'bedrooms', value: state.bedrooms + 1 })}>
                                                 <img src={increase} alt="icon" />
                                             </button>
                                         </li>
@@ -121,7 +126,7 @@ const EditInfoPassengersBoat = (props: any) => {
                                 <div className="add-btn">
                                     <ul className='d-flex gap-1 align-items-center'>
                                         <li>
-                                            <button className='btn border-0' onClick={() => handleChange({ name: 'bathrooms', value: state.bathrooms - 1 })} disabled={state.bathrooms === 1}>
+                                            <button className='btn border-0' type="button" onClick={() => handleChange({ name: 'bathrooms', value: state.bathrooms - 1 })} disabled={state.bathrooms === 1}>
                                                 <img src={decrease} alt="icon" />
                                             </button>
                                         </li>
@@ -129,7 +134,7 @@ const EditInfoPassengersBoat = (props: any) => {
                                             <input type="text" className='form-control' value={state.bathrooms} />
                                         </li>
                                         <li>
-                                            <button className='btn border-0' onClick={() => handleChange({ name: 'bathrooms', value: state.bathrooms + 1 })}>
+                                            <button className='btn border-0' type="button" onClick={() => handleChange({ name: 'bathrooms', value: state.bathrooms + 1 })}>
                                                 <img src={increase} alt="icon" />
                                             </button>
                                         </li>
@@ -139,16 +144,16 @@ const EditInfoPassengersBoat = (props: any) => {
                         </div>
                         <div className="col-7">
                             <div className="save-btn pt-2">
-                                <button className='btn btn-yellow rounded-2' type="button">Save</button>
+                                <button className='btn btn-yellow rounded-2' type="submit">Save</button>
                             </div>
                         </div>
-                    </div> :
+                    </form> :
                     <div className="listing-content">
                         <h6 className='mb-3'>Passengers & Bedrooms</h6>
                         <p className='mb-2'>Passengers(Day): {state.passenger_day}</p>
                         <p className='mb-2'>Passengers(Night): {state.passenger_night}</p>
                         <p className='mb-2'>Bedrooms: {state.bedrooms}</p>
-                        <p className='mb-2'>Bathrooms: {state.bathrooms} feet</p>
+                        <p className='mb-2'>Bathrooms: {state.bathrooms}</p>
                     </div>}
             </div>
             <div className="edit-photo ps-4" >

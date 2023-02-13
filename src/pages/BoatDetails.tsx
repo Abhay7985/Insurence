@@ -3,7 +3,7 @@ import BannerImage from '../assets/images/boat_one.png';
 import petIcon from '../assets/images/pet.png';
 import smoking from '../assets/images/cigar.png';
 import currentLocation from '../assets/icons/exact_location.svg';
-import type { DatePickerProps } from 'antd';
+import { DatePickerProps, Spin } from 'antd';
 import { DatePicker, Space } from 'antd';
 import henceforthApi from '../utils/henceforthApi';
 import { Link, useMatch } from 'react-router-dom';
@@ -19,7 +19,8 @@ const onChange: DatePickerProps['onChange'] = (date, dateString) => {
 const BoatDetails = () => {
 
     const match = useMatch(`boat/:id/inquiry`)
-    const { authState } = React.useContext(GlobalContext)
+    const { authState, Toast } = React.useContext(GlobalContext)
+    const [loading, setLoading] = React.useState(false)
 
     const [state, setState] = useState({
         amenities: [],
@@ -43,27 +44,33 @@ const BoatDetails = () => {
         smoking_allowed: 0,
         status: "",
         step: "",
-        updated_at: ""
+        updated_at: "",
+        address: {
+            address1: ""
+        }
     })
 
-    const boatDetails = async () => {
+    const initialise = async () => {
         henceforthApi.setToken(authState?.access_token)
         try {
+            setLoading(true)
             let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
             setState(res.data);
 
         } catch (error) {
+            Toast.error(error)
+        } finally {
+            setLoading(false)
         }
     }
 
     useEffect(() => {
-        boatDetails()
+        initialise()
     }, [match?.params.id])
 
 
     return (
-        <>
-            {/* Morning Panormic */}
+        <Spin spinning={loading} >
             <section className="morning-panormic py-4">
                 <div className="container">
                     {/* banner-row */}
@@ -75,7 +82,7 @@ const BoatDetails = () => {
                                         <HenceforthIcons.DetailBack />
                                     </div>
                                     <h3 className='mt-4 mb-2'>{state.name}</h3>
-                                    <p>{state.category_id} • {state.location}</p>
+                                    <p>{state.category_id} • {state?.address?.address1}</p>
                                 </div>
                                 <div className="share-btn align-self-end d-flex gap-2 align-items-center">
                                     <HenceforthIcons.Share />
@@ -131,7 +138,7 @@ const BoatDetails = () => {
                                     <h4 className='mb-2'>Amenities</h4>
                                     <div className="aminities-list d-flex gap-5">
                                         <ul>
-                                            {state?.amenities?.map((e: any, index: number) => <li key={index}>{e}</li>)}
+                                            {state?.amenities?.map((e: any, index: number) => <li key={index}>{e?.amenity}</li>)}
                                         </ul>
                                     </div>
                                 </div>
@@ -206,7 +213,7 @@ const BoatDetails = () => {
                     </div>
                 </div>
             </section>
-        </>
+        </Spin>
     )
 }
 

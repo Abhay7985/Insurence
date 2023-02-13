@@ -12,12 +12,11 @@ const EditInfoBoat = (props: any) => {
     })
     const [isExpended, setIsExpended] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
-    
+
     const [categories_list, setCategoriesList] = React.useState([])
     const [manufactures_list, setManufactureresList] = React.useState([])
 
     const handleChange = async ({ name, value }: any) => {
-        debugger
         setState((state: any) => {
             return {
                 ...state,
@@ -29,8 +28,11 @@ const EditInfoBoat = (props: any) => {
     const onSubmit = async (e: any) => {
         e.preventDefault()
         const items = {
-            boat: {
-                name: state.name
+            boatinfo: {
+                category_id: state.category_id,
+                manufacturer_id: state.manufacturer_id,
+                model: state.model,
+                size: state.size,
             }
         }
         setLoading(true)
@@ -61,7 +63,7 @@ const EditInfoBoat = (props: any) => {
         initialise()
     }, [])
     return <Spin spinning={loading} >
-        <div className="photo-header d-flex justify-content-between border px-4 py-4 rounded-1 mb-3">
+        <div className="photo-header d-flex justify-content-between border px-4 py-4 rounded-1 mb-3" >
             <div className="edit-details">
                 {isExpended ?
                     <form className="edit-input mt-3" onSubmit={onSubmit}>
@@ -73,7 +75,7 @@ const EditInfoBoat = (props: any) => {
                                         <Select
                                             defaultValue={state.category_id}
                                             className='w-100'
-                                            onChange={(category_id) => handleChange({ category_id })}
+                                            onChange={(category_id) => handleChange({ name: 'category_id', value: category_id })}
                                             options={categories_list?.map((res: any) => { return { value: res?.id, label: res.category } })}
 
                                         />
@@ -87,7 +89,7 @@ const EditInfoBoat = (props: any) => {
                                         <Select
                                             className='w-100'
                                             defaultValue={state.manufacturer_id}
-                                            onChange={(manufacturer_id) => handleChange({ manufacturer_id })}
+                                            onChange={(manufacturer_id) => handleChange({ name: 'manufacturer_id', value: manufacturer_id })}
                                             options={manufactures_list?.map((res: any) => { return { value: res?.id, label: res.manufacturer } })}
                                         />
                                     </div>
@@ -98,13 +100,13 @@ const EditInfoBoat = (props: any) => {
                             <div className="col-12">
                                 <div className="address mb-3">
                                     <label className="form-label">Model</label>
-                                    <Input placeholder="Model" value={state.model} />
+                                    <Input placeholder="Model" value={state.model} name="model" onChange={(e) => handleChange(e.target)} />
                                 </div>
                             </div>
                             <div className="col-12">
                                 <div className="address mb-3">
                                     <label className="form-label">Size</label>
-                                    <Input placeholder="Size" value={state.size} />
+                                    <Input placeholder="Size" value={state.size} name="size" onChange={(e) => handleChange(e.target)} />
                                 </div>
                             </div>
                         </div>
@@ -114,8 +116,8 @@ const EditInfoBoat = (props: any) => {
                     </form> :
                     <div className="listing-content">
                         <h6 className='mb-3'>Boat Detail</h6>
-                        <p className='mb-2'>Category: {state.category_id}</p>
-                        <p className='mb-2'>Manufacturer: {state.manufacturer_id}</p>
+                        <p className='mb-2'>Category: {state.category}</p>
+                        <p className='mb-2'>Manufacturer: {state.manufacturer}</p>
                         <p className='mb-2'>Model: {state.model}</p>
                         <p className='mb-2'>Size: {state.size} feet</p>
 

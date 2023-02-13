@@ -25,7 +25,7 @@ const EditBasicBoat = (props: any) => {
     const onSubmit = async (e: any) => {
         e.preventDefault()
         const items = {
-            boat: {
+            boatinfo: {
                 name: state.name
             }
         }
@@ -59,7 +59,7 @@ const EditBasicBoat = (props: any) => {
                                 <button className='btn btn-yellow rounded-2' type="submit" id='amenities_tab' >Save</button>
                             </div>
                         </form> :
-                        <p>{state?.name}</p>
+                        <p id='amenities_tab'>{state?.name}</p>
                     }
 
                 </div>

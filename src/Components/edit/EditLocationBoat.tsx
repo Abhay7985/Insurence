@@ -61,7 +61,7 @@ const EditLocationBoat = (props: any) => {
 
     return <Spin spinning={loading} >
         <div className="Location bg-white Pricing mb-4">
-            <div className="photo-header d-flex justify-content-between mb-3">
+            <div className="photo-header d-flex justify-content-between mb-3" id='location_tab'>
                 <h4>Location</h4>
             </div>
             <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">

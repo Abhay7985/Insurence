@@ -5,8 +5,8 @@ import React, { Fragment, useState } from "react";
 import { GlobalContext } from "../context/Provider";
 import { Checkbox, Select, Space, Switch } from "antd";
 import BackNextLayout from "../Components/boat/BackNextLayout";
-import { CheckboxChangeEvent } from "antd/es/checkbox";
 import henceforthApi from "../utils/henceforthApi";
+import CountryCodeJson from '../utils/CountryCode.json'
 
 function PlaceLocated() {
 
@@ -179,11 +179,13 @@ function PlaceLocated() {
                                             <div className="category">
                                                 <Space direction="vertical" style={{ width: '100%' }}>
                                                     <Select
+                                                        showSearch
                                                         size={'middle'}
                                                         defaultValue="Enter country / region"
                                                         onChange={handleChange}
                                                         style={{ width: '100%' }}
-                                                    // options={options}
+                                                        options={CountryCodeJson.map((res) => { return { value: res.code, label: res.name } })}
+
                                                     />
                                                 </Space>
                                             </div>

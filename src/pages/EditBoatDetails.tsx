@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Input, Select, Spin } from 'antd';
+import { Badge, Dropdown, Input, MenuProps, Select, Space, Spin } from 'antd';
 import { Link, useMatch } from 'react-router-dom';
 import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
@@ -77,6 +77,35 @@ const EditBoatDetails = () => {
 
     ]
 
+    const StatusItem: MenuProps['items'] = [
+        {
+            key: '1',
+            label: (
+                <span>
+                    Listed
+                </span>
+            ),
+            icon: <Badge color="#32CD32" />,
+            onClick: () => {
+
+            }
+
+        },
+        {
+            key: '2',
+            label: (
+                <span>
+                    Unlisted
+                </span>
+            ),
+            icon: <Badge color="#FF0000" />,
+            onClick: () => {
+
+            }
+        }
+
+    ];
+
     return (
         <Spin spinning={loading} >
             <section className='morning-panormic-listing py-5' id='photos_tab'>
@@ -87,10 +116,13 @@ const EditBoatDetails = () => {
                                 <h2>Morning Panoramic</h2>
                                 <div className="list-btn d-flex gap-4">
                                     <a href="#" className='d-flex gap-2 align-items-center text-dark'>
-                                        <div className={`status-dot bg-${dotColor.find(res => res.status === state?.status)?.color}`} ></div>
-                                        <span>{state.status}</span>
+                                        <Dropdown menu={{ items: StatusItem }}>
+                                            <Badge color={state?.status == "draft" ? '#FF0000' : '#32CD32'} text={state?.status} />
+                                        </Dropdown>
                                     </a>
-                                    <button className='btn btn-outline-yellow'>Preview Listing</button>
+                                    <Link to={`/boat/${match?.params.id}/inquiry`}>
+                                        <button className='btn btn-outline-yellow'>Preview Listing</button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -120,10 +152,10 @@ const EditBoatDetails = () => {
                                                                 <a href="#amenities_tab" className='nav-link'>Amenities</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" className='nav-link'>Location</a>
+                                                                <a href="#location_tab" className='nav-link'>Location</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" className='nav-link'>Boat & passengers</a>
+                                                                <a href="#passengers_tab" className='nav-link'>Boat & passengers</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -209,7 +241,7 @@ const EditBoatDetails = () => {
                                                     <h6 className='mb-2'>Amenities</h6>
                                                     <div className="amenities-list d-flex gap-5">
                                                         <ul>
-                                                            {state?.amenities?.map((e: any, index: number) => <li>{e}</li>)}
+                                                            {state?.amenities?.map((e: any) => <li>{e.amenity}</li>)}
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -227,7 +259,7 @@ const EditBoatDetails = () => {
                                         }
                                         {/* Boat & passengers */}
                                         {state.name &&
-                                            <div className="boat-passengers bg-white Pricing">
+                                            <div className="boat-passengers bg-white Pricing" id="passengers_tab">
                                                 <div className="photo-header d-flex justify-content-between mb-3">
                                                     <h4>Boat & passengers</h4>
                                                 </div>

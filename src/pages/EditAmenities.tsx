@@ -1,131 +1,122 @@
+import { Spin } from 'antd';
+import React from 'react';
+import { useMatch } from 'react-router-dom';
 import HenceforthIcons from '../assets/icons/HenceforthIcons'
+import { GlobalContext } from '../context/Provider';
+import henceforthApi from '../utils/henceforthApi';
+
+interface AmenitiesInterface {
+    id: number,
+    amenity: string,
+    checked?: boolean
+}
 
 const EditAmenities = () => {
+    const match = useMatch("boat/:id/amenities/edit")
+    const { authState, Toast } = React.useContext(GlobalContext)
+    const [loading, setLoading] = React.useState(false)
+    const [state, setState] = React.useState<Array<AmenitiesInterface>>([])
+
+    const onSubmit = async (e: any) => {
+        e.preventDefault()
+        let items = {
+            amenities: state.filter((res) => res.checked === true).map((res) => res.id)
+        }
+        setLoading(true)
+        try {
+            let apiRes = await henceforthApi.Boat.edit(match?.params.id as string, items)
+            Toast.success(apiRes.message)
+            window?.history?.back()
+        } catch (error) {
+            Toast.error(error)
+            setLoading(false)
+        }
+    }
+
+    const handleChecked = (b: boolean, index: number) => {
+        const item = state
+        item[index]['checked'] = b
+        setState([...item])
+    };
+
+
+    const initialiseDetails = async () => {
+        henceforthApi.setToken(authState?.access_token)
+        try {
+            let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
+            return res
+        } catch (error) {
+        }
+    }
+
+
+    const initialiseAmenities = async () => {
+        try {
+            setLoading(true)
+            let rowData: Array<AmenitiesInterface> = []
+            let amenitiesRes = await henceforthApi.Boat.boatAmenities()
+            let amenitiesData = amenitiesRes.data
+            let boatRes = await initialiseDetails()
+            let boatData = boatRes.data
+
+            amenitiesData.forEach((element: AmenitiesInterface) => {
+                const item = boatData.amenities.find((res: AmenitiesInterface) => res.id == element.id)
+                rowData.push({
+                    id: element.id,
+                    amenity: element.amenity,
+                    checked: item?.id === element?.id
+                })
+
+            });
+            setState(rowData)
+        } catch (error) {
+        }
+        finally {
+            setLoading(false)
+        }
+    }
+
+    React.useEffect(() => {
+        initialiseAmenities()
+    }, [])
+
     return (
-        <>
-            {/* Edit-amenties section */}
+        <Spin spinning={loading} >
             <section className="edit-amenities py-5">
                 <div className="container">
-                    <div className="row">
+                    <form className="row" onSubmit={onSubmit}>
                         <div className="col-md-6">
                             <div className="row gy-4">
-                                <div className="col-12">
+                                <div className="col-12" onClick={() => window?.history.back()}>
                                     <HenceforthIcons.LeftArrow />
                                 </div>
                                 <div className="col-lg-12">
                                     <div className="title d-flex justify-content-between align-items-center py-3 flex-wrap gap-2">
                                         <h2>Edit Amenities</h2>
                                         <div className="save-btn">
-                                            <button className="btn btn-yellow">Save Changes</button>
+                                            <button className="btn btn-yellow" type='submit'>Save Changes</button>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-lg-12">
                                     <div className="row gy-4">
-                                        <div className="col-12">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="check1" />
-                                                <label className="form-check-label" htmlFor="check1">
-                                                    Blanket
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="check2" />
-                                                <label className="form-check-label" htmlFor="check2">
-                                                    Conditioner
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="check3" />
-                                                <label className="form-check-label" htmlFor="check3">
-                                                    Sheet
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="check4" />
-                                                <label className="form-check-label" htmlFor="check4">
-                                                    Toilet paper
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="check5" />
-                                                <label className="form-check-label" htmlFor="check5">
-                                                    Soap
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="check6" />
-                                                <label className="form-check-label" htmlFor="check6">
-                                                    Towel
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="check7" />
-                                                <label className="form-check-label" htmlFor="check7">
-                                                    Pilow
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="check8" />
-                                                <label className="form-check-label" htmlFor="check8">
-                                                    Shampoo
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="check9" />
-                                                <label className="form-check-label" htmlFor="check9">
-                                                    Wine House
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="check10" />
-                                                <label className="form-check-label" htmlFor="check10">
-                                                    Hot Water
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="check11" />
-                                                <label className="form-check-label" htmlFor="check11">
-                                                    Amplifier
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="check12" />
-                                                <label className="form-check-label" htmlFor="check12">
-                                                    Anchor
-                                                </label>
-                                            </div>
-                                        </div>
+                                        {state.map((res: AmenitiesInterface, index: number) =>
+                                            <div className="col-12 col-lg-12">
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" checked={res.checked} onChange={(e) => handleChecked(e.target.checked, index)} id="check1" />
+                                                    <label className="form-check-label" htmlFor="check1">
+                                                        {res?.amenity}
+                                                    </label>
+                                                </div>
+                                            </div>)}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </section>
-        </>
+        </Spin>
     )
 }
 
