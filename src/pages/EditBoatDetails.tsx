@@ -1,75 +1,116 @@
 import React, { useEffect, useState } from 'react'
-import increase from '../assets/icons/add_circle_outline.svg';
-import decrease from '../assets/icons/remove_circle_outline.svg';
-import { Input, Select } from 'antd';
-import { useMatch } from 'react-router-dom';
+import { Badge, Dropdown, Input, MenuProps, Select, Space, Spin } from 'antd';
+import { Link, useLocation, useMatch } from 'react-router-dom';
 import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
+import BasicListing from '../Components/edit/EditBasicBoat';
+import InfoPassengersBoat from '../Components/edit/EditInfoPassengersBoat';
+import EditInfoBoat from '../Components/edit/EditInfoBoat';
+import EditLocationBoat from '../Components/edit/EditLocationBoat';
+import EditPriceBoat from '../Components/edit/EditPriceBoat';
 
-const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
-};
+
 const EditBoatDetails = () => {
- 
-        const match = useMatch(`boat/:id/inquiry/edit`)
-        const { authState } = React.useContext(GlobalContext)
-        const [state, setState] = useState({
-            amenities: [],
-            bathrooms: 0,
-            bedrooms: 0,
-            category_id: 0,
-            cover_image: "",
+
+    const match = useMatch(`boat/:id/inquiry/edit`)
+    const location = useLocation()
+    const { authState, Toast } = React.useContext(GlobalContext)
+    const [loading, setLoading] = React.useState(false)
+    const [state, setState] = useState({
+        amenities: [],
+        bathrooms: 0,
+        bedrooms: 0,
+        category_id: 0,
+        cover_image: "",
+        created_at: "",
+        id: "",
+        location: "",
+        manufacturer_id: "",
+        model: "",
+        name: "",
+        passenger_day: "",
+        passenger_night: "",
+        pets_allowed: 0,
+        photos: [],
+        prices: [],
+        rules: "",
+        size: "",
+        smoking_allowed: 0,
+        status: "",
+        step: "",
+        updated_at: "",
+        address: {
+            id: 0,
+            address1: "",
+            address2: "",
+            city: "",
+            state: "",
+            postcode: "",
+            country: "",
+            show_location: 1,
             created_at: "",
-            id: "",
-            location: "",
-            manufacturer_id: "",
-            model: "",
-            name: "",
-            passenger_day: "",
-            passenger_night: "",
-            pets_allowed: 0,
-            photos: [],
-            prices: [],
-            rules: "",
-            size: "",
-            smoking_allowed: 0,
-            status: "",
-            step: "",
             updated_at: ""
-        })
-        const [booleanState , setBooleanState] = useState({
-            hideEditName:false,
-            hideAmenities:false,
-            hideAddress:false,
-            hideBoatDetail:false,
-            hidePassengers:false
-        })
-    
-        const boatDetails = async () => {
-            henceforthApi.setToken(authState?.access_token)
-            try {
-                let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
-                setState(res.data);
-    
-            } catch (error) {
+        }
+    })
+
+
+    const initialise = async (b: boolean) => {
+        setLoading(b)
+        henceforthApi.setToken(authState?.access_token)
+        try {
+            let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
+            setState(res.data);
+
+        } catch (error) {
+            Toast.error(error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        initialise(true)
+    }, [match?.params.id])
+
+    let dotColor = [
+        { status: "listed", color: "green" },
+        { status: "unlisted", color: "red" },
+        { status: "draft", color: "" },
+
+    ]
+
+    const StatusItem: MenuProps['items'] = [
+        {
+            key: '1',
+            label: (
+                <span>
+                    Listed
+                </span>
+            ),
+            icon: <Badge color="#32CD32" />,
+            onClick: () => {
+
+            }
+
+        },
+        {
+            key: '2',
+            label: (
+                <span>
+                    Unlisted
+                </span>
+            ),
+            icon: <Badge color="#FF0000" />,
+            onClick: () => {
+
             }
         }
-    
-        useEffect(() => {
-            boatDetails()
-        }, [match?.params.id])
-        
-        let dotColor = [
-            { status: "listed", color: "green" },
-            { status: "unlisted", color: "red" },
-            { status: "draft", color: "" },
-    
-        ]
-    
+
+    ];
+
     return (
-        <>
-            {/* morning-panormic-listing */}
-            <section className='morning-panormic-listing py-5'>
+        <Spin spinning={loading} >
+            <section className='morning-panormic-listing py-5' >
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
@@ -77,518 +118,181 @@ const EditBoatDetails = () => {
                                 <h2>Morning Panoramic</h2>
                                 <div className="list-btn d-flex gap-4">
                                     <a href="#" className='d-flex gap-2 align-items-center text-dark'>
-                                        <div className={`status-dot bg-${dotColor.find(res => res.status === state?.status)?.color}`} ></div>
-                                        <span>{state.status}</span>
+                                        <Dropdown menu={{ items: StatusItem }}>
+                                            <Badge color={state?.status == "draft" ? '#FF0000' : '#32CD32'} text={state?.status} />
+                                        </Dropdown>
                                     </a>
-                                    <button className='btn btn-outline-yellow'>Preview Listing</button>
+                                    <Link to={`/boat/${match?.params.id}/inquiry`}>
+                                        <button className='btn btn-outline-yellow'>Preview Listing</button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
                         <div className="col-12">
                             <div className="tab-box d-flex align-items-start py-5 gap-3">
-                                <div className="nav flex-column nav-pills bg-white" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                    {/* Listing accordian */}
-                                    <button className="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
+                                <div className='bg-white h-100'>
+                                    <div className="nav flex-column nav-pills bg-white" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                         {/* Listing accordian */}
-                                        <div className="accordion" id="accordionExample">
-                                            <div className="accordion-item">
-                                                <h2 className="accordion-header" id="headingOne">
-                                                    <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        Listing Details
-                                                    </button>
-                                                </h2>
-                                                <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                                    <div className="accordion-body text-start">
-                                                        <ul>
-                                                            <li>
-                                                                <a href="#" className='nav-link'>Photos</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" className='nav-link'>Listing basics</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" className='nav-link'>Amenities</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" className='nav-link'>Location</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" className='nav-link'>Boat & passengers</a>
-                                                            </li>
-                                                        </ul>
+                                        <button className="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
+                                            {/* Listing accordian */}
+                                            <div className="accordion" id="accordionExample">
+                                                <div className="accordion-item">
+                                                    <h2 className="accordion-header" id="headingOne">
+                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            Listing Details
+                                                        </button>
+                                                    </h2>
+                                                    <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                        <div className="accordion-body text-start">
+                                                            <ul>
+                                                                <li>
+                                                                    <a href="#photos_tab" className={`${location.hash === '#photos_tab' ? 'active-tab' : ''} nav-link`}>Photos</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#listing_tab" className={`${location.hash === '#listing_tab' ? 'active-tab' : ''} nav-link`}>Listing basics</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#amenities_tab" className={`${location.hash === '#amenities_tab' ? 'active-tab' : ''} nav-link`}>Amenities</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#location_tab" className={`${location.hash === '#location_tab' ? 'active-tab' : ''} nav-link`}>Location</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#passengers_tab" className={`${location.hash === '#passengers_tab' ? 'active-tab' : ''} nav-link`}>Boat & passengers</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </button>
-                                    {/* Pricing and Availability */}
-                                    <button className="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">
+                                        </button>
                                         {/* Pricing and Availability */}
-                                        <div className="accordion" id="pricingAccordian">
-                                            <div className="accordion-item">
-                                                <h2 className="accordion-header" id="headingOne">
-                                                    <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#pricing" aria-expanded="true" aria-controls="pricing">
-                                                        Pricing and Availability
-                                                    </button>
-                                                </h2>
-                                                <div id="pricing" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#pricingAccordian">
-                                                    <div className="accordion-body text-start">
-                                                        <ul>
-                                                            <li>
-                                                                <a href="#" className='nav-link'>Pricing</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" className='nav-link'>Calender availability</a>
-                                                            </li>
-                                                        </ul>
+                                        <button className="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">
+                                            {/* Pricing and Availability */}
+                                            <div className="accordion" id="pricingAccordian">
+                                                <div className="accordion-item">
+                                                    <h2 className="accordion-header" id="headingOne">
+                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#pricing" aria-expanded="true" aria-controls="pricing">
+                                                            Pricing and Availability
+                                                        </button>
+                                                    </h2>
+                                                    <div id="pricing" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#pricingAccordian">
+                                                        <div className="accordion-body text-start">
+                                                            <ul>
+                                                                <li>
+                                                                    <a href="#pricing_tab" className={`${location.hash === '#pricing_tab' ? 'active-tab' : ''} nav-link`}>Pricing</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#calender_tab" className={`${location.hash === '#calender_tab' ? 'active-tab' : ''} nav-link`}>Calender availability</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </button>
-                                    {/* Rules & Includes */}
-                                    <button className="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">
+                                        </button>
                                         {/* Rules & Includes */}
-                                        <div className="accordion" id="RulesAccordian">
-                                            <div className="accordion-item">
-                                                <h2 className="accordion-header" id="headingOne">
-                                                    <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#rules" aria-expanded="true" aria-controls="rules">
-                                                        Rules & Includes
-                                                    </button>
-                                                </h2>
-                                                <div id="rules" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#RulesAccordian">
-                                                    <div className="accordion-body text-start">
-                                                        <ul>
-                                                            <li>
-                                                                <a href="#" className='nav-link'>Rules</a>
-                                                            </li>
-                                                        </ul>
+                                        <button className="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">
+                                            {/* Rules & Includes */}
+                                            <div className="accordion" id="RulesAccordian">
+                                                <div className="accordion-item">
+                                                    <h2 className="accordion-header" id="headingOne">
+                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#rules" aria-expanded="true" aria-controls="rules">
+                                                            Rules & Includes
+                                                        </button>
+                                                    </h2>
+                                                    <div id="rules" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#RulesAccordian">
+                                                        <div className="accordion-body text-start">
+                                                            <ul>
+                                                                <li>
+                                                                    <a href="#" className={`${location.hash === '#listing_tab' ? 'active-tab' : ''} nav-link`}>Rules</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </button>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div className="tab-content w-100" id="v-pills-tabContent">
                                     {/* Listing accordian */}
                                     <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
 
                                         {/* photos */}
-                                        <div className="photos Pricing bg-white mb-4">
+                                        <div className="photos Pricing bg-white mb-4" >
                                             <div className="photo-header d-flex justify-content-between">
-                                                <h4>Photos (5)</h4>
-                                                <div className="edit-photo">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
+                                                <h4>Photos ({state.photos.length})</h4>
+                                                <div className="edit-photo" id='listing_tab'>
+                                                    <Link to={`/boat/${match?.params.id}/photos/edit`} >
+                                                        <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
+                                                    </Link>
                                                 </div>
                                             </div>
                                             {/* photo-slider */}
                                         </div>
                                         {/* Listing-basics */}
-                                        <div className="Listing-basics bg-white Pricing mb-4">
-                                            <div className="photo-header d-flex justify-content-between mb-3">
-                                                <h4>Listing basics</h4>
-                                            </div>
-                                            <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
-                                                <div className="listing-content w-100">
-                                                    <h6 className='mb-2'>Listing Title</h6>
-                                                    <p>{state?.name}</p>
-                                                    {/* edit-email */}
-                                                    <div className="edit-input">
-                                                        <input type="text" className="form-control w-100 my-3" id="boatname" placeholder="Enter boat name" value={state.name}/>
-                                                        <div className="save-btn">
-                                                            <button className='btn btn-yellow rounded-2'>Save</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="edit-photo ps-4">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        {state.name &&
+                                            <BasicListing {...state} initialise={initialise} />
+                                        }
                                         {/* Amenities */}
-                                        <div className="Listing-basics bg-white Pricing mb-4">
-                                            <div className="photo-header d-flex justify-content-between mb-3">
-                                                <h4>Amenities</h4>
-                                            </div>
-                                            <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
-                                                <div className="listing-content">
-                                                    <h6 className='mb-2'>Amenities</h6>
-                                                    <div className="amenities-list d-flex gap-5">
-                                                        <ul>
-                                                            {state?.amenities?.map((e:any, index:number)=><li>{e}</li> )}
-                                                        
-                                                        </ul>
-                                                      
+                                        {state.name &&
+
+                                            <div className="Listing-basics bg-white Pricing mb-4">
+                                                <div className="photo-header d-flex justify-content-between mb-3">
+                                                    <h4>Amenities</h4>
+                                                </div>
+                                                <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
+                                                    <div className="listing-content">
+                                                        <h6 className='mb-2'>Amenities</h6>
+                                                        <div className="amenities-list d-flex gap-5">
+                                                            <ul>
+                                                                {state?.amenities?.map((e: any) => <li>{e.amenity}</li>)}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                    <div className="edit-photo">
+                                                        <Link to={`/boat/${match?.params.id}/amenities/edit`}>
+                                                            <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
+                                                        </Link>
                                                     </div>
                                                 </div>
-                                                <div className="edit-photo">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            </div>}
                                         {/* Location */}
-                                        <div className="Location bg-white Pricing mb-4">
-                                            <div className="photo-header d-flex justify-content-between mb-3">
-                                                <h4>Location</h4>
-                                            </div>
-                                            <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
-                                                <div className="listing-content w-100">
-                                                    <h6 className='mb-2'>Address</h6>
-                                                    <p>{state.location}</p>
-                                                    {/* edit-email */}
-                                                    <div className="edit-input mt-3">
-                                                        <div className="row">
-                                                            <div className="col-12">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">Street address</label>
-                                                                    <Input placeholder="House name/number +street /road" />
-                                                                </div>
-                                                            </div>
-
-
-                                                            <div className="col-12">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">Flat, suite. (Optional)</label>
-                                                                    <Input placeholder="Flat, suite, building access code" />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-lg-6">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">City</label>
-                                                                    <Input placeholder="Enter City" />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-lg-6">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">State</label>
-                                                                    <Input placeholder="Enter State" />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-lg-6">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">Postcode</label>
-                                                                    <Input placeholder="Enter Postcode" />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-lg-6">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">Country</label>
-                                                                    <div className="select">
-                                                                        <Select
-                                                                            defaultValue="Country"
-                                                                            className='w-100'
-                                                                            onChange={handleChange}
-                                                                            options={[
-                                                                                { value: 'jack', label: 'Jack' },
-                                                                                { value: 'lucy', label: 'Lucy' },
-                                                                                { value: 'Yiminghe', label: 'yiminghe' },
-                                                                                { value: 'disabled', label: 'Disabled', disabled: true },
-                                                                            ]}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="save-btn pt-2">
-                                                            <button className='btn btn-yellow rounded-2'>Save</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="edit-photo ps-4">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        {state.name &&
+                                            <EditLocationBoat {...state.address} initialise={initialise} />
+                                        }
                                         {/* Boat & passengers */}
-                                        <div className="boat-passengers bg-white Pricing">
-                                            <div className="photo-header d-flex justify-content-between mb-3">
-                                                <h4>Boat & passengers</h4>
+                                        {state.name &&
+                                            <div className="boat-passengers bg-white Pricing" id="passengers_tab">
+                                                <div className="photo-header d-flex justify-content-between mb-3">
+                                                    <h4>Boat & passengers</h4>
+                                                </div>
+                                                <EditInfoBoat {...state} initialise={initialise} />
+                                                <InfoPassengersBoat {...state} initialise={initialise} />
+
                                             </div>
-                                            <div className="photo-header d-flex justify-content-between border px-4 py-4 rounded-1 mb-3">
-                                                <div className="edit-details">
-                                                    <div className="listing-content">
-                                                        <h6 className='mb-3'>Boat Detail</h6>
-                                                        <p className='mb-2'>Category: {state.category_id}</p>
-                                                        <p className='mb-2'>Manufacturer: {state.manufacturer_id}</p>
-                                                        <p className='mb-2'>Model: {state.manufacturer_id}</p>
-                                                        <p className='mb-2'>Size: {state.size} feet</p>
-
-                                                    </div>
-                                                    {/* edit */}
-                                                    <div className="edit-input mt-3">
-                                                        <div className="row">
-                                                            <div className="col-12">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">Category</label>
-                                                                    <div className="select">
-                                                                        <Select
-                                                                            // defaultValue="Speedboat"
-                                                                            value={String(state.category_id)}
-                                                                            className='w-100'
-                                                                            onChange={handleChange}
-                                                                            options={[
-                                                                                { value: 'jack', label: 'Jack' },
-                                                                                { value: 'lucy', label: 'Lucy' },
-                                                                                { value: 'Yiminghe', label: 'yiminghe' },
-                                                                                { value: 'disabled', label: 'Disabled', disabled: true },
-                                                                            ]}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-12">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">Manufacturer</label>
-                                                                    <div className="select">
-                                                                        <Select
-                                                                            
-                                                                            className='w-100'
-                                                                            value={state.manufacturer_id}
-                                                                            onChange={handleChange}
-                                                                            options={[
-                                                                                { value: 'jack', label: 'Jack' },
-                                                                                { value: 'lucy', label: 'Lucy' },
-                                                                                { value: 'Yiminghe', label: 'yiminghe' },
-                                                                                { value: 'disabled', label: 'Disabled', disabled: true },
-                                                                            ]}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-
-                                                            <div className="col-12">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">Model</label>
-                                                                    <Input placeholder="Model" value={state.model} />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-12">
-                                                                <div className="address mb-3">
-                                                                    <label className="form-label">Size</label>
-                                                                    <Input placeholder="Size" value={state.size} />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="save-btn pt-2">
-                                                            <button className='btn btn-yellow rounded-2'>Save</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div className="edit-photo">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                </div>
-                                            </div>
-                                            <div className="photo-header d-flex justify-content-between border px-4 py-4 rounded-1">
-                                                <div className="edit-address">
-                                                    <div className="listing-content">
-                                                        <h6 className='mb-3'>Passengers & Bedrooms</h6>
-                                                        <p className='mb-2'>Category: {state.category_id}</p>
-                                                        <p className='mb-2'>Manufacturer: {state.manufacturer_id}</p>
-                                                        <p className='mb-2'>Model: {state.model}</p>
-                                                        <p className='mb-2'>Size: {state.size} feet</p>
-                                                    </div>
-                                                    <div className="row gy-2 pt-2">
-                                                        <div className="col-7">
-                                                            <div className="add-passenger d-flex justify-content-between align-items-center">
-                                                                <p>Number of Passengers (Day)</p>
-                                                                <div className="add-btn">
-                                                                    <ul className='d-flex gap-1 align-items-center'>
-                                                                        <li>
-                                                                            <button className='btn border-0'>
-                                                                                <img src={decrease} alt="icon" />
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <input type="text" className='form-control' value={state.passenger_day} />
-                                                                        </li>
-                                                                        <li>
-                                                                            <button className='btn border-0'>
-                                                                                <img src={increase} alt="icon" />
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-7">
-                                                            <div className="add-passenger d-flex justify-content-between align-items-center">
-                                                                <p>Number of Passengers (Night)</p>
-                                                                <div className="add-btn">
-                                                                    <ul className='d-flex gap-1 align-items-center'>
-                                                                        <li>
-                                                                            <button className='btn border-0'>
-                                                                                <img src={decrease} alt="icon" />
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <input type="text" className='form-control' value={state.passenger_night} />
-                                                                        </li>
-                                                                        <li>
-                                                                            <button className='btn border-0'>
-                                                                                <img src={increase} alt="icon" />
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-7">
-                                                            <div className="add-passenger d-flex justify-content-between align-items-center">
-                                                                <p>Number of Bedrooms</p>
-                                                                <div className="add-btn">
-                                                                    <ul className='d-flex gap-1 align-items-center'>
-                                                                        <li>
-                                                                            <button className='btn border-0'>
-                                                                                <img src={decrease} alt="icon" />
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <input type="text" className='form-control' value={state.bedrooms} />
-                                                                        </li>
-                                                                        <li>
-                                                                            <button className='btn border-0'  >
-                                                                                <img src={increase} alt="icon" />
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-7">
-                                                            <div className="add-passenger d-flex justify-content-between align-items-center">
-                                                                <p>Number of Bathrooms</p>
-                                                                <div className="add-btn">
-                                                                    <ul className='d-flex gap-1 align-items-center'>
-                                                                        <li>
-                                                                            <button className='btn border-0'>
-                                                                                <img src={decrease} alt="icon" />
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <input type="text" className='form-control' value={state.bathrooms} />
-                                                                        </li>
-                                                                        <li>
-                                                                            <button className='btn border-0'>
-                                                                                <img src={increase} alt="icon" />
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-7">
-                                                            <div className="save-btn pt-2">
-                                                                <button className='btn btn-yellow rounded-2'>Save</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="edit-photo">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        }
 
                                     </div>
                                     {/* Pricing and Availability */}
                                     <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                         {/* Pricing */}
-                                        <div className="Pricing bg-white mb-4">
-                                            <div className="photo-header d-flex justify-content-between mb-3">
-                                                <h4>Pricing</h4>
-                                            </div>
-                                            <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
-                                                <div className="listing-content">
-                                                    <h6 className='mb-2'>Price for Panorâmico Manhã - 9 às 13hrs (4 hours AM)</h6>
-                                                    <p>$30 <span className='fs-14'>or</span> 10x in $4</p>
-                                                </div>
-                                                <div className="edit-photo">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                </div>
-                                            </div>
-                                            {/* edit-pricing */}
-                                            <div className="row justify-content-center justify-content-lg-end gy-4 py-4">
-                                                <div className="col-12">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox" value="" id="boat-check-1" />
-                                                        <label className="form-check-label" htmlFor="boat-check-1">
-                                                            Panorâmico Manhã - 9 às 13hrs (4 hours AM)
-                                                        </label>
-                                                    </div>
-                                                    <div className="row justify-content-end py-3">
-                                                        <div className="col-md-12">
-                                                            <div className="mb-3 ps-sm-4">
-                                                                <label htmlFor="exampleInputEmail1" className="form-label">Price (cash)</label>
-                                                                <input type="email" className="form-control" id="exampleInputEmail1" placeholder='Enter price' />
-                                                            </div>
-                                                            <div className="ps-sm-4">
-                                                                <label htmlFor="exampleInputEmail2" className="form-label">Price (installments)</label>
-                                                                <div className="price-input d-flex gap-3 align-items-center">
-                                                                    <input type="email" className="form-control" placeholder='Enter installments' />
-                                                                    <span>*</span>
-                                                                    <input type="email" className="form-control" placeholder='Enter price' />
-                                                                    <span>=</span>
-                                                                    <input type="email" className="form-control" placeholder='$00' disabled />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox" value="" id="boat-check-2" />
-                                                        <label className="form-check-label" htmlFor="boat-check-2">
-                                                            Panorâmico Pôr do Sol - 14:30 às 18:30 (4 hours PM)
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox" value="" id="boat-check-3" />
-                                                        <label className="form-check-label" htmlFor="boat-check-3">
-                                                            Panorâmico 2hrs (2 hours tour)
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox" value="" id="boat-check-4" />
-                                                        <label className="form-check-label" htmlFor="boat-check-4">
-                                                            Panorâmico Pôr do sol + Noturno 14 às 20hrs (6 hours PM) - Panorâmico Completo - 10 às 18hrs (Full day panoramic tour - 8 hours)
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox" value="" id="boat-check-5" />
-                                                        <label className="form-check-label" htmlFor="boat-check-5">
-                                                            Panorâmico Noturno - 20 à meia noite (night time tour)
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox" value="" id="boat-check-6" />
-                                                        <label className="form-check-label" htmlFor="boat-check-6">
-                                                            Roteiro Ilha dos Frades - 10 às 18hrs (Island tour 1)
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <button className='btn btn-yellow px-4 rounded-2'>Save</button>
-                                                </div>
 
-                                            </div>
-                                        </div>
+                                        {/* edit-pricing */}
+                                        {state.name && state.prices &&
+                                            <EditPriceBoat {...state} initialise={initialise} />
+                                        }
+
                                         {/* Calender availability */}
                                         <div className="Calender-availability bg-white p-4 ">
                                             <div className="photo-header d-flex justify-content-between mb-3">
                                                 <h4>Calender availability</h4>
                                                 <div className="edit-photo">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Open calender</button>
+                                                    <Link to={`/calender`}>
+                                                        <button className='btn p-0 border-0 text-yellow fw-bold'>Open calender</button>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>
@@ -688,7 +392,7 @@ const EditBoatDetails = () => {
                     </div>
                 </div>
             </section>
-        </>
+        </Spin>
     )
 }
 

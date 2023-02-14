@@ -25,19 +25,19 @@ const SelectPassenger = () => {
         e.preventDefault()
 
         const items = {
-            "boat": {
-                "name": uRLSearchParams.get("name"),
-                "category_id": uRLSearchParams.get("category_id"),
-                "manufacturer_id": uRLSearchParams.get("manufacturer_id"),
-                "model": uRLSearchParams.get("model"),
-                "size": uRLSearchParams.get("size"),
-                "passenger_day": passengerDay,
-                "passenger_night": passengerNight,
-                "bedrooms": bedrooms,
-                "bathrooms": bathrooms
+            boat: {
+                name: uRLSearchParams.get("name"),
+                category_id: uRLSearchParams.get("category_id"),
+                manufacturer_id: uRLSearchParams.get("manufacturer_id"),
+                model: uRLSearchParams.get("model"),
+                size: uRLSearchParams.get("size"),
+                passenger_day: passengerDay,
+                passenger_night: passengerNight,
+                bedrooms: bedrooms,
+                bathrooms: bathrooms
             }
             // navigate({
-            //     pathname: '/boat/passenger-bedrooms',
+            //     pathname: '/boat/passengers',
             //     search: uRLSearchParams.toString()
             // })
         }

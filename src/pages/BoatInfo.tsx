@@ -4,8 +4,10 @@ import type { SizeType } from 'antd/es/config-provider/SizeContext';
 import { Select, Space } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import henceforthApi from '../utils/henceforthApi';
+import { GlobalContext } from '../context/Provider';
 
 const BoatInfo = () => {
+    const { authState } = React.useContext(GlobalContext)
     const navigate = useNavigate()
     const location = useLocation()
     const [size, setSize] = useState<SizeType>('middle')
@@ -19,7 +21,10 @@ const BoatInfo = () => {
     const [category_id, setCategoryId] = useState("")
     const [manufacturer_id, setManufacturerId] = useState("")
 
+
     const onSubmit = async (e: any) => {
+        henceforthApi.setToken(authState?.access_token)
+
         e.preventDefault()
         const uRLSearchParams = new URLSearchParams()
         uRLSearchParams.set("name", boatName)
@@ -27,8 +32,9 @@ const BoatInfo = () => {
         uRLSearchParams.set("size", boatSize)
         uRLSearchParams.set("category_id", category_id)
         uRLSearchParams.set("manufacturer_id", manufacturer_id)
+
         navigate({
-            pathname: '/boat/passenger-bedrooms',
+            pathname: '/boat/passengers',
             search: uRLSearchParams.toString()
         })
 
@@ -50,6 +56,8 @@ const BoatInfo = () => {
     useEffect(() => {
         initialise()
     }, [])
+
+
 
     return (
         // boat-details

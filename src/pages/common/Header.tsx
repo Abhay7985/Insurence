@@ -2,9 +2,7 @@ import { useContext } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import logo from '../../assets/icons/logo_header.svg'
 import { GlobalContext } from '../../context/Provider'
-import profile from '../../assets/images/image_two.png';
 import React, { Fragment } from "react";
-import { UserOutlined } from '@ant-design/icons';
 import placeholder from '../../assets/images/placeholder.png'
 import { Button, Divider, Dropdown, MenuProps, Space, Switch, theme, Tooltip, Avatar, Image, Row, Col } from "antd";
 import henceforthApi from '../../utils/henceforthApi';
@@ -59,10 +57,10 @@ const Header = () => {
                                 {authState.access_token ?
                                     <ul className='d-flex flex-wrap align-items-center gap-5'>
                                         <li>
-                                            <Link to='' className='nav-link'>Boats</Link>
+                                            <Link to='/' className='nav-link'>Boats</Link>
                                         </li>
                                         <li>
-                                            <Link to={`inquiry/${123}`} className='nav-link'>Inquiry</Link>
+                                            <Link to={`inquiry/1`} className='nav-link'>Inquiry</Link>
                                         </li>
                                         <li>
                                             <Link to='/calender' className='nav-link'>Calender</Link>
@@ -76,7 +74,7 @@ const Header = () => {
                                                     </div>
                                                 )}
                                                 arrow className="btnn h-100">
-                                                <Button><Avatar style={{ backgroundColor: '#32CD32' }} icon={<img src={authState?.image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${authState.image}` : placeholder} />} />&nbsp;{authState?.name}</Button>
+                                                <Button><Avatar style={{ backgroundColor: '#FF9100' }} icon={<img src={henceforthApi.FILES.imageOriginal(authState.image, placeholder)} />} />&nbsp;{authState?.name}</Button>
                                             </Dropdown>
                                         </li>
                                     </ul> :
