@@ -168,7 +168,9 @@ const Profile = () => {
                         </div>
                       </div> : ""}
                   </div>
-
+                  <div className="edit-user ps-4">
+                    <button className='btn border-0 text-yellow fw-bold p-0' onClick={onChangeNameHide}>{show === true ? "Cancel" : "Edit"}</button>
+                  </div>
                 </div>
                 {/* email */}
 
@@ -190,7 +192,9 @@ const Profile = () => {
                         </div>
                       </div> : ""}
                   </div>
-
+                  <div className="edit-user ps-4">
+                    <button className='btn border-0 text-yellow fw-bold p-0' onClick={onChangeEmailHide} >{emailShow === true ? "Cancel" : "Edit"}</button>
+                  </div>
                 </div>
               </div>
             </div>

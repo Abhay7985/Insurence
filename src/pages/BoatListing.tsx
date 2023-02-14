@@ -1,7 +1,7 @@
 import addIcon from '../assets/icons/plus_white.svg'
 import search from '../assets/icons/search.svg'
 import boatImage from '../assets/images/boat_four.png'
-import { Pagination, Select, Space } from 'antd';
+import { Badge, Pagination, Select, Space } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import henceforthApi from '../utils/henceforthApi';
 import React, { useEffect, useState } from 'react';
@@ -9,6 +9,7 @@ import moment from 'moment';
 import { boatListingData } from '../interfaces';
 import { GlobalContext } from '../context/Provider';
 import HenceforthIcons from '../assets/icons/HenceforthIcons';
+import henceofrthEnums from '../utils/henceofrthEnums';
 
 const BoatListing = () => {
     const navigate = useNavigate()
@@ -62,10 +63,9 @@ const BoatListing = () => {
     }, [urlSearchParams.toString()])
 
     let dotColor = [
-        { status: "listed", color: "green" },
-        { status: "unlisted", color: "red" },
-        { status: "draft", color: "" },
-
+        { status: henceofrthEnums.OrderStatus.draft, color: henceofrthEnums.OrderColor.draft },
+        { status: henceofrthEnums.OrderStatus.listed, color: henceofrthEnums.OrderColor.listed },
+        { status: henceofrthEnums.OrderStatus.unlisted, color: henceofrthEnums.OrderColor.unlisted },
     ]
 
     const onChangePagination = (value: string) => {
@@ -150,7 +150,8 @@ const BoatListing = () => {
                                             </td>
                                             <td>
                                                 <div className="status d-flex align-items-center">
-                                                    <div className={`status-dot bg-${dotColor.find(res => res.status === e?.status)?.color}`}></div>
+                                                    <div className={`status-dot bg-${dotColor.find(res => res.status == e?.status)?.status}`}></div>
+                                                    {/* <Badge color={dotColor.find(res => res.status == e?.status)?.color} /> */}
                                                     <div className="ms-1">
                                                         <p>{e?.status}</p>
                                                     </div>

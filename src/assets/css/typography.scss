@@ -32,6 +32,7 @@ h5 {
 .fs-12 {
     font-size: 12px !important;
 }
+
 .fs-14 {
     font-size: 14px !important;
 }
@@ -57,10 +58,11 @@ p {
     font-family: 'Nunito', sans-serif !important;
 }
 
-.rounded{
+.rounded {
     border-radius: $radius !important;
 }
-.rounded-2{
+
+.rounded-2 {
     border-radius: 2px !important;
 }
 
@@ -71,17 +73,33 @@ p {
 .bg-yellow {
     background: $primary-color !important;
 }
+
 .bg-white {
     background: $white !important;
 }
+
 .bg-green {
     background: $green !important;
 }
-.text-yellow{
+
+.bg-draft {
+    background: $draft !important;
+}
+
+.bg-listed {
+    background: $listed !important;
+}
+
+.bg-unlisted {
+    background: $unlisted !important;
+}
+
+.text-yellow {
     color: $primary-color !important;
 }
-.text-black{
-    color: $light-black!important;
+
+.text-black {
+    color: $light-black !important;
 }
 
 label {
@@ -123,10 +141,12 @@ label {
 .form-control:hover {
     border-color: $primary-color;
 }
-.nav-link{
+
+.nav-link {
     font-weight: 600;
 }
-.nav-link:hover{
+
+.nav-link:hover {
     color: $primary-color;
 }
 
@@ -143,6 +163,7 @@ label {
     box-shadow: none !important;
     border-radius: 50% !important;
 }
+
 .form-check-toggle {
     box-shadow: none !important;
     border-radius: 25px !important;
