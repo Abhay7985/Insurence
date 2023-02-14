@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { Badge, Dropdown, Input, MenuProps, Select, Space, Spin } from 'antd';
-import { Link, useMatch } from 'react-router-dom';
+import { Link, useLocation, useMatch } from 'react-router-dom';
 import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
 import BasicListing from '../Components/edit/EditBasicBoat';
 import InfoPassengersBoat from '../Components/edit/EditInfoPassengersBoat';
 import EditInfoBoat from '../Components/edit/EditInfoBoat';
 import EditLocationBoat from '../Components/edit/EditLocationBoat';
+import EditPriceBoat from '../Components/edit/EditPriceBoat';
 
 
 const EditBoatDetails = () => {
 
     const match = useMatch(`boat/:id/inquiry/edit`)
+    const location = useLocation()
     const { authState, Toast } = React.useContext(GlobalContext)
     const [loading, setLoading] = React.useState(false)
     const [state, setState] = useState({
@@ -108,7 +110,7 @@ const EditBoatDetails = () => {
 
     return (
         <Spin spinning={loading} >
-            <section className='morning-panormic-listing py-5' id='photos_tab'>
+            <section className='morning-panormic-listing py-5' >
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
@@ -143,19 +145,19 @@ const EditBoatDetails = () => {
                                                     <div className="accordion-body text-start">
                                                         <ul>
                                                             <li>
-                                                                <a href="#" className='nav-link'>Photos</a>
+                                                                <a href="#photos_tab" className={`${location.hash === '#photos_tab' ? 'active-tab' : ''} nav-link`}>Photos</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#listing_tab" className='nav-link'>Listing basics</a>
+                                                                <a href="#listing_tab" className={`${location.hash === '#listing_tab' ? 'active-tab' : ''} nav-link`}>Listing basics</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#amenities_tab" className='nav-link'>Amenities</a>
+                                                                <a href="#amenities_tab" className={`${location.hash === '#amenities_tab' ? 'active-tab' : ''} nav-link`}>Amenities</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#location_tab" className='nav-link'>Location</a>
+                                                                <a href="#location_tab" className={`${location.hash === '#location_tab' ? 'active-tab' : ''} nav-link`}>Location</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#passengers_tab" className='nav-link'>Boat & passengers</a>
+                                                                <a href="#passengers_tab" className={`${location.hash === '#passengers_tab' ? 'active-tab' : ''} nav-link`}>Boat & passengers</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -177,10 +179,10 @@ const EditBoatDetails = () => {
                                                     <div className="accordion-body text-start">
                                                         <ul>
                                                             <li>
-                                                                <a href="#" className='nav-link'>Pricing</a>
+                                                                <a href="#pricing_tab" className={`${location.hash === '#pricing_tab' ? 'active-tab' : ''} nav-link`}>Pricing</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" className='nav-link'>Calender availability</a>
+                                                                <a href="#calender_tab" className={`${location.hash === '#calender_tab' ? 'active-tab' : ''} nav-link`}>Calender availability</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -202,7 +204,7 @@ const EditBoatDetails = () => {
                                                     <div className="accordion-body text-start">
                                                         <ul>
                                                             <li>
-                                                                <a href="#" className='nav-link'>Rules</a>
+                                                                <a href="#" className={`${location.hash === '#listing_tab' ? 'active-tab' : ''} nav-link`}>Rules</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -232,27 +234,29 @@ const EditBoatDetails = () => {
                                             <BasicListing {...state} initialise={initialise} />
                                         }
                                         {/* Amenities */}
-                                        <div className="Listing-basics bg-white Pricing mb-4">
-                                            <div className="photo-header d-flex justify-content-between mb-3">
-                                                <h4>Amenities</h4>
-                                            </div>
-                                            <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
-                                                <div className="listing-content">
-                                                    <h6 className='mb-2'>Amenities</h6>
-                                                    <div className="amenities-list d-flex gap-5">
-                                                        <ul>
-                                                            {state?.amenities?.map((e: any) => <li>{e.amenity}</li>)}
-                                                        </ul>
+                                        {state.name &&
+
+                                            <div className="Listing-basics bg-white Pricing mb-4">
+                                                <div className="photo-header d-flex justify-content-between mb-3">
+                                                    <h4>Amenities</h4>
+                                                </div>
+                                                <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
+                                                    <div className="listing-content">
+                                                        <h6 className='mb-2'>Amenities</h6>
+                                                        <div className="amenities-list d-flex gap-5">
+                                                            <ul>
+                                                                {state?.amenities?.map((e: any) => <li>{e.amenity}</li>)}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                    <div className="edit-photo">
+                                                        <Link to={`/boat/${match?.params.id}/amenities/edit`}>
+                                                            <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
+                                                        </Link>
                                                     </div>
                                                 </div>
-                                                <hr />
-                                                <div className="edit-photo">
-                                                    <Link to={`/boat/${match?.params.id}/amenities/edit`}>
-                                                        <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            </div>}
                                         {/* Location */}
                                         {state.name &&
                                             <EditLocationBoat {...state.address} initialise={initialise} />
@@ -273,99 +277,20 @@ const EditBoatDetails = () => {
                                     {/* Pricing and Availability */}
                                     <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                         {/* Pricing */}
-                                        <div className="Pricing bg-white mb-4">
-                                            <div className="photo-header d-flex justify-content-between mb-3">
-                                                <h4>Pricing</h4>
-                                            </div>
-                                            <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
-                                                <div className="listing-content">
-                                                    <h6 className='mb-2'>Price for Panorâmico Manhã - 9 às 13hrs (4 hours AM)</h6>
-                                                    <p>$30 <span className='fs-14'>or</span> 10x in $4</p>
-                                                </div>
-                                                <div className="edit-photo">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                </div>
-                                            </div>
-                                            {/* edit-pricing */}
-                                            <div className="row justify-content-center justify-content-lg-end gy-4 py-4">
-                                                <div className="col-12">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox" value="" id="boat-check-1" />
-                                                        <label className="form-check-label" htmlFor="boat-check-1">
-                                                            Panorâmico Manhã - 9 às 13hrs (4 hours AM)
-                                                        </label>
-                                                    </div>
-                                                    <div className="row justify-content-end py-3">
-                                                        <div className="col-md-12">
-                                                            <div className="mb-3 ps-sm-4">
-                                                                <label htmlFor="exampleInputEmail1" className="form-label">Price (cash)</label>
-                                                                <input type="email" className="form-control" id="exampleInputEmail1" placeholder='Enter price' />
-                                                            </div>
-                                                            <div className="ps-sm-4">
-                                                                <label htmlFor="exampleInputEmail2" className="form-label">Price (installments)</label>
-                                                                <div className="price-input d-flex gap-3 align-items-center">
-                                                                    <input type="email" className="form-control" placeholder='Enter installments' />
-                                                                    <span>*</span>
-                                                                    <input type="email" className="form-control" placeholder='Enter price' />
-                                                                    <span>=</span>
-                                                                    <input type="email" className="form-control" placeholder='$00' disabled />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox" value="" id="boat-check-2" />
-                                                        <label className="form-check-label" htmlFor="boat-check-2">
-                                                            Panorâmico Pôr do Sol - 14:30 às 18:30 (4 hours PM)
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox" value="" id="boat-check-3" />
-                                                        <label className="form-check-label" htmlFor="boat-check-3">
-                                                            Panorâmico 2hrs (2 hours tour)
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox" value="" id="boat-check-4" />
-                                                        <label className="form-check-label" htmlFor="boat-check-4">
-                                                            Panorâmico Pôr do sol + Noturno 14 às 20hrs (6 hours PM) - Panorâmico Completo - 10 às 18hrs (Full day panoramic tour - 8 hours)
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox" value="" id="boat-check-5" />
-                                                        <label className="form-check-label" htmlFor="boat-check-5">
-                                                            Panorâmico Noturno - 20 à meia noite (night time tour)
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox" value="" id="boat-check-6" />
-                                                        <label className="form-check-label" htmlFor="boat-check-6">
-                                                            Roteiro Ilha dos Frades - 10 às 18hrs (Island tour 1)
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <button className='btn btn-yellow px-4 rounded-2'>Save</button>
-                                                </div>
 
-                                            </div>
-                                        </div>
+                                        {/* edit-pricing */}
+                                        {state.name && state.prices &&
+                                            <EditPriceBoat {...state} initialise={initialise} />
+                                        }
+
                                         {/* Calender availability */}
                                         <div className="Calender-availability bg-white p-4 ">
                                             <div className="photo-header d-flex justify-content-between mb-3">
                                                 <h4>Calender availability</h4>
                                                 <div className="edit-photo">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Open calender</button>
+                                                    <Link to={`/calender`}>
+                                                        <button className='btn p-0 border-0 text-yellow fw-bold'>Open calender</button>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>
