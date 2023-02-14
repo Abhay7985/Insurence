@@ -11,7 +11,7 @@ const EditImage = () => {
                     <div className="row gy-4">
                         <div className="col-lg-6">
                             <div className="row gy-4">
-                                <div className="col-12">
+                                <div className="col-12" onClick={() => window.history.back()}>
                                     <HenceforthIcons.LeftArrow />
                                 </div>
                                 <div className="col-lg-12">

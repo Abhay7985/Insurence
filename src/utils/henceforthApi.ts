@@ -115,15 +115,9 @@ const Boat = {
 
 // boat-routes
 
-const Search = {
-  pagination: (search: string, nft_type: string) =>
-    requests.get(`Nft/search?search=${search}&nft_type=${nft_type}&limit=10&pagination=0&language=ENGLISH`),
-  reels: (user_id: any, amount: number) =>
-    requests.get(`reels/getReels?user_id=${user_id}&amount=${amount ? amount : 10}`),
-  getById: (id: any) =>
-    requests.get(`profile?id=${id}`),
-  searchSubCatg: (id: any) =>
-    requests.get(`Product/sub_subcategories?subcategory_id=${id}&language=ENGLISH`)
+const Inquiry = {
+  pagination: () =>
+    requests.get(`provider/inquiry`),
 };
 
 const Admin = {
@@ -133,24 +127,6 @@ const Admin = {
 const Common = {
   do_spaces_file_upload: (key: string, file: any) =>
     requests.file(`provider/upload-image`, key, file),
-  nested: () =>
-    requests.get(`User/nested`),
-  notification: (pagination: number, limit: number) =>
-    requests.get(`user/notification`),
-  payments: () =>
-    requests.get(`user/payments`),
-  paymentsecurity: () =>
-    requests.get(`user/paymentsecurity`),
-  returnpolicy: () =>
-    requests.get(`user/returnpolicy`),
-  shipping: () =>
-    requests.get(`user/shipping`),
-  faq: () =>
-    requests.get(`Product/faqs?language=ENGLISH`),
-  content: (type: string) =>
-    requests.get(`User/list_content?language=ENGLISH&type=${type}`),
-  checkDelivery: (id: string, lat: string, lng: string) =>
-    requests.get(`Product/check/delivery?product_id=${id}&lat=${lat}&lng=${lng}&language=ENGLISH`),
 }
 
 
@@ -182,7 +158,7 @@ const henceforthApi = {
   Auth,
   Common,
   Profile,
-  Search,
+  Inquiry,
   API_ROOT,
   API_FILE_ROOT_SMALL,
   API_FILE_ROOT_MEDIUM,

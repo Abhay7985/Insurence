@@ -32,9 +32,9 @@ const ChangePassword = () => {
                 <div className="container">
                     <div className="row gy-4">
                         <div className="col-12 mb-2">
-                            <Link to="/profile">
+                            <a href='#' onClick={() => window.history.back()}>
                                 <HenceforthIcons.LeftArrow />
-                            </Link>
+                            </a>
                         </div>
                         <div className="col-12 mb-2">
                             <div className="title">
@@ -105,7 +105,7 @@ const ChangePassword = () => {
                                                     </Form.Item>
                                                 </div>
                                                 <div className="save-btn">
-                                                    <Button htmlType='submit' className='btn btn-yellow px-4 py-2 h-100' disabled={loading}>{loading ? <Spinner/>:"Update Password" }</Button>
+                                                    <Button htmlType='submit' className='btn btn-yellow px-4 py-2 h-100' disabled={loading}>{loading ? <Spinner /> : "Update Password"}</Button>
                                                 </div>
                                             </div> : ""}
                                     </Form>

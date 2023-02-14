@@ -52,7 +52,7 @@ const Profile = () => {
     } catch (error) {
       console.log(error)
     } finally {
-       setLoading(false)
+      setLoading(false)
     }
   }
 
@@ -126,7 +126,7 @@ const Profile = () => {
       <section className='profile-section py-5'>
         <div className="container">
           <div className="row gy-4 justify-content-between">
-            <div className="col-12 mb-2">
+            <div className="col-12 mb-2" onClick={() => window.history.back()}>
               <HenceforthIcons.LeftArrow />
             </div>
             <div className="col-12 mb-2">
@@ -138,11 +138,11 @@ const Profile = () => {
             <div className="col-lg-5">
               <div className="user-profile">
                 <div className="profile-image mx-auto">
-                  <img src={ authState.image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${authState.image}` : profile} alt="img" className='img-fluid' />
+                  <img src={authState.image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${authState.image}` : profile} alt="img" className='img-fluid' />
                 </div>
                 <div className="profile-btn text-center">
                   <input type="file" onChange={imageUpload} id='profileUpload' />
-                  <button className='btn btn-yellow px-4' role="button" disabled={loading}>{loading ? <Spinner/>:"Update photo" }</button>
+                  <button className='btn btn-yellow px-4' role="button" disabled={loading}>{loading ? <Spinner /> : "Update photo"}</button>
                 </div>
               </div>
             </div>
