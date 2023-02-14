@@ -14,41 +14,104 @@ const AddPhotos = () => {
     const match = useMatch(`boat/:id/photos`)
     const uRLSearchParams = new URLSearchParams(location.search)
     const { Toast } = React.useContext(GlobalContext)
-    const [coverImage, setCoverImage] = useState()
-    const [image, setImage] = useState([])
+ 
+    const [state, setState] = useState({
+        amenities: [],
+        bathrooms: 0,
+        bedrooms: 0,
+        category_id: 0,
+        cover_image: "",
+        created_at: "",
+        id: "",
+        location: "",
+        manufacturer_id: "",
+        model: "",
+        name: "",
+        passenger_day: "",
+        passenger_night: "",
+        pets_allowed: 0,
+        photos: [],
+        prices: [],
+        rules: "",
+        size: "",
+        smoking_allowed: 0,
+        status: "",
+        step: "",
+        updated_at: "",
+        address: {
+            address1: ""
+        }
+    })
+
+    
 
 
-    const getImage = async() => {
+    const getImage = async () => {
         try {
             let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
             console.log(res?.data.cover_image);
-            
-            setCoverImage(res.data)
-        } catch (error) {
-            
-        }
 
+            setState({...state,
+                photos:res?.data?.photos,
+                cover_image:res?.data?.cover_image
+                })
+
+            
+        } catch (error) {
+        }
     }
 
     useEffect(() => {
         getImage()
-    },[])
+    }, [])
 
 
     const handleImage = async (e: any) => {
-        const image = e.target.files[0]
-        let res = await henceforthApi.Boat.imageUpload('image', image)
+        const images = e.target.files[0]
+        let res = await henceforthApi.Boat.imageUpload('image', images)
         // setImage(res.image);
-        await uploadImage([...image,res.image])
-
+        debugger
+        await uploadImage([...state?.photos, { photo: res.image }])
     }
+    console.log(state);
+    
 
-
-    const uploadImage = async(arr:any) => {
-        let length = arr?.length - 1
-        let lastItem = arr[length]
+    const uploadImage = async (arr: any) => {
+        debugger
+        let index = arr?.length - 1
+        let lastItem = arr[index]
         console.log(lastItem);
-        
+        let items = {}
+
+        {
+            state?.cover_image?.length ? items = {
+                photos: {
+                    boat_id: match?.params.id,
+                    cover_photo: state?.cover_image,
+                    photos: [...state?.photos,
+                    {
+                        order: arr?.length,
+                        photo: lastItem.photo
+                    },
+                    ]
+                }
+            } : items = {
+                photos: {
+                    boat_id: match?.params.id,
+                    cover_photo: lastItem.photo,
+                }
+            }
+        }
+
+        try {
+            let res = await henceforthApi.Boat.create(items)
+            await getImage()
+            console.log(res);
+
+        } catch (error) {
+
+        }
+
     }
 
     const onSubmit = async (e: any) => {
@@ -56,24 +119,21 @@ const AddPhotos = () => {
         let items = {
             photos: {
                 boat_id: match?.params.id,
-                cover_image: coverImage,
-                photos: [...image]
+                cover_photo: state?.cover_image,
+                photos: [...state?.photos]
             }
         }
 
         try {
             let apiRes = await henceforthApi.Boat.create(items)
             console.log(apiRes);
-            // navigate({
-            //     pathname: `/boat/${match?.params.id}/safety-question`,
-            //     search: uRLSearchParams.toString()
-            // })
+            navigate({
+                pathname: `/boat/${match?.params.id}/safety-question`,
+                search: uRLSearchParams.toString()
+            })
         } catch (error) {
 
         }
-
-
-
     }
 
     return (<section className="Confirm-address-section">

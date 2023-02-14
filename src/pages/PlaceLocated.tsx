@@ -28,7 +28,7 @@ function PlaceLocated() {
         city: "",
         state: "",
         postCode: "",
-        country: "india",
+        country: "",
         showLocation: false,
 
     })

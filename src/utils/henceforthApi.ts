@@ -108,6 +108,8 @@ const Boat = {
     requests.get(`provider/boat-category`),
   manufacturer: () =>
     requests.get(`provider/boat-manufacturer`),
+  boatRoutes: () =>
+    requests.get(`provider/boat-routes`),
   create: (items: any) =>
     requests.post(`provider/boats`, items),
   edit: (id: string, items: any) =>
@@ -122,7 +124,7 @@ const Boat = {
   requests.file(`provider/upload-image`,key, file)
 }
 
-
+// boat-routes
 
 const Search = {
   pagination: (search: string, nft_type: string) =>
