@@ -152,12 +152,17 @@ const Profile = () => {
                 {/* name */}
                 <div className="name d-flex justify-content-between mb-4">
                   <div className="user-info w-100">
-                    <label htmlFor="" className='fw-bold mb-2'>Name</label><br />
+                    <div className="label d-flex justify-content-between mb-2">
+                      <label htmlFor="" className='fw-bold'>Name</label><br />
+                      <div className="edit-user ps-4">
+                        <button className='btn border-0 text-yellow fw-bold p-0 text-capitalize' onClick={onChangeNameHide}>{show === true ? "cancel" : "Edit"}</button>
+                      </div>
+                    </div>
                     {show === false ? authState.name : ""}
                     {/* edit-name */}
                     {show === true ?
                       <div className="edit-input">
-                        <Input type="text" defaultValue={authState.name} name="name" className="form-control w-100 my-3" placeholder="Enter name" onChange={onhandleChnage} />
+                        <Input type="text" defaultValue={authState.name} name="name" className="form-control w-100 mt-3 mb-4" placeholder="Enter name" onChange={onhandleChnage} />
                         <div className="save-btn">
                           <button className='btn btn-yellow' onClick={onChnageName} disabled={loading}>{loading ? <Spinner /> : "Save"}</button>
                         </div>
@@ -171,12 +176,17 @@ const Profile = () => {
 
                 <div className="name d-flex justify-content-between">
                   <div className="user-info w-100">
-                    <label htmlFor="editemail" className='fw-bold mb-2'>Email</label><br />
+                    <div className="label d-flex justify-content-between mb-2">
+                      <label htmlFor="editemail" className='fw-bold'>Email</label><br />
+                      <div className="edit-user ps-4">
+                        <button className='btn border-0 text-yellow fw-bold p-0 text-capitalize' onClick={onChangeEmailHide} >{emailShow === true ? "cancel" : "Edit"}</button>
+                      </div>
+                    </div>
                     {emailShow === false ? authState.email : ""}
                     {/* edit-email */}
                     {emailShow === true ?
                       <div className="edit-input">
-                        <Input type="email" defaultValue={authState.email} name="email" className="form-control w-100 my-3" placeholder="Enter email" onChange={onhandleChnage} />
+                        <Input type="email" defaultValue={authState.email} name="email" className="form-control w-100 mt-3 mb-4" placeholder="Enter email" onChange={onhandleChnage} />
                         <div className="save-btn">
                           <button className='btn btn-yellow' onClick={onChnageEmail}>Save</button>
                         </div>

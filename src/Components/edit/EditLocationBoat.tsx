@@ -66,7 +66,14 @@ const EditLocationBoat = (props: any) => {
             </div>
             <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
                 <form className="listing-content w-100" onSubmit={onSubmit}>
-                    <h6 className='mb-2'>Address</h6>
+                    <div className="edit-location d-flex justify-content-between mb-2">
+                        <h6>Address</h6>
+                        <div className="edit-photo ps-4" >
+                            {isExpended ?
+                                <button type="button" className='btn p-0 border-0 text-yellow fw-bold' onClick={() => { setIsExpended(false); setState(props) }}>Cancel</button> :
+                                <button type="button" className='btn p-0 border-0 text-yellow fw-bold' onClick={() => setIsExpended(true)}>Edit</button>}
+                        </div>
+                    </div>
                     {isExpended ?
                         <div className="edit-input mt-3">
                             <div className="row">
@@ -124,11 +131,6 @@ const EditLocationBoat = (props: any) => {
                         <p>{state.address1}</p>
                     }
                 </form>
-                <div className="edit-photo ps-4" >
-                    {isExpended ?
-                        <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => { setIsExpended(false); setState(props) }}>Cancel</button> :
-                        <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => setIsExpended(true)}>Edit</button>}
-                </div>
             </div>
         </div>
     </Spin>

@@ -44,7 +44,12 @@ const ChangePassword = () => {
                         <div className="col-lg-6">
                             <div className="name d-flex justify-content-between mb-4">
                                 <div className="user-info w-100">
-                                    <label htmlFor="" className='fw-bold mb-2'>Password</label>
+                                    <div className="label d-flex justify-content-between">
+                                        <label htmlFor="" className='fw-bold mb-2'>Password</label>
+                                        <div className="edit-user ps-4">
+                                            <button className='btn border-0 text-yellow fw-bold p-0' onClick={() => setEditEnable(!editEnable)}>{editEnable ? 'Cancel' : 'Update'}</button>
+                                        </div>
+                                    </div>
                                     <p>Last updated 9 months ago</p>
                                     {/* edit-email */}
                                     <Form onFinish={handleSubmit}>
@@ -110,9 +115,7 @@ const ChangePassword = () => {
                                             </div> : ""}
                                     </Form>
                                 </div>
-                                <div className="edit-user ps-4">
-                                    <button className='btn border-0 text-yellow fw-bold p-0' onClick={() => setEditEnable(!editEnable)}>{editEnable ? 'Cancel' : 'Update'}</button>
-                                </div>
+
                             </div>
                         </div>
                     </div>

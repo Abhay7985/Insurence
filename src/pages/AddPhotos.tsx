@@ -127,6 +127,7 @@ const AddPhotos = () => {
         try {
             let apiRes = await henceforthApi.Boat.create(items)
             console.log(apiRes);
+            Toast.success(apiRes.message)
             navigate({
                 pathname: `/boat/${match?.params.id}/safety-question`,
                 search: uRLSearchParams.toString()

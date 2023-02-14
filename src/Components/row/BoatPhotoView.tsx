@@ -12,15 +12,18 @@ const BoatPhotoView = () => {
             </div>
             <div className="modify-image d-flex gap-2 position-absolute justify-content-between align-items-center">
                 <p className='cover-image'>COVER PHOTO</p>
-                <div className="modify-btn d-flex gap-2">
-                    <button className='btn edit'>
-                        <img src={editIcon} alt="icon" />
-                    </button>
-
-                    <button className='btn edit'>
-                        <img src={deleteIcon} alt="icon" />
-                    </button>
-                </div>
+                <ul className="modify-btn d-flex gap-2">
+                    <li>
+                        <button className='edit'>
+                            <img src={editIcon} alt="icon" />
+                        </button>
+                    </li>
+                    <li>
+                        <button className='edit'>
+                            <img src={deleteIcon} alt="icon" />
+                        </button>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

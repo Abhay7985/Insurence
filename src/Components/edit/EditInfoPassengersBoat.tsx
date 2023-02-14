@@ -51,9 +51,15 @@ const EditInfoPassengersBoat = (props: any) => {
 
     return <Spin spinning={loading} >
         <div className="photo-header d-flex justify-content-between border px-4 py-4 rounded-1">
-            <div className="edit-address">
+            <div className="edit-address w-100">
+                <div className="d-flex justify-content-between mb-2" >
+                    <h6 className=''>Passengers & Bedrooms</h6>
+                    {isExpended ?
+                        <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => { setIsExpended(false); setState(props) }}>Cancel</button> :
+                        <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => setIsExpended(true)}>Edit</button>}
+                </div>
                 {isExpended ?
-                    <form className="row gy-2 pt-2" onSubmit={onSubmit}>
+                    <form className="row gy-2" onSubmit={onSubmit}>
                         <div className="col-7">
                             <div className="add-passenger d-flex justify-content-between align-items-center">
                                 <p>Number of Passengers (Day)</p>
@@ -149,17 +155,11 @@ const EditInfoPassengersBoat = (props: any) => {
                         </div>
                     </form> :
                     <div className="listing-content">
-                        <h6 className='mb-3'>Passengers & Bedrooms</h6>
                         <p className='mb-2'>Passengers(Day): {state.passenger_day}</p>
                         <p className='mb-2'>Passengers(Night): {state.passenger_night}</p>
                         <p className='mb-2'>Bedrooms: {state.bedrooms}</p>
                         <p className='mb-2'>Bathrooms: {state.bathrooms}</p>
                     </div>}
-            </div>
-            <div className="edit-photo ps-4" >
-                {isExpended ?
-                    <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => { setIsExpended(false); setState(props) }}>Cancel</button> :
-                    <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => setIsExpended(true)}>Edit</button>}
             </div>
         </div>
     </Spin>

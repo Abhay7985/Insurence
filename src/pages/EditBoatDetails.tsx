@@ -147,43 +147,42 @@ const EditBoatDetails = () => {
                         </div>
                         <div className="col-12">
                             <div className="tab-box d-flex align-items-start py-5 gap-3">
-                                <div className="nav flex-column nav-pills bg-white" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                    {/* Listing accordian */}
-                                    <button className="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
+                                <div className='bg-white h-100'>
+                                    <div className="nav flex-column nav-pills bg-white" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                         {/* Listing accordian */}
-                                        <div className="accordion" id="accordionExample">
-                                            <div className="accordion-item">
-                                                <h2 className="accordion-header" id="headingOne">
-                                                    <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        Listing Details
-                                                    </button>
-                                                </h2>
-                                                <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                                    <div className="accordion-body text-start">
-                                                        <ul>
-                                                            <li>
-                                                                <a href="#photos_tab" className={`${location.hash === '#photos_tab' ? 'active-tab' : ''} nav-link`}>Photos</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#listing_tab" className={`${location.hash === '#listing_tab' ? 'active-tab' : ''} nav-link`}>Listing basics</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#amenities_tab" className={`${location.hash === '#amenities_tab' ? 'active-tab' : ''} nav-link`}>Amenities</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#location_tab" className={`${location.hash === '#location_tab' ? 'active-tab' : ''} nav-link`}>Location</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#passengers_tab" className={`${location.hash === '#passengers_tab' ? 'active-tab' : ''} nav-link`}>Boat & passengers</a>
-                                                            </li>
-                                                        </ul>
+                                        <button className="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
+                                            {/* Listing accordian */}
+                                            <div className="accordion" id="accordionExample">
+                                                <div className="accordion-item">
+                                                    <h2 className="accordion-header" id="headingOne">
+                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            Listing Details
+                                                        </button>
+                                                    </h2>
+                                                    <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                        <div className="accordion-body text-start">
+                                                            <ul>
+                                                                <li>
+                                                                    <a href="#photos_tab" className={`${location.hash === '#photos_tab' ? 'active-tab' : ''} nav-link`}>Photos</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#listing_tab" className={`${location.hash === '#listing_tab' ? 'active-tab' : ''} nav-link`}>Listing basics</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#amenities_tab" className={`${location.hash === '#amenities_tab' ? 'active-tab' : ''} nav-link`}>Amenities</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#location_tab" className={`${location.hash === '#location_tab' ? 'active-tab' : ''} nav-link`}>Location</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#passengers_tab" className={`${location.hash === '#passengers_tab' ? 'active-tab' : ''} nav-link`}>Boat & passengers</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </button>
-                                    {/* Pricing and Availability */}
-                                    <button className="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">
+                                        </button>
                                         {/* Pricing and Availability */}
                                         <div className="accordion" id="pricingAccordian">
                                             <div className="accordion-item">
@@ -206,9 +205,6 @@ const EditBoatDetails = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                    </button>
-                                    {/* Rules & Includes */}
-                                    <button className="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">
                                         {/* Rules & Includes */}
                                         <div className="accordion" id="RulesAccordian">
                                             <div className="accordion-item">
@@ -228,7 +224,7 @@ const EditBoatDetails = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                    </button>
+                                    </div>
                                 </div>
                                 <div className="tab-content w-100" id="v-pills-tabContent">
                                     {/* Listing accordian */}

@@ -51,11 +51,18 @@ const EditBasicBoat = (props: any) => {
             </div>
             <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1" >
                 <div className="listing-content w-100">
-                    <h6 className='mb-2'>Listing Title</h6>
+                    <div className="listing-title d-flex justify-content-between mb-2">
+                        <h6>Listing Title</h6>
+                        <div className="edit-photo ps-4" >
+                            {isExpended ?
+                                <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => { setIsExpended(false); setState(props) }}>Cancel</button> :
+                                <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => setIsExpended(true)}>Edit</button>}
+                        </div>
+                    </div>
                     {isExpended ?
                         <form className="edit-input" onSubmit={onSubmit}>
                             <input type="text" className="form-control w-100 my-3" id="boatname" placeholder="Enter boat name" value={state.name} name="name" onChange={(e) => handleChange(e.target)} />
-                            <div className="save-btn" >
+                            <div className="save-btn pt-2" >
                                 <button className='btn btn-yellow rounded-2' type="submit" id='amenities_tab' >Save</button>
                             </div>
                         </form> :
@@ -63,11 +70,7 @@ const EditBasicBoat = (props: any) => {
                     }
 
                 </div>
-                <div className="edit-photo ps-4" >
-                    {isExpended ?
-                        <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => { setIsExpended(false); setState(props) }}>Cancel</button> :
-                        <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => setIsExpended(true)}>Edit</button>}
-                </div>
+
             </div>
         </div>
     </Spin>

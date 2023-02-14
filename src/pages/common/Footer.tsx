@@ -6,13 +6,13 @@ const Footer = () => {
             {/* Footer */}
             <footer className='footer'>
                 <div className="container">
-                    <div className="row gy-4">
-                        <div className="col-12 text-center">
+                    <div className="row gy-4 justify-content-lg-between">
+                        <div className="col-md-11 text-center">
                             <h5>Subscribe to our newsletter</h5>
                         </div>
-                        <div className="col-lg-12">
+                        <div className="col-lg-11">
                             <div className="row justify-content-center">
-                                <div className="col-md-6">
+                                <div className="col-md-8 col-lg-5">
                                     <div className="subscribe mx-auto">
                                         <div className="input-group mb-3 form-control p-0 rounded-pill">
                                             <input type="text" className="form-control border-0 rounded-pill" placeholder="Enter your email" />
@@ -23,18 +23,18 @@ const Footer = () => {
                             </div>
 
                         </div>
-                        <div className="col-sm-6 col-md-3">
+                        <div className="col-sm-6 col-md-4 col-lg-3">
                             <ul >
                                 <li>
                                     <div className="footer-logo">
                                         <a href="#"> <HenceforthIcons.FooterLogo /></a>
-                                        <a href="#" className="nav-link mt-4 fs-12">&copy; 2023 lancha salvador, Inc.</a>
+
                                     </div>
                                 </li>
 
                             </ul>
                         </div>
-                        <div className="col-sm-6 col-md-5">
+                        <div className="col-sm-6 col-md-4 col-lg-2">
                             <ul>
                                 <li>
                                     <a href="#" className="nav-link">About Us</a>
@@ -42,6 +42,11 @@ const Footer = () => {
                                 <li>
                                     <a href="#" className="nav-link">Contact Us</a>
                                 </li>
+
+                            </ul>
+                        </div>
+                        <div className="col-sm-6 col-md-4 col-lg-2">
+                            <ul>
                                 <li>
                                     <a href="#" className="nav-link">Terms & Conditions</a>
                                 </li>
@@ -50,33 +55,47 @@ const Footer = () => {
                                 </li>
                             </ul>
                         </div>
-                        <div className="col-sm-6 col-md-4">
+                        <div className="col-sm-6 col-md-4 col-lg-2">
                             <ul>
                                 <li>
-                                    <a href="#" className="nav-link">
-                                        <HenceforthIcons.Facebook />
+                                    <a href="#" className="nav-link d-flex align-items-center gap-3">
+                                        <div className="facebook-icon text-center ms-1">
+                                            <HenceforthIcons.Facebook />
+                                        </div>
                                         <span>Facebook</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" className="nav-link">
+                                    <a href="#" className="nav-link d-flex align-items-center gap-2">
                                         <HenceforthIcons.Instagram />
-                                        <span>Instagram</span>
+                                        <span className="ms-1">Instagram</span>
                                     </a>
                                 </li>
+
+                            </ul>
+                        </div>
+                        <div className="col-sm-6 col-md-4 col-lg-2">
+                            <ul>
                                 <li>
-                                    <a href="#" className="nav-link">
+                                    <a href="#" className="nav-link d-flex align-items-center gap-3">
                                         <HenceforthIcons.Youtube />
                                         <span>Youtube</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" className="nav-link">
+                                    <a href="#" className="nav-link d-flex align-items-center gap-3">
                                         <HenceforthIcons.Tiktok />
-                                        <span>Tiktok</span>
+                                        <span className="ms-1">Tiktok</span>
                                     </a>
                                 </li>
                             </ul>
+                        </div>
+                    </div>
+                </div>
+                <div className="container-fluid copyright">
+                    <div className="row">
+                        <div className="col-12 text-center">
+                            <p className="text-white fs-12"> &copy; 2023 lancha salvador, Inc.</p>
                         </div>
                     </div>
                 </div>

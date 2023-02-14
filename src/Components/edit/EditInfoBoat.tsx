@@ -64,9 +64,16 @@ const EditInfoBoat = (props: any) => {
     }, [])
     return <Spin spinning={loading} >
         <div className="photo-header d-flex justify-content-between border px-4 py-4 rounded-1 mb-3" >
-            <div className="edit-details">
+            <div className="edit-details w-100">
+
+            <div className="d-flex justify-content-between mb-2" >
+                        <h6 className=''>Boat Detail</h6>
                 {isExpended ?
-                    <form className="edit-input mt-3" onSubmit={onSubmit}>
+                    <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => { setIsExpended(false); setState(props) }}>Cancel</button> :
+                    <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => setIsExpended(true)}>Edit</button>}
+                    </div>
+                {isExpended ?
+                    <form className="edit-input" onSubmit={onSubmit}>
                         <div className="row">
                             <div className="col-12">
                                 <div className="address mb-3">
@@ -115,7 +122,7 @@ const EditInfoBoat = (props: any) => {
                         </div>
                     </form> :
                     <div className="listing-content">
-                        <h6 className='mb-3'>Boat Detail</h6>
+                        {/* <h6 className='mb-3'>Boat Detail</h6> */}
                         <p className='mb-2'>Category: {state.category}</p>
                         <p className='mb-2'>Manufacturer: {state.manufacturer}</p>
                         <p className='mb-2'>Model: {state.model}</p>
@@ -124,11 +131,7 @@ const EditInfoBoat = (props: any) => {
                     </div>}
             </div>
 
-            <div className="edit-photo ps-4" >
-                {isExpended ?
-                    <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => { setIsExpended(false); setState(props) }}>Cancel</button> :
-                    <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => setIsExpended(true)}>Edit</button>}
-            </div>
+           
         </div>
     </Spin>
 }
