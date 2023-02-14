@@ -8,6 +8,10 @@ import InfoPassengersBoat from '../Components/edit/EditInfoPassengersBoat';
 import EditInfoBoat from '../Components/edit/EditInfoBoat';
 import EditLocationBoat from '../Components/edit/EditLocationBoat';
 import EditPriceBoat from '../Components/edit/EditPriceBoat';
+import EditRuleSmokingAllowed from '../Components/edit/EditRuleSmokingAllowed';
+import EditRulePetsAllowed from '../Components/edit/EditRulePetsAllowed';
+import EditSecurityBoat from '../Components/edit/EditSecurityBoat';
+import henceofrthEnums from '../utils/henceofrthEnums';
 
 
 const EditBoatDetails = () => {
@@ -53,6 +57,25 @@ const EditBoatDetails = () => {
         }
     })
 
+    const handleStatus = async (status: string) => {
+        try {
+            const items = {
+                status
+            }
+            setLoading(true)
+            try {
+                const apiRes = await henceforthApi.Boat.status(state.id, items)
+                Toast.success(apiRes.message)
+                await initialise(true)
+            } catch (error) {
+                Toast.error(error)
+            } finally {
+                setLoading(false)
+            }
+        } catch (error) {
+
+        }
+    }
 
     const initialise = async (b: boolean) => {
         setLoading(b)
@@ -72,13 +95,6 @@ const EditBoatDetails = () => {
         initialise(true)
     }, [match?.params.id])
 
-    let dotColor = [
-        { status: "listed", color: "green" },
-        { status: "unlisted", color: "red" },
-        { status: "draft", color: "" },
-
-    ]
-
     const StatusItem: MenuProps['items'] = [
         {
             key: '1',
@@ -87,10 +103,8 @@ const EditBoatDetails = () => {
                     Listed
                 </span>
             ),
-            icon: <Badge color="#32CD32" />,
-            onClick: () => {
-
-            }
+            icon: <Badge color={henceofrthEnums.OrderColor.listed} />,
+            onClick: () => handleStatus(henceofrthEnums.OrderStatus.listed)
 
         },
         {
@@ -100,10 +114,8 @@ const EditBoatDetails = () => {
                     Unlisted
                 </span>
             ),
-            icon: <Badge color="#FF0000" />,
-            onClick: () => {
-
-            }
+            icon: <Badge color={henceofrthEnums.OrderColor.unlisted} />,
+            onClick: () => handleStatus(henceofrthEnums.OrderStatus.unlisted)
         }
 
     ];
@@ -119,7 +131,12 @@ const EditBoatDetails = () => {
                                 <div className="list-btn d-flex gap-4">
                                     <a href="#" className='d-flex gap-2 align-items-center text-dark'>
                                         <Dropdown menu={{ items: StatusItem }}>
-                                            <Badge color={state?.status == "draft" ? '#FF0000' : '#32CD32'} text={state?.status} />
+                                            <Badge color={state?.status == henceofrthEnums.OrderStatus.listed ?
+                                                henceofrthEnums.OrderColor.listed :
+                                                state?.status == henceofrthEnums.OrderStatus.unlisted ?
+                                                    henceofrthEnums.OrderColor.unlisted :
+                                                    henceofrthEnums.OrderColor.draft}
+                                                text={state?.status} />
                                         </Dropdown>
                                     </a>
                                     <Link to={`/boat/${match?.params.id}/inquiry`}>
@@ -182,7 +199,7 @@ const EditBoatDetails = () => {
                                                                 <a href="#pricing_tab" className={`${location.hash === '#pricing_tab' ? 'active-tab' : ''} nav-link`}>Pricing</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#calender_tab" className={`${location.hash === '#calender_tab' ? 'active-tab' : ''} nav-link`}>Calender availability</a>
+                                                                <Link to={`/calender`} className="nav-link">Calender availability</Link>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -204,7 +221,7 @@ const EditBoatDetails = () => {
                                                     <div className="accordion-body text-start">
                                                         <ul>
                                                             <li>
-                                                                <a href="#" className={`${location.hash === '#listing_tab' ? 'active-tab' : ''} nav-link`}>Rules</a>
+                                                                <a href="#rules_tab" className={`${location.hash === '#rules_tab' ? 'active-tab' : ''} nav-link`}>Rules</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -298,90 +315,20 @@ const EditBoatDetails = () => {
                                     {/* Rules & Includes */}
                                     <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                                         {/* Rules */}
-                                        <div className="roules Pricing bg-white mb-4">
-                                            <div className="photo-header d-flex justify-content-between mb-3">
-                                                <h4>Rules</h4>
+                                        {state.name &&
+
+                                            <div className="roules Pricing bg-white mb-4">
+                                                <div className="photo-header d-flex justify-content-between mb-3">
+                                                    <h4>Rules</h4>
+                                                </div>
+                                                {/* smoking */}
+                                                <EditRuleSmokingAllowed {...state} initialise={initialise} />
+                                                {/* pets */}
+                                                <EditRulePetsAllowed {...state} initialise={initialise} />
+                                                {/* Rules and Security */}
+                                                <EditSecurityBoat {...state} initialise={initialise} />
                                             </div>
-                                            {/* smoking */}
-                                            <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1 mb-3">
-                                                <div className="edit-field">
-                                                    <div className="listing-content">
-                                                        <h6 className='mb-2'>Smoking Allowed</h6>
-                                                        <p>No</p>
-                                                    </div>
-                                                    {/* edit */}
-                                                    <div className="edit-input mt-2">
-                                                        <div className="form-check mb-2">
-                                                            <input className="form-check-input form-check-radio" type="radio" name="flexRadioDefault" id="smoking" />
-                                                            <label className="form-check-label" htmlFor="smoking">
-                                                                Yes
-                                                            </label>
-                                                        </div>
-                                                        <div className="form-check mb-4">
-                                                            <input className="form-check-input form-check-radio" type="radio" name="flexRadioDefault" id="smoking2" />
-                                                            <label className="form-check-label" htmlFor="smoking2">
-                                                                No
-                                                            </label>
-                                                        </div>
-                                                        <div className="save-btn">
-                                                            <button className='btn btn-yellow rounded-2'>Save</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="edit-photo">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                </div>
-                                            </div>
-                                            {/* pets */}
-                                            <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1 mb-3">
-                                                <div className="edit-pets">
-                                                    <div className="listing-content">
-                                                        <h6 className='mb-2'>Pets Allowed</h6>
-                                                        <p>No</p>
-                                                    </div>
-                                                    {/* edit */}
-                                                    <div className="edit-input mt-2">
-                                                        <div className="form-check mb-2">
-                                                            <input className="form-check-input form-check-radio" type="radio" name="flexRadioDefault2" id="pet" />
-                                                            <label className="form-check-label" htmlFor="pet">
-                                                                Yes
-                                                            </label>
-                                                        </div>
-                                                        <div className="form-check mb-4">
-                                                            <input className="form-check-input form-check-radio" type="radio" name="flexRadioDefault2" id="pet2" />
-                                                            <label className="form-check-label" htmlFor="pet2">
-                                                                No
-                                                            </label>
-                                                        </div>
-                                                        <div className="save-btn">
-                                                            <button className='btn btn-yellow rounded-2'>Save</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="edit-photo">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                </div>
-                                            </div>
-                                            {/* Rules and Security */}
-                                            <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
-                                                <div className="edit-listing">
-                                                    <div className="listing-content">
-                                                        <h6 className='mb-2'>Rules and Security</h6>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in nunc vel purus sollicitudin fringilla in vel odio. Proin nec lobortis nulla.</p>
-                                                    </div>
-                                                    {/* edit */}
-                                                    <div className="edit-input mt-4">
-                                                        <textarea name="" id="" className='form-control'></textarea>
-                                                        <div className="save-btn mt-4">
-                                                            <button className='btn btn-yellow rounded-2'>Save</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="edit-photo ps-4">
-                                                    <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        }
                                     </div>
 
                                 </div>
