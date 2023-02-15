@@ -14,7 +14,6 @@ const SelectPassenger = () => {
     const location = useLocation()
     const uRLSearchParams = new URLSearchParams(location.search)
 
-
     const [passengerDay, setPassengerDay] = React.useState(1)
     const [passengerNight, setPassengerNight] = React.useState(1)
     const [bedrooms, setBedrooms] = React.useState(1)
@@ -25,16 +24,16 @@ const SelectPassenger = () => {
         e.preventDefault()
 
         const items = {
-            "boat": {
-                "name": uRLSearchParams.get("name"),
-                "category_id": uRLSearchParams.get("category_id"),
-                "manufacturer_id": uRLSearchParams.get("manufacturer_id"),
-                "model": uRLSearchParams.get("model"),
-                "size": uRLSearchParams.get("size"),
-                "passenger_day": passengerDay,
-                "passenger_night": passengerNight,
-                "bedrooms": bedrooms,
-                "bathrooms": bathrooms
+            boat: {
+                name: uRLSearchParams.get("name"),
+                category_id: uRLSearchParams.get("category_id"),
+                manufacturer_id: uRLSearchParams.get("manufacturer_id"),
+                model: uRLSearchParams.get("model"),
+                size: uRLSearchParams.get("size"),
+                passenger_day: passengerDay,
+                passenger_night: passengerNight,
+                bedrooms: bedrooms,
+                bathrooms: bathrooms
             }
             // navigate({
             //     pathname: '/boat/passengers',
@@ -49,6 +48,7 @@ const SelectPassenger = () => {
             })
         } catch (error) {
             console.log('error', error);
+            Toast.error(error)
 
         }
 

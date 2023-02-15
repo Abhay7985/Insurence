@@ -36,12 +36,11 @@ const App = () => {
             <Route path=":id/photos" element={<AddPhotos />} />
             <Route path=":id/safety-question" element={<SafetyQuestions />} />
             <Route path=":id/price" element={<BoatPrice />} />
-
           </Route>
 
           <Route path="*" element={<MainLayout />}>
             <Route index element={<BoatListing />} />
-            <Route path="inquiry/:id" element={<Inquiry />} />
+            <Route path="inquiry/:type/:page" element={<Inquiry />} />
             <Route path="boat/:id/inquiry" element={<BoatDetails />} />
             <Route path="boat/:id/inquiry/edit" element={<EditBoatDetails />} />
             <Route path="boat/:id/photos/edit" element={<EditImage />} />

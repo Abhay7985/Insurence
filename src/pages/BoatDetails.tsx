@@ -3,7 +3,7 @@ import BannerImage from '../assets/images/boat_one.png';
 import petIcon from '../assets/images/pet.png';
 import smoking from '../assets/images/cigar.png';
 import currentLocation from '../assets/icons/exact_location.svg';
-import type { DatePickerProps } from 'antd';
+import { DatePickerProps, Spin } from 'antd';
 import { DatePicker, Space } from 'antd';
 import henceforthApi from '../utils/henceforthApi';
 import { Link, useMatch } from 'react-router-dom';
@@ -19,7 +19,8 @@ const onChange: DatePickerProps['onChange'] = (date, dateString) => {
 const BoatDetails = () => {
 
     const match = useMatch(`boat/:id/inquiry`)
-    const { authState } = React.useContext(GlobalContext)
+    const { authState, Toast } = React.useContext(GlobalContext)
+    const [loading, setLoading] = React.useState(false)
 
     const [state, setState] = useState({
         amenities: [],
@@ -43,27 +44,33 @@ const BoatDetails = () => {
         smoking_allowed: 0,
         status: "",
         step: "",
-        updated_at: ""
+        updated_at: "",
+        address: {
+            address1: ""
+        }
     })
 
-    const boatDetails = async () => {
+    const initialise = async () => {
         henceforthApi.setToken(authState?.access_token)
         try {
+            setLoading(true)
             let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
             setState(res.data);
 
         } catch (error) {
+            Toast.error(error)
+        } finally {
+            setLoading(false)
         }
     }
 
     useEffect(() => {
-        boatDetails()
+        initialise()
     }, [match?.params.id])
 
 
     return (
-        <>
-            {/* Morning Panormic */}
+        <Spin spinning={loading} >
             <section className="morning-panormic py-4">
                 <div className="container">
                     {/* banner-row */}
@@ -75,7 +82,7 @@ const BoatDetails = () => {
                                         <HenceforthIcons.DetailBack />
                                     </div>
                                     <h3 className='mt-4 mb-2'>{state.name}</h3>
-                                    <p>{state.category_id} • {state.location}</p>
+                                    <p>{state.category_id} • {state?.address?.address1}</p>
                                 </div>
                                 <div className="share-btn align-self-end d-flex gap-2 align-items-center">
                                     <HenceforthIcons.Share />
@@ -86,33 +93,44 @@ const BoatDetails = () => {
                         <div className="col-12">
                             <div className="row gy-4 py-4">
                                 <div className="col-md-6 ps-0">
-                                    <div className="morning-banner">
-                                        <img src={BannerImage} alt="img" className='img-fluid' />
+                                    <div className="morning-banner cover-image">
+                                        <img src={`${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}`} alt="img" className='img-fluid' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="row gy-2">
-                                        <div className="col-6 ps-0">
-                                            <div className="morning-banner">
-                                                <img src={BannerImage} alt="img" className='img-fluid' />
+                                        {state?.photos?.map(() =>
+                                            <div className="col-6 ps-0">
+                                                <div className="morning-banner">
+                                                    <img src={BannerImage} alt="img" className='img-fluid' />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="col-6 ps-0">
-                                            <div className="morning-banner">
-                                                <img src={BannerImage} alt="img" className='img-fluid' />
-                                            </div>
-                                        </div>
-                                        <div className="col-6 ps-0">
-                                            <div className="morning-banner">
-                                                <img src={BannerImage} alt="img" className='img-fluid' />
-                                            </div>
-                                        </div>
-                                        <div className="col-6 ps-0">
-                                            <div className="morning-banner">
-                                                <img src={BannerImage} alt="img" className='img-fluid' />
-                                            </div>
-                                        </div>
+                                        )}
+
                                     </div>
+
+                                    {/* <div className="row gy-2">
+                                        <div className="col-6 ps-0">
+                                            <div className="morning-banner">
+                                                <img src={BannerImage} alt="img" className='img-fluid' />
+                                            </div>
+                                        </div>
+                                        <div className="col-6 ps-0">
+                                            <div className="morning-banner">
+                                                <img src={BannerImage} alt="img" className='img-fluid' />
+                                            </div>
+                                        </div>
+                                        <div className="col-6 ps-0">
+                                            <div className="morning-banner">
+                                                <img src={BannerImage} alt="img" className='img-fluid' />
+                                            </div>
+                                        </div>
+                                        <div className="col-6 ps-0">
+                                            <div className="morning-banner">
+                                                <img src={BannerImage} alt="img" className='img-fluid' />
+                                            </div>
+                                        </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -131,7 +149,7 @@ const BoatDetails = () => {
                                     <h4 className='mb-2'>Amenities</h4>
                                     <div className="aminities-list d-flex gap-5">
                                         <ul>
-                                            {state?.amenities?.map((e: any, index: number) => <li key={index}>{e}</li>)}
+                                            {state?.amenities?.map((e: any, index: number) => <li key={index}>{e?.amenity}</li>)}
                                         </ul>
                                     </div>
                                 </div>
@@ -185,13 +203,13 @@ const BoatDetails = () => {
                                 {state?.prices?.map((e: any, index: number) => {
                                     return (
                                         <>
-                                            <div className="price-list py-3 border-bottom">
+                                            <div className="price-list py-3 border-bottom" key={e?.id}>
                                                 <div className="price-list-title d-flex justify-content-between mb-2">
                                                     <p>{e?.date}</p>
-                                                    <p className='fw-bold'>${e?.price} <span className='fw-normal fs-14 px-1'>or</span> {e?.installments}x in ${e?.installment_price}</p>
+                                                    <p className='fw-bold'>${e?.price}<span className='fw-normal fs-14 px-1'>or</span> {e?.installments}x in ${e?.installment_price}</p>
                                                 </div>
                                                 <div className="price-list-title d-flex justify-content-between">
-                                                    <p className='fs-14'>{e?.route} - 9 às 13hrs <br /> (4 hours AM)</p>
+                                                    <p className='fs-14'>{e?.route}</p>
                                                     <div className="choose-btn align-self-end">
                                                         <button className='btn btn-yellow fs-14 py-0'>Choose</button>
                                                     </div>
@@ -206,7 +224,7 @@ const BoatDetails = () => {
                     </div>
                 </div>
             </section>
-        </>
+        </Spin>
     )
 }
 

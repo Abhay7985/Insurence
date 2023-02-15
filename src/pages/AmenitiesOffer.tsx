@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import { useLocation, useMatch, useNavigate } from 'react-router-dom';
 import bannerImage from '../assets/images/image_one.png';
 import BackNextLayout from '../Components/boat/BackNextLayout';
 import { GlobalContext } from '../context/Provider';
+import henceforthApi from '../utils/henceforthApi';
+
+interface amenities {
+    id: number,
+    amenity:string
+}
 
 const AmenitiesOffer = () => {
 
@@ -10,18 +16,61 @@ const AmenitiesOffer = () => {
     const location = useLocation()
     const match = useMatch(`boat/:id/amenities`)
     const uRLSearchParams = new URLSearchParams(location.search)
+    const { Toast, authState } = React.useContext(GlobalContext)
+    const [amenities, setAmenities] = useState<Array<number>>([])
+    const [amenitiesOffers, setAmenitiesOffers] = useState<Array<amenities>>([])
 
-    const { Toast } = React.useContext(GlobalContext)
+    const handleChecked = (e: any) => {
+        let prev = amenities;
+        let value = e.target.value
+        let itemIndex = prev.indexOf(value);
+        if (itemIndex !== -1) {
+            prev.splice(itemIndex, 1);
+        } else {
+            prev.push(value);
+        }
+        setAmenities([...prev]);
+    };
+
+  
+    
 
     const onSubmit = async (e: any) => {
         e.preventDefault()
         // uRLSearchParams.set("manufacturer_id", manufacturer_id)
-        navigate({
-            pathname: `/boat/${match?.params.id}/photos`,
-            search: uRLSearchParams.toString()
-        })
+        let items = {
+            amenities: {
+                boat_id: Number(match?.params.id),
+                amenities: amenities
+            }
+        }
+        try {
+            let apiRes = await henceforthApi.Boat.create(items)
+            Toast.success(apiRes.message)
 
+            navigate({
+                pathname: `/boat/${match?.params.id}/photos`,
+                search: uRLSearchParams.toString()
+            })
+
+        } catch (error:any) {
+            if(error.response.body.message.amenities) return Toast.error(error.response.body.message.amenities[0])
+
+        }
     }
+
+    const handleAmenities = async () => {
+        try {
+            let res = await henceforthApi.Boat.boatAmenities()
+            console.log(res);
+            setAmenitiesOffers(res.data)
+        } catch (error) {
+        }
+    }
+
+    useEffect(() => {
+        handleAmenities()
+    }, [])
 
     return (
         <>
@@ -36,102 +85,15 @@ const AmenitiesOffer = () => {
                                         <h3 className='banner-title pb-3'>What amenities do you offer?</h3>
                                         <p>You will be able to add more amenities in your write up for your listing.</p>
                                     </div>
-                                    <div className="col-11 col-lg-11">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="check1" />
-                                            <label className="form-check-label" htmlFor="check1">
-                                                Blanket
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="col-11 col-lg-11">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="check2" />
-                                            <label className="form-check-label" htmlFor="check2">
-                                                Conditioner
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="col-11 col-lg-11">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="check3" />
-                                            <label className="form-check-label" htmlFor="check3">
-                                                Sheet
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="col-11 col-lg-11">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="check4" />
-                                            <label className="form-check-label" htmlFor="check4">
-                                                Toilet paper
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="col-11 col-lg-11">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="check5" />
-                                            <label className="form-check-label" htmlFor="check5">
-                                                Soap
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="col-11 col-lg-11">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="check6" />
-                                            <label className="form-check-label" htmlFor="check6">
-                                                Towel
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="col-11 col-lg-11">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="check7" />
-                                            <label className="form-check-label" htmlFor="check7">
-                                                Pilow
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="col-11 col-lg-11">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="check8" />
-                                            <label className="form-check-label" htmlFor="check8">
-                                                Shampoo
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="col-11 col-lg-11">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="check9" />
-                                            <label className="form-check-label" htmlFor="check9">
-                                                Wine House
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="col-11 col-lg-11">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="check10" />
-                                            <label className="form-check-label" htmlFor="check10">
-                                                Hot Water
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="col-11 col-lg-11">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="check11" />
-                                            <label className="form-check-label" htmlFor="check11">
-                                                Amplifier
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="col-11 col-lg-11">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="check12" />
-                                            <label className="form-check-label" htmlFor="check12">
-                                                Anchor
-                                            </label>
-                                        </div>
-                                    </div>
+                                    {amenitiesOffers.map((e: any, index: number) =>
+                                        <div className="col-11 col-lg-11" key={index}>
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value={e?.id} onChange={(e: any) => handleChecked(e)} id="check1" />
+                                                <label className="form-check-label" htmlFor="check1">
+                                                    {e?.amenity}
+                                                </label>
+                                            </div>
+                                        </div>)}
                                 </div>
                                 <BackNextLayout />
                             </div>

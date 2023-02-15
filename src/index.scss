@@ -20,9 +20,15 @@
 //     font-weight: bold;
 // }
 body{
-    font-family: 'Nunito', sans-serif;
-    // background: $white-2;
+    font-family: 'Nunito', sans-serif !important;
     height: 100%;
+}
+
+.morning-panormic-listing,
+.Location,
+.Pricing,
+.listing-content{
+    font-family: 'Nunito', sans-serif !important;
 }
 html{
     height: 100%;

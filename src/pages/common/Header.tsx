@@ -43,56 +43,54 @@ const Header = () => {
 
     return (
         <>
-            <header className='.header'>
-                <div className="container">
-                    <nav className="navbar navbar-expand-lg">
-                        <Link className="navbar-brand" to={`/`}>
-                            <img src={logo} alt="img" className='img-fluid' />
-                        </Link>
-                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                        <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                            {location.pathname !== "/boat/add/info" &&
-                                <form className="d-flex" role="search">
-                                    {authState.access_token ?
-                                        <ul className='d-flex flex-wrap align-items-center gap-5'>
-                                            <li>
-                                                <Link to='/' className='nav-link'>Boats</Link>
-                                            </li>
-                                            <li>
-                                                <Link to={`inquiry/1`} className='nav-link'>Inquiry</Link>
-                                            </li>
-                                            <li>
-                                                <Link to='/calender' className='nav-link'>Calender</Link>
-                                            </li>
-                                            <li>
-                                                <Dropdown menu={{ items }}
-                                                    dropdownRender={(menu) => (
-                                                        <div >
-                                                            {React.cloneElement(menu as React.ReactElement, { style: menuStyle })}
-                                                            <Divider style={{ margin: 0 }} />
-                                                        </div>
-                                                    )}
-                                                    arrow className="btnn h-100">
-                                                    <Button><Avatar style={{ backgroundColor: '#32CD32' }} icon={<img src={henceforthApi.FILES.imageOriginal(authState.photo, placeholder)} />} />&nbsp;{authState?.name}</Button>
-                                                </Dropdown>
-                                            </li>
-                                        </ul> :
-                                        <ul className='d-flex gap-2 flex-wrap'>
-                                            <li>
-                                                <button className="btn btn-outline-dark" type="submit">Help</button>
-                                            </li>
-                                            <li>
-                                                <Button htmlType="submit" className="btn btn-yellow" onClick={logOutNow}>Save & Exit</Button>
-                                            </li>
-                                        </ul>}
-                                </form>}
-                        </div>
+            <div className="container">
+                <nav className="navbar navbar-expand-lg py-0">
+                    <Link className="navbar-brand" to={`/`}>
+                        <img src={logo} alt="img" className='img-fluid' />
+                    </Link>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                        {location.pathname !== "/boat/add/info" &&
+                            <form className="d-flex" role="search">
+                                {authState.access_token ?
+                                    <ul className='d-flex flex-wrap align-items-center gap-5'>
+                                        <li>
+                                            <Link to='/' className='nav-link'>Boats</Link>
+                                        </li>
+                                        <li>
+                                            <Link to={`inquiry/1`} className='nav-link'>Inquiry</Link>
+                                        </li>
+                                        <li>
+                                            <Link to='/calender' className='nav-link'>Calender</Link>
+                                        </li>
+                                        <li>
+                                            <Dropdown menu={{ items }}
+                                                dropdownRender={(menu) => (
+                                                    <div >
+                                                        {React.cloneElement(menu as React.ReactElement, { style: menuStyle })}
+                                                        <Divider style={{ margin: 0 }} />
+                                                    </div>
+                                                )}
+                                                arrow className="btnn h-100">
+                                                <Button><Avatar style={{ backgroundColor: '#FF9100' }} icon={<img src={henceforthApi.FILES.imageOriginal(authState.image, placeholder)} />} />&nbsp;{authState?.name}</Button>
+                                            </Dropdown>
+                                        </li>
+                                    </ul> :
+                                    <ul className='d-flex gap-2 flex-wrap'>
+                                        <li>
+                                            <button className="btn btn-outline-dark" type="submit">Help</button>
+                                        </li>
+                                        <li>
+                                            <Button htmlType="submit" className="btn btn-yellow" onClick={logOutNow}>Save & Exit</Button>
+                                        </li>
+                                    </ul>}
+                            </form>}
+                    </div>
 
-                    </nav>
-                </div>
-            </header>
+                </nav>
+            </div>
         </>
     )
 }

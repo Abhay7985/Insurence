@@ -3,11 +3,11 @@ import React from "react"
 import { GlobalContext } from "../../context/Provider"
 import henceforthApi from "../../utils/henceforthApi"
 
-const BasicListing = (props: any) => {
+const EditSecurityBoat = (props: any) => {
     const { Toast } = React.useContext(GlobalContext)
 
     const [state, setState] = React.useState({
-        name: "",
+        rules: "",
         ...props,
     })
     const [isExpended, setIsExpended] = React.useState(false)
@@ -25,39 +25,39 @@ const BasicListing = (props: any) => {
     const onSubmit = async (e: any) => {
         e.preventDefault()
         const items = {
-            name: state.name
+            safety_question: {
+                rules: state.rules
+            }
         }
         setLoading(true)
         try {
-            const apiRes = await henceforthApi.Boat.edit(items)
+            const apiRes = await henceforthApi.Boat.edit(state.id, items)
             Toast.success(apiRes.message)
             setIsExpended(false)
+            await props.initialise()
         } catch (error) {
             Toast.error(error)
         } finally {
             setLoading(false)
-
         }
     }
 
 
-    return <Spin spinning={loading} > <div className="Listing-basics bg-white Pricing mb-4">
-        <div className="photo-header d-flex justify-content-between mb-3">
-            <h4>Listing basics</h4>
-        </div>
-        <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1" >
-            <div className="listing-content w-100">
-                <h6 className='mb-2'>Listing Title</h6>
+    return <Spin spinning={loading} >
+        <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
+            <div className="edit-listing">
+                <h6 className='mb-2'>Rules and Security</h6>
                 {isExpended ?
-                    <form className="edit-input" onSubmit={onSubmit}>
-                        <input type="text" className="form-control w-100 my-3" id="boatname" placeholder="Enter boat name" value={state.name} name="name" onChange={(e) => handleChange(e.target)} />
-                        <div className="save-btn" >
-                            <button className='btn btn-yellow rounded-2' type="submit" id='amenities_tab' disabled={loading}>Save</button>
+                    <form className="edit-input mt-4" onSubmit={onSubmit}>
+                        <textarea className='form-control' placeholder="Enter rules" value={state.rules} name="rules" onChange={(e) => handleChange(e.target)} ></textarea>
+                        <div className="save-btn mt-4">
+                            <button className='btn btn-yellow rounded-2' type="submit">Save</button>
                         </div>
                     </form> :
-                    <p>{state?.name}</p>
+                    <div className="listing-content">
+                        <p>{state.rules}</p>
+                    </div>
                 }
-
             </div>
             <div className="edit-photo ps-4" >
                 {isExpended ?
@@ -65,7 +65,6 @@ const BasicListing = (props: any) => {
                     <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => setIsExpended(true)}>Edit</button>}
             </div>
         </div>
-    </div>
     </Spin>
 }
-export default BasicListing
+export default EditSecurityBoat

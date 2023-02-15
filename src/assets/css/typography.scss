@@ -6,6 +6,7 @@ h5,
 h6 {
     font-weight: bold;
     margin: 0;
+    font-family: 'Nunito', sans-serif !important;
 }
 
 h2 {
@@ -27,9 +28,11 @@ h5 {
     font-size: 20px;
     color: $light-black;
 }
+
 .fs-12 {
     font-size: 12px !important;
 }
+
 .fs-14 {
     font-size: 14px !important;
 }
@@ -45,18 +48,21 @@ h5 {
 .btn {
     font-size: 16px;
     font-weight: normal;
+    font-family: 'Nunito', sans-serif !important;
 }
 
 p {
     margin: 0;
     font-size: 16px;
     color: $light-black;
+    font-family: 'Nunito', sans-serif !important;
 }
 
-.rounded{
+.rounded {
     border-radius: $radius !important;
 }
-.rounded-2{
+
+.rounded-2 {
     border-radius: 2px !important;
 }
 
@@ -67,23 +73,40 @@ p {
 .bg-yellow {
     background: $primary-color !important;
 }
+
 .bg-white {
     background: $white !important;
 }
+
 .bg-green {
     background: $green !important;
 }
-.text-yellow{
+
+.bg-draft {
+    background: $draft !important;
+}
+
+.bg-listed {
+    background: $listed !important;
+}
+
+.bg-unlisted {
+    background: $unlisted !important;
+}
+
+.text-yellow {
     color: $primary-color !important;
 }
-.text-black{
-    color: $light-black!important;
+
+.text-black {
+    color: $light-black !important;
 }
 
 label {
     color: $light-black;
     font-size: 16px;
     font-weight: normal;
+    font-family: 'Nunito', sans-serif !important;
 }
 
 .btn-yellow {
@@ -101,9 +124,10 @@ label {
 }
 
 ::placeholder {
-    font-size: 16px;
+    font-size: 16px; 
     color: $light-black;
     font-weight: normal;
+    font-family: 'Nunito', sans-serif !important;
 }
 
 .form-control {
@@ -111,15 +135,18 @@ label {
     border-radius: $radius;
     border: 1px solid $light-gray;
     padding: 14px 20px;
+    font-family: 'Nunito', sans-serif !important;
 }
 
 .form-control:hover {
     border-color: $primary-color;
 }
-.nav-link{
+
+.nav-link {
     font-weight: 600;
 }
-.nav-link:hover{
+
+.nav-link:hover {
     color: $primary-color;
 }
 
@@ -136,6 +163,7 @@ label {
     box-shadow: none !important;
     border-radius: 50% !important;
 }
+
 .form-check-toggle {
     box-shadow: none !important;
     border-radius: 25px !important;
@@ -157,6 +185,8 @@ label {
     border-radius: $radius;
     border: 1px solid $light-gray;
     padding: 14px 20px;
+    font-family: 'Nunito', sans-serif !important;
+    font-size: 16px;
 }
 
 .ant-input:hover {
@@ -178,6 +208,11 @@ ul {
     padding: 0;
     margin: 0;
     list-style: none;
+    font-family: 'Nunito', sans-serif !important;
+    li{
+        font-size: 16px;
+        text-transform: capitalize;
+    }
 }
 
 .ant-select {

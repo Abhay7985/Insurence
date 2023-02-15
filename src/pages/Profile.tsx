@@ -52,7 +52,7 @@ const Profile = () => {
     } catch (error) {
       console.log(error)
     } finally {
-       setLoading(false)
+      setLoading(false)
     }
   }
 
@@ -126,7 +126,7 @@ const Profile = () => {
       <section className='profile-section py-5'>
         <div className="container">
           <div className="row gy-4 justify-content-between">
-            <div className="col-12 mb-2">
+            <div className="col-12 mb-2" onClick={() => window.history.back()}>
               <HenceforthIcons.LeftArrow />
             </div>
             <div className="col-12 mb-2">
@@ -138,11 +138,11 @@ const Profile = () => {
             <div className="col-lg-5">
               <div className="user-profile">
                 <div className="profile-image mx-auto">
-                  <img src={henceforthApi.FILES.imageOriginal(authState?.photo,profile)} alt="img" className='img-fluid' />
+                  <img src={authState.image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${authState.image}` : profile} alt="img" className='img-fluid' />
                 </div>
                 <div className="profile-btn text-center">
                   <input type="file" onChange={imageUpload} id='profileUpload' />
-                  <button className='btn btn-yellow px-4' role="button" disabled={loading}>{loading ? <Spinner/>:"Update photo" }</button>
+                  <button className='btn btn-yellow px-4' role="button" disabled={loading}>{loading ? <Spinner /> : "Update photo"}</button>
                 </div>
               </div>
             </div>
@@ -152,38 +152,48 @@ const Profile = () => {
                 {/* name */}
                 <div className="name d-flex justify-content-between mb-4">
                   <div className="user-info w-100">
-                    <label htmlFor="" className='fw-bold mb-2'>Name</label><br />
+                    <div className="label d-flex justify-content-between mb-2">
+                      <label htmlFor="" className='fw-bold'>Name</label><br />
+                      <div className="edit-user ps-4">
+                        <button className='btn border-0 text-yellow fw-bold p-0 text-capitalize' onClick={onChangeNameHide}>{show === true ? "cancel" : "Edit"}</button>
+                      </div>
+                    </div>
                     {show === false ? authState.name : ""}
                     {/* edit-name */}
                     {show === true ?
                       <div className="edit-input">
-                        <Input type="text" defaultValue={authState.name} name="name" className="form-control w-100 my-3" placeholder="Enter name" onChange={onhandleChnage} />
+                        <Input type="text" defaultValue={authState.name} name="name" className="form-control w-100 mt-3 mb-4" placeholder="Enter name" onChange={onhandleChnage} />
                         <div className="save-btn">
                           <button className='btn btn-yellow' onClick={onChnageName} disabled={loading}>{loading ? <Spinner /> : "Save"}</button>
                         </div>
                       </div> : ""}
                   </div>
                   <div className="edit-user ps-4">
-                    <button className='btn border-0 text-yellow fw-bold p-0' onClick={onChangeNameHide}>{show === true ? "cancel" : "Edit"}</button>
+                    <button className='btn border-0 text-yellow fw-bold p-0' onClick={onChangeNameHide}>{show === true ? "Cancel" : "Edit"}</button>
                   </div>
                 </div>
                 {/* email */}
 
                 <div className="name d-flex justify-content-between">
                   <div className="user-info w-100">
-                    <label htmlFor="editemail" className='fw-bold mb-2'>Email</label><br />
+                    <div className="label d-flex justify-content-between mb-2">
+                      <label htmlFor="editemail" className='fw-bold'>Email</label><br />
+                      <div className="edit-user ps-4">
+                        <button className='btn border-0 text-yellow fw-bold p-0 text-capitalize' onClick={onChangeEmailHide} >{emailShow === true ? "cancel" : "Edit"}</button>
+                      </div>
+                    </div>
                     {emailShow === false ? authState.email : ""}
                     {/* edit-email */}
                     {emailShow === true ?
                       <div className="edit-input">
-                        <Input type="email" defaultValue={authState.email} name="email" className="form-control w-100 my-3" placeholder="Enter email" onChange={onhandleChnage} />
+                        <Input type="email" defaultValue={authState.email} name="email" className="form-control w-100 mt-3 mb-4" placeholder="Enter email" onChange={onhandleChnage} />
                         <div className="save-btn">
                           <button className='btn btn-yellow' onClick={onChnageEmail}>Save</button>
                         </div>
                       </div> : ""}
                   </div>
                   <div className="edit-user ps-4">
-                    <button className='btn border-0 text-yellow fw-bold p-0' onClick={onChangeEmailHide} >{emailShow === true ? "cancel" : "Edit"}</button>
+                    <button className='btn border-0 text-yellow fw-bold p-0' onClick={onChangeEmailHide} >{emailShow === true ? "Cancel" : "Edit"}</button>
                   </div>
                 </div>
               </div>
