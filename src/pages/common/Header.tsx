@@ -75,7 +75,7 @@ const Header = () => {
                                                         </div>
                                                     )}
                                                     arrow className="btnn h-100">
-                                                    <Button><Avatar style={{ backgroundColor: '#32CD32' }} icon={<img src={henceforthApi.FILES.imageOriginal(authState.image, placeholder)} />} />&nbsp;{authState?.name}</Button>
+                                                    <Button><Avatar style={{ backgroundColor: '#32CD32' }} icon={<img src={henceforthApi.FILES.imageOriginal(authState.photo, placeholder)} />} />&nbsp;{authState?.name}</Button>
                                                 </Dropdown>
                                             </li>
                                         </ul> :

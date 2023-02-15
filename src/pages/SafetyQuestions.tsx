@@ -20,6 +20,13 @@ const SafetyQuestions = () => {
         })
 
     }
+    const onChangeHandle=async()=>{
+      try{
+
+      }catch{
+        
+      }
+    }
 
     return (
         <section className="Confirm-address-section">
@@ -34,13 +41,13 @@ const SafetyQuestions = () => {
                                 <div className="col-11 col-lg-11 mb-4">
                                     <h4 className='mb-3'>Smoking Allowed</h4>
                                     <div className="form-check mb-2">
-                                        <input className="form-check-input form-check-radio" type="radio" name="flexRadioDefault" id="radio1" />
+                                        <input className="form-check-input form-check-radio" type="radio" value="true" name="flexRadioDefault" id="radio1" />
                                         <label className="form-check-label" htmlFor="radio1">
                                             Yes
                                         </label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input form-check-radio" type="radio" name="flexRadioDefault" id="radio2" />
+                                        <input className="form-check-input form-check-radio" type="radio" value="false" name="flexRadioDefault" id="radio2" />
                                         <label className="form-check-label" htmlFor="radio2">
                                             No
                                         </label>

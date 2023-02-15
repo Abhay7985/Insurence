@@ -10,7 +10,7 @@ import loginSuccess from '../context/actions/auth/loginSuccess';
 
 interface profile {
   name: string,
-  image: any,
+  photo: any,
   email: string
 }
 
@@ -48,7 +48,7 @@ const Profile = () => {
         photo: image
       }
       let apiRes = await henceforthApi.Auth.editProfile(item)
-      loginSuccess(apiRes.data)(authDispatch)
+      loginSuccess(apiRes.update)(authDispatch)
     } catch (error) {
       console.log(error)
     } finally {
@@ -138,7 +138,7 @@ const Profile = () => {
             <div className="col-lg-5">
               <div className="user-profile">
                 <div className="profile-image mx-auto">
-                  <img src={ authState.image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${authState.image}` : profile} alt="img" className='img-fluid' />
+                  <img src={henceforthApi.FILES.imageOriginal(authState?.photo,profile)} alt="img" className='img-fluid' />
                 </div>
                 <div className="profile-btn text-center">
                   <input type="file" onChange={imageUpload} id='profileUpload' />
