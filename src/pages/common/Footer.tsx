@@ -6,7 +6,7 @@ const Footer = () => {
             {/* Footer */}
             <footer className='footer'>
                 <div className="container">
-                    <div className="row gy-4 justify-content-lg-between">
+                    <div className="row gy-3 gy-sm-4 justify-content-lg-between">
                         <div className="col-md-11 text-center">
                             <h5>Subscribe to our newsletter</h5>
                         </div>
@@ -23,7 +23,7 @@ const Footer = () => {
                             </div>
 
                         </div>
-                        <div className="col-sm-6 col-md-4 col-lg-3">
+                        <div className="col-12 col-sm-6 col-md-4 col-lg-3">
                             <ul >
                                 <li>
                                     <div className="footer-logo">
@@ -34,7 +34,7 @@ const Footer = () => {
 
                             </ul>
                         </div>
-                        <div className="col-sm-6 col-md-4 col-lg-2">
+                        <div className="col-6 col-sm-6 col-md-4 col-lg-2">
                             <ul>
                                 <li>
                                     <a href="#" className="nav-link">About Us</a>
@@ -45,7 +45,7 @@ const Footer = () => {
 
                             </ul>
                         </div>
-                        <div className="col-sm-6 col-md-4 col-lg-2">
+                        <div className="col-6 col-sm-6 col-md-4 col-lg-2">
                             <ul>
                                 <li>
                                     <a href="#" className="nav-link">Terms & Conditions</a>
@@ -55,7 +55,7 @@ const Footer = () => {
                                 </li>
                             </ul>
                         </div>
-                        <div className="col-sm-6 col-md-4 col-lg-2">
+                        <div className="col-6 col-sm-6 col-md-4 col-lg-2">
                             <ul>
                                 <li>
                                     <a href="#" className="nav-link d-flex align-items-center gap-3">
@@ -74,7 +74,7 @@ const Footer = () => {
 
                             </ul>
                         </div>
-                        <div className="col-sm-6 col-md-4 col-lg-2">
+                        <div className="col-6 col-sm-6 col-md-4 col-lg-2">
                             <ul>
                                 <li>
                                     <a href="#" className="nav-link d-flex align-items-center gap-3">

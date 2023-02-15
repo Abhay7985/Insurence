@@ -15,10 +15,10 @@ const ProviderCalender = () => {
         <div className="container-fluid">
           <div className="row bg-white">
             {/* calender */}
-            <div className="col-lg-9 px-0 border-end py-5">
+            <div className="col-lg-9 px-0 boat-calender py-5">
               <div className="row">
                 <div className="col-12">
-                  <div className="select-date px-4 d-flex justify-content-between align-items-center">
+                  <div className="select-date px-sm-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
                     <Select
                       defaultValue="Morning Panoramic"
                       style={{ width: '100%' }}
@@ -30,7 +30,7 @@ const ProviderCalender = () => {
                         { value: 'disabled', label: 'Disabled', disabled: true },
                       ]}
                     />
-                    <div className="edit-pricing px-4">
+                    <div className="edit-pricing px-sm-4">
                       <button className='btn text-yellow p-0 border-0 text-decoration-underline text-nowrap fw-bold d-flex align-items-center'>
                         <HenceforthIcons.EditPencil />
                         <span>Edit pricing & availability</span>

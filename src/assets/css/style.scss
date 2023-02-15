@@ -10,8 +10,10 @@
 
 
 .banner-title {
-    padding-top: 60px;
-    padding-bottom: 42px;
+    padding-block: 60px 42px;
+  @media (max-width:575px) {
+    padding-block: 40px 32px;
+  }
 }
 
 // ************************************Boat Details section****************************
@@ -201,9 +203,25 @@
 
 // ************************************Morning Panormic section****************************
 .morning-banner {
+    height: 466px;
+    overflow: hidden;
+    border-radius: 10px 0 0 10px;
     img {
         height: 100%;
         width: 100%;
+        object-fit: cover;
+    }
+    @media (max-width:991px) {
+        height: 350px;
+    }
+    @media (max-width:767px) {
+        border-radius: 10px;
+    }
+}
+.boat-calender{
+    border-right: 1px solid $light-gray;
+    @media (max-width:991px) {
+        border-right: none;
     }
 }
 
@@ -563,4 +581,39 @@
             width: 90%;
         }
     }
+}
+
+.photo-slider{
+    height: 100px;
+    border-radius: 4px;
+    margin-inline: 5px;
+    overflow: hidden;
+    position: relative;
+
+    img{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+}
+.slider-box{
+    position: relative;
+    &::after{
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        height: 20%;
+        width: 0px;
+        background: transparent;
+        box-shadow: 0px 0px 30px 70px rgb(255, 255, 255) ;
+    }
+}
+
+// .ant-float-btn-default
+.ant-float-btn-default{
+    z-index: 1111;
 }
