@@ -14,7 +14,6 @@ const SelectPassenger = () => {
     const location = useLocation()
     const uRLSearchParams = new URLSearchParams(location.search)
 
-
     const [passengerDay, setPassengerDay] = React.useState(1)
     const [passengerNight, setPassengerNight] = React.useState(1)
     const [bedrooms, setBedrooms] = React.useState(1)
@@ -49,6 +48,7 @@ const SelectPassenger = () => {
             })
         } catch (error) {
             console.log('error', error);
+            Toast.error(error)
 
         }
 

@@ -108,14 +108,14 @@ const BoatListing = () => {
                                 <div className="add-boat-btn">
                                     <Select
                                         defaultValue="Listing status"
-                                        value={urlSearchParams.has("status") ? urlSearchParams.get("status") : "0"}
+                                        value={urlSearchParams.has("status") ? urlSearchParams.get("status") : ""}
                                         style={{ width: 150 }}
                                         onChange={handleChange}
                                         options={[
-                                            { value: '0', label: 'All' },
-                                            { value: '1', label: 'Listed' },
-                                            { value: '2', label: 'Unlisted' },
-                                            { value: '3', label: 'Draft' },
+                                            { value: '', label: 'All' },
+                                            { value: 'listed', label: 'Listed' },
+                                            { value: 'unlisted', label: 'Unlisted' },
+                                            { value: 'draft', label: 'Draft' },
                                         ]}
                                     />
                                 </div>

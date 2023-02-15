@@ -6,13 +6,14 @@ import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
 
 interface RouteData {
-    price: number,
+    price?: number,
     selected?: boolean
-    installments: number,
-    date: string,
-    priceing_date: string,
+    installments?: number,
+    date?: string,
+    priceing_date?: string,
     route_id: number,
     installment_price: number,
+    route_name: string,
 }
 
 const BoatPrice = () => {
@@ -21,29 +22,45 @@ const BoatPrice = () => {
     const match = useMatch(`boat/:id/price`)
     const uRLSearchParams = new URLSearchParams(location.search)
     const { Toast } = React.useContext(GlobalContext)
-    const [state, setState] = useState<Array<RouteData>>([])
-    const [routes, setRoutes] = useState([])
-
-    const handleState = (e: any) => {
-        setState({
-            ...state,
-            [e.target.name]: e.target.value
-
-        })
-    }
+    const [routes, setRoutes] = useState<Array<RouteData>>([])
 
     const onSubmit = async (e: any) => {
         e.preventDefault()
-
-        let items = {
-
+        const items = {
+            price_boat: {
+                boat_id: match?.params.id,
+                route_prices: routes.filter(((res: any) => res.selected == true)).map((res: any) => {
+                    return {
+                        route_id: res.id,
+                        price: res.price,
+                        route_name: res.route_name,
+                        installments: res.installments,
+                        installment_price: res.installment_price
+                    }
+                })
+            }
         }
 
-        navigate({
-            pathname: `/boat/${match?.params.id}/inquiry`,
-            search: uRLSearchParams.toString()
-        })
 
+        try {
+            if (!routes[0]?.selected) {
+                Toast.error("Select Routes")
+            } else if (!routes[0]?.price) {
+                Toast.error("Add Price")
+            } else if (!routes[0]?.installments || !routes[0]?.installment_price) {
+                Toast.error("Add Installments")
+            }
+            else {
+                let res = await henceforthApi.Boat.create(items)
+                Toast.success(res.message)
+                navigate({
+                    pathname: `/boat/${match?.params.id}/inquiry`,
+                    search: uRLSearchParams.toString()
+                })
+            }
+
+        } catch (error) {
+        }
     }
 
     const boatRoutes = async () => {
@@ -51,23 +68,24 @@ const BoatPrice = () => {
             let res = await henceforthApi.Boat.boatRoutes()
             setRoutes(res.data)
         } catch (error) {
-
+            console.log(error);
         }
     }
+
     useEffect(() => {
         boatRoutes()
     }, [])
 
-    const handleChange = async (name: string, value: boolean, index: number) => {  
-        // const arr: any = []
-        // arr.splice(2, 0, {...state,selected:value});
-        // // arr[index].push([{...state,selected:value}])
-
-        // console.log(arr);
+    const handleChange = async (name: string, value: any, index: number) => {
+        const data = routes[index] as any
+        if (typeof value == "boolean") {
+            data.selected = value
+        }
+        console.log(data);
+        data[name] = value
+        setRoutes([...routes])
     }
 
-
-   
 
 
     return (
@@ -83,73 +101,32 @@ const BoatPrice = () => {
                                         <h3 className='banner-title pb-3'>Price your boat.</h3>
                                     </div>
                                     {routes.map((res: any, index: number) =>
-                                        <div className="col-11 col-lg-11">
+                                        <div className="col-11 col-lg-11" key={res.id}>
                                             <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value={res.id} checked={res.selected} id="boat-check-1" onChange={(e: any) => handleChange(e.target.name , e.target.checked, index)} />
+                                                <input className="form-check-input" type="checkbox" value={res.id} checked={res.selected} id="boat-check-1" onChange={(e: any) => handleChange(e.target.name, e.target.checked, index)} />
                                                 <label className="form-check-label" htmlFor="boat-check-1">
                                                     {res.route_name}
                                                 </label>
                                             </div>
-                                            {<div className="row justify-content-end py-3">
+                                            {res.selected && <div className="row justify-content-end py-3">
                                                 <div className="col-md-12">
                                                     <div className="mb-3 ps-sm-4">
                                                         <label htmlFor="exampleInputEmail1" className="form-label">Price (cash)</label>
-                                                        <input type="text" className="form-control" id="exampleInputEmail1" name='price' placeholder='Enter price' onChange={handleState} />
+                                                        <input type="text" className="form-control" id="exampleInputEmail1" name='price' placeholder='Enter price' onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
                                                     </div>
                                                     <div className="ps-sm-4">
                                                         <label htmlFor="exampleInputEmail2" className="form-label">Price (installments)</label>
                                                         <div className="price-input d-flex gap-3 align-items-center">
-                                                            <input type="text" className="form-control" placeholder='Enter installments' name='installments' onChange={handleState} />
+                                                            <input type="text" className="form-control" placeholder='Enter installments' name='installments' onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
                                                             <span>*</span>
-                                                            <input type="text" className="form-control" placeholder='Enter price'  name='installments_price' onChange={handleState}/>
+                                                            <input type="text" className="form-control" placeholder='Enter price' name='installment_price' onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
                                                             <span>=</span>
-                                                            <input type="text" className="form-control" placeholder='$00' value={""} disabled />
+                                                            <input type="text" className="form-control" placeholder='$00' value={Number(res?.installments || 0) * Number(res?.installment_price || 0)} disabled />
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>}
                                         </div>)}
-                                    {/* <div className="col-11 col-lg-11">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="boat-check-2" />
-                                            <label className="form-check-label" htmlFor="boat-check-2">
-                                                Panorâmico Pôr do Sol - 14:30 às 18:30 (4 hours PM)
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="col-11 col-lg-11">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="boat-check-3" />
-                                            <label className="form-check-label" htmlFor="boat-check-3">
-                                                Panorâmico 2hrs (2 hours tour)
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="col-11 col-lg-11">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="boat-check-4" />
-                                            <label className="form-check-label" htmlFor="boat-check-4">
-                                                Panorâmico Pôr do sol + Noturno 14 às 20hrs (6 hours PM) - Panorâmico Completo - 10 às 18hrs (Full day panoramic tour - 8 hours)
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="col-11 col-lg-11">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="boat-check-5" />
-                                            <label className="form-check-label" htmlFor="boat-check-5">
-                                                Panorâmico Noturno - 20 à meia noite (night time tour)
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="col-11 col-lg-11">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="boat-check-6" />
-                                            <label className="form-check-label" htmlFor="boat-check-6">
-                                                Roteiro Ilha dos Frades - 10 às 18hrs (Island tour 1)
-                                            </label>
-                                        </div>
-                                    </div> */}
-
                                 </div>
                                 <BackNextLayout buttonName="Finish" />
                             </div>

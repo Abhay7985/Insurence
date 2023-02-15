@@ -77,7 +77,7 @@ function GlobalProvider(props: GlobleContextProviderProps) {
 
     henceforthApi.setToken(authState?.access_token)
     const error = (error: any) => {
-        const msg = error?.response?.body?.message as string
+        const msg = error?.response?.body?.message ? error?.response?.body?.message as string : error as string
         messageApi.open({
             type: 'error',
             content: msg,
