@@ -60,7 +60,7 @@ const Header = () => {
                                             <Link to='/' className='nav-link'>Boats</Link>
                                         </li>
                                         <li>
-                                            <Link to={`inquiry/1`} className='nav-link'>Inquiry</Link>
+                                            <Link to={`inquiry/all/1`} className='nav-link'>Inquiry</Link>
                                         </li>
                                         <li>
                                             <Link to='/calender' className='nav-link'>Calender</Link>

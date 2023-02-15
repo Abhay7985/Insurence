@@ -100,22 +100,25 @@ const EditBoatDetails = () => {
             key: '1',
             label: (
                 <span>
-                    Listed
+                    {henceofrthEnums.OrderStatus.list}
                 </span>
             ),
             icon: <Badge color={henceofrthEnums.OrderColor.listed} />,
-            onClick: () => handleStatus(henceofrthEnums.OrderStatus.listed)
+            onClick: () => handleStatus(henceofrthEnums.OrderStatus.listed),
+            disabled: henceofrthEnums.OrderStatus.listed === state?.status
 
         },
         {
             key: '2',
             label: (
                 <span>
-                    Unlisted
+                    {henceofrthEnums.OrderStatus.unlist}
                 </span>
             ),
             icon: <Badge color={henceofrthEnums.OrderColor.unlisted} />,
-            onClick: () => handleStatus(henceofrthEnums.OrderStatus.unlisted)
+            onClick: () => handleStatus(henceofrthEnums.OrderStatus.unlisted),
+            disabled: henceofrthEnums.OrderStatus.unlisted === state?.status
+
         }
 
     ];

@@ -101,7 +101,7 @@ const Boat = {
     requests.post(`provider/boats`, items),
   edit: (id: string, items: any) =>
     requests.put(`provider/boats/${id}`, items),
-  status: (id: string, items: any) =>
+  status: (id: any, items: any) =>
     requests.put(`provider/boat-status/${id}`, items),
   getBoatListing: (search: any) =>
     requests.get(`provider/boats?${search}`),
