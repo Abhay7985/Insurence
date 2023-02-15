@@ -61,12 +61,12 @@ const BoatInfo = () => {
 
     return (
         // boat-details
-        <section className="boat-details-section">
-            <div className="container-fluid">
-                <form className="row" onSubmit={onSubmit}>
+        <section className="boat-details-section h-100">
+            <div className="container-fluid h-100">
+                <form className="row h-100" onSubmit={onSubmit}>
                     <div className="col-lg-6">
-                        <div className="banner-content h-100 d-flex flex-column ">
-                            <div className="row justify-content-center justify-content-lg-end">
+                        <div className="banner-content h-100 d-flex flex-column justify-content-between">
+                            <div className="row justify-content-center justify-content-lg-end h-100">
                                 <div className="col-11 col-lg-11">
                                     <h3 className='banner-title'>Please enter the details of the boat</h3>
                                 </div>
@@ -120,8 +120,36 @@ const BoatInfo = () => {
                                         <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) => setBoatSize(e.target.value)} />
                                     </div>
                                 </div>
+                                <div className="col-11 col-lg-11">
+                                    <div className="mb-3">
+                                        <label htmlFor="input4" className="form-label">Model</label>
+                                        <input type="text" className="form-control" id='input4' placeholder='Enter model' value={boatModel} onChange={(e) => setBoatModel(e.target.value)} />
+                                    </div>
+                                </div>
+                                <div className="col-11 col-lg-11">
+                                    <div className="mb-3">
+                                        <label htmlFor="input5" className="form-label">Size</label>
+                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) => setBoatSize(e.target.value)} />
+                                    </div>
+                                </div>
+                                <div className="col-11 col-lg-11">
+                                    <div className="mb-3">
+                                        <label htmlFor="input4" className="form-label">Model</label>
+                                        <input type="text" className="form-control" id='input4' placeholder='Enter model' value={boatModel} onChange={(e) => setBoatModel(e.target.value)} />
+                                    </div>
+                                </div>
+                                <div className="col-11 col-lg-11">
+                                    <div className="mb-3">
+                                        <label htmlFor="input5" className="form-label">Size</label>
+                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) => setBoatSize(e.target.value)} />
+                                    </div>
+                                </div>
                             </div>
-                            <div className="row banner-footer border-top mt-auto justify-content-end">
+
+                        </div>
+
+                        <div className="col-md-6 sticky-bottom mt-auto bg-white">
+                            <div className="row banner-footer border-top  justify-content-end">
                                 <div className="col-11 col-lg-11">
                                     <ul className='d-flex justify-content-between'>
                                         <li>
@@ -136,7 +164,7 @@ const BoatInfo = () => {
                         </div>
 
                     </div>
-                    <div className="col-lg-6 pe-lg-0">
+                    <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
                         <div className="banner-image border">
                             <img src={bannerImage} alt="" />
                         </div>

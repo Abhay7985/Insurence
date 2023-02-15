@@ -50,9 +50,9 @@ const SafetyQuestions = () => {
     }
 
     return (
-        <section className="Confirm-address-section">
-            <div className="container-fluid">
-                <form className="row" onSubmit={onSubmit}>
+        <section className="Confirm-address-section h-100">
+            <div className="container-fluid h-100">
+                <form className="row h-100" onSubmit={onSubmit}>
                     <div className="col-lg-6">
                         <div className="banner-content h-100 d-flex flex-column ">
                             <div className="row justify-content-center justify-content-lg-end gy-4 pb-5">

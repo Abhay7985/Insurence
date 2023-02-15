@@ -7,6 +7,10 @@ h6 {
     font-weight: bold;
     margin: 0;
     font-family: 'Nunito', sans-serif !important;
+
+    ::first-letter {
+        text-transform: capitalize;
+    }
 }
 
 h2 {
@@ -49,6 +53,10 @@ h5 {
     font-size: 16px;
     font-weight: normal;
     font-family: 'Nunito', sans-serif !important;
+
+    ::first-letter {
+        text-transform: capitalize;
+    }
 }
 
 p {
@@ -56,6 +64,10 @@ p {
     font-size: 16px;
     color: $light-black;
     font-family: 'Nunito', sans-serif !important;
+
+    ::first-letter {
+        text-transform: capitalize;
+    }
 }
 
 .rounded {
@@ -107,6 +119,10 @@ label {
     font-size: 16px;
     font-weight: normal;
     font-family: 'Nunito', sans-serif !important;
+
+    ::first-letter {
+        text-transform: capitalize;
+    }
 }
 
 .btn-yellow {
@@ -124,10 +140,14 @@ label {
 }
 
 ::placeholder {
-    font-size: 16px; 
+    font-size: 16px;
     color: $light-black;
     font-weight: normal;
     font-family: 'Nunito', sans-serif !important;
+
+    ::first-letter {
+        text-transform: capitalize;
+    }
 }
 
 .form-control {
@@ -136,27 +156,33 @@ label {
     border: 1px solid $light-gray;
     padding: 14px 20px;
     font-family: 'Nunito', sans-serif !important;
+    &:hover{
+        border-color: $primary-color;
+    }
+    &:focus{
+        border-color: $primary-color;
+    }
 }
 
-.form-control:hover {
-    border-color: $primary-color;
-}
 
 .nav-link {
     font-weight: 600;
-}
-
-.nav-link:hover {
-    color: $primary-color;
-}
-
-.form-control:focus {
-    border-color: $primary-color;
+    &:hover{
+        color: $primary-color;
+    }
 }
 
 .form-check-input {
     box-shadow: none !important;
     border-radius: 2px !important;
+    &:checked{
+        background-color: $primary-color;
+        border-color: $primary-color;
+    }
+    &:focus{
+        background-color: $primary-color;
+        border-color: $primary-color;
+    }
 }
 
 .form-check-radio {
@@ -171,10 +197,6 @@ label {
     width: 41px !important;
 }
 
-.form-check-input:checked {
-    background-color: $primary-color;
-    border-color: $primary-color;
-}
 
 .form-check-input:focus {
     border-color: $primary-color;
@@ -209,9 +231,12 @@ ul {
     margin: 0;
     list-style: none;
     font-family: 'Nunito', sans-serif !important;
-    li{
+
+    li {
         font-size: 16px;
-        text-transform: capitalize;
+        ::first-letter{
+            text-transform: capitalize;
+        }
     }
 }
 
@@ -239,4 +264,7 @@ ul {
 
 .form-switch .form-check-input:focus {
     background-image: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%27-4 -4 8 8%27%3e%3ccircle r=%273%27 fill=%27rgba%280, 0, 0, 0.25%29%27/%3e%3c/svg%3e');
+}
+section{
+    padding-inline: 15px;
 }

@@ -2,7 +2,8 @@
 header {
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 2px 4px #00000014;
-    padding-block: 25px;
+    padding-block: 16px;
+    z-index: 999 !important;
 
     .btn {
         padding: 10px 20px;
@@ -89,4 +90,10 @@ header {
 .copyright{
     border-top: 1px solid #4A4F70;
     padding-block: 20px;
+}
+
+// boat-main-layout
+.boat-main-layout{
+    height: 100%;
+    // overflow: hidden;
 }

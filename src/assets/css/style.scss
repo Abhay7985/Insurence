@@ -15,9 +15,18 @@
 }
 
 // ************************************Boat Details section****************************
+.sticky-bottom {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
 .banner-image {
-    max-height: 100vh;
-    overflow: hidden;
+
+    position: fixed;
+    height: 100%;
+    width: 50%;
 
     img {
         height: 100%;
@@ -27,8 +36,7 @@
 }
 
 .banner-content {
-    min-height: 100vh;
-    max-height: 100vh;
+
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -241,6 +249,11 @@
         padding: 15px;
         vertical-align: middle;
         white-space: nowrap;
+        font-family: 'Nunito', sans-serif !important;
+
+        ::first-letter {
+            text-transform: capitalize;
+        }
     }
 
     th {
@@ -272,6 +285,8 @@
 
 
 .ant-tabs {
+    font-family: 'Nunito', sans-serif !important;
+
     .ant-tabs-tab {
         font-size: 18px;
         padding-inline: 10px;
@@ -470,6 +485,10 @@
 }
 
 // ************************************Bugs Css****************************
+.ant-select-item-option-content {
+    font-family: 'Nunito', sans-serif !important;
+}
+
 .ant-form-item {
     margin: 0;
 }
@@ -479,8 +498,6 @@
     color: #707579;
     font-weight: normal;
 }
-
-.ant-dropdown-arrow {}
 
 .ant-select-single.ant-select-show-arrow .ant-select-selection-item {
     color: $light-black !important;
@@ -493,6 +510,7 @@
 .ant-dropdown {
     box-shadow: 0px 0px 10px #00000014 !important;
     border-radius: 8px;
+    font-family: 'Nunito', sans-serif !important;
 }
 
 .ant-dropdown-show-arrow.ant-dropdown-placement-bottomLeft {
@@ -508,4 +526,27 @@
     color: $light-black;
     font-weight: normal;
     font-family: 'Nunito', sans-serif;
+}
+
+.boat-listing-header {
+    .search-icon {
+        position: absolute;
+        top: 50%;
+        background: white;
+        left: 5px;
+        transform: translate(50%, -50%);
+        margin: auto;
+        z-index: 10;
+    }
+
+}
+.search-input{
+    width: 100%;
+    .form-control{
+        width: 25%;
+        transition: 0.3s;
+        &:focus{
+            width: 90%;
+        }
+    }
 }
