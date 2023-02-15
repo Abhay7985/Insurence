@@ -139,7 +139,7 @@ const Profile = () => {
                 </div>
                 <div className="profile-btn text-center">
                   <input type="file" onChange={imageUpload} id='profileUpload' />
-                  <button className='btn btn-yellow px-4' role="button" disabled={loading}>{loading ? <Spinner /> : "Update photo"}</button>
+                  <button className='btn btn-yellow px-4' role="button" disabled={loading}>Update photo</button>
                 </div>
               </div>
             </div>
@@ -161,7 +161,7 @@ const Profile = () => {
                       <div className="edit-input">
                         <Input type="text" defaultValue={authState.name} name="name" className="form-control w-100 mt-3 mb-4" placeholder="Enter name" onChange={onhandleChnage} />
                         <div className="save-btn">
-                          <button className='btn btn-yellow' onClick={onChnageName} disabled={loading}>{loading ? <Spinner /> : "Save"}</button>
+                          <button className='btn btn-yellow' onClick={onChnageName} disabled={loading}>Save</button>
                         </div>
                       </div> : ""}
                   </div>

@@ -1,4 +1,5 @@
-import React, { useEffect,useState } from 'react';
+import { Spin } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useMatch, useNavigate } from 'react-router-dom';
 import bannerImage from '../assets/images/image_one.png';
 import BackNextLayout from '../Components/boat/BackNextLayout';
@@ -7,7 +8,7 @@ import henceforthApi from '../utils/henceforthApi';
 
 interface amenities {
     id: number,
-    amenity:string
+    amenity: string
 }
 
 const AmenitiesOffer = () => {
@@ -17,6 +18,7 @@ const AmenitiesOffer = () => {
     const match = useMatch(`boat/:id/amenities`)
     const uRLSearchParams = new URLSearchParams(location.search)
     const { Toast, authState } = React.useContext(GlobalContext)
+    const [loading, setLoading] = React.useState(false)
     const [amenities, setAmenities] = useState<Array<number>>([])
     const [amenitiesOffers, setAmenitiesOffers] = useState<Array<amenities>>([])
 
@@ -32,8 +34,8 @@ const AmenitiesOffer = () => {
         setAmenities([...prev]);
     };
 
-  
-    
+
+
 
     const onSubmit = async (e: any) => {
         e.preventDefault()
@@ -45,6 +47,7 @@ const AmenitiesOffer = () => {
             }
         }
         try {
+            setLoading(true)
             let apiRes = await henceforthApi.Boat.create(items)
             Toast.success(apiRes.message)
 
@@ -53,9 +56,10 @@ const AmenitiesOffer = () => {
                 search: uRLSearchParams.toString()
             })
 
-        } catch (error:any) {
-            if(error.response.body.message.amenities) return Toast.error(error.response.body.message.amenities[0])
-
+        } catch (error: any) {
+            if (error.response.body.message.amenities) return Toast.error(error.response.body.message.amenities[0])
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -73,8 +77,7 @@ const AmenitiesOffer = () => {
     }, [])
 
     return (
-        <>
-            {/* Aminities-offer */}
+        <Spin spinning={loading} >
             <section className="Confirm-address-section">
                 <div className="container-fluid">
                     <form className="row" onSubmit={onSubmit}>
@@ -107,7 +110,7 @@ const AmenitiesOffer = () => {
                     </form>
                 </div>
             </section>
-        </>
+        </Spin>
     )
 }
 

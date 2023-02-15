@@ -6,6 +6,7 @@ import React from 'react';
 import henceforthApi from '../utils/henceforthApi';
 import { GlobalContext } from '../context/Provider';
 import BackNextLayout from '../Components/boat/BackNextLayout';
+import { Spin } from 'antd';
 
 const SelectPassenger = () => {
     const { Toast } = React.useContext(GlobalContext)
@@ -18,6 +19,7 @@ const SelectPassenger = () => {
     const [passengerNight, setPassengerNight] = React.useState(1)
     const [bedrooms, setBedrooms] = React.useState(1)
     const [bathrooms, setBathrooms] = React.useState(1)
+    const [loading, setLoading] = React.useState(false)
 
 
     const onSubmit = async (e: any) => {
@@ -41,6 +43,7 @@ const SelectPassenger = () => {
             // })
         }
         try {
+            setLoading(true)
             const apiRes = await henceforthApi.Boat.create(items)
             Toast.success(apiRes.message)
             navigate({
@@ -49,13 +52,13 @@ const SelectPassenger = () => {
         } catch (error) {
             console.log('error', error);
             Toast.error(error)
-
+        } finally {
+            setLoading(false)
         }
 
     }
     return (
-        <>
-            {/* Select-passenger */}
+        <Spin spinning={loading} >
             <section className="select-passenger-section">
                 <div className="container-fluid">
                     <form className="row" onSubmit={onSubmit}>
@@ -166,7 +169,7 @@ const SelectPassenger = () => {
                     </form>
                 </div>
             </section>
-        </>
+        </Spin>
     )
 }
 export default SelectPassenger;

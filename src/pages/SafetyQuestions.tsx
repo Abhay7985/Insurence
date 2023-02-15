@@ -1,3 +1,4 @@
+import { Spin } from 'antd';
 import React, { useState } from 'react';
 import { Link, useLocation, useMatch, useNavigate } from 'react-router-dom';
 import bannerImage from '../assets/images/image_one.png';
@@ -11,6 +12,7 @@ const SafetyQuestions = () => {
     const match = useMatch(`boat/:id/safety-question`)
     const uRLSearchParams = new URLSearchParams(location.search)
     const { Toast } = React.useContext(GlobalContext)
+    const [spinning, setSpinning] = React.useState(false)
 
     const [state, setState] = useState({
         smoking_allowed: 0 as number,
@@ -18,9 +20,6 @@ const SafetyQuestions = () => {
         rules: ""
 
     })
-
-    console.log(state.smoking_allowed);
-    
 
     const handleState = (e: any) => {
         setState({
@@ -40,6 +39,7 @@ const SafetyQuestions = () => {
             }
         }
         try {
+            setSpinning(true)
             let res = await henceforthApi.Boat.create(items)
             Toast.success(res.message)
             navigate({
@@ -47,79 +47,75 @@ const SafetyQuestions = () => {
                 search: uRLSearchParams.toString()
             })
         } catch (error: any) {
-            if(error.response.body.message.rules) return Toast.error(error.response.body.message.rules[0])
-
+            if (error.response.body.message.rules) return Toast.error(error.response.body.message.rules[0])
+        } finally {
+            setSpinning(false)
         }
-    }
-    const onChangeHandle=async()=>{
-      try{
-
-      }catch{
-        
-      }
     }
 
     return (
-        <section className="Confirm-address-section">
-            <div className="container-fluid">
-                <form className="row" onSubmit={onSubmit}>
-                    <div className="col-lg-6">
-                        <div className="banner-content h-100 d-flex flex-column ">
-                            <div className="row justify-content-center justify-content-lg-end gy-4 pb-5">
-                                <div className="col-11 col-lg-11">
-                                    <h3 className='banner-title pb-3'>Just a few safety questions?</h3>
+        <Spin spinning={spinning}>
+            <section className="Confirm-address-section">
+                <div className="container-fluid">
+                    <form className="row" onSubmit={onSubmit}>
+                        <div className="col-lg-6">
+                            <div className="banner-content h-100 d-flex flex-column ">
+                                <div className="row justify-content-center justify-content-lg-end gy-4 pb-5">
+                                    <div className="col-11 col-lg-11">
+                                        <h3 className='banner-title pb-3'>Just a few safety questions?</h3>
+                                    </div>
+                                    <div className="col-11 col-lg-11 mb-4">
+                                        <h4 className='mb-3'>Smoking Allowed</h4>
+                                        <div className="form-check mb-2"   >
+                                            <input className="form-check-input form-check-radio" onChange={handleState} checked={state.smoking_allowed == 1} type="radio" value={1} name="smoking_allowed" id="radio1" />
+                                            <label className="form-check-label" htmlFor="radio1">
+                                                Yes
+                                            </label>
+                                        </div>
+                                        <div className="form-check">
+                                            <input className="form-check-input form-check-radio" type="radio" onChange={handleState} checked={state.smoking_allowed == 0} value={0} name="smoking_allowed" id="radio2" />
+                                            <label className="form-check-label" htmlFor="radio2">
+                                                No
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div className="col-11 col-lg-11 mb-4">
+                                        <h4 className='mb-3'>Pets Allowed</h4>
+                                        <div className="form-check mb-2">
+                                            <input className="form-check-input form-check-radio" type="radio" onChange={handleState} checked={state.pets_allowed == 1} value={1} name="pets_allowed" id="radio4" />
+                                            <label className="form-check-label" htmlFor="radio4">
+                                                Yes
+                                            </label>
+                                        </div>
+                                        <div className="form-check">
+                                            <input className="form-check-input form-check-radio" type="radio" onChange={handleState} checked={state.pets_allowed == 0} value={0} name="pets_allowed" id="radio5" />
+                                            <label className="form-check-label" htmlFor="radio5">
+                                                No
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div className="col-11 col-lg-11 mb-5">
+                                        <h4 className='mb-2'>Rules and Security</h4>
+                                        <p className='mb-3'>Set additional and vessel safety rules.</p>
+                                        <div className="form-floating">
+                                            <textarea className="form-control text-area" placeholder="Type here..." id="floatingTextarea" onChange={(e: any) => setState({ ...state, rules: e.target.value })}></textarea>
+                                            <label htmlFor="floatingTextarea">Type here...</label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="col-11 col-lg-11 mb-4">
-                                    <h4 className='mb-3'>Smoking Allowed</h4>
-                                    <div className="form-check mb-2"   >
-                                        <input className="form-check-input form-check-radio" onChange={handleState} checked={state.smoking_allowed == 1} type="radio" value={1} name="smoking_allowed" id="radio1" />
-                                        <label className="form-check-label" htmlFor="radio1">
-                                            Yes
-                                        </label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input className="form-check-input form-check-radio" type="radio" onChange={handleState} checked={state.smoking_allowed == 0} value={0}  name="smoking_allowed" id="radio2" />
-                                        <label className="form-check-label" htmlFor="radio2">
-                                            No
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className="col-11 col-lg-11 mb-4">
-                                    <h4 className='mb-3'>Pets Allowed</h4>
-                                    <div className="form-check mb-2">
-                                        <input className="form-check-input form-check-radio" type="radio" onChange={handleState} checked={state.pets_allowed == 1} value={1} name="pets_allowed" id="radio4" />
-                                        <label className="form-check-label" htmlFor="radio4">
-                                            Yes
-                                        </label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input className="form-check-input form-check-radio" type="radio" onChange={handleState} checked={state.pets_allowed == 0} value={0} name="pets_allowed" id="radio5" />
-                                        <label className="form-check-label" htmlFor="radio5">
-                                            No
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className="col-11 col-lg-11 mb-5">
-                                    <h4 className='mb-2'>Rules and Security</h4>
-                                    <p className='mb-3'>Set additional and vessel safety rules.</p>
-                                    <div className="form-floating">
-                                        <textarea className="form-control text-area" placeholder="Type here..." id="floatingTextarea" onChange={(e: any) => setState({ ...state, rules: e.target.value })}></textarea>
-                                        <label htmlFor="floatingTextarea">Type here...</label>
-                                    </div>
-                                </div>
+                                <BackNextLayout />
                             </div>
-                            <BackNextLayout />
-                        </div>
 
-                    </div>
-                    <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
-                        <div className="banner-image border">
-                            <img src={bannerImage} alt="" />
                         </div>
-                    </div>
-                </form>
-            </div>
-        </section>
+                        <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
+                            <div className="banner-image border">
+                                <img src={bannerImage} alt="" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </Spin>
     )
 }
 

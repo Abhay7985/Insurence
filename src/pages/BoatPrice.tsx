@@ -1,3 +1,4 @@
+import { Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useMatch, useNavigate } from 'react-router-dom';
 import bannerImage from '../assets/images/image_one.png';
@@ -22,6 +23,8 @@ const BoatPrice = () => {
     const match = useMatch(`boat/:id/price`)
     const uRLSearchParams = new URLSearchParams(location.search)
     const { Toast } = React.useContext(GlobalContext)
+    const [spinning, setSpinning] = React.useState(false)
+
     const [routes, setRoutes] = useState<Array<RouteData>>([])
 
     const onSubmit = async (e: any) => {
@@ -51,6 +54,7 @@ const BoatPrice = () => {
                 Toast.error("Add Installments")
             }
             else {
+                setSpinning(true)
                 let res = await henceforthApi.Boat.create(items)
                 Toast.success(res.message)
                 navigate({
@@ -60,15 +64,22 @@ const BoatPrice = () => {
             }
 
         } catch (error) {
+            Toast.error(error)
+        } finally {
+            setSpinning(false)
         }
     }
 
     const boatRoutes = async () => {
+        setSpinning(true)
+
         try {
             let res = await henceforthApi.Boat.boatRoutes()
             setRoutes(res.data)
         } catch (error) {
             console.log(error);
+        } finally {
+            setSpinning(false)
         }
     }
 
@@ -89,8 +100,7 @@ const BoatPrice = () => {
 
 
     return (
-        <>
-            {/* Boat-Price */}
+        <Spin spinning={spinning}>
             <section className="Confirm-address-section">
                 <div className="container-fluid">
                     <form className="row" onSubmit={onSubmit}>
@@ -140,7 +150,7 @@ const BoatPrice = () => {
                     </form>
                 </div>
             </section>
-        </>
+        </Spin>
     )
 }
 
