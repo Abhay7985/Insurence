@@ -173,7 +173,7 @@ const BoatInfo = () => {
 
                         </div>
 
-                        <div className="col-md-6 sticky-bottom mt-auto bg-white">
+                        <div className="col-md-6 sticky-bottom mt-auto bg-white ">
                             <div className="row banner-footer border-top  justify-content-end">
                                 <div className="col-11 col-lg-11">
                                     <ul className='d-flex justify-content-between'>

@@ -20,6 +20,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
+    background-color: $white;
 }
 
 .banner-image {
@@ -105,7 +106,17 @@
     border-radius: 8px;
 
     .form-control {
-        min-height: 176px;
+        /* min-height: 176px; */
+        border: 1px solid red;
+        position: absolute;
+        top: 67px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 40px;
+        width: 140px;
+        z-index: 1;
+        margin: auto;
     }
 
     label {
@@ -540,12 +551,15 @@
     }
 
 }
-.search-input{
+
+.search-input {
     width: 100%;
-    .form-control{
+
+    .form-control {
         width: 25%;
         transition: 0.3s;
-        &:focus{
+
+        &:focus {
             width: 90%;
         }
     }

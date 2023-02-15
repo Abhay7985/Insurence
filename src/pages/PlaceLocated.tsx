@@ -216,9 +216,9 @@ function PlaceLocated() {
                                     </div>
                                 </Fragment>}
                             </div>
-                            <BackNextLayout />
+                           
                         </div>
-
+                        <BackNextLayout />
                     </div>
                     <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
                         <div className="banner-image border">
