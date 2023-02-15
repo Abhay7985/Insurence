@@ -145,32 +145,7 @@ const BoatInfo = () => {
                                         <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) => setBoatSize(e.target.value)} />
                                     </div>
                                 </div>
-                                <div className="col-11 col-lg-11">
-                                    <div className="mb-3">
-                                        <label htmlFor="input4" className="form-label">Model</label>
-                                        <input type="text" className="form-control" id='input4' placeholder='Enter model' value={boatModel} onChange={(e) => setBoatModel(e.target.value)} />
-                                    </div>
-                                </div>
-                                <div className="col-11 col-lg-11">
-                                    <div className="mb-3">
-                                        <label htmlFor="input5" className="form-label">Size</label>
-                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) => setBoatSize(e.target.value)} />
-                                    </div>
-                                </div>
-                                <div className="col-11 col-lg-11">
-                                    <div className="mb-3">
-                                        <label htmlFor="input4" className="form-label">Model</label>
-                                        <input type="text" className="form-control" id='input4' placeholder='Enter model' value={boatModel} onChange={(e) => setBoatModel(e.target.value)} />
-                                    </div>
-                                </div>
-                                <div className="col-11 col-lg-11">
-                                    <div className="mb-3">
-                                        <label htmlFor="input5" className="form-label">Size</label>
-                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) => setBoatSize(e.target.value)} />
-                                    </div>
-                                </div>
                             </div>
-
                         </div>
 
                         <div className="col-md-6 sticky-bottom mt-auto bg-white ">
