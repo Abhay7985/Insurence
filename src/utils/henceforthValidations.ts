@@ -34,7 +34,7 @@ const UserNameValidation = (str: string) => {
 const MobileNumberValidation = (str: string) => {
     return NumberRegEx.test(str);
 }
-const NumberValidation = (str: string) => {
+export const NumberValidation = (str: string) => {
     return NumericNumberRegEx.test(str);
 }
 const ResultValidation = (str: string) => {

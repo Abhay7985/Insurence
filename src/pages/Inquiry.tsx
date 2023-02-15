@@ -1,288 +1,87 @@
 import React from 'react';
-import { Tabs } from 'antd';
+import { Spin, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
-import { Select, Input, Space } from 'antd';
-import TableHeading from '../Components/TableHeading';
-import boatImage from '../assets/images/boat_four.png'
-import HenceforthIcons from '../assets/icons/HenceforthIcons';
+import { Select, } from 'antd';
 import search from '../assets/icons/search.svg'
-import { useMatch } from 'react-router-dom';
+import { useLocation, useMatch, useNavigate } from 'react-router-dom';
+import Tablelayout from '../Components/inquiry/TableLayout';
+import henceforthApi from '../utils/henceforthApi';
+import { GlobalContext } from '../context/Provider';
+
+const InquiryPage = () => {
+    const match = useMatch('/inquiry/:type/:page')
+    const navigate = useNavigate()
+    const location = useLocation()
+    const uRLSearchParams = new URLSearchParams(location.search)
+    const { authState, Toast } = React.useContext(GlobalContext)
+    const [inqieryData, setInquiryData] = React.useState({
+        name: "",
+        boat_name: "",
+    })
+    const [loading, setLoading] = React.useState(false)
+    const [state, setState] = React.useState({
+        current_page: 0,
+        data: [],
+        per_page: 10
+    })
+
+    const onStatusChanged = () => {
+
+    }
 
 
-const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
-};
+    const filternavigate = () => {
+        navigate({ search: uRLSearchParams.toString() })
+    }
 
-const onChange = (key: string) => {
-    console.log(key);
-};
-const headings = [
-    "SR. NO.",
-    "BOAT NAME",
-    "ROUTE",
-    "PRICE",
-    "DATE",
-    "ENQUIRY VIA",
-    "STATUS",
-    "ACTION"
-]
-const items: TabsProps['items'] = [
-    {
-        key: '1',
-        label: `All`,
-        children: <TableHeading Array={headings}>
-            <tr>
-                <th>01</th>
-                <td>
-                    <div className="boats d-flex gap-2 align-items-center">
-                        <div className="boat-image">
-                            <img src={boatImage} alt="img" className='img-fluid' />
-                        </div>
-                        <p>Morning Panoramic</p>
-                    </div>
-                </td>
-                <td>Panorâmico Manhã - 9 às 13hrs (4 hours AM)</td>
-                <td>$30</td>
-                <td>24/06/2020</td>
-                <td>
-                    <div className="boats d-flex gap-2 align-items-center">
-                        <HenceforthIcons.Whatsapp />
-                        <p>Whatsapp</p>
-                    </div>
-                </td>
-                <td>Resolved</td>
-                <td>
-                    <button className='btn border-0 p-0'><HenceforthIcons.ThreeDot /></button>
-                </td>
-            </tr>
-            <tr>
-                <th>02</th>
-                <td>
-                    <div className="boats d-flex gap-2 align-items-center">
-                        <div className="boat-image">
-                            <img src={boatImage} alt="img" className='img-fluid' />
-                        </div>
-                        <p>Morning Panoramic</p>
-                    </div>
-                </td>
-                <td>Panorâmico Manhã - 9 às 13hrs (4 hours AM)</td>
-                <td>$30</td>
-                <td>24/06/2020</td>
-                <td>
-                    <div className="boats d-flex gap-2 align-items-center" >
-                        <button className=' d-flex gap-2 align-items-center btn p-0 border-0 text-dark' data-bs-toggle="modal" data-bs-target="#emailInquiryModal">
-                            <HenceforthIcons.Email />
-                            <span className='text-decoration-underline'>Email</span>
-                            <HenceforthIcons.ChevronRight />
-                        </button>
-                    </div>
-                </td>
-                <td>Resolved</td>
-                <td>
-                    <button className='btn border-0 p-0'><HenceforthIcons.ThreeDot /></button>
-                </td>
-            </tr>
-            <tr>
-                <th>03</th>
-                <td>
-                    <div className="boats d-flex gap-2 align-items-center">
-                        <div className="boat-image">
-                            <img src={boatImage} alt="img" className='img-fluid' />
-                        </div>
-                        <p>Morning Panoramic</p>
-                    </div>
-                </td>
-                <td>Panorâmico Manhã - 9 às 13hrs (4 hours AM)</td>
-                <td>$30</td>
-                <td>24/06/2020</td>
-                <td>
-                    <div className="boats d-flex gap-2 align-items-center">
-                        <HenceforthIcons.Whatsapp />
-                        <p>Whatsapp</p>
-                    </div>
-                </td>
-                <td>Open</td>
-                <td>
-                    <button className='btn border-0 p-0'>
-                        <HenceforthIcons.ThreeDot />
-                    </button>
-                </td>
-            </tr>
-        </TableHeading>,
-    },
-    {
-        key: '2',
-        label: `Resolved`,
-        children:
-            <TableHeading Array={headings}>
-                <tr>
-                    <th>01</th>
-                    <td>
-                        <div className="boats d-flex gap-2 align-items-center">
-                            <div className="boat-image">
-                                <img src={boatImage} alt="img" className='img-fluid' />
-                            </div>
-                            <p>Morning Panoramic</p>
-                        </div>
-                    </td>
-                    <td>Panorâmico Manhã - 9 às 13hrs (4 hours AM)</td>
-                    <td>$30</td>
-                    <td>24/06/2020</td>
-                    <td>
-                        <div className="boats d-flex gap-2 align-items-center">
-                            <HenceforthIcons.Whatsapp />
-                            <p>Whatsapp</p>
-                        </div>
-                    </td>
-                    <td>Resolved</td>
-                    <td>
-                        <button className='btn border-0 p-0'><HenceforthIcons.ThreeDot /></button>
-                    </td>
-                </tr>
-                <tr>
-                    <th>02</th>
-                    <td>
-                        <div className="boats d-flex gap-2 align-items-center">
-                            <div className="boat-image">
-                                <img src={boatImage} alt="img" className='img-fluid' />
-                            </div>
-                            <p>Morning Panoramic</p>
-                        </div>
-                    </td>
-                    <td>Panorâmico Manhã - 9 às 13hrs (4 hours AM)</td>
-                    <td>$30</td>
-                    <td>24/06/2020</td>
-                    <td>
-                        <div className="boats d-flex gap-2 align-items-center" >
-                            <button className=' d-flex gap-2 align-items-center btn p-0 border-0 text-dark' data-bs-toggle="modal" data-bs-target="#emailInquiryModal">
-                                <HenceforthIcons.Email />
-                                <span className='text-decoration-underline'>Email</span>
-                                <HenceforthIcons.ChevronRight />
-                            </button>
-                        </div>
-                    </td>
-                    <td>Resolved</td>
-                    <td>
-                        <button className='btn border-0 p-0'><HenceforthIcons.ThreeDot /></button>
-                    </td>
-                </tr>
-                <tr>
-                    <th>03</th>
-                    <td>
-                        <div className="boats d-flex gap-2 align-items-center">
-                            <div className="boat-image">
-                                <img src={boatImage} alt="img" className='img-fluid' />
-                            </div>
-                            <p>Morning Panoramic</p>
-                        </div>
-                    </td>
-                    <td>Panorâmico Manhã - 9 às 13hrs (4 hours AM)</td>
-                    <td>$30</td>
-                    <td>24/06/2020</td>
-                    <td>
-                        <div className="boats d-flex gap-2 align-items-center">
-                            <HenceforthIcons.Whatsapp />
-                            <p>Whatsapp</p>
-                        </div>
-                    </td>
-                    <td>Open</td>
-                    <td>
-                        <button className='btn border-0 p-0'>
-                            <HenceforthIcons.ThreeDot />
-                        </button>
-                    </td>
-                </tr>
-            </TableHeading>,
-    },
-    {
-        key: '3',
-        label: `Open`,
-        children: <TableHeading Array={headings}>
-            <tr>
-                <th>01</th>
-                <td>
-                    <div className="boats d-flex gap-2 align-items-center">
-                        <div className="boat-image">
-                            <img src={boatImage} alt="img" className='img-fluid' />
-                        </div>
-                        <p>Morning Panoramic</p>
-                    </div>
-                </td>
-                <td>Panorâmico Manhã - 9 às 13hrs (4 hours AM)</td>
-                <td>$30</td>
-                <td>24/06/2020</td>
-                <td>
-                    <div className="boats d-flex gap-2 align-items-center">
-                        <HenceforthIcons.Whatsapp />
-                        <p>Whatsapp</p>
-                    </div>
-                </td>
-                <td>Resolved</td>
-                <td>
-                    <button className='btn border-0 p-0'><HenceforthIcons.ThreeDot /></button>
-                </td>
-            </tr>
-            <tr>
-                <th>02</th>
-                <td>
-                    <div className="boats d-flex gap-2 align-items-center">
-                        <div className="boat-image">
-                            <img src={boatImage} alt="img" className='img-fluid' />
-                        </div>
-                        <p>Morning Panoramic</p>
-                    </div>
-                </td>
-                <td>Panorâmico Manhã - 9 às 13hrs (4 hours AM)</td>
-                <td>$30</td>
-                <td>24/06/2020</td>
-                <td>
-                    <div className="boats d-flex gap-2 align-items-center" >
-                        <button className=' d-flex gap-2 align-items-center btn p-0 border-0 text-dark' data-bs-toggle="modal" data-bs-target="#emailInquiryModal">
-                            <HenceforthIcons.Email />
-                            <span className='text-decoration-underline'>Email</span>
-                            <HenceforthIcons.ChevronRight />
-                        </button>
-                    </div>
-                </td>
-                <td>Resolved</td>
-                <td>
-                    <button className='btn border-0 p-0'><HenceforthIcons.ThreeDot /></button>
-                </td>
-            </tr>
-            <tr>
-                <th>03</th>
-                <td>
-                    <div className="boats d-flex gap-2 align-items-center">
-                        <div className="boat-image">
-                            <img src={boatImage} alt="img" className='img-fluid' />
-                        </div>
-                        <p>Morning Panoramic</p>
-                    </div>
-                </td>
-                <td>Panorâmico Manhã - 9 às 13hrs (4 hours AM)</td>
-                <td>$30</td>
-                <td>24/06/2020</td>
-                <td>
-                    <div className="boats d-flex gap-2 align-items-center">
-                        <HenceforthIcons.Whatsapp />
-                        <p>Whatsapp</p>
-                    </div>
-                </td>
-                <td>Open</td>
-                <td>
-                    <button className='btn border-0 p-0'>
-                        <HenceforthIcons.ThreeDot />
-                    </button>
-                </td>
-            </tr>
-        </TableHeading>,
-    },
-];
+    const handleSocialFilter = (value: string) => {
+        uRLSearchParams.set('social', value)
+        filternavigate()
+    };
 
-const Inquiry = () => {
-    const match=useMatch('/inquiry/:id')
+    const onChangeQuery = (path: string) => {
+        navigate(`/inquiry/${path}/1`)
+    };
+
+    const initialise = async () => {
+        try {
+            setLoading(true)
+            const apiRes = await henceforthApi.Inquiry.pagination()
+            setState(apiRes.data)
+
+        } catch (error) {
+            Toast.error(error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const items: TabsProps['items'] = [
+        {
+            key: 'all',
+            label: `All`,
+            children: <Tablelayout {...state} setInquiryData={setInquiryData} initialise={initialise} />
+        },
+        {
+            key: 'resolved',
+            label: `Resolved`,
+            children: <Tablelayout  {...state} setInquiryData={setInquiryData} initialise={initialise} />
+
+        },
+        {
+            key: 'open',
+            label: `Open`,
+            children: <Tablelayout  {...state} setInquiryData={setInquiryData} initialise={initialise} />
+        },
+    ];
+
+
+    React.useEffect(() => {
+        initialise()
+    }, [match?.params.type, match?.params.page, uRLSearchParams.get('social')])
+
     return (
-        <>
+        <Spin spinning={loading} >
             {/* inquiry section */}
             <section className='inquiry-section py-5'>
                 <div className="container">
@@ -293,7 +92,7 @@ const Inquiry = () => {
                                 <Select
                                     defaultValue="All"
                                     style={{ width: 150 }}
-                                    onChange={handleChange}
+                                    onChange={handleSocialFilter}
                                     options={[
                                         { value: 'All', label: 'All' },
                                         { value: 'Whatsapp', label: 'Whatsapp' },
@@ -311,7 +110,7 @@ const Inquiry = () => {
                             </div>
                         </div>
                         <div className="col-12">
-                            <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+                            <Tabs defaultActiveKey={match?.params.type} items={items} onChange={onChangeQuery} />
                         </div>
                     </div>
                 </div>
@@ -331,7 +130,7 @@ const Inquiry = () => {
                                 <div className="col-lg-6">
                                     <div className="inquiry-name">
                                         <h6 className='mb-2'>Name</h6>
-                                        <p>John Deo</p>
+                                        <p>{inqieryData?.boat_name}</p>
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
@@ -355,8 +154,8 @@ const Inquiry = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </Spin>
     )
 }
 
-export default Inquiry
+export default InquiryPage

@@ -13,8 +13,8 @@ const SafetyQuestions = () => {
     const { Toast } = React.useContext(GlobalContext)
 
     const [state, setState] = useState({
-        smoking_allowed: false,
-        pets_allowed: false,
+        smoking_allowed: 0 as number,
+        pets_allowed: 0 as number,
         rules: ""
 
     })
@@ -33,8 +33,9 @@ const SafetyQuestions = () => {
         e.preventDefault()
         let items = {
             safety_question: {
-                smoking_allowed: state.smoking_allowed,
-                pets_allowed: state.pets_allowed,
+                boat_id: match?.params.id,
+                smoking_allowed: Number(state.smoking_allowed),
+                pets_allowed: Number(state.pets_allowed),
                 rules: state.rules
             }
         }
@@ -45,8 +46,17 @@ const SafetyQuestions = () => {
                 pathname: `/boat/${match?.params.id}/price`,
                 search: uRLSearchParams.toString()
             })
-        } catch (error) {
+        } catch (error: any) {
+            if(error.response.body.message.rules) return Toast.error(error.response.body.message.rules[0])
+
         }
+    }
+    const onChangeHandle=async()=>{
+      try{
+
+      }catch{
+        
+      }
     }
 
     return (
@@ -61,14 +71,14 @@ const SafetyQuestions = () => {
                                 </div>
                                 <div className="col-11 col-lg-11 mb-4">
                                     <h4 className='mb-3'>Smoking Allowed</h4>
-                                    <div className="form-check mb-2" onChange={handleState}  >
-                                        <input className="form-check-input form-check-radio" type="radio"   name="smoking_allowed" id="radio1" />
+                                    <div className="form-check mb-2"   >
+                                        <input className="form-check-input form-check-radio" onChange={handleState} checked={state.smoking_allowed == 1} type="radio" value={1} name="smoking_allowed" id="radio1" />
                                         <label className="form-check-label" htmlFor="radio1">
                                             Yes
                                         </label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input form-check-radio" type="radio"   name="smoking_allowed" id="radio2" />
+                                        <input className="form-check-input form-check-radio" type="radio" onChange={handleState} checked={state.smoking_allowed == 0} value={0}  name="smoking_allowed" id="radio2" />
                                         <label className="form-check-label" htmlFor="radio2">
                                             No
                                         </label>
@@ -77,13 +87,13 @@ const SafetyQuestions = () => {
                                 <div className="col-11 col-lg-11 mb-4">
                                     <h4 className='mb-3'>Pets Allowed</h4>
                                     <div className="form-check mb-2">
-                                        <input className="form-check-input form-check-radio" type="radio" name="pets_allowed" id="radio4" />
+                                        <input className="form-check-input form-check-radio" type="radio" onChange={handleState} checked={state.pets_allowed == 1} value={1} name="pets_allowed" id="radio4" />
                                         <label className="form-check-label" htmlFor="radio4">
                                             Yes
                                         </label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input form-check-radio" type="radio" name="pets_allowed" id="radio5" />
+                                        <input className="form-check-input form-check-radio" type="radio" onChange={handleState} checked={state.pets_allowed == 0} value={0} name="pets_allowed" id="radio5" />
                                         <label className="form-check-label" htmlFor="radio5">
                                             No
                                         </label>
