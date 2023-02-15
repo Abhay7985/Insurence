@@ -93,33 +93,44 @@ const BoatDetails = () => {
                         <div className="col-12">
                             <div className="row gy-4 py-4">
                                 <div className="col-md-6 ps-0">
-                                    <div className="morning-banner">
-                                        <img src={BannerImage} alt="img" className='img-fluid' />
+                                    <div className="morning-banner cover-image">
+                                        <img src={`${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}`} alt="img" className='img-fluid' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="row gy-2">
-                                        <div className="col-6 ps-0">
-                                            <div className="morning-banner">
-                                                <img src={BannerImage} alt="img" className='img-fluid' />
+                                        {state?.photos?.map(() =>
+                                            <div className="col-6 ps-0">
+                                                <div className="morning-banner">
+                                                    <img src={BannerImage} alt="img" className='img-fluid' />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="col-6 ps-0">
-                                            <div className="morning-banner">
-                                                <img src={BannerImage} alt="img" className='img-fluid' />
-                                            </div>
-                                        </div>
-                                        <div className="col-6 ps-0">
-                                            <div className="morning-banner">
-                                                <img src={BannerImage} alt="img" className='img-fluid' />
-                                            </div>
-                                        </div>
-                                        <div className="col-6 ps-0">
-                                            <div className="morning-banner">
-                                                <img src={BannerImage} alt="img" className='img-fluid' />
-                                            </div>
-                                        </div>
+                                        )}
+
                                     </div>
+
+                                    {/* <div className="row gy-2">
+                                        <div className="col-6 ps-0">
+                                            <div className="morning-banner">
+                                                <img src={BannerImage} alt="img" className='img-fluid' />
+                                            </div>
+                                        </div>
+                                        <div className="col-6 ps-0">
+                                            <div className="morning-banner">
+                                                <img src={BannerImage} alt="img" className='img-fluid' />
+                                            </div>
+                                        </div>
+                                        <div className="col-6 ps-0">
+                                            <div className="morning-banner">
+                                                <img src={BannerImage} alt="img" className='img-fluid' />
+                                            </div>
+                                        </div>
+                                        <div className="col-6 ps-0">
+                                            <div className="morning-banner">
+                                                <img src={BannerImage} alt="img" className='img-fluid' />
+                                            </div>
+                                        </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -192,13 +203,13 @@ const BoatDetails = () => {
                                 {state?.prices?.map((e: any, index: number) => {
                                     return (
                                         <>
-                                            <div className="price-list py-3 border-bottom">
+                                            <div className="price-list py-3 border-bottom" key={e?.id}>
                                                 <div className="price-list-title d-flex justify-content-between mb-2">
                                                     <p>{e?.date}</p>
-                                                    <p className='fw-bold'>${e?.price} <span className='fw-normal fs-14 px-1'>or</span> {e?.installments}x in ${e?.installment_price}</p>
+                                                    <p className='fw-bold'>${e?.price}<span className='fw-normal fs-14 px-1'>or</span> {e?.installments}x in ${e?.installment_price}</p>
                                                 </div>
                                                 <div className="price-list-title d-flex justify-content-between">
-                                                    <p className='fs-14'>{e?.route} - 9 às 13hrs <br /> (4 hours AM)</p>
+                                                    <p className='fs-14'>{e?.route}</p>
                                                     <div className="choose-btn align-self-end">
                                                         <button className='btn btn-yellow fs-14 py-0'>Choose</button>
                                                     </div>

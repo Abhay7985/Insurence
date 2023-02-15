@@ -10,6 +10,7 @@ export interface UserInfoInterface {
     phone_no?: string,
     country_code?: string,
     email_verified?: boolean,
+    photo:any
 }
 
 export interface ApisListResponse {

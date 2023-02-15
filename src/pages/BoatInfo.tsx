@@ -5,6 +5,7 @@ import { Select, Space } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import henceforthApi from '../utils/henceforthApi';
 import { GlobalContext } from '../context/Provider';
+import { NumberValidation } from '../utils/henceforthValidations';
 
 const BoatInfo = () => {
     const { authState } = React.useContext(GlobalContext)
@@ -20,11 +21,11 @@ const BoatInfo = () => {
     const [boatSize, setBoatSize] = useState('')
     const [category_id, setCategoryId] = useState("")
     const [manufacturer_id, setManufacturerId] = useState("")
+    const { Toast } = React.useContext(GlobalContext)
 
 
     const onSubmit = async (e: any) => {
         henceforthApi.setToken(authState?.access_token)
-
         e.preventDefault()
         const uRLSearchParams = new URLSearchParams()
         uRLSearchParams.set("name", boatName)
@@ -33,10 +34,35 @@ const BoatInfo = () => {
         uRLSearchParams.set("category_id", category_id)
         uRLSearchParams.set("manufacturer_id", manufacturer_id)
 
-        navigate({
-            pathname: '/boat/passengers',
-            search: uRLSearchParams.toString()
-        })
+        try {
+            if (!boatName) {
+                Toast.error('Enter Boat Name')
+            } else if (!category_id) {
+                Toast.error("Enter Category")
+
+            }
+            else if (!manufacturer_id) {
+                Toast.error("Enter manufacturer")
+
+            }
+            else if (!boatSize) {
+                Toast.error("Enter Boat Size")
+
+            }
+            else if (!boatModel) {
+                Toast.error("Enter Boat Model")
+
+            } else {
+                navigate({
+                    pathname: '/boat/passengers',
+                    search: uRLSearchParams.toString()
+                })
+            }
+        } catch (error) {
+
+        }
+
+
 
     }
 
@@ -96,7 +122,7 @@ const BoatInfo = () => {
                                     <div className="mb-3">
                                         <label htmlFor="input3" className="form-label">Manufacturer</label>
                                         <div className="category">
-                                            <Space direction="vertical" style={{ width: '100%' }}>
+                                            <Space direction="vertical" style={{ width: '100%' }}  >
                                                 <Select
                                                     size={size}
                                                     defaultValue={manufacturer_id}
@@ -111,8 +137,7 @@ const BoatInfo = () => {
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-3">
                                         <label htmlFor="input4" className="form-label">Model</label>
-                                        <input type="text" className="form-control" id='input4' placeholder='Enter model' value={boatModel} onChange={(e) => setBoatModel(e.target.value)} />
-                                    </div>
+                                        <input type="text" className="form-control" id='input4' placeholder='Enter model' value={boatModel} onChange={(e) => setBoatModel(e.target.value)} />                                    </div>
                                 </div>
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-3">
@@ -128,7 +153,7 @@ const BoatInfo = () => {
                                             <button type='button' onClick={() => window.history.back()} className='btn back-btn border-0'>Back</button>
                                         </li>
                                         <li>
-                                            <button type='submit' className='btn btn-yellow px-3'>Next</button>
+                                            <button type='submit' className='btn btn-yellow px-3' >Next</button>
                                         </li>
                                     </ul>
                                 </div>

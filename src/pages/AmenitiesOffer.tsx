@@ -53,7 +53,9 @@ const AmenitiesOffer = () => {
                 search: uRLSearchParams.toString()
             })
 
-        } catch (error) {
+        } catch (error:any) {
+            if(error.response.body.message.amenities) return Toast.error(error.response.body.message.amenities[0])
+
         }
     }
 

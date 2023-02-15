@@ -1,4 +1,4 @@
-import { Input } from 'antd';
+import { Input, Spin } from 'antd';
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useMatch } from 'react-router-dom';
 import HenceforthIcons from '../assets/icons/HenceforthIcons'
@@ -10,14 +10,14 @@ import loginSuccess from '../context/actions/auth/loginSuccess';
 
 interface profile {
   name: string,
-  image: any,
+  photo: any,
   email: string
 }
 
 const Profile = () => {
   const { authState, loading, setLoading, authDispatch } = React.useContext(GlobalContext)
   henceforthApi.setToken(authState?.access_token)
-  const match = useMatch('/profile')
+
   console.log(authState?.access_token)
   const [state, setState] = useState({
     name: authState.name,
@@ -25,9 +25,7 @@ const Profile = () => {
     image: authState.image
   })
   const [show, setShow] = useState(false)
-  const [file, setFile] = useState(null)
   const [emailShow, setEmailShow] = useState(false)
-  const fileRef: any = useRef();
   const fileupload = async (file: any) => {
     try {
       const apiRes = await henceforthApi.Common.do_spaces_file_upload("image", file)
@@ -48,7 +46,7 @@ const Profile = () => {
         photo: image
       }
       let apiRes = await henceforthApi.Auth.editProfile(item)
-      loginSuccess(apiRes.data)(authDispatch)
+      loginSuccess(apiRes.update)(authDispatch)
     } catch (error) {
       console.log(error)
     } finally {
@@ -121,8 +119,7 @@ const Profile = () => {
   }
 
   return (
-    <>
-      {/* profile-section */}
+    <Spin spinning={loading} >
       <section className='profile-section py-5'>
         <div className="container">
           <div className="row gy-4 justify-content-between">
@@ -195,7 +192,7 @@ const Profile = () => {
           </div>
         </div>
       </section>
-    </>
+    </Spin>
   )
 }
 

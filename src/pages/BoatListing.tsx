@@ -1,7 +1,7 @@
 import addIcon from '../assets/icons/plus_white.svg'
 import search from '../assets/icons/search.svg'
 import boatImage from '../assets/images/boat_four.png'
-import { Badge, Pagination, Select, Space } from 'antd';
+import { Badge, Pagination, Select, Space, Spin } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import henceforthApi from '../utils/henceforthApi';
 import React, { useEffect, useState } from 'react';
@@ -24,6 +24,7 @@ const BoatListing = () => {
         total: 0,
         per_page: 0
     })
+    const [loading, setLoading] = React.useState(false)
 
     const handleChange = (value: string) => {
         if (value) {
@@ -48,6 +49,7 @@ const BoatListing = () => {
     const boatListing = async () => {
         henceforthApi.setToken(authState?.access_token)
         try {
+            setLoading(true)
             let res = await henceforthApi.Boat.getBoatListing(
                 urlSearchParams.toString()
             )
@@ -55,6 +57,8 @@ const BoatListing = () => {
             console.log(res);
         } catch (error) {
             console.log(error);
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -79,8 +83,7 @@ const BoatListing = () => {
     }
 
     return (
-        <>
-            {/* Boat-listing */}
+        <Spin spinning={loading} >
             <section className="boat-listing py-5">
                 <div className="container">
                     <div className="row gy-4">
@@ -108,14 +111,14 @@ const BoatListing = () => {
                                 <div className="add-boat-btn">
                                     <Select
                                         defaultValue="Listing status"
-                                        value={urlSearchParams.has("status") ? urlSearchParams.get("status") : "0"}
+                                        value={urlSearchParams.has("status") ? urlSearchParams.get("status") : ""}
                                         style={{ width: 150 }}
                                         onChange={handleChange}
                                         options={[
-                                            { value: '0', label: 'All' },
-                                            { value: '1', label: 'Listed' },
-                                            { value: '2', label: 'Unlisted' },
-                                            { value: '3', label: 'Draft' },
+                                            { value: '', label: 'All' },
+                                            { value: 'listed', label: 'Listed' },
+                                            { value: 'unlisted', label: 'Unlisted' },
+                                            { value: 'draft', label: 'Draft' },
                                         ]}
                                     />
                                 </div>
@@ -189,7 +192,7 @@ const BoatListing = () => {
                 </div>
 
             </section>
-        </>
+        </Spin>
     )
 }
 
