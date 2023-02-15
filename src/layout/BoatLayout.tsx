@@ -7,7 +7,7 @@ const BoatLayout = () => {
             <header className="sticky-top" style={{ zIndex: 10 }}>
                 <Header />
             </header>
-            <main><Outlet /></main>
+            <main className="boat-main-layout h-100"><Outlet /></main>
         </div>
     )
 }

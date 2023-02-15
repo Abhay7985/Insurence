@@ -114,8 +114,8 @@ const EditImage = () => {
                                 </div>
                                 <div className="col-12">
                                     <div className="upload-image">
-                                        <input type="file" className='form-control zIndex-5 position-relative' id='upload-icon' onChange={(e) => onSelectFiles(e.target.files)} multiple />
-                                        <label htmlFor="upload-icon">
+                                        <input type="file" className='form-control' id='upload-icon' onChange={(e) => onSelectFiles(e.target.files)} multiple />
+                                        <label>
                                             <div className="upload-icon text-center mb-2">
                                                 <img src={uploadIcon} alt="upload" className='img-fluid' />
                                             </div>

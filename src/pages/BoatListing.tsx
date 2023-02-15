@@ -101,12 +101,12 @@ const BoatListing = () => {
                             </div>
                         </div>
                         <div className="col-12">
-                            <div className="boat-listing-header d-flex justify-content-between align-items-center">
-                                <div className="input-group mb-3 form-control p-0 rounded-pill w-auto">
-                                    <span className="input-group-text bg-transparent border-0" id="basic-addon1">
+                            <div className="boat-listing-header d-flex justify-content-between">
+                                <div className="search-input mb-3 rounded-pill position-relative">
+                                    <span className="search-icon border-0" id="basic-addon1">
                                         <img src={search} alt="icon" />
                                     </span>
-                                    <input type="text" className="form-control border-0 ps-0 rounded-pill" name='search' placeholder="Search..." value={urlSearchParams.get('search') as string} onChange={(e: any) => handleSearch(e.target.name, e.target.value)} />
+                                    <input type="text" className="form-control rounded-pill px-5" name='search' placeholder="Search..." value={urlSearchParams.get('search') as string} onChange={(e: any) => handleSearch(e.target.name, e.target.value)} />
                                 </div>
                                 <div className="add-boat-btn">
                                     <Select
@@ -143,7 +143,7 @@ const BoatListing = () => {
                                         <tr>
                                             <th scope="row">{Number(urlSearchParams.get("page")) == 0 ? index + 1 : (Number(urlSearchParams.get("page")) - 1) * state.per_page + (index + 1)}</th>
                                             <td >
-                                                <div className="boats d-flex gap-2 align-items-center" key={index}>
+                                                <div className="boats d-flex gap-3 align-items-center" key={index}>
                                                     <div className="boat-image">
                                                         {/* <img src={e.image ? `${""}` : boatImage} alt="img" className='img-fluid' /> */}
                                                         <img src={boatImage} alt="img" className='img-fluid' />
@@ -152,7 +152,7 @@ const BoatListing = () => {
                                                 </div>
                                             </td>
                                             <td>
-                                                <div className="status d-flex align-items-center">
+                                                <div className="status d-flex align-items-center gap-1">
                                                     <div className={`status-dot bg-${dotColor.find(res => res.status == e?.status)?.status}`}></div>
                                                     {/* <Badge color={dotColor.find(res => res.status == e?.status)?.color} /> */}
                                                     <div className="ms-1">

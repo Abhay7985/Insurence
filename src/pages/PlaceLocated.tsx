@@ -1,8 +1,8 @@
 import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
 import bannerImage from '../assets/images/image_two.png';
 import locationIcon from '../assets/icons/current_location.svg';
-import React, { Fragment, useState } from "react";
-import { GlobalContext } from "../context/Provider";
+import React, { Fragment, useRef, useState } from "react";
+import { GlobalContext, NEXT_PUBLIC_GOOGLE_API_KEY } from "../context/Provider";
 import { Checkbox, Select, Space, Spin, Switch } from "antd";
 import BackNextLayout from "../Components/boat/BackNextLayout";
 import henceforthApi from "../utils/henceforthApi";
@@ -14,6 +14,7 @@ function PlaceLocated() {
     const location = useLocation()
     const match = useMatch(`boat/:id/place`)
     const uRLSearchParams = new URLSearchParams(location.search)
+    const placeInputRef = useRef(null as any);
 
     const { Toast } = React.useContext(GlobalContext)
     const [inputFocued, setInputFocused] = React.useState(false)
@@ -96,12 +97,12 @@ function PlaceLocated() {
     };
 
     const handleChange = (value: string) => {
-        // console.log(`selected ${value}`);
         setState({
             ...state,
             country: value
         })
     };
+
 
     const requestCurrenctLocation = () => {
         console.log('requestCurrenctLocation called');
@@ -128,8 +129,48 @@ function PlaceLocated() {
         }
     }
 
-    console.log(state);
+    function loadGoogleMapScript(callback: any) {
+        if (
+            typeof (window as any).google === "object" &&
+            typeof (window as any).google.maps === "object"
+        ) {
+            callback();
+        } else {
+            const googleMapScript = document.createElement("script");
+            googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=${NEXT_PUBLIC_GOOGLE_API_KEY}&libraries=places`;
+            window.document.body.appendChild(googleMapScript);
+            googleMapScript.addEventListener("load", callback);
+        }
+    }
+    const initPlaceAPI = () => {
+        loadGoogleMapScript(() => {
+            if (placeInputRef) {
+                let autocomplete = new (window as any).google.maps.places.Autocomplete(
+                    placeInputRef.current
+                );
+                new (window as any).google.maps.event.addListener(
+                    autocomplete,
+                    "place_changed",
+                    () => {
+                        let place = autocomplete.getPlace();
+                        let formatAddress = place.formatted_address
+                        const address = place.address_components
+                        let latitude = place.geometry?.location.lat();
+                        let longitude = place.geometry?.location.lng();
 
+                        setForm({
+                            ...form,
+                            latitude,
+                            longitude
+                        })
+                    }
+                );
+            }
+
+        });
+    };
+
+    React.useEffect(initPlaceAPI, []);
 
     return (
         <Spin spinning={loading} >
@@ -144,7 +185,7 @@ function PlaceLocated() {
                                     </div>
                                     {form.latitude == 0 ? <Fragment>
                                         <div className="col-11 col-lg-11">
-                                            <input type="text" className="form-control" placeholder="Enter your address" onFocus={() => setInputFocused(true)} onBlur={() => setTimeout(() => setInputFocused(false), 100)} />
+                                            <input type="text" ref={placeInputRef} className="form-control" placeholder="Enter your address" onFocus={() => setInputFocused(true)} onBlur={() => setTimeout(() => setInputFocused(false), 100)} />
 
                                             {inputFocued && <div className="location border mt-1 d-flex gap-3 align-items-center nav-link" onClick={requestCurrenctLocation}>
                                                 <div className="location-icon">
@@ -214,9 +255,8 @@ function PlaceLocated() {
                                         </div>
                                     </Fragment>}
                                 </div>
-                                <BackNextLayout />
                             </div>
-
+                            <BackNextLayout />
                         </div>
                         <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
                             <div className="banner-image border">
