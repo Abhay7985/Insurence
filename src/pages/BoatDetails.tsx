@@ -91,7 +91,7 @@ const BoatDetails = () => {
                             </div>
                         </div>
                         <div className="col-12">
-                            <div className="row gy-4 py-4">
+                            <div className="row gy-4 py-4 ms-0">
                                 <div className="col-md-6 ps-0">
                                     <div className="morning-banner">
                                         <img src={`${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}`} alt="img" className='img-fluid' />
@@ -101,11 +101,6 @@ const BoatDetails = () => {
                                     <div className="row gy-2 h-100">
                                         {state?.photos?.map(() =>
                                         <>
-                                            <div className="col-6 ps-0">
-                                                <div className="boat-group-image h-100">
-                                                    <img src={BannerImage} alt="img" className='img-fluid w-100 h-100' />
-                                                </div>
-                                            </div>
                                             <div className="col-6 ps-0">
                                                 <div className="boat-group-image h-100">
                                                     <img src={BannerImage} alt="img" className='img-fluid w-100 h-100' />
@@ -152,7 +147,7 @@ const BoatDetails = () => {
                                     <p>{state.passenger_day} passengers day • {state.passenger_night} passengers overnight • {state.bedrooms} rooms • {state.bathrooms} bathrooms</p>
                                 </div>
                                 {/* aminities */}
-                                <div className="aminities border-bottom py-4">
+                                <div className="aminities border-bottom py-3 py-sm-4">
                                     <h4 className='mb-2'>Amenities</h4>
                                     <div className="aminities-list d-flex gap-5">
                                         <ul>
@@ -161,7 +156,7 @@ const BoatDetails = () => {
                                     </div>
                                 </div>
                                 {/* Itineraries rules */}
-                                <div className="Itineraries-rules border-bottom py-4">
+                                <div className="Itineraries-rules border-bottom py-3 py-sm-4">
                                     <h4 className='mb-2'>Itineraries rules</h4>
                                     <ul>
                                         <li className='d-flex gap-3 align-items-center'>

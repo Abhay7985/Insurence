@@ -28,7 +28,7 @@ const ChangePassword = () => {
     return (
         <>
             {/* Change password section */}
-            <section className="change-password py-5">
+            <section className="change-password py-5 px-2 px-sm-0">
                 <div className="container">
                     <div className="row gy-4">
                         <div className="col-12 mb-2">

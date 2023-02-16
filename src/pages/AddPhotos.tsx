@@ -1,4 +1,4 @@
-import bannerImage from '../assets/images/image_one.png';
+import bannerImage from '../assets/images/image_four.png';
 import uploadIcon from '../assets/icons/upload_photo.svg';
 import BoatPhotoView from '../Components/row/BoatPhotoView';
 import BackNextLayout from '../Components/boat/BackNextLayout';
@@ -73,15 +73,15 @@ const AddPhotos = () => {
     }
 
     return (
-        <Spin spinning={spinning}>
-            <section className="Confirm-address-section h-100">
+        <section className="Confirm-address-section h-100">
+            <Spin spinning={spinning}>
                 <div className="container-fluid h-100">
                     <form className="row h-100" onSubmit={onSubmit}>
                         <div className="col-lg-6">
                             <div className="banner-content h-100 d-flex flex-column ">
                                 <div className="row justify-content-center justify-content-lg-end gy-4 pb-5">
-                                    <div className="col-11 col-lg-11 mb-4">
-                                        <h3 className='banner-title pb-3'>Add photos to your listing <span className='fw-normal'>(Choose at least 5 photos)</span></h3>
+                                    <div className="col-11 col-lg-11 mb-2 mb-sm-4">
+                                        <h3 className='banner-title pb-3 d-flex gap-2 flex-wrap'>Add photos to your listing <span className='fw-normal'>(Choose at least 5 photos)</span></h3>
                                         <p>Upload at least one photo to publish your listing. We strongly suggest adding multiple photos to attract attention to your listing. Do not include images of your boat name or contact information.</p>
                                     </div>
                                     <div className="col-11 col-lg-11">
@@ -116,8 +116,8 @@ const AddPhotos = () => {
                         </div>
                     </form>
                 </div>
-            </section>
-        </Spin>
+            </Spin>
+        </section>
     )
 }
 

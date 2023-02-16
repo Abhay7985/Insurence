@@ -165,7 +165,7 @@ const EditBoatDetails = () => {
             <section className='morning-panormic-listing py-5' >
                 <div className="container">
                     <div className="row">
-                        <div className="col-12">
+                        <div className="col-12 mb-5">
                             <div className="title d-flex justify-content-between">
                                 <h2>Morning Panoramic</h2>
                                 <div className="list-btn d-flex gap-4">

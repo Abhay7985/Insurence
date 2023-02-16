@@ -81,12 +81,12 @@ const EditAmenities = () => {
     }, [])
 
     return (
-        <Spin spinning={loading} >
-            <section className="edit-amenities py-5">
-                <div className="container">
-                    <form className="row" onSubmit={onSubmit}>
+        <Spin spinning={loading} className='h-100'>
+            <section className="edit-amenities py-5 h-100">
+                <div className="container h-100">
+                    <form className="row h-100" onSubmit={onSubmit}>
                         <div className="col-md-6">
-                            <div className="row gy-4">
+                            <div className="row gy-4 h-100">
                                 <div className="col-12" onClick={() => window?.history.back()}>
                                     <HenceforthIcons.LeftArrow />
                                 </div>
