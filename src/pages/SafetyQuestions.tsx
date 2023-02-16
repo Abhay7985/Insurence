@@ -99,8 +99,8 @@ const SafetyQuestions = () => {
                                         <h4 className='mb-2'>Rules and Security</h4>
                                         <p className='mb-3'>Set additional and vessel safety rules.</p>
                                         <div className="form-floating">
-                                            <textarea className="form-control text-area" placeholder="Type here..." id="floatingTextarea" onChange={(e: any) => setState({ ...state, rules: e.target.value })}></textarea>
-                                            <label htmlFor="floatingTextarea">Type here...</label>
+                                            <textarea className="text-area" placeholder="Type here"  onChange={(e: any) => setState({ ...state, rules: e.target.value })}></textarea>
+                                            {/* <label htmlFor="floatingTextarea">Type here...</label> */}
                                         </div>
                                     </div>
                                 </div>

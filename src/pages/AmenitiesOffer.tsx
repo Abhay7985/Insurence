@@ -91,8 +91,8 @@ const AmenitiesOffer = () => {
                                     {amenitiesOffers.map((e: any, index: number) =>
                                         <div className="col-12 col-lg-11" key={index}>
                                             <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value={e?.id} onChange={(e: any) => handleChecked(e)} id="check1" />
-                                                <label className="form-check-label" htmlFor="check1">
+                                                <input className="form-check-input" type="checkbox" value={e?.id} onChange={(e: any) => handleChecked(e)} id={`check1${index}`} />
+                                                <label className="form-check-label" htmlFor={`check1${index}`}>
                                                     {e?.amenity}
                                                 </label>
                                             </div>

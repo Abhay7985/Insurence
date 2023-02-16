@@ -76,8 +76,8 @@ function PlaceLocated() {
 
         } catch (error: any) {
             // Toast.error(error)
-
-            if (error.response.body.message.address1) return Toast.error(error.response.body.message.address1[0])
+             
+            if (error.response.body.message.address1) return Toast.error(`Please Enter Street`)
             if (error.response.body.message.city) return Toast.error(error.response.body.message.city[0])
             if (error.response.body.message.country) return Toast.error(error.response.body.message.country[0])
             if (error.response.body.message.postcode) return Toast.error(error.response.body.message.postcode[0])

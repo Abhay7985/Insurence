@@ -78,7 +78,7 @@ const BoatDetails = () => {
                         <div className="col-12">
                             <div className="boat-header d-flex justify-content-between">
                                 <div className="title">
-                                    <div className="left-arrow">
+                                    <div className="left-arrow" role="button" onClick={()=>window.history.back()}>
                                         <HenceforthIcons.DetailBack />
                                     </div>
                                     <h3 className='mt-4 mb-2'>{state.name}</h3>

@@ -6,6 +6,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import henceforthApi from '../utils/henceforthApi';
 import { GlobalContext } from '../context/Provider';
 import { NumberValidation } from '../utils/henceforthValidations';
+import { Spin } from 'antd';
+import BackNextLayout from '../Components/boat/BackNextLayout';
 
 const BoatInfo = () => {
     const { authState } = React.useContext(GlobalContext)
@@ -22,6 +24,7 @@ const BoatInfo = () => {
     const [category_id, setCategoryId] = useState("")
     const [manufacturer_id, setManufacturerId] = useState("")
     const { Toast } = React.useContext(GlobalContext)
+    const [loading, setLoading] = React.useState(false)
 
 
     const onSubmit = async (e: any) => {
@@ -33,7 +36,7 @@ const BoatInfo = () => {
         uRLSearchParams.set("size", boatSize)
         uRLSearchParams.set("category_id", category_id)
         uRLSearchParams.set("manufacturer_id", manufacturer_id)
-
+        
         try {
             if (!boatName) {
                 Toast.error('Enter Boat Name')
@@ -60,7 +63,7 @@ const BoatInfo = () => {
             }
         } catch (error) {
 
-        }
+        } 
 
 
 
@@ -87,65 +90,65 @@ const BoatInfo = () => {
 
     return (
         // boat-details
-        <section className="boat-details-section h-100">
-            <div className="container-fluid h-100">
-                <form className="row h-100" onSubmit={onSubmit}>
-                    <div className="col-lg-6">
-                        <div className="banner-content h-100 d-flex flex-column justify-content-between">
-                            <div className="row justify-content-center justify-content-lg-end h-100">
-                                <div className="col-11 col-lg-11">
-                                    <h3 className='banner-title'>Please enter the details of the boat</h3>
-                                </div>
-                                <div className="col-11 col-lg-11">
-                                    <div className="mb-2 mb-sm-3">
-                                        <label htmlFor="input1" className="form-label">Boat Name</label>
-                                        <input type="text" className="form-control" id='input1' placeholder='Enter boat name' value={boatName} onChange={(e) => setBoatName(e.target.value)} />
+            <section className="boat-details-section h-100">
+                <div className="container-fluid h-100">
+                    <form className="row h-100" onSubmit={onSubmit}>
+                        <div className="col-lg-6">
+                            <div className="banner-content h-100 d-flex flex-column justify-content-between">
+                                <div className="row justify-content-center justify-content-lg-end h-100">
+                                    <div className="col-11 col-lg-11">
+                                        <h3 className='banner-title'>Please enter the details of the boat</h3>
                                     </div>
-                                </div>
-                                <div className="col-11 col-lg-11">
-                                    <div className="mb-2 mb-sm-3">
-                                        <label htmlFor="input2" className="form-label">Category</label>
-                                        <div className="category">
-                                            <Space direction="vertical" style={{ width: '100%' }}>
-                                                <Select
-                                                    size={size}
-                                                    defaultValue={category_id}
-                                                    onChange={setCategoryId}
-                                                    style={{ width: '100%' }}
-                                                    options={[{ value: "", label: "Select" }, ...state?.category?.map((res: any) => { return { value: res?.id, label: res.category } })]}
-                                                />
-                                            </Space>
+                                    <div className="col-11 col-lg-11">
+                                        <div className="mb-2 mb-sm-3">
+                                            <label htmlFor="input1" className="form-label">Boat Name</label>
+                                            <input type="text" className="form-control" id='input1' placeholder='Enter boat name' value={boatName} onChange={(e) => setBoatName(e.target.value)} />
                                         </div>
                                     </div>
-                                </div>
-                                <div className="col-11 col-lg-11">
-                                    <div className="mb-2 mb-sm-3">
-                                        <label htmlFor="input3" className="form-label">Manufacturer</label>
-                                        <div className="category">
-                                            <Space direction="vertical" style={{ width: '100%' }}  >
-                                                <Select
-                                                    size={size}
-                                                    defaultValue={manufacturer_id}
-                                                    onChange={setManufacturerId}
-                                                    style={{ width: '100%' }}
-                                                    options={[{ value: "", label: "Select" }, ...state?.manufacturer?.map((res: any) => { return { value: res?.id, label: res.manufacturer } })]}
-                                                />
-                                            </Space>
+                                    <div className="col-11 col-lg-11">
+                                        <div className="mb-2 mb-sm-3">
+                                            <label htmlFor="input2" className="form-label">Category</label>
+                                            <div className="category">
+                                                <Space direction="vertical" style={{ width: '100%' }}>
+                                                    <Select
+                                                        size={size}
+                                                        defaultValue={category_id}
+                                                        onChange={setCategoryId}
+                                                        style={{ width: '100%' }}
+                                                        options={[{ value: "", label: "Select" }, ...state?.category?.map((res: any) => { return { value: res?.id, label: res.category } })]}
+                                                    />
+                                                </Space>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="col-11 col-lg-11">
-                                    <div className="mb-2 mb-sm-3">
-                                        <label htmlFor="input4" className="form-label">Model</label>
-                                        <input type="text" className="form-control" id='input4' placeholder='Enter model' value={boatModel} onChange={(e) => setBoatModel(e.target.value)} />                                    </div>
-                                </div>
-                                <div className="col-11 col-lg-11">
-                                    <div className="mb-2 mb-sm-3">
-                                        <label htmlFor="input5" className="form-label">Size</label>
-                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) => setBoatSize(e.target.value)} />
+                                    <div className="col-11 col-lg-11">
+                                        <div className="mb-2 mb-sm-3">
+                                            <label htmlFor="input3" className="form-label">Manufacturer</label>
+                                            <div className="category">
+                                                <Space direction="vertical" style={{ width: '100%' }}  >
+                                                    <Select
+                                                        size={size}
+                                                        defaultValue={manufacturer_id}
+                                                        onChange={setManufacturerId}
+                                                        style={{ width: '100%' }}
+                                                        options={[{ value: "", label: "Select" }, ...state?.manufacturer?.map((res: any) => { return { value: res?.id, label: res.manufacturer } })]}
+                                                    />
+                                                </Space>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="col-11 col-lg-11">
+                                    <div className="col-11 col-lg-11">
+                                        <div className="mb-2 mb-sm-3">
+                                            <label htmlFor="input4" className="form-label">Model</label>
+                                            <input type="text" className="form-control" id='input4' placeholder='Enter model' value={boatModel} onChange={(e) => setBoatModel(e.target.value)} />                                    </div>
+                                    </div>
+                                    <div className="col-11 col-lg-11">
+                                        <div className="mb-2 mb-sm-3">
+                                            <label htmlFor="input5" className="form-label">Size</label>
+                                            <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) => setBoatSize(e.target.value)} />
+                                        </div>
+                                    </div>
+                                    {/* <div className="col-11 col-lg-11">
                                     <div className="mb-2 mb-sm-3">
                                         <label htmlFor="input4" className="form-label">Model</label>
                                         <input type="text" className="form-control" id='input4' placeholder='Enter model' value={boatModel} onChange={(e) => setBoatModel(e.target.value)} />
@@ -168,34 +171,19 @@ const BoatInfo = () => {
                                         <label htmlFor="input5" className="form-label">Size</label>
                                         <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) => setBoatSize(e.target.value)} />
                                     </div>
+                                </div> */}
                                 </div>
                             </div>
+                            <BackNextLayout />
                         </div>
-
-                        <div className="col-md-6 sticky-bottom mt-auto bg-white ">
-                            <div className="row banner-footer border-top  justify-content-end">
-                                <div className="col-11 col-lg-11">
-                                    <ul className='d-flex justify-content-between'>
-                                        <li>
-                                            <button type='button' onClick={() => window.history.back()} className='btn back-btn border-0'>Back</button>
-                                        </li>
-                                        <li>
-                                            <button type='submit' className='btn btn-yellow px-3' >Next</button>
-                                        </li>
-                                    </ul>
-                                </div>
+                        <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
+                            <div className="banner-image border">
+                                <img src={bannerImage} alt="" />
                             </div>
                         </div>
-
-                    </div>
-                    <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
-                        <div className="banner-image border">
-                            <img src={bannerImage} alt="" />
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </section>
+                    </form>
+                </div>
+            </section>
     )
 }
 
