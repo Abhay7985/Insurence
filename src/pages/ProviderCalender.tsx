@@ -11,14 +11,14 @@ const ProviderCalender = () => {
   return (
     <>
       {/* Calender-section */}
-      <section className="calender-section">
+      <section className="calender-section px-3">
         <div className="container-fluid">
           <div className="row bg-white">
             {/* calender */}
             <div className="col-lg-9 px-0 boat-calender py-5">
               <div className="row">
                 <div className="col-12">
-                  <div className="select-date px-sm-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                  <div className="select-date px-sm-4 d-flex justify-content-between align-items-center flex-wrap flex-md-nowrap gap-2">
                     <Select
                       defaultValue="Morning Panoramic"
                       style={{ width: '100%' }}

@@ -12,7 +12,7 @@
 .banner-title {
     padding-block: 60px 42px;
   @media (max-width:575px) {
-    padding-block: 40px 32px;
+    padding-block: 30px 15px;
   }
 }
 
@@ -46,6 +46,9 @@
 
 .banner-footer {
     padding: 20px 0;
+    @media (max-width:991px) {
+        padding: 20px 15px;
+    }
 
     .btn {
         font-weight: 600;
@@ -216,6 +219,7 @@
     }
     @media (max-width:767px) {
         border-radius: 10px;
+        height: 210px;
     }
 }
 .boat-calender{
@@ -272,7 +276,11 @@
 }
 
 .table {
-
+    p{
+        @media (max-width:575px) {
+            font-size: 14px;
+        }
+    }
     th,
     td {
         padding: 15px;
@@ -280,7 +288,7 @@
         white-space: nowrap;
         font-family: 'Nunito', sans-serif !important;
 
-        ::first-letter {
+        &::first-letter {
             text-transform: capitalize;
         }
     }
@@ -292,6 +300,9 @@
 
     td {
         font-size: 16px;
+        @media (max-width:575px) {
+            font-size: 14px;
+        }
     }
 
     .thead {
@@ -305,6 +316,10 @@
     overflow: hidden;
     border-radius: $radius;
 
+    @media (max-width:575px) {
+        height: 40px;
+        width: 60px;
+    }
     img {
         height: 100%;
         width: 100%;
@@ -354,6 +369,9 @@
 .user-profile {
     border: 1px solid $light-gray;
     padding-block: 41px;
+    @media (max-width:575px) {
+        padding-block: 20px;
+    }
 
     .profile-image {
         height: 120px;
@@ -361,7 +379,9 @@
         border-radius: 50%;
         overflow: hidden;
         margin-bottom: 24px;
-
+        @media (max-width:575px) {
+            margin-bottom: 15px;
+        }
         img {
             height: 100%;
             width: 100%;
@@ -524,13 +544,10 @@
 
 .ant-select-single.ant-select-show-arrow .ant-select-selection-item {
     font-size: 16px;
-    color: #707579;
-    font-weight: normal;
+    color: #707579 ;
+    font-weight: 500;
 }
 
-.ant-select-single.ant-select-show-arrow .ant-select-selection-item {
-    color: $light-black !important;
-}
 
 .ant-dropdown-arrow {
     display: none !important;
@@ -617,3 +634,15 @@
 .ant-float-btn-default{
     z-index: 1111;
 }
+
+.ant-spin-nested-loading{
+    height: 100% ;
+}
+.ant-spin-container{
+    height: 100%;
+}
+.ant-badge-status-text{
+    text-transform: capitalize !important;
+    font-weight: 600;
+    font-size: 16px;
+} 

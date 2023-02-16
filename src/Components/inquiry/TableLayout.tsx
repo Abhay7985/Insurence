@@ -125,7 +125,7 @@ const Tablelayout = (props: any) => {
     ]
 
 
-    return <Spin spinning={loading}>
+    return <Spin spinning={loading} className='h-100'>
         <TableHeading Array={headings}>
             {props?.data?.map((res: any, index: number) =>
                 <tr>
@@ -145,7 +145,7 @@ const Tablelayout = (props: any) => {
                         <div className="boats d-flex gap-2 align-items-center">
                             {res.inquiry_mode == "whatsapp" ? <Fragment>
                                 <HenceforthIcons.Whatsapp />
-                                <span className='text-decoration-underline'>{res.inquiry_mode}</span>
+                                <span>{res.inquiry_mode}</span>
                             </Fragment> :
                                 <button className=' d-flex gap-2 align-items-center btn p-0 border-0 text-dark' data-bs-toggle="modal" data-bs-target="#emailInquiryModal" onMouseOver={() => props.setInquiryData(res)}>
                                     <HenceforthIcons.Email />

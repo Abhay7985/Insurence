@@ -1,7 +1,7 @@
 import { Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useMatch, useNavigate } from 'react-router-dom';
-import bannerImage from '../assets/images/image_one.png';
+import bannerImage from '../assets/images/image_six.png';
 import BackNextLayout from '../Components/boat/BackNextLayout';
 import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
@@ -106,7 +106,7 @@ const BoatPrice = () => {
                     <form className="row h-100" onSubmit={onSubmit}>
                         <div className="col-lg-6">
                             <div className="banner-content h-100 d-flex flex-column ">
-                                <div className="row justify-content-center justify-content-lg-end gy-4 pb-5">
+                                <div className="row justify-content-center justify-content-lg-end gy-3 gy-sm-4 pb-5">
                                     <div className="col-11 col-lg-11">
                                         <h3 className='banner-title pb-3'>Price your boat.</h3>
                                     </div>
@@ -140,7 +140,6 @@ const BoatPrice = () => {
                                 </div>
                                 <BackNextLayout buttonName="Finish" />
                             </div>
-
                         </div>
                         <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
                             <div className="banner-image border">

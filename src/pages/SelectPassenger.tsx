@@ -161,7 +161,7 @@ const SelectPassenger = () => {
                             </div>
 
                         </div>
-                        <div className="col-lg-6 pe-lg-0">
+                        <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
                             <div className="banner-image border">
                                 <img src={bannerImage} alt="" />
                             </div>
