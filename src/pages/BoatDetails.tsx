@@ -7,11 +7,18 @@ import { DatePickerProps, Spin } from 'antd';
 import { DatePicker, Space } from 'antd';
 import henceforthApi from '../utils/henceforthApi';
 import { Link, useMatch } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { GlobalContext } from '../context/Provider';
 import HenceforthIcons from '../assets/icons/HenceforthIcons';
+import HenceforthGoogleMap from '../utils/henceforthGoogleMap';
 
-
+const defaultProps = {
+    center: {
+        lat: 10.99835602,
+        lng: 77.01502627
+    },
+    zoom: 11
+};
 const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     console.log(date, dateString);
 };
@@ -21,17 +28,20 @@ const BoatDetails = () => {
     const match = useMatch(`boat/:id/inquiry`)
     const { authState, Toast } = React.useContext(GlobalContext)
     const [loading, setLoading] = React.useState(false)
-
+const googleMapRef=useRef() as any
     const [state, setState] = useState({
         amenities: [],
         bathrooms: 0,
         bedrooms: 0,
+        category: "",
         category_id: 0,
         cover_image: "",
         created_at: "",
         id: "",
-        location: "",
+        location: "" as any,
+        manufacturer: "",
         manufacturer_id: "",
+        minimum_price: "",
         model: "",
         name: "",
         passenger_day: "",
@@ -68,6 +78,17 @@ const BoatDetails = () => {
         initialise()
     }, [match?.params.id])
 
+   
+    const onGoogleApiLoaded = ({ map, maps, ref }: any) => {
+        // setShowGoogleAddressInput(true)
+        // map.addListener("click", (event: google.maps.MapMouseEvent) => {
+        //     if (!gLoading) {
+        //         addMarkerByMapEvent(event.latLng!, map);
+        //         handleAddPreviewMap('Prev', googlePreviewMapRef)
+        //     }
+        // });
+        // initPlaceAPI()
+    }
 
     return (
         <Spin spinning={loading} >
@@ -78,11 +99,11 @@ const BoatDetails = () => {
                         <div className="col-12">
                             <div className="boat-header d-flex justify-content-between">
                                 <div className="title">
-                                    <div className="left-arrow">
+                                    <div className="left-arrow" onClick={() => window?.history.back()}>
                                         <HenceforthIcons.DetailBack />
                                     </div>
                                     <h3 className='mt-4 mb-2'>{state.name}</h3>
-                                    <p>{state.category_id} • {state?.address?.address1}</p>
+                                    <p>{state.category} • {state?.address?.address1}</p>
                                 </div>
                                 <div className="share-btn align-self-end d-flex gap-2 align-items-center">
                                     <HenceforthIcons.Share />
@@ -99,18 +120,13 @@ const BoatDetails = () => {
                                 </div>
                                 <div className="col-md-6">
                                     <div className="row gy-2 h-100">
-                                        {state?.photos?.map(() =>
-                                        <>
-                                            <div className="col-6 ps-0">
-                                                <div className="boat-group-image h-100">
-                                                    <img src={BannerImage} alt="img" className='img-fluid w-100 h-100' />
+                                        {state?.photos?.map((res: any) =>
+                                            <>
+                                                <div className="col-6 ps-0">
+                                                    <div className="boat-group-image h-100">
+                                                        <img src={res.image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${res.image}` : BannerImage} alt="img" className='img-fluid w-100 h-100' />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="col-6 ps-0">
-                                                <div className="boat-group-image h-100">
-                                                    <img src={BannerImage} alt="img" className='img-fluid w-100 h-100' />
-                                                </div>
-                                            </div>
                                             </>
                                         )}
 
@@ -185,7 +201,7 @@ const BoatDetails = () => {
                                 {/* Location */}
                                 <div className="Location py-4">
                                     <h4 className='mb-4'>Location</h4>
-                                    <div className="map-box position-relative">
+                                    {/* <div className="map-box position-relative">
                                         <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d13796.890889034594!2d76.8605537!3d30.173631149999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1675841671352!5m2!1sen!2sin" width="100%" height="400" className='map'></iframe>
                                         <div className="location-icon position-absolute top-50 start-50 text-center translate-middle">
                                             <div className="location-text mb-2">
@@ -195,6 +211,16 @@ const BoatDetails = () => {
                                                 <img src={currentLocation} alt="icon" className='img-fluid' />
                                             </div>
                                         </div>
+                                    </div> */}
+                                    <div style={{ height: '100vh', width: '100%' }}>
+                                        <HenceforthGoogleMap
+                                            ref={googleMapRef}
+                                            defaultCenter={defaultProps.center}
+                                            // center={onAddressChanged.center}
+                                            zoom={defaultProps.zoom}
+                                            defaultZoom={defaultProps.zoom}
+                                            onGoogleApiLoaded={onGoogleApiLoaded}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -202,7 +228,7 @@ const BoatDetails = () => {
                         {/* price-card */}
                         <div className="col-lg-6 col-xl-5">
                             <div className="price-card px-4 py-4">
-                                <h4 className='mb-3'>From $30</h4>
+                                <h4 className='mb-3'>From ${state.minimum_price}</h4>
                                 <div className="select-date">
                                     <DatePicker onChange={onChange} />
                                 </div>

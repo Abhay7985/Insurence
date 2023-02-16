@@ -5,6 +5,7 @@ import bannerImage from '../assets/images/image_one.png';
 import BackNextLayout from '../Components/boat/BackNextLayout';
 import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
+import { NumberValidation } from '../utils/henceforthValidations';
 
 interface RouteData {
     price?: number,
@@ -88,11 +89,19 @@ const BoatPrice = () => {
     }, [])
 
     const handleChange = async (name: string, value: any, index: number) => {
+        console.log('name,value',name,value)
         const data = routes[index] as any
         if (typeof value == "boolean") {
             data.selected = value
         }
-        console.log(data);
+        // setRoutes([...routes])
+        // console.log('routes',routes)
+        // console.log('zero',String(value).startsWith('0'))
+        // console.log('zero',!NumberValidation(value) && !value.includes('.'))
+        // console.log('zero',isNaN(Number(value)))
+        // if (name === 'price' || name === "installments" || name === "installment_price" && String(value).startsWith('0')) return 
+        // if (name === 'price' || name === "installments" || name === "installment_price" && !NumberValidation(value) && !value.includes('.')) return 
+        // if (name === 'price' || name === "installments" || name === "installment_price" && isNaN(Number(value))) return 
         data[name] = value
         setRoutes([...routes])
     }
@@ -122,7 +131,7 @@ const BoatPrice = () => {
                                                 <div className="col-md-12">
                                                     <div className="mb-3 ps-sm-4">
                                                         <label htmlFor="exampleInputEmail1" className="form-label">Price (cash)</label>
-                                                        <input type="text" className="form-control" id="exampleInputEmail1" name='price' placeholder='Enter price' onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
+                                                        <input type="text" className="form-control" id="exampleInputEmail1" name='price' placeholder='Enter price' value={res.price?res.price:''} onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
                                                     </div>
                                                     <div className="ps-sm-4">
                                                         <label htmlFor="exampleInputEmail2" className="form-label">Price (installments)</label>

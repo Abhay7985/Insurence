@@ -62,8 +62,6 @@ const BoatInfo = () => {
 
         }
 
-
-
     }
 
     const initialise = async () => {
@@ -142,7 +140,7 @@ const BoatInfo = () => {
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-3">
                                         <label htmlFor="input5" className="form-label">Size</label>
-                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) => setBoatSize(e.target.value)} />
+                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e: any) => {setBoatSize(e.target.value.replace(/[^.0-9]/g, ""))}} />
                                     </div>
                                 </div>
                             </div>

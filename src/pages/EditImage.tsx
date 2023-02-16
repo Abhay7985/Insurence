@@ -38,7 +38,7 @@ const EditImage = () => {
         const rowData = [] as any
         await Promise.all(
             selectedFiles.map(async (imageRes: any) => {
-                try {
+                try { 
                     const apiRes = await henceforthApi.Boat.imageUpload('image', imageRes.file)
                     rowData.push(apiRes.image)
                 } catch (error) {
@@ -50,14 +50,19 @@ const EditImage = () => {
     }
     const uploadImage = async () => {
         try {
+            
             setSpinning(true)
             const photos = await uploadImages()
             let items = {
                 photos: photos.map((res) => { return { photo: res } })
             }
-
-            let res = await henceforthApi.Boat.edit(match?.params.id as string, items)
-            window.history.back()
+            if(photos.length > 0){
+                let res = await henceforthApi.Boat.edit(match?.params.id as string, items)
+                window.history.back()
+            }else {
+                Toast.error("Add Images")
+            }
+         
         } catch (error) {
             Toast.error(error)
         } finally {

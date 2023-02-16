@@ -47,10 +47,15 @@ const EditLocationBoat = (props: any) => {
         }
         setLoading(true)
         try {
-            const apiRes = await henceforthApi.Boat.edit(state.boat_id, items)
-            Toast.success(apiRes.message)
-            setIsExpended(false)
-            await props.initialise()
+            if (state.address1 && state.city && state.state && state.postcode && state.country) {
+                const apiRes = await henceforthApi.Boat.edit(state.boat_id, items)
+                Toast.success(apiRes.message)
+                setIsExpended(false)
+                await props.initialise()
+            } else {
+                Toast.error("Enter Complete Address")
+            }
+
         } catch (error) {
             Toast.error(error)
         } finally {

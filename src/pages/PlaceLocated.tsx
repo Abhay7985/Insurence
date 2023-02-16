@@ -152,7 +152,7 @@ function PlaceLocated() {
                     autocomplete,
                     "place_changed",
                     () => {
-                        let place = autocomplete.getPlace();
+                        let place = autocomplete?.getPlace();
                         let formatAddress = place.formatted_address
                         const address = place.address_components
                         let latitude = place.geometry?.location.lat();
@@ -221,7 +221,7 @@ function PlaceLocated() {
                                         <div className="col-11 col-lg-11">
                                             <div className="mb-3">
                                                 <label htmlFor="input5" className="form-label">Postcode (optional)</label>
-                                                <input type="text" className="form-control" id='input5' placeholder='Enter postcode' name="postCode" onChange={handleState} />
+                                                <input type="text" className="form-control" id='input5' placeholder='Enter postcode'  name="postCode" onChange={handleState} />
                                             </div>
                                         </div>
                                         <div className="col-11 col-lg-11">

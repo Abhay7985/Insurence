@@ -86,7 +86,7 @@ const AddPhotos = () => {
                                     </div>
                                     <div className="col-11 col-lg-11">
                                         <div className="upload-image">
-                                            <input type="file" className='form-control' id='upload-icon' name='file' onChange={onSelectFiles} />
+                                            <input type="file" className='form-control' id='upload-icon' name='file' onChange={onSelectFiles} multiple />
                                             <label >
                                                 <div className="upload-icon text-center mb-2">
                                                     <img src={uploadIcon} alt="upload" className='img-fluid' />
