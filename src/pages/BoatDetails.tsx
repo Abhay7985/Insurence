@@ -89,8 +89,8 @@ const googleMapRef=useRef() as any
       }
     const onGoogleApiLoaded = ({ map, maps, ref }: any) => {
         let latlng = new (window as any).google.maps.LatLng(
-            state.location.latitude,
-            state.location.longitude
+            state?.location?.latitude,
+            state?.location?.longitude
           )
           createMerker(latlng,map)
         map.addListener("click", (event: google.maps.MapMouseEvent) => {
@@ -139,29 +139,6 @@ const googleMapRef=useRef() as any
                                         )}
 
                                     </div>
-
-                                    {/* <div className="row gy-2">
-                                        <div className="col-6 ps-0">
-                                            <div className="morning-banner">
-                                                <img src={BannerImage} alt="img" className='img-fluid' />
-                                            </div>
-                                        </div>
-                                        <div className="col-6 ps-0">
-                                            <div className="morning-banner">
-                                                <img src={BannerImage} alt="img" className='img-fluid' />
-                                            </div>
-                                        </div>
-                                        <div className="col-6 ps-0">
-                                            <div className="morning-banner">
-                                                <img src={BannerImage} alt="img" className='img-fluid' />
-                                            </div>
-                                        </div>
-                                        <div className="col-6 ps-0">
-                                            <div className="morning-banner">
-                                                <img src={BannerImage} alt="img" className='img-fluid' />
-                                            </div>
-                                        </div>
-                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -213,7 +190,7 @@ const googleMapRef=useRef() as any
                                     <div style={{ height: '100vh', width: '100%' }}>
                                         <HenceforthGoogleMap
                                             ref={googleMapRef}
-                                            defaultCenter={state.location}
+                                            defaultCenter={state?.location}
                                             // center={onAddressChanged.center}
                                             zoom={defaultProps.zoom}
                                             defaultZoom={defaultProps.zoom}

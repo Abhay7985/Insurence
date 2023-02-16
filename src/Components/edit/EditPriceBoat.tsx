@@ -2,6 +2,7 @@ import { Spin } from "antd"
 import React from "react"
 import { GlobalContext } from "../../context/Provider"
 import henceforthApi from "../../utils/henceforthApi"
+import { NumberValidation } from "../../utils/henceforthValidations"
 
 interface RouteDataInterface {
     id: number,
@@ -24,6 +25,9 @@ const EditPriceBoat = (props: any) => {
     const [dataRoute, setDataRoute] = React.useState<Array<RouteDataInterface>>([])
 
     const handleChange = async (name: string, value: any, index: number) => {
+        if(name === "price" && !NumberValidation(value)) return
+        if(name === "installments" && !NumberValidation(value)) return
+        if(name === "installment_price" && !NumberValidation(value)) return
         const data = dataRoute[index] as any
         if (typeof value == "boolean") {
             data.selected = value

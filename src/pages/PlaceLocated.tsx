@@ -7,6 +7,7 @@ import { Checkbox, Select, Space, Spin, Switch } from "antd";
 import BackNextLayout from "../Components/boat/BackNextLayout";
 import henceforthApi from "../utils/henceforthApi";
 import CountryCodeJson from '../utils/CountryCode.json'
+import { NumberValidation } from "../utils/henceforthValidations";
 
 function PlaceLocated() {
 
@@ -37,11 +38,14 @@ function PlaceLocated() {
 
 
     const handleState = (e: any) => {
-     
+     const name=e.target.name
+     const value=e.target.value
+        if(name === "postCode" && !NumberValidation(value)) return
         setState({
             ...state,
-            [e.target.name]: e.target.value
+            [name]: value
         })
+        
     }
 
     const onSubmit = async (e: any) => {
