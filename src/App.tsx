@@ -13,7 +13,7 @@ import BoatPrice from './pages/BoatPrice';
 import BoatDetails from './pages/BoatDetails';
 import EditImage from './pages/EditImage';
 import EditAmenities from './pages/EditAmenities';
-import Inquiry from './pages/Inquiry';
+import InquiryPage from './pages/Inquiry';
 import Profile from './pages/Profile';
 import ChangePassword from './pages/ChangePassword';
 import ProviderCalender from './pages/ProviderCalender';
@@ -40,7 +40,7 @@ const App = () => {
 
           <Route path="*" element={<MainLayout />}>
             <Route index element={<BoatListing />} />
-            <Route path="inquiry/:type/:page" element={<Inquiry />} />
+            <Route path="inquiry/:type/:page" element={<InquiryPage />} />
             <Route path="boat/:id/inquiry" element={<BoatDetails />} />
             <Route path="boat/:id/inquiry/edit" element={<EditBoatDetails />} />
             <Route path="boat/:id/photos/edit" element={<EditImage />} />

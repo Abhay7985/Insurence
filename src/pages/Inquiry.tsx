@@ -1,18 +1,23 @@
 import React from 'react';
 import { Spin, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
-import { Select, Input, Space } from 'antd';
+import { Select, } from 'antd';
 import search from '../assets/icons/search.svg'
-import { useMatch, useNavigate } from 'react-router-dom';
+import { useLocation, useMatch, useNavigate } from 'react-router-dom';
 import Tablelayout from '../Components/inquiry/TableLayout';
 import henceforthApi from '../utils/henceforthApi';
 import { GlobalContext } from '../context/Provider';
 
-const Inquiry = () => {
+const InquiryPage = () => {
     const match = useMatch('/inquiry/:type/:page')
     const navigate = useNavigate()
+    const location = useLocation()
+    const uRLSearchParams = new URLSearchParams(location.search)
     const { authState, Toast } = React.useContext(GlobalContext)
-
+    const [inqieryData, setInquiryData] = React.useState({
+        name: "",
+        boat_name: "",
+    })
     const [loading, setLoading] = React.useState(false)
     const [state, setState] = React.useState({
         current_page: 0,
@@ -20,33 +25,23 @@ const Inquiry = () => {
         per_page: 10
     })
 
+    const onStatusChanged = () => {
 
-    const handleChange = (value: string) => {
-        console.log(`selected ${value}`);
+    }
+
+
+    const filternavigate = () => {
+        navigate({ search: uRLSearchParams.toString() })
+    }
+
+    const handleSocialFilter = (value: string) => {
+        uRLSearchParams.set('social', value)
+        filternavigate()
     };
 
     const onChangeQuery = (path: string) => {
         navigate(`/inquiry/${path}/1`)
     };
-
-    const items: TabsProps['items'] = [
-        {
-            key: '1',
-            label: `All`,
-            children: <Tablelayout {...state} />
-        },
-        {
-            key: '2',
-            label: `Resolved`,
-            children: <Tablelayout  {...state} />
-
-        },
-        {
-            key: '3',
-            label: `Open`,
-            children: <Tablelayout  {...state} />
-        },
-    ];
 
     const initialise = async () => {
         try {
@@ -61,9 +56,29 @@ const Inquiry = () => {
         }
     }
 
+    const items: TabsProps['items'] = [
+        {
+            key: 'all',
+            label: `All`,
+            children: <Tablelayout {...state} setInquiryData={setInquiryData} initialise={initialise} />
+        },
+        {
+            key: 'resolved',
+            label: `Resolved`,
+            children: <Tablelayout  {...state} setInquiryData={setInquiryData} initialise={initialise} />
+
+        },
+        {
+            key: 'open',
+            label: `Open`,
+            children: <Tablelayout  {...state} setInquiryData={setInquiryData} initialise={initialise} />
+        },
+    ];
+
+
     React.useEffect(() => {
         initialise()
-    }, [match?.params.type, match?.params.page])
+    }, [match?.params.type, match?.params.page, uRLSearchParams.get('social')])
 
     return (
         <Spin spinning={loading} >
@@ -77,7 +92,7 @@ const Inquiry = () => {
                                 <Select
                                     defaultValue="All"
                                     style={{ width: 150 }}
-                                    onChange={handleChange}
+                                    onChange={handleSocialFilter}
                                     options={[
                                         { value: 'All', label: 'All' },
                                         { value: 'Whatsapp', label: 'Whatsapp' },
@@ -95,7 +110,7 @@ const Inquiry = () => {
                             </div>
                         </div>
                         <div className="col-12">
-                            <Tabs defaultActiveKey="1" items={items} onChange={onChangeQuery} />
+                            <Tabs defaultActiveKey={match?.params.type} items={items} onChange={onChangeQuery} />
                         </div>
                     </div>
                 </div>
@@ -115,7 +130,7 @@ const Inquiry = () => {
                                 <div className="col-lg-6">
                                     <div className="inquiry-name">
                                         <h6 className='mb-2'>Name</h6>
-                                        <p>John Deo</p>
+                                        <p>{inqieryData?.boat_name}</p>
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
@@ -143,4 +158,4 @@ const Inquiry = () => {
     )
 }
 
-export default Inquiry
+export default InquiryPage

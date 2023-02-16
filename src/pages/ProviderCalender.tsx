@@ -8,14 +8,6 @@ const handleChange = (value: string) => {
 };
 
 const ProviderCalender = () => {
-
-  const [hideshow,setHideshow]=React.useState(true)
-  
-  const toggleHandler = () => {
-    setHideshow(false)
-    // props.changeDiv(pass)
-}
-
   return (
     <>
       {/* Calender-section */}
@@ -54,8 +46,7 @@ const ProviderCalender = () => {
             <div className="col-lg-3 px-0">
               <div className="sidebar-calender py-4">
                 <div className="cross px-4">
-                 {hideshow ?<button onClick={() => toggleHandler()}><HenceforthIcons.Cross /></button>  :<button></button> }
-                 {/* <HenceforthIcons.Cross /> */}
+                  <HenceforthIcons.Cross />
                 </div>
                 <div className="edit-date border-bottom px-4 py-4">
                   <button className='btn border-0 p-0 d-flex justify-content-between w-100 align-items-center'>

@@ -55,12 +55,12 @@ const Header = () => {
                         {location.pathname !== "/boat/add/info" &&
                             <form className="d-flex" role="search">
                                 {authState.access_token ?
-                                    <ul className='d-flex flex-wrap align-items-center gap-5'>
+                                    <ul className='d-flex flex-column flex-lg-row flex-wrap align-items-center gap-3 gap-lg-5 mt-3 mt-lg-0'>
                                         <li>
                                             <Link to='/' className='nav-link'>Boats</Link>
                                         </li>
                                         <li>
-                                            <Link to={`inquiry/1`} className='nav-link'>Inquiry</Link>
+                                            <Link to={`inquiry/all/1`} className='nav-link'>Inquiry</Link>
                                         </li>
                                         <li>
                                             <Link to='/calender' className='nav-link'>Calender</Link>

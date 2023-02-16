@@ -30,6 +30,7 @@ interface CommonContextType {
 
 // toast.error((typeof error?.response?.body?.error_description === "string") ? error?.response?.body?.error_description : JSON.stringify(error?.response?.body?.error_description))
 export const GlobalContext = createContext({} as CommonContextType);
+export const NEXT_PUBLIC_GOOGLE_API_KEY = "AIzaSyDL3YG2rrntEN8bLoQtln4K26PeNiBklDU"
 export const downloadFile = (file_path: String) => {
     var a: any = document.createElement('a') as HTMLElement;
     a.href = file_path;
@@ -77,13 +78,13 @@ function GlobalProvider(props: GlobleContextProviderProps) {
 
     henceforthApi.setToken(authState?.access_token)
     const error = (error: any) => {
-        const msg = error?.response?.body?.message ? error?.response?.body?.message as string : error as string
+        const msg = error?.response?.body?.message
         messageApi.open({
             type: 'error',
-            content: msg,
+            content: typeof msg == "string" ? msg : msg ? JSON.stringify(msg) : JSON.stringify(error),
         });
     }
-    const success = (success: string) => {
+    const success = (success: any) => {
         messageApi.open({
             type: 'success',
             content: success,
