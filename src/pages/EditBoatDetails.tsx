@@ -12,9 +12,13 @@ import EditRuleSmokingAllowed from '../Components/edit/EditRuleSmokingAllowed';
 import EditRulePetsAllowed from '../Components/edit/EditRulePetsAllowed';
 import EditSecurityBoat from '../Components/edit/EditSecurityBoat';
 import henceofrthEnums from '../utils/henceofrthEnums';
+import Slider from "react-slick";
+import PhotoSlider from './common/PhotoSlider';
+
 
 
 const EditBoatDetails = () => {
+
 
     const match = useMatch(`boat/:id/inquiry/edit`)
     const location = useLocation()
@@ -123,6 +127,38 @@ const EditBoatDetails = () => {
 
     ];
 
+    const settings = {
+        infinite: true,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    infinite: true,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    initialSlide: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    };
     return (
         <Spin spinning={loading} >
             <section className='morning-panormic-listing py-5' >
@@ -149,8 +185,9 @@ const EditBoatDetails = () => {
                             </div>
                         </div>
                         <div className="col-12">
-                            <div className="tab-box d-flex align-items-start py-5 gap-3">
-                                <div className='bg-white h-100'>
+                            <div className="tab-box row">
+                                {/* tabs */}
+                                <div className='col-md-3'><div className='bg-white h-100'>
                                     <div className="nav flex-column nav-pills bg-white" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                         {/* Listing accordian */}
                                         <button className="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
@@ -228,8 +265,10 @@ const EditBoatDetails = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="tab-content w-100" id="v-pills-tabContent">
+                                </div></div>
+                                {/* content  */}
+                               <div className='col-md-9'>
+                               <div className="tab-content w-100" id="v-pills-tabContent">
                                     {/* Listing accordian */}
                                     <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
 
@@ -244,6 +283,28 @@ const EditBoatDetails = () => {
                                                 </div>
                                             </div>
                                             {/* photo-slider */}
+                                            <div className="slider-box mt-4">
+                                                <Slider {...settings}>
+                                                    <div className='slider-inner'>
+                                                        <PhotoSlider />
+                                                    </div>
+                                                    <div className='slider-inner'>
+                                                        <PhotoSlider />
+                                                    </div>
+                                                    <div className='slider-inner'>
+                                                        <PhotoSlider />
+                                                    </div>
+                                                    <div className='slider-inner'>
+                                                        <PhotoSlider />
+                                                    </div>
+                                                    <div className='slider-inner'>
+                                                        <PhotoSlider />
+                                                    </div>
+                                                    <div className='slider-inner'>
+                                                        <PhotoSlider />
+                                                    </div>
+                                                </Slider>
+                                            </div>
                                         </div>
                                         {/* Listing-basics */}
                                         {state.name &&
@@ -331,6 +392,7 @@ const EditBoatDetails = () => {
                                     </div>
 
                                 </div>
+                               </div>
                             </div>
                         </div>
                     </div>

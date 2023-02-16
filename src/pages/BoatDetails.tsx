@@ -93,18 +93,25 @@ const BoatDetails = () => {
                         <div className="col-12">
                             <div className="row gy-4 py-4">
                                 <div className="col-md-6 ps-0">
-                                    <div className="morning-banner cover-image">
+                                    <div className="morning-banner">
                                         <img src={`${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}`} alt="img" className='img-fluid' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
-                                    <div className="row gy-2">
+                                    <div className="row gy-2 h-100">
                                         {state?.photos?.map(() =>
+                                        <>
                                             <div className="col-6 ps-0">
-                                                <div className="morning-banner">
-                                                    <img src={BannerImage} alt="img" className='img-fluid' />
+                                                <div className="boat-group-image h-100">
+                                                    <img src={BannerImage} alt="img" className='img-fluid w-100 h-100' />
                                                 </div>
                                             </div>
+                                            <div className="col-6 ps-0">
+                                                <div className="boat-group-image h-100">
+                                                    <img src={BannerImage} alt="img" className='img-fluid w-100 h-100' />
+                                                </div>
+                                            </div>
+                                            </>
                                         )}
 
                                     </div>

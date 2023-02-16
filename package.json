@@ -17,6 +17,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
+    "react-slick": "^0.29.0",
     "sass": "^1.58.0",
     "slick-slider": "^1.8.2",
     "superagent": "^8.0.9",
@@ -51,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-slick": "^0.23.10",
     "@types/superagent": "^4.1.16"
   }
 }
