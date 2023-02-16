@@ -14,6 +14,7 @@ import EditSecurityBoat from '../Components/edit/EditSecurityBoat';
 import henceofrthEnums from '../utils/henceofrthEnums';
 import Slider from "react-slick";
 import PhotoSlider from './common/PhotoSlider';
+import henceofrthValidations from "../utils/henceforthValidations";
 
 
 
@@ -69,7 +70,7 @@ const EditBoatDetails = () => {
             setLoading(true)
             try {
                 const apiRes = await henceforthApi.Boat.status(state.id, items)
-                Toast.success(apiRes.message)
+                Toast.success(henceofrthValidations.capFirst(apiRes.message))
                 await initialise(true)
             } catch (error) {
                 Toast.error(error)
@@ -267,132 +268,132 @@ const EditBoatDetails = () => {
                                     </div>
                                 </div></div>
                                 {/* content  */}
-                               <div className='col-md-9'>
-                               <div className="tab-content w-100" id="v-pills-tabContent">
-                                    {/* Listing accordian */}
-                                    <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                <div className='col-md-9'>
+                                    <div className="tab-content w-100" id="v-pills-tabContent">
+                                        {/* Listing accordian */}
+                                        <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
 
-                                        {/* photos */}
-                                        <div className="photos Pricing bg-white mb-4" >
-                                            <div className="photo-header d-flex justify-content-between">
-                                                <h4>Photos ({state.photos.length})</h4>
-                                                <div className="edit-photo" id='listing_tab'>
-                                                    <Link to={`/boat/${match?.params.id}/photos/edit`} >
-                                                        <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                            {/* photo-slider */}
-                                            <div className="slider-box mt-4">
-                                                <Slider {...settings}>
-                                                    <div className='slider-inner'>
-                                                        <PhotoSlider />
-                                                    </div>
-                                                    <div className='slider-inner'>
-                                                        <PhotoSlider />
-                                                    </div>
-                                                    <div className='slider-inner'>
-                                                        <PhotoSlider />
-                                                    </div>
-                                                    <div className='slider-inner'>
-                                                        <PhotoSlider />
-                                                    </div>
-                                                    <div className='slider-inner'>
-                                                        <PhotoSlider />
-                                                    </div>
-                                                    <div className='slider-inner'>
-                                                        <PhotoSlider />
-                                                    </div>
-                                                </Slider>
-                                            </div>
-                                        </div>
-                                        {/* Listing-basics */}
-                                        {state.name &&
-                                            <BasicListing {...state} initialise={initialise} />
-                                        }
-                                        {/* Amenities */}
-                                        {state.name &&
-
-                                            <div className="Listing-basics bg-white Pricing mb-4">
-                                                <div className="photo-header d-flex justify-content-between mb-3">
-                                                    <h4>Amenities</h4>
-                                                </div>
-                                                <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
-                                                    <div className="listing-content">
-                                                        <h6 className='mb-2'>Amenities</h6>
-                                                        <div className="amenities-list d-flex gap-5">
-                                                            <ul>
-                                                                {state?.amenities?.map((e: any) => <li>{e.amenity}</li>)}
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <hr />
-                                                    <div className="edit-photo">
-                                                        <Link to={`/boat/${match?.params.id}/amenities/edit`}>
+                                            {/* photos */}
+                                            <div className="photos Pricing bg-white mb-4" >
+                                                <div className="photo-header d-flex justify-content-between">
+                                                    <h4>Photos ({state.photos.length})</h4>
+                                                    <div className="edit-photo" id='listing_tab'>
+                                                        <Link to={`/boat/${match?.params.id}/photos/edit`} >
                                                             <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
                                                         </Link>
                                                     </div>
                                                 </div>
-                                            </div>}
-                                        {/* Location */}
-                                        {state.name &&
-                                            <EditLocationBoat {...state.address} initialise={initialise} />
-                                        }
-                                        {/* Boat & passengers */}
-                                        {state.name &&
-                                            <div className="boat-passengers bg-white Pricing" id="passengers_tab">
-                                                <div className="photo-header d-flex justify-content-between mb-3">
-                                                    <h4>Boat & passengers</h4>
+                                                {/* photo-slider */}
+                                                <div className="slider-box mt-4">
+                                                    <Slider {...settings}>
+                                                        <div className='slider-inner'>
+                                                            <PhotoSlider />
+                                                        </div>
+                                                        <div className='slider-inner'>
+                                                            <PhotoSlider />
+                                                        </div>
+                                                        <div className='slider-inner'>
+                                                            <PhotoSlider />
+                                                        </div>
+                                                        <div className='slider-inner'>
+                                                            <PhotoSlider />
+                                                        </div>
+                                                        <div className='slider-inner'>
+                                                            <PhotoSlider />
+                                                        </div>
+                                                        <div className='slider-inner'>
+                                                            <PhotoSlider />
+                                                        </div>
+                                                    </Slider>
                                                 </div>
-                                                <EditInfoBoat {...state} initialise={initialise} />
-                                                <InfoPassengersBoat {...state} initialise={initialise} />
-
                                             </div>
-                                        }
+                                            {/* Listing-basics */}
+                                            {state.name &&
+                                                <BasicListing {...state} initialise={initialise} />
+                                            }
+                                            {/* Amenities */}
+                                            {state.name &&
 
-                                    </div>
-                                    {/* Pricing and Availability */}
-                                    <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                                        {/* Pricing */}
+                                                <div className="Listing-basics bg-white Pricing mb-4">
+                                                    <div className="photo-header d-flex justify-content-between mb-3">
+                                                        <h4>Amenities</h4>
+                                                    </div>
+                                                    <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
+                                                        <div className="listing-content">
+                                                            <h6 className='mb-2'>Amenities</h6>
+                                                            <div className="amenities-list d-flex gap-5">
+                                                                <ul>
+                                                                    {state?.amenities?.map((e: any) => <li>{e.amenity}</li>)}
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <hr />
+                                                        <div className="edit-photo">
+                                                            <Link to={`/boat/${match?.params.id}/amenities/edit`}>
+                                                                <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
+                                                            </Link>
+                                                        </div>
+                                                    </div>
+                                                </div>}
+                                            {/* Location */}
+                                            {state.name &&
+                                                <EditLocationBoat {...state.address} initialise={initialise} />
+                                            }
+                                            {/* Boat & passengers */}
+                                            {state.name &&
+                                                <div className="boat-passengers bg-white Pricing" id="passengers_tab">
+                                                    <div className="photo-header d-flex justify-content-between mb-3">
+                                                        <h4>Boat & passengers</h4>
+                                                    </div>
+                                                    <EditInfoBoat {...state} initialise={initialise} />
+                                                    <InfoPassengersBoat {...state} initialise={initialise} />
 
-                                        {/* edit-pricing */}
-                                        {state.name && state.prices &&
-                                            <EditPriceBoat {...state} initialise={initialise} />
-                                        }
+                                                </div>
+                                            }
 
-                                        {/* Calender availability */}
-                                        <div className="Calender-availability bg-white p-4 ">
-                                            <div className="photo-header d-flex justify-content-between mb-3">
-                                                <h4>Calender availability</h4>
-                                                <div className="edit-photo">
-                                                    <Link to={`/calender`}>
-                                                        <button className='btn p-0 border-0 text-yellow fw-bold'>Open calender</button>
-                                                    </Link>
+                                        </div>
+                                        {/* Pricing and Availability */}
+                                        <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                            {/* Pricing */}
+
+                                            {/* edit-pricing */}
+                                            {state.name && state.prices &&
+                                                <EditPriceBoat {...state} initialise={initialise} />
+                                            }
+
+                                            {/* Calender availability */}
+                                            <div className="Calender-availability bg-white p-4 ">
+                                                <div className="photo-header d-flex justify-content-between mb-3">
+                                                    <h4>Calender availability</h4>
+                                                    <div className="edit-photo">
+                                                        <Link to={`/calender`}>
+                                                            <button className='btn p-0 border-0 text-yellow fw-bold'>Open calender</button>
+                                                        </Link>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {/* Rules & Includes */}
-                                    <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                                        {/* Rules */}
-                                        {state.name &&
+                                        {/* Rules & Includes */}
+                                        <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                            {/* Rules */}
+                                            {state.name &&
 
-                                            <div className="roules Pricing bg-white mb-4">
-                                                <div className="photo-header d-flex justify-content-between mb-3">
-                                                    <h4>Rules</h4>
+                                                <div className="roules Pricing bg-white mb-4">
+                                                    <div className="photo-header d-flex justify-content-between mb-3">
+                                                        <h4>Rules</h4>
+                                                    </div>
+                                                    {/* smoking */}
+                                                    <EditRuleSmokingAllowed {...state} initialise={initialise} />
+                                                    {/* pets */}
+                                                    <EditRulePetsAllowed {...state} initialise={initialise} />
+                                                    {/* Rules and Security */}
+                                                    <EditSecurityBoat {...state} initialise={initialise} />
                                                 </div>
-                                                {/* smoking */}
-                                                <EditRuleSmokingAllowed {...state} initialise={initialise} />
-                                                {/* pets */}
-                                                <EditRulePetsAllowed {...state} initialise={initialise} />
-                                                {/* Rules and Security */}
-                                                <EditSecurityBoat {...state} initialise={initialise} />
-                                            </div>
-                                        }
-                                    </div>
+                                            }
+                                        </div>
 
+                                    </div>
                                 </div>
-                               </div>
                             </div>
                         </div>
                     </div>

@@ -113,8 +113,8 @@ const BoatPrice = () => {
                                     {routes.map((res: any, index: number) =>
                                         <div className="col-11 col-lg-11" key={res.id}>
                                             <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value={res.id} checked={res.selected} id="boat-check-1" onChange={(e: any) => handleChange(e.target.name, e.target.checked, index)} />
-                                                <label className="form-check-label" htmlFor="boat-check-1">
+                                                <input className="form-check-input" type="checkbox" value={res.id} checked={res.selected} id={`boat-check-1${index}`} onChange={(e: any) => handleChange(e.target.name, e.target.checked, index)} />
+                                                <label className="form-check-label" htmlFor={`boat-check-1${index}`}>
                                                     {res.route_name}
                                                 </label>
                                             </div>

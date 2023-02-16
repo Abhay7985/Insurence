@@ -106,7 +106,16 @@ const BoatListing = () => {
                                     <span className="search-icon border-0" id="basic-addon1">
                                         <img src={search} alt="icon" />
                                     </span>
-                                    <input type="text" className="form-control rounded-pill px-5" name='search' placeholder="Search..." value={urlSearchParams.get('search') as string} onChange={(e: any) => handleSearch(e.target.name, e.target.value)} />
+                                    <form onSubmit={(e: any) => {
+                                        e.preventDefault();
+                                        handleSearch('search', e.target.search.value);
+                                    }}>
+                                        <input type="text" className="form-control rounded-pill px-5" name='search' placeholder="Search..." onChange={(e: any) => {
+                                            if (!e.target.value) {
+                                                handleSearch(e.target.name, e.target.value);
+                                            }
+                                        }} />
+                                    </form>
                                 </div>
                                 <div className="add-boat-btn">
                                     <Select
@@ -160,7 +169,7 @@ const BoatListing = () => {
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>{e?.price}</td>
+                                            <td>&#36;{e?.price}</td>
                                             <td>{moment(e?.updated_at).format('MMMM Do')}</td>
                                             <td>
                                                 <ul className='d-flex gap-2'>
@@ -184,6 +193,7 @@ const BoatListing = () => {
                             <Pagination
                                 pageSize={state.per_page}
                                 total={state.total}
+                                // total={state.total_count}
                                 current={Number(urlSearchParams.has('page') ? urlSearchParams.get('page') : "1")}
                                 onChange={(page: any) => onChangePagination(page)}
                             />
