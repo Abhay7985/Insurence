@@ -170,7 +170,6 @@ const BoatInfo = () => {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
                         <div className="col-md-6 sticky-bottom mt-auto bg-white ">
