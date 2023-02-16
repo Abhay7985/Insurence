@@ -37,6 +37,7 @@ function PlaceLocated() {
 
 
     const handleState = (e: any) => {
+     
         setState({
             ...state,
             [e.target.name]: e.target.value
@@ -174,9 +175,9 @@ function PlaceLocated() {
 
     return (
         <Spin spinning={loading} >
-            <section className="select-passenger-section">
-                <div className="container-fluid">
-                    <form className="row" onSubmit={onSubmit}>
+            <section className="select-passenger-section h-100">
+                <div className="container-fluid h-100">
+                    <form className="row h-100" onSubmit={onSubmit}>
                         <div className="col-lg-6">
                             <div className="banner-content h-100 d-flex flex-column ">
                                 <div className="row gy-2 justify-content-center justify-content-lg-end pb-5 pb-lg-0">
@@ -195,33 +196,33 @@ function PlaceLocated() {
                                             </div>}
                                         </div></Fragment> : <Fragment>
                                         <div className="col-11 col-lg-11">
-                                            <div className="mb-3">
+                                            <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input1" className="form-label">Street</label>
-                                                <input type="text" className="form-control" id='input1' placeholder='Enter street' name="street" onChange={handleState} />
+                                                <input type="text" className="form-control" id='input1' value={state.street} placeholder='Enter street' name="street" onChange={handleState} />
                                             </div>
                                         </div>
                                         <div className="col-11 col-lg-11">
-                                            <div className="mb-3">
+                                            <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input4" className="form-label">Flat, Suite, etc. (optional)</label>
-                                                <input type="text" className="form-control" id='input4' placeholder='Enter flat, suite, etc.' name="flat" onChange={handleState} />
+                                                <input type="text" className="form-control" id='input4' placeholder='Enter flat, suite, etc.' value={state.flat} name="flat" onChange={handleState} />
                                             </div>
                                         </div>
                                         <div className="col-11 col-lg-11">
-                                            <div className="mb-3">
+                                            <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input5" className="form-label">City</label>
-                                                <input type="text" className="form-control" id='input5' placeholder='Enter City' name="city" onChange={handleState} />
+                                                <input type="text" className="form-control" id='input5' placeholder='Enter City' value={state.city} name="city" onChange={handleState} />
                                             </div>
                                         </div>
                                         <div className="col-11 col-lg-11">
-                                            <div className="mb-3">
+                                            <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input5" className="form-label">State (optional)</label>
-                                                <input type="text" className="form-control" id='input5' placeholder='Enter City' name="state" onChange={handleState} />
+                                                <input type="text" className="form-control" id='input5' placeholder='Enter City' name="state" value={state.state} onChange={handleState} />
                                             </div>
                                         </div>
                                         <div className="col-11 col-lg-11">
-                                            <div className="mb-3">
+                                            <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input5" className="form-label">Postcode (optional)</label>
-                                                <input type="text" className="form-control" id='input5' placeholder='Enter postcode'  name="postCode" onChange={handleState} />
+                                                <input type="text" className="form-control" id='input5' placeholder='Enter postcode' value={state.postCode}  name="postCode" onChange={handleState} />
                                             </div>
                                         </div>
                                         <div className="col-11 col-lg-11">

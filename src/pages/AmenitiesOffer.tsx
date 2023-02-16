@@ -1,7 +1,7 @@
 import { Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useMatch, useNavigate } from 'react-router-dom';
-import bannerImage from '../assets/images/image_one.png';
+import bannerImage from '../assets/images/image_three.png';
 import BackNextLayout from '../Components/boat/BackNextLayout';
 import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
@@ -77,19 +77,19 @@ const AmenitiesOffer = () => {
     }, [])
 
     return (
-        <Spin spinning={loading} >
-            <section className="Confirm-address-section h-100">
+        <Spin spinning={loading} className='h-100'>
+            <section className="Confirm-address-section h-100 px-2 px-md-0">
                 <div className="container-fluid h-100">
                     <form className="row h-100" onSubmit={onSubmit}>
                         <div className="col-lg-6">
                             <div className="banner-content h-100 d-flex flex-column ">
-                                <div className="row justify-content-center justify-content-lg-end gy-4">
-                                    <div className="col-11 col-lg-11 mb-4">
+                                <div className="row justify-content-center justify-content-lg-end gy-3 gy-sm-4">
+                                    <div className="col-12 col-lg-11 mb-2 mb-md-4">
                                         <h3 className='banner-title pb-3'>What amenities do you offer?</h3>
                                         <p>You will be able to add more amenities in your write up for your listing.</p>
                                     </div>
                                     {amenitiesOffers.map((e: any, index: number) =>
-                                        <div className="col-11 col-lg-11" key={index}>
+                                        <div className="col-12 col-lg-11" key={index}>
                                             <div className="form-check">
                                                 <input className="form-check-input" type="checkbox" value={e?.id} onChange={(e: any) => handleChecked(e)} id="check1" />
                                                 <label className="form-check-label" htmlFor="check1">
@@ -98,9 +98,8 @@ const AmenitiesOffer = () => {
                                             </div>
                                         </div>)}
                                 </div>
-                                <BackNextLayout />
                             </div>
-
+                            <BackNextLayout />
                         </div>
                         <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
                             <div className="banner-image border">

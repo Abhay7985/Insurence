@@ -84,7 +84,7 @@ const BoatListing = () => {
 
     return (
         <Spin spinning={loading} >
-            <section className="boat-listing py-5">
+            <section className="boat-listing py-5 px-2 px-sm-0">
                 <div className="container">
                     <div className="row gy-4">
                         <div className="col-12 mb-3">

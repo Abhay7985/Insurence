@@ -1,4 +1,4 @@
-import bannerImage from '../assets/images/image_one.png';
+import bannerImage from '../assets/images/image_four.png';
 import uploadIcon from '../assets/icons/upload_photo.svg';
 import BoatPhotoView from '../Components/row/BoatPhotoView';
 import BackNextLayout from '../Components/boat/BackNextLayout';
@@ -21,18 +21,24 @@ const AddPhotos = () => {
 
     const addFiles = (rowData: Array<any>) => {
         setSelectedFiles([...selectedFiles, ...rowData])
+        console.log(rowData, "rowData");
+
     }
     const removeFiles = (index: number) => {
         const data = selectedFiles
         data.splice(index, 1)
         setSelectedFiles([...data])
     }
+    console.log(selectedFiles);
+
     const onSelectFiles = (files: any) => {
         let rowData = [] as any
         for (let i = 0; i < files.length; i++) {
             rowData.push({ file: files[i], loading: false })
         }
         addFiles(rowData)
+        console.log("files", files.target.files);
+
     }
 
     const uploadImages = async () => {
@@ -56,9 +62,13 @@ const AddPhotos = () => {
             setSpinning(true)
             const photos = await uploadImages()
             let items = {
-                photos: photos.map((res: any) => { return { photo: res } })
+                photos: {
+                    boat_id: match?.params.id as string,
+                    photos: photos.map((res: any,index: number) => { return { photo: res,order:index+1 } })
+                }
             }
-            const apiRes = await henceforthApi.Boat.edit(match?.params.id as string, items)
+
+            const apiRes = await henceforthApi.Boat.create(items)
             Toast.success(apiRes.message)
             navigate({
                 pathname: `/boat/${match?.params.id}/safety-question`,
@@ -73,27 +83,26 @@ const AddPhotos = () => {
     }
 
     return (
-        <Spin spinning={spinning}>
-            <section className="Confirm-address-section h-100">
+        <section className="Confirm-address-section h-100">
+            <Spin spinning={spinning}>
                 <div className="container-fluid h-100">
                     <form className="row h-100" onSubmit={onSubmit}>
                         <div className="col-lg-6">
                             <div className="banner-content h-100 d-flex flex-column ">
                                 <div className="row justify-content-center justify-content-lg-end gy-4 pb-5">
-                                    <div className="col-11 col-lg-11 mb-4">
-                                        <h3 className='banner-title pb-3'>Add photos to your listing <span className='fw-normal'>(Choose at least 5 photos)</span></h3>
+                                    <div className="col-11 col-lg-11 mb-2 mb-sm-4">
+                                        <h3 className='banner-title pb-3 d-flex gap-2 flex-wrap'>Add photos to your listing <span className='fw-normal'>(Choose at least 5 photos)</span></h3>
                                         <p>Upload at least one photo to publish your listing. We strongly suggest adding multiple photos to attract attention to your listing. Do not include images of your boat name or contact information.</p>
                                     </div>
                                     <div className="col-11 col-lg-11">
                                         <div className="upload-image">
-                                            <input type="file" className='form-control' id='upload-icon' name='file' onChange={onSelectFiles} multiple />
+                                            <input type="file" className='form-control' id='upload-icon' name='file' onChange={(e: any) => onSelectFiles(e.target.files)} multiple />
                                             <label >
                                                 <div className="upload-icon text-center mb-2">
                                                     <img src={uploadIcon} alt="upload" className='img-fluid' />
                                                 </div>
                                                 <button className='btn btn-yellow'>Uploads Photos</button>
                                             </label>
-
                                         </div>
                                     </div>
                                     <div className="col-11 col-lg-11">
@@ -116,8 +125,8 @@ const AddPhotos = () => {
                         </div>
                     </form>
                 </div>
-            </section>
-        </Spin>
+            </Spin>
+        </section>
     )
 }
 

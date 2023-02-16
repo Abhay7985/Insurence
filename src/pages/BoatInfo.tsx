@@ -95,13 +95,13 @@ const BoatInfo = () => {
                                     <h3 className='banner-title'>Please enter the details of the boat</h3>
                                 </div>
                                 <div className="col-11 col-lg-11">
-                                    <div className="mb-3">
+                                    <div className="mb-2 mb-sm-3">
                                         <label htmlFor="input1" className="form-label">Boat Name</label>
                                         <input type="text" className="form-control" id='input1' placeholder='Enter boat name' value={boatName} onChange={(e) => setBoatName(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className="col-11 col-lg-11">
-                                    <div className="mb-3">
+                                    <div className="mb-2 mb-sm-3">
                                         <label htmlFor="input2" className="form-label">Category</label>
                                         <div className="category">
                                             <Space direction="vertical" style={{ width: '100%' }}>
@@ -117,7 +117,7 @@ const BoatInfo = () => {
                                     </div>
                                 </div>
                                 <div className="col-11 col-lg-11">
-                                    <div className="mb-3">
+                                    <div className="mb-2 mb-sm-3">
                                         <label htmlFor="input3" className="form-label">Manufacturer</label>
                                         <div className="category">
                                             <Space direction="vertical" style={{ width: '100%' }}  >
@@ -133,14 +133,14 @@ const BoatInfo = () => {
                                     </div>
                                 </div>
                                 <div className="col-11 col-lg-11">
-                                    <div className="mb-3">
+                                    <div className="mb-2 mb-sm-3">
                                         <label htmlFor="input4" className="form-label">Model</label>
                                         <input type="text" className="form-control" id='input4' placeholder='Enter model' value={boatModel} onChange={(e) => setBoatModel(e.target.value)} />                                    </div>
                                 </div>
                                 <div className="col-11 col-lg-11">
-                                    <div className="mb-3">
+                                    <div className="mb-2 mb-sm-3">
                                         <label htmlFor="input5" className="form-label">Size</label>
-                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e: any) => {setBoatSize(e.target.value.replace(/[^.0-9]/g, ""))}} />
+                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) => (NumberValidation(e.target.value) ? setBoatSize(e.target.value) :"") } />
                                     </div>
                                 </div>
                             </div>

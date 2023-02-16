@@ -25,11 +25,19 @@ h2 {
 h3 {
     font-size: 26px;
     color: $light-black;
+
+    @media (max-width:575px) {
+        font-size: 22px;
+    }
 }
 
 h4 {
     font-size: 22px;
     color: $light-black;
+
+    @media (max-width:575px) {
+        font-size: 18px;
+    }
 }
 
 h5 {
@@ -172,6 +180,10 @@ label {
     &:focus {
         border-color: $primary-color;
     }
+
+    @media (max-width:575px) {
+        padding: 10px 15px;
+    }
 }
 
 
@@ -272,6 +284,10 @@ ul {
         &:active {
             border-color: $primary-color !important;
         }
+
+        @media (max-width:575px) {
+            padding: 7px 15px !important;
+        }
     }
 
 }
@@ -280,12 +296,12 @@ ul {
     background-image: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%27-4 -4 8 8%27%3e%3ccircle r=%273%27 fill=%27rgba%280, 0, 0, 0.25%29%27/%3e%3c/svg%3e');
 }
 
-section {
-    padding-inline: 15px;
-}
-
 .ant-pagination {
     .ant-pagination-item {
         margin-inline-end: 5px !important;
     }
+}
+
+span::first-letter {
+    text-transform: uppercase;
 }

@@ -38,7 +38,7 @@ const googleMapRef=useRef() as any
         cover_image: "",
         created_at: "",
         id: "",
-        location: "" as any,
+        location: {} as any,
         manufacturer: "",
         manufacturer_id: "",
         minimum_price: "",
@@ -78,16 +78,24 @@ const googleMapRef=useRef() as any
         initialise()
     }, [match?.params.id])
 
-   
+    const createMerker = (position: google.maps.LatLng | google.maps.LatLngLiteral, map: google.maps.Map, icon?: any) => {
+        return new google.maps.Marker({
+          position,
+          map,
+          draggable: false,
+          label:{text:state.name , color :"#FFFFFF"},
+          icon: icon,
+        });
+      }
     const onGoogleApiLoaded = ({ map, maps, ref }: any) => {
-        // setShowGoogleAddressInput(true)
-        // map.addListener("click", (event: google.maps.MapMouseEvent) => {
-        //     if (!gLoading) {
-        //         addMarkerByMapEvent(event.latLng!, map);
-        //         handleAddPreviewMap('Prev', googlePreviewMapRef)
-        //     }
-        // });
-        // initPlaceAPI()
+        let latlng = new (window as any).google.maps.LatLng(
+            state.location.latitude,
+            state.location.longitude
+          )
+          createMerker(latlng,map)
+        map.addListener("click", (event: google.maps.MapMouseEvent) => {
+     
+        });
     }
 
     return (
@@ -112,7 +120,7 @@ const googleMapRef=useRef() as any
                             </div>
                         </div>
                         <div className="col-12">
-                            <div className="row gy-4 py-4">
+                            <div className="row gy-4 py-4 ms-0">
                                 <div className="col-md-6 ps-0">
                                     <div className="morning-banner">
                                         <img src={`${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}`} alt="img" className='img-fluid' />
@@ -168,7 +176,7 @@ const googleMapRef=useRef() as any
                                     <p>{state.passenger_day} passengers day • {state.passenger_night} passengers overnight • {state.bedrooms} rooms • {state.bathrooms} bathrooms</p>
                                 </div>
                                 {/* aminities */}
-                                <div className="aminities border-bottom py-4">
+                                <div className="aminities border-bottom py-3 py-sm-4">
                                     <h4 className='mb-2'>Amenities</h4>
                                     <div className="aminities-list d-flex gap-5">
                                         <ul>
@@ -177,7 +185,7 @@ const googleMapRef=useRef() as any
                                     </div>
                                 </div>
                                 {/* Itineraries rules */}
-                                <div className="Itineraries-rules border-bottom py-4">
+                                <div className="Itineraries-rules border-bottom py-3 py-sm-4">
                                     <h4 className='mb-2'>Itineraries rules</h4>
                                     <ul>
                                         <li className='d-flex gap-3 align-items-center'>
@@ -201,25 +209,16 @@ const googleMapRef=useRef() as any
                                 {/* Location */}
                                 <div className="Location py-4">
                                     <h4 className='mb-4'>Location</h4>
-                                    {/* <div className="map-box position-relative">
-                                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d13796.890889034594!2d76.8605537!3d30.173631149999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1675841671352!5m2!1sen!2sin" width="100%" height="400" className='map'></iframe>
-                                        <div className="location-icon position-absolute top-50 start-50 text-center translate-middle">
-                                            <div className="location-text mb-2">
-                                                Angra dos Reis - Rio de Janeiro
-                                            </div>
-                                            <div className="icon">
-                                                <img src={currentLocation} alt="icon" className='img-fluid' />
-                                            </div>
-                                        </div>
-                                    </div> */}
+                                 
                                     <div style={{ height: '100vh', width: '100%' }}>
                                         <HenceforthGoogleMap
                                             ref={googleMapRef}
-                                            defaultCenter={defaultProps.center}
+                                            defaultCenter={state.location}
                                             // center={onAddressChanged.center}
                                             zoom={defaultProps.zoom}
                                             defaultZoom={defaultProps.zoom}
                                             onGoogleApiLoaded={onGoogleApiLoaded}
+
                                         />
                                     </div>
                                 </div>
