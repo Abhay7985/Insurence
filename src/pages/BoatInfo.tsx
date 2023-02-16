@@ -38,7 +38,7 @@ const BoatInfo = () => {
         uRLSearchParams.set("manufacturer_id", manufacturer_id)
         
         try {
-            if (!boatName) {
+            if (!boatName.trim()) {
                 Toast.error('Enter Boat Name')
             } else if (!category_id) {
                 Toast.error("Enter Category")
@@ -48,14 +48,14 @@ const BoatInfo = () => {
                 Toast.error("Enter manufacturer")
 
             }
+            else if (!boatModel.trim()) {
+                Toast.error("Enter Boat Model")
+            }
             else if (!boatSize) {
                 Toast.error("Enter Boat Size")
 
             }
-            else if (!boatModel) {
-                Toast.error("Enter Boat Model")
-
-            } else {
+            else {
                 navigate({
                     pathname: '/boat/passengers',
                     search: uRLSearchParams.toString()
@@ -167,7 +167,7 @@ const BoatInfo = () => {
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-2 mb-sm-3">
                                         <label htmlFor="input5" className="form-label">Size</label>
-                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) => setBoatSize(e.target.value)} />
+                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) => (NumberValidation(e.target.value) ? setBoatSize(e.target.value) : "")} />
                                     </div>
                                 </div> */}
                                 </div>

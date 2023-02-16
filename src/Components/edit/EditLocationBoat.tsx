@@ -3,6 +3,7 @@ import React from "react"
 import { GlobalContext } from "../../context/Provider"
 import henceforthApi from "../../utils/henceforthApi"
 import CountryCodeJson from '../../utils/CountryCode.json'
+import { NumberValidation } from "../../utils/henceforthValidations"
 
 const EditLocationBoat = (props: any) => {
     const { Toast } = React.useContext(GlobalContext)
@@ -25,6 +26,7 @@ const EditLocationBoat = (props: any) => {
     const [loading, setLoading] = React.useState(false)
 
     const handleChange = async ({ name, value }: any) => {
+        if(name === "postCode" && !NumberValidation(value)) return
         setState((state: any) => {
             return {
                 ...state,

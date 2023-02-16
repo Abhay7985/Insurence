@@ -90,21 +90,18 @@ const BoatPrice = () => {
 
     const handleChange = async (name: string, value: any, index: number) => {
         console.log('name,value',name,value)
+        if(name === "price" && !NumberValidation(value)) return
+        if(name === "installments" && !NumberValidation(value)) return
+        if(name === "installment_price" && !NumberValidation(value)) return
+
         const data = routes[index] as any
         if (typeof value == "boolean") {
             data.selected = value
         }
-        // setRoutes([...routes])
-        // console.log('routes',routes)
-        // console.log('zero',String(value).startsWith('0'))
-        // console.log('zero',!NumberValidation(value) && !value.includes('.'))
-        // console.log('zero',isNaN(Number(value)))
-        // if (name === 'price' || name === "installments" || name === "installment_price" && String(value).startsWith('0')) return 
-        // if (name === 'price' || name === "installments" || name === "installment_price" && !NumberValidation(value) && !value.includes('.')) return 
-        // if (name === 'price' || name === "installments" || name === "installment_price" && isNaN(Number(value))) return 
+
         data[name] = value
         setRoutes([...routes])
-    }
+            }
 
 
 

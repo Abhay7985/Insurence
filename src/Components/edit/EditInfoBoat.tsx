@@ -2,6 +2,7 @@ import { Input, Select, Spin } from "antd"
 import React from "react"
 import { GlobalContext } from "../../context/Provider"
 import henceforthApi from "../../utils/henceforthApi"
+import { NumberValidation } from "../../utils/henceforthValidations"
 
 const EditInfoBoat = (props: any) => {
     const { Toast } = React.useContext(GlobalContext)
@@ -17,6 +18,7 @@ const EditInfoBoat = (props: any) => {
     const [manufactures_list, setManufactureresList] = React.useState([])
 
     const handleChange = async ({ name, value }: any) => {
+        if(name === "size" && !NumberValidation(value)) return
         setState((state: any) => {
             return {
                 ...state,
@@ -37,7 +39,7 @@ const EditInfoBoat = (props: any) => {
         }
         setLoading(true)
         try {
-            if (state.category_id && state.manufacturer_id && state.model && state.size) {
+            if (state.category_id && state.manufacturer_id && state.model.trim() && state.size.trim()) {
                 const apiRes = await henceforthApi.Boat.edit(state.id, items)
                 Toast.success(apiRes.message)
                 setIsExpended(false)
