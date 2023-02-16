@@ -31,10 +31,14 @@ const EditBasicBoat = (props: any) => {
         }
         setLoading(true)
         try {
-            const apiRes = await henceforthApi.Boat.edit(state.id, items)
-            Toast.success(apiRes.message)
-            setIsExpended(false)
-            await props.initialise()
+            if(state.name){
+                const apiRes = await henceforthApi.Boat.edit(state.id, items)
+                Toast.success(apiRes.message)
+                setIsExpended(false)
+                await props.initialise()
+        }else{
+            Toast.error("Enter Listing Title")
+        }
         } catch (error) {
             Toast.error(error)
         } finally {

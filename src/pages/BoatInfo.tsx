@@ -65,8 +65,6 @@ const BoatInfo = () => {
 
         } 
 
-
-
     }
 
     const initialise = async () => {

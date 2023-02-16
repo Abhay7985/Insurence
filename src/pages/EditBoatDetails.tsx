@@ -167,7 +167,7 @@ const EditBoatDetails = () => {
                     <div className="row">
                         <div className="col-12 mb-5">
                             <div className="title d-flex justify-content-between">
-                                <h2>Morning Panoramic</h2>
+                                <h2>{state.name}</h2>
                                 <div className="list-btn d-flex gap-4">
                                     <a href="#" className='d-flex gap-2 align-items-center text-dark'>
                                         <Dropdown menu={{ items: StatusItem }}>

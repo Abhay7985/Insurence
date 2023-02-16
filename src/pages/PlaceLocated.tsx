@@ -37,6 +37,7 @@ function PlaceLocated() {
 
 
     const handleState = (e: any) => {
+     
         setState({
             ...state,
             [e.target.name]: e.target.value
@@ -152,7 +153,7 @@ function PlaceLocated() {
                     autocomplete,
                     "place_changed",
                     () => {
-                        let place = autocomplete.getPlace();
+                        let place = autocomplete?.getPlace();
                         let formatAddress = place.formatted_address
                         const address = place.address_components
                         let latitude = place.geometry?.location.lat();
@@ -197,31 +198,31 @@ function PlaceLocated() {
                                         <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input1" className="form-label">Street</label>
-                                                <input type="text" className="form-control" id='input1' placeholder='Enter street' name="street" onChange={handleState} />
+                                                <input type="text" className="form-control" id='input1' value={state.street} placeholder='Enter street' name="street" onChange={handleState} />
                                             </div>
                                         </div>
                                         <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input4" className="form-label">Flat, Suite, etc. (optional)</label>
-                                                <input type="text" className="form-control" id='input4' placeholder='Enter flat, suite, etc.' name="flat" onChange={handleState} />
+                                                <input type="text" className="form-control" id='input4' placeholder='Enter flat, suite, etc.' value={state.flat} name="flat" onChange={handleState} />
                                             </div>
                                         </div>
                                         <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input5" className="form-label">City</label>
-                                                <input type="text" className="form-control" id='input5' placeholder='Enter City' name="city" onChange={handleState} />
+                                                <input type="text" className="form-control" id='input5' placeholder='Enter City' value={state.city} name="city" onChange={handleState} />
                                             </div>
                                         </div>
                                         <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input5" className="form-label">State (optional)</label>
-                                                <input type="text" className="form-control" id='input5' placeholder='Enter City' name="state" onChange={handleState} />
+                                                <input type="text" className="form-control" id='input5' placeholder='Enter City' name="state" value={state.state} onChange={handleState} />
                                             </div>
                                         </div>
                                         <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input5" className="form-label">Postcode (optional)</label>
-                                                <input type="text" className="form-control" id='input5' placeholder='Enter postcode' name="postCode" onChange={handleState} />
+                                                <input type="text" className="form-control" id='input5' placeholder='Enter postcode' value={state.postCode}  name="postCode" onChange={handleState} />
                                             </div>
                                         </div>
                                         <div className="col-11 col-lg-11">

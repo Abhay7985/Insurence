@@ -24,11 +24,17 @@ const EditAmenities = () => {
         }
         setLoading(true)
         try {
-            let apiRes = await henceforthApi.Boat.edit(match?.params.id as string, items)
-            Toast.success(apiRes.message)
-            window?.history?.back()
+            if(state[0]?.checked){
+                let apiRes = await henceforthApi.Boat.edit(match?.params.id as string, items)
+                Toast.success(apiRes.message)
+                window?.history?.back()
+            } else{
+                Toast.error("Please Select Amenities")
+            }
         } catch (error) {
             Toast.error(error)
+            
+        }finally{
             setLoading(false)
         }
     }
@@ -43,6 +49,7 @@ const EditAmenities = () => {
     const initialiseDetails = async () => {
         henceforthApi.setToken(authState?.access_token)
         try {
+            
             let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
             return res
         } catch (error) {
