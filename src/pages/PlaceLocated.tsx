@@ -143,12 +143,12 @@ function PlaceLocated() {
                 console.log("Latitude is :", successCallback.coords.latitude);
                 console.log("Longitude is :", successCallback.coords.longitude);
 
-
-                setForm({
-                    ...form,
-                    latitude: successCallback.coords.latitude,
-                    longitude: successCallback.coords.longitude
-                })
+                getLocationName(successCallback.coords.latitude,successCallback.coords.longitude)
+                // setForm({
+                //     ...form,
+                //     latitude: successCallback.coords.latitude,
+                //     longitude: successCallback.coords.longitude
+                // })
 
             }, (errorCallback) => {
                 console.log('errorCallback', errorCallback.message);
@@ -174,25 +174,20 @@ function PlaceLocated() {
             googleMapScript.addEventListener("load", callback);
         }
     }
-    const initPlaceAPI = () => {
-        loadGoogleMapScript(() => {
-            if (placeInputRef) {
-                let autocomplete = new (window as any).google.maps.places.Autocomplete(
-                    placeInputRef.current
-                );
-                new (window as any).google.maps.event.addListener(
-                    autocomplete,
-                    "place_changed",
-
-                    () => {
-                        let place = autocomplete.getPlace();
-                        let formatAddress = place.formatted_address
-                        const address = place.address_components
-
-                        console.log("formatAddress", formatAddress);
-                        console.log("address", address);
-
-                        let items: any = {}
+    const getLocationName = async (lat:number,lng:number) => {
+            let address: any
+                let latlng = new (window as any).google.maps.LatLng(
+                    lat,
+                    lng
+                )
+                var geocoder = new (window as any).google.maps.Geocoder()
+                geocoder.geocode({ latLng: latlng }, async (results: any, status: any) => {
+                    address = results[0].address_components
+                    setLoactionsFromLatlng(address,'',lat,lng)
+                })
+    }
+    const setLoactionsFromLatlng=(address:Array<any>,formatAddress:string,lat:number,lng:number)=>{
+        let items: any = {}
                         if (Array.isArray(address) && address.length > 0) {
                             let zipIndex = address.findIndex(res => res.types.includes("postal_code"))
                             let administrativeAreaIndex = address.findIndex(res => res.types.includes("administrative_area_level_1", "political"))
@@ -204,8 +199,6 @@ function PlaceLocated() {
                             let route = address.findIndex(res => res.types.includes('route'))
                             let subpremise = address.findIndex(res => res.types.includes('subpremise'))
                             let street_number = address.findIndex(res => res.types.includes('street_number'))
-
-
                             if (zipIndex > -1) {
                                 items.pin_code = address[zipIndex].long_name
                             }
@@ -230,8 +223,8 @@ function PlaceLocated() {
                             items.full_address = formatAddress
 
                         }
-                        let latitude = place.geometry?.location.lat();
-                        let longitude = place.geometry?.location.lng();
+                        let latitude = lat;
+                        let longitude = lng;
 
                         setForm({
                             ...form,
@@ -249,6 +242,23 @@ function PlaceLocated() {
                                 country: items?.country,
                             }
                         })
+    }
+    const initPlaceAPI = () => {
+        loadGoogleMapScript(() => {
+            if (placeInputRef) {
+                let autocomplete = new (window as any).google.maps.places.Autocomplete(
+                    placeInputRef.current
+                );
+                new (window as any).google.maps.event.addListener(
+                    autocomplete,
+                    "place_changed",
+                    () => {
+                        let place = autocomplete.getPlace();
+                        let formatAddress = place.formatted_address
+                        const address = place.address_components
+                        console.log("formatAddress", formatAddress);
+                        console.log("address", address);
+                        setLoactionsFromLatlng(address,formatAddress,place.geometry?.location.lat(),place.geometry?.location.lng())
                     }
                 );
             }
@@ -318,7 +328,7 @@ function PlaceLocated() {
                                                         <Select
                                                             showSearch
                                                             size={'middle'}
-                                                            defaultValue={state.country?state.country:"Enter country / region"}
+                                                            defaultValue={state.country ? state.country : "Enter country / region"}
                                                             onChange={handleChange}
                                                             style={{ width: '100%' }}
                                                             options={CountryCodeJson.map((res) => { return { value: res.code, label: res.name } })}
