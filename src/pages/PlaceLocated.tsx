@@ -126,7 +126,7 @@ function PlaceLocated() {
     const handleChange = (value: string) => {
         setState({
             ...state,
-            country: value
+            country: CountryCodeJson.find(res => res.name == value)?.code as string
         })
     };
     const onKeyDown = (keyEvent: any) => {
@@ -331,7 +331,8 @@ function PlaceLocated() {
                                                             defaultValue={state.country ? state.country : "Enter country / region"}
                                                             onChange={handleChange}
                                                             style={{ width: '100%' }}
-                                                            options={CountryCodeJson.map((res) => { return { value: res.code, label: res.name } })}
+                                                            autoClearSearchValue={true}
+                                                            options={CountryCodeJson.map((res) => { return { value: res.name, label: res.name } })}
 
                                                         />
                                                     </Space>

@@ -26,7 +26,7 @@ const EditLocationBoat = (props: any) => {
     const [loading, setLoading] = React.useState(false)
 
     const handleChange = async ({ name, value }: any) => {
-        if(name === "postCode" && !NumberValidation(value)) return
+        if (name === "postCode" && !NumberValidation(value)) return
         setState((state: any) => {
             return {
                 ...state,
@@ -124,8 +124,11 @@ const EditLocationBoat = (props: any) => {
                                                 defaultValue={state.country}
                                                 showSearch
                                                 className='w-100'
-                                                onChange={(e) => handleChange({ name: 'country', value: e })}
-                                                options={CountryCodeJson.map((res) => { return { value: res.code, label: res.name } })}
+                                                onChange={(e) => handleChange({
+                                                    name: 'country',
+                                                     value:CountryCodeJson.find(res => res.name == e)?.code
+                                                })}
+                                                options={CountryCodeJson.map((res) => { return { value: res.name, label: res.name } })}
                                             />
                                         </div>
                                     </div>
