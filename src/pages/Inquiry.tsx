@@ -24,12 +24,6 @@ const InquiryPage = () => {
         data: [],
         per_page: 10
     })
-
-    const onStatusChanged = () => {
-
-    }
-
-
     const filternavigate = () => {
         navigate({ search: uRLSearchParams.toString() })
     }

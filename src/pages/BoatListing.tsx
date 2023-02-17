@@ -89,7 +89,7 @@ const BoatListing = () => {
                     <div className="row gy-4">
                         <div className="col-12 mb-3">
                             <div className="boat-listing-header d-flex justify-content-between">
-                               <h2>{state.total==1 ? `${state.total}Boat` :`${state.total}Boats`}</h2>
+                               <h2>{state.total==1 ? `${state.total} Boat` :`${state.total} Boats`}</h2>
                                 <div className="add-boat-btn">
                                     <Link to={`/boat/add/info`} className='nav-link'>
                                         <button className='btn btn-yellow d-flex align-items-center gap-2'>

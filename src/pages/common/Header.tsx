@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import logo from '../../assets/icons/logo_header.svg'
 import { GlobalContext } from '../../context/Provider'
 import React, { Fragment } from "react";
@@ -10,6 +10,8 @@ import henceforthApi from '../../utils/henceforthApi';
 const Header = () => {
     const { authState, logOutNow } = useContext(GlobalContext)
     const location = useLocation()
+    const params= useParams();
+   const { id } = useParams()
     const menuStyle = {
         boxShadow: 'none',
     };
@@ -40,7 +42,7 @@ const Header = () => {
         },
 
     ];
-
+    console.log(location)
     return (
         <>
             <div className="container">
@@ -54,7 +56,7 @@ const Header = () => {
                     <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                         {location.pathname !== "/boat/add/info" && 
                             <form className="d-flex" role="search">
-                                {authState.access_token ?
+                                {authState.access_token && !location.pathname.includes('/boat') || location.pathname==`/boat/${id}/inquiry`  ?
                                     <ul className='d-flex flex-column flex-lg-row flex-wrap align-items-center gap-3 gap-lg-5 mt-3 mt-lg-0'>
                                         <li>
                                             <Link to='/' className='nav-link'>Boats</Link>
@@ -78,12 +80,13 @@ const Header = () => {
                                             </Dropdown>
                                         </li>
                                     </ul> :
+                                    
                                     <ul className='d-flex gap-2 flex-wrap'>
                                         <li>
                                             <button className="btn btn-outline-dark" type="submit">Help</button>
                                         </li>
                                         <li>
-                                            <Button htmlType="submit" className="btn btn-yellow" onClick={logOutNow}>Save & Exit</Button>
+                                            <Button htmlType="submit" className="btn btn-yellow h-100" onClick={logOutNow}>Save & Exit</Button>
                                         </li>
                                     </ul>}
                             </form>}

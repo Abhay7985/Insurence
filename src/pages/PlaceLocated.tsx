@@ -77,16 +77,17 @@ function PlaceLocated() {
             } else if (!state.street) {
                 Toast.error("Enter Street")
             } else if (!state.flat) {
-                Toast.error("Enter Flat")
+                Toast.error("Enter Flat Name")
             }
             else if (!state.city) {
-                Toast.error("Enter city Name")
+                Toast.error("Enter City Name")
 
             } else if (!state.state) {
-                Toast.error("Enter state Name")
-            } else if (!state.postCode) {
-                Toast.error("Enter Postcode")
-            }
+                Toast.error("Enter State Name")
+            } 
+            // else if (!state.postCode) {
+            //     Toast.error("Enter Postcode")
+            // }
             else if (!state.country) {
                 Toast.error("Enter Country")
             }
