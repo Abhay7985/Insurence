@@ -84,6 +84,7 @@ const EditImage = () => {
 
     }
     const removeImage = async (index: number) => {
+        debugger
         const data = photos
         data.splice(index, 1)
         setPhotos([...data])

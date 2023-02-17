@@ -93,9 +93,6 @@ const BoatDetails = () => {
             state?.location?.longitude
         )
         createMerker(latlng, map)
-        map.addListener("click", (event: google.maps.MapMouseEvent) => {
-
-        });
     }
 
     return (
@@ -114,10 +111,10 @@ const BoatDetails = () => {
                                     <p>{state.category} • {state?.address?.address1}</p>
                                 </div>
                                 <a href={`http://15.229.56.53/boat/${state.id}`} target="_blank">
-                                <div className="share-btn align-self-end d-flex gap-2 align-items-center" >
-                                    <HenceforthIcons.Share />
-                                    <span> Share</span>
-                                </div>
+                                    <div className="share-btn align-self-end d-flex gap-2 align-items-center" >
+                                        <HenceforthIcons.Share />
+                                        <span> Share</span>
+                                    </div>
                                 </a>
                             </div>
                         </div>
@@ -125,7 +122,7 @@ const BoatDetails = () => {
                             <div className="row gy-4 py-4 ms-0">
                                 <div className="col-md-6 ps-0">
                                     <div className="morning-banner">
-                                        <img src={state.cover_image ?`${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}` : BannerImage} alt="img" className='img-fluid' />
+                                        <img src={state.cover_image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}` : BannerImage} alt="img" className='img-fluid' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
@@ -191,8 +188,8 @@ const BoatDetails = () => {
                                     <div style={{ height: '400px', width: '100%', borderRadius:'6px', overflow:'hidden'}}>
                                         <HenceforthGoogleMap
                                             ref={googleMapRef}
-                                            defaultCenter={state?.location}
-                                            // center={onAddressChanged.center}
+                                            defaultCenter={defaultProps.center}
+                                            center={{lat:state?.location?.latitude, lng:state?.location?.longitude}}
                                             zoom={defaultProps.zoom}
                                             defaultZoom={defaultProps.zoom}
                                             onGoogleApiLoaded={onGoogleApiLoaded}

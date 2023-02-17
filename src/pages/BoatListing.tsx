@@ -1,7 +1,7 @@
 import addIcon from '../assets/icons/plus_white.svg'
 import search from '../assets/icons/search.svg'
 import boatImage from '../assets/images/boat_four.png'
-import { Badge, Pagination, Select, Space, Spin } from 'antd';
+import { Pagination, Select, Spin } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import henceforthApi from '../utils/henceforthApi';
 import React, { useEffect, useState } from 'react';
@@ -193,7 +193,6 @@ const BoatListing = () => {
                             <Pagination
                                 pageSize={state.per_page}
                                 total={state.total}
-                                // total={state.total_count}
                                 current={Number(urlSearchParams.has('page') ? urlSearchParams.get('page') : "1")}
                                 onChange={(page: any) => onChangePagination(page)}
                             />
