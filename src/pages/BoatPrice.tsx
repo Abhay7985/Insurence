@@ -27,6 +27,7 @@ const BoatPrice = () => {
     const [spinning, setSpinning] = React.useState(false)
 
     const [routes, setRoutes] = useState<Array<RouteData>>([])
+    const [index, setIndex] = useState<number>(0)
 
     const onSubmit = async (e: any) => {
         e.preventDefault()
@@ -47,11 +48,11 @@ const BoatPrice = () => {
 
 
         try {
-            if (!routes[0]?.selected) {
+            if (!routes[index]?.selected) {
                 Toast.error("Select Routes")
-            } else if (!routes[0]?.price) {
+            } else if (!routes[index]?.price) {
                 Toast.error("Add Price")
-            } else if (!routes[0]?.installments || !routes[0]?.installment_price) {
+            } else if (!routes[index]?.installments || !routes[index]?.installment_price) {
                 Toast.error("Add Installments")
             }
             else {
@@ -89,7 +90,7 @@ const BoatPrice = () => {
     }, [])
 
     const handleChange = async (name: string, value: any, index: number) => {
-        console.log('name,value',name,value)
+        setIndex(index)
         if(name === "price" && !NumberValidation(value)) return
         if(name === "installments" && !NumberValidation(value)) return
         if(name === "installment_price" && !NumberValidation(value)) return

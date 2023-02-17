@@ -181,7 +181,6 @@ const BoatListing = () => {
                                                     <li>
                                                         <Link to={`/boat/${e?.id}/inquiry/edit`}> <HenceforthIcons.EditIcon /></Link>
                                                     </li>
-
                                                 </ul>
                                             </td>
                                         </tr>

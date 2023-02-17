@@ -1,5 +1,5 @@
 import { Spin } from "antd"
-import React from "react"
+import React, { useState } from "react"
 import { GlobalContext } from "../../context/Provider"
 import henceforthApi from "../../utils/henceforthApi"
 import { NumberValidation } from "../../utils/henceforthValidations"
@@ -23,8 +23,11 @@ const EditPriceBoat = (props: any) => {
     const [isExpended, setIsExpended] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
     const [dataRoute, setDataRoute] = React.useState<Array<RouteDataInterface>>([])
+    const [index , setIndex] = useState<number>(0)
+console.log(props);
 
     const handleChange = async (name: string, value: any, index: number) => {
+        setIndex(index)
         if(name === "price" && !NumberValidation(value)) return
         if(name === "installments" && !NumberValidation(value)) return
         if(name === "installment_price" && !NumberValidation(value)) return
@@ -61,13 +64,22 @@ const EditPriceBoat = (props: any) => {
 
         setLoading(true)
         try {
-            const apiRes = await henceforthApi.Boat.edit(state.id, items)
-            Toast.success(apiRes.message)
-            setIsExpended(false)
-            setState({
-                ...state,
-                prices: stateData
-            })
+            if (!dataRoute[index]?.selected) {
+                Toast.error("Select Routes")
+            } else if (!dataRoute[index]?.price) {
+                Toast.error("Add Price")
+            } else if (!dataRoute[index]?.installments || !dataRoute[index]?.installment_price) {
+                Toast.error("Add Installments")
+            }else{
+
+                const apiRes = await henceforthApi.Boat.edit(state.id, items)
+                Toast.success(apiRes.message)
+                setIsExpended(false)
+                setState({
+                    ...state,
+                    prices: stateData
+                })
+            }
             await props.initialise()
         } catch (error) {
             Toast.error(error)

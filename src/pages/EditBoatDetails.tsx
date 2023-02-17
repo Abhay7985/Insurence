@@ -337,15 +337,17 @@ const EditBoatDetails = () => {
                                             }
 
                                         </div>
+                                        {state.name && state.prices &&
+                                                <EditPriceBoat {...state} initialise={initialise} />
+                                            }
+
                                         {/* Pricing and Availability */}
                                         <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                             {/* Pricing */}
 
                                             {/* edit-pricing */}
-                                            {state.name && state.prices &&
-                                                <EditPriceBoat {...state} initialise={initialise} />
-                                            }
-
+                                        
+                                         
                                             {/* Calender availability */}
                                             <div className="Calender-availability bg-white p-4 ">
                                                 <div className="photo-header d-flex justify-content-between mb-3">
