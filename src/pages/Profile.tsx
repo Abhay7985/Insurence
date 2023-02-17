@@ -43,7 +43,7 @@ const Profile = () => {
     try {
       const image = await fileupload(file)
       const item = {
-        photo: image
+        image: image
       }
       let apiRes = await henceforthApi.Auth.editProfile(item)
       loginSuccess(apiRes.update)(authDispatch)

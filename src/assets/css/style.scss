@@ -204,6 +204,19 @@
 
 .text-area {
     min-height: 120px !important;
+    width: 100%;
+    border: 1px solid $light-gray;
+    outline: none;
+    padding: 10px;
+    border-radius: 4px;
+
+    &:hover {
+        border-color: $primary-color;
+    }
+
+    &:focus {
+        border-color: $primary-color;
+    }
 }
 
 // ************************************Morning Panormic section****************************
@@ -664,4 +677,21 @@
     font-size: 16px;
 }
 
-// .ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input{height: 100%;margin-left: 7px;}
+
+// bugs
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input{
+    height: 100%;margin-left: 7px;
+}
+.ant-pagination-options{
+    display: none !important;
+}
+.ant-select-arrow{
+    color: $dark-black !important;
+    svg{
+        font-size: 14px !important;
+    }
+}
+
+.ant-dropdown-menu-title-content{
+    font-weight: bold;
+}

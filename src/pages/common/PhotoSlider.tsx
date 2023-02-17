@@ -1,10 +1,11 @@
 import SliderImage from '../../assets/images/boat_three.png';
+import henceforthApi from '../../utils/henceforthApi';
 
-const PhotoSlider = () => {
+const PhotoSlider = (props:any) => {
     return (
         <>
-            <div className="photo-slider">
-                <img src={SliderImage} className='img-fluid' alt='img' />
+            <div className="photo-slider" key={props.order}>
+                <img src={`${henceforthApi.API_FILE_ROOT_ORIGINAL}${props.image}`} className='img-fluid' alt='img' />
             </div>
         </>
     )

@@ -50,7 +50,8 @@ const ChangePassword = () => {
                                             <button className='btn border-0 text-yellow fw-bold p-0' onClick={() => setEditEnable(!editEnable)}>{editEnable ? 'Cancel' : 'Update'}</button>
                                         </div>
                                     </div>
-                                    <p>Last updated 9 months ago</p>
+                                    {!editEnable ? <p>Last updated 9 months ago</p> :""  }
+                                    
                                     {/* edit-email */}
                                     <Form onFinish={handleSubmit}>
                                         {editEnable ?

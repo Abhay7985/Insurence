@@ -34,6 +34,16 @@ const InquiryPage = () => {
         navigate({ search: uRLSearchParams.toString() })
     }
 
+    const handleSearch = (name: string, value: any) => {
+        if (value) {
+            console.log(name, value);
+            uRLSearchParams.set(name, value)
+        } else {
+            uRLSearchParams.delete(name)
+        }
+        filternavigate()
+    }
+
     const handleSocialFilter = (value: string) => {
         uRLSearchParams.set('social', value)
         filternavigate()
@@ -76,6 +86,7 @@ const InquiryPage = () => {
     ];
 
 
+
     React.useEffect(() => {
         initialise()
     }, [match?.params.type, match?.params.page, uRLSearchParams.get('social')])
@@ -106,7 +117,17 @@ const InquiryPage = () => {
                                 <span className="input-group-text bg-transparent border-0" id="basic-addon1">
                                     <img src={search} alt="icon" />
                                 </span>
-                                <input type="text" className="form-control border-0 ps-0 rounded-pill" placeholder="Search..." />
+                                <form onSubmit={(e: any) => {
+                                    e.preventDefault();
+                                    handleSearch('search', e.target.search.value);
+                                }}>
+                                    <input type="text" className="form-control border-0 ps-0 rounded-pill" name='search' placeholder="Search..." onChange={(e: any) => {
+                                        if (!e.target.value) {
+                                            handleSearch(e.target.name, e.target.value);
+                                        }
+                                    }} />
+                                </form>
+                                {/* <input type="text" className="form-control border-0 ps-0 rounded-pill" placeholder="Search..." /> */}
                             </div>
                         </div>
                         <div className="col-12">

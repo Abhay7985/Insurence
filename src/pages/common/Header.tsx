@@ -52,7 +52,7 @@ const Header = () => {
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                        {location.pathname !== "/boat/add/info" &&
+                        {location.pathname !== "/boat/add/info" && 
                             <form className="d-flex" role="search">
                                 {authState.access_token ?
                                     <ul className='d-flex flex-column flex-lg-row flex-wrap align-items-center gap-3 gap-lg-5 mt-3 mt-lg-0'>

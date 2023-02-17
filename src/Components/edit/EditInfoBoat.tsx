@@ -2,6 +2,7 @@ import { Input, Select, Spin } from "antd"
 import React from "react"
 import { GlobalContext } from "../../context/Provider"
 import henceforthApi from "../../utils/henceforthApi"
+import { NumberValidation } from "../../utils/henceforthValidations"
 
 const EditInfoBoat = (props: any) => {
     const { Toast } = React.useContext(GlobalContext)
@@ -17,6 +18,7 @@ const EditInfoBoat = (props: any) => {
     const [manufactures_list, setManufactureresList] = React.useState([])
 
     const handleChange = async ({ name, value }: any) => {
+        if(name === "size" && !NumberValidation(value)) return
         setState((state: any) => {
             return {
                 ...state,
@@ -37,10 +39,14 @@ const EditInfoBoat = (props: any) => {
         }
         setLoading(true)
         try {
-            const apiRes = await henceforthApi.Boat.edit(state.id, items)
-            Toast.success(apiRes.message)
-            setIsExpended(false)
-            await props.initialise()
+            if (state.category_id && state.manufacturer_id && state.model.trim() && state.size.trim()) {
+                const apiRes = await henceforthApi.Boat.edit(state.id, items)
+                Toast.success(apiRes.message)
+                setIsExpended(false)
+                await props.initialise()
+            } else {
+                Toast.error("Enter Complete Boat Details")
+            }
         } catch (error) {
             Toast.error(error)
         } finally {
@@ -66,12 +72,12 @@ const EditInfoBoat = (props: any) => {
         <div className="photo-header d-flex justify-content-between border px-4 py-4 rounded-1 mb-3" >
             <div className="edit-details w-100">
 
-            <div className="d-flex justify-content-between mb-2" >
-                        <h6 className=''>Boat Detail</h6>
-                {isExpended ?
-                    <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => { setIsExpended(false); setState(props) }}>Cancel</button> :
-                    <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => setIsExpended(true)}>Edit</button>}
-                    </div>
+                <div className="d-flex justify-content-between mb-2" >
+                    <h6 className=''>Boat Detail</h6>
+                    {isExpended ?
+                        <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => { setIsExpended(false); setState(props) }}>Cancel</button> :
+                        <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => setIsExpended(true)}>Edit</button>}
+                </div>
                 {isExpended ?
                     <form className="edit-input" onSubmit={onSubmit}>
                         <div className="row">
@@ -131,7 +137,7 @@ const EditInfoBoat = (props: any) => {
                     </div>}
             </div>
 
-           
+
         </div>
     </Spin>
 }

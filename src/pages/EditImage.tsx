@@ -50,14 +50,19 @@ const EditImage = () => {
     }
     const uploadImage = async () => {
         try {
+
             setSpinning(true)
             const photos = await uploadImages()
             let items = {
                 photos: photos.map((res) => { return { photo: res } })
             }
+            if (photos.length > 0) {
+                let res = await henceforthApi.Boat.edit(match?.params.id as string, items)
+                window.history.back()
+            } else {
+                Toast.error("Add Images")
+            }
 
-            let res = await henceforthApi.Boat.edit(match?.params.id as string, items)
-            window.history.back()
         } catch (error) {
             Toast.error(error)
         } finally {
@@ -65,7 +70,17 @@ const EditImage = () => {
         }
 
     }
-    const initialiseCover = async () => {
+    const initialiseCover = async (img: any) => {
+        let items = {
+            cover_photo: img
+        }
+
+        try {
+            let res = await henceforthApi.Boat.edit(match?.params.id as string, items)
+            Toast.success(res.message)
+        } catch (error) {
+
+        }
 
     }
     const removeImage = async (index: number) => {

@@ -1,9 +1,9 @@
 enum OrderStatus {
     draft = "draft",
     listed = "listed",
-    list = "list",
+    list = "listed",
     unlisted = "unlisted",
-    unlist = "unlist",
+    unlist = "unlisted",
 }
 enum InquiryStatus {
     open = "open",

@@ -47,15 +47,19 @@ const AmenitiesOffer = () => {
             }
         }
         try {
-            setLoading(true)
-            let apiRes = await henceforthApi.Boat.create(items)
-            Toast.success(apiRes.message)
-
-            navigate({
-                pathname: `/boat/${match?.params.id}/photos`,
-                search: uRLSearchParams.toString()
-            })
-
+            if(amenities.length>0){
+                setLoading(true)
+                let apiRes = await henceforthApi.Boat.create(items)
+                Toast.success(apiRes.message)
+    
+                navigate({
+                    pathname: `/boat/${match?.params.id}/photos`,
+                    search: uRLSearchParams.toString()
+                })    
+            } else{
+                Toast.error("Enter Amenities")
+            }
+        
         } catch (error: any) {
             if (error.response.body.message.amenities) return Toast.error(error.response.body.message.amenities[0])
         } finally {
@@ -91,8 +95,8 @@ const AmenitiesOffer = () => {
                                     {amenitiesOffers.map((e: any, index: number) =>
                                         <div className="col-12 col-lg-11" key={index}>
                                             <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value={e?.id} onChange={(e: any) => handleChecked(e)} id="check1" />
-                                                <label className="form-check-label" htmlFor="check1">
+                                                <input className="form-check-input" type="checkbox" value={e?.id} onChange={(e: any) => handleChecked(e)} id={`check1${index}`} />
+                                                <label className="form-check-label" htmlFor={`check1${index}`}>
                                                     {e?.amenity}
                                                 </label>
                                             </div>

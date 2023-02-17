@@ -99,6 +99,9 @@ const showPrice = (price: number) => {
     parts = parts?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     return parts
 }
+const  capFirst=(str:string) =>{
+    return str[0].toUpperCase() + str.slice(1);
+}
 
 const henceforthValidations = {
     roundOffCeil,
@@ -123,6 +126,7 @@ const henceforthValidations = {
     ObjectValidation,
     LengthValidation,
     strongPassword,
-    showPrice
+    showPrice,
+    capFirst
 }
 export default henceforthValidations

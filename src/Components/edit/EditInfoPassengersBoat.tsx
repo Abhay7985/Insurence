@@ -66,7 +66,7 @@ const EditInfoPassengersBoat = (props: any) => {
                                 <div className="add-btn">
                                     <ul className='d-flex gap-1 align-items-center'>
                                         <li>
-                                            <button className='btn border-0' type="button" onClick={() => handleChange({ name: 'passenger_day', value: state.passenger_day - 1 })} disabled={state.passenger_day === 1}>
+                                            <button className='btn border-0' type="button" onClick={() => handleChange({ name: 'passenger_day', value: state.passenger_day - 1 })} disabled={state.passenger_day == 1}>
                                                 <img src={decrease} alt="icon" />
                                             </button>
                                         </li>
@@ -88,7 +88,7 @@ const EditInfoPassengersBoat = (props: any) => {
                                 <div className="add-btn">
                                     <ul className='d-flex gap-1 align-items-center'>
                                         <li>
-                                            <button className='btn border-0' type="button" onClick={() => handleChange({ name: 'passenger_night', value: state.passenger_night - 1 })} disabled={state.passenger_night === 1}>
+                                            <button className='btn border-0' type="button" onClick={() => handleChange({ name: 'passenger_night', value: state.passenger_night - 1 })} disabled={state.passenger_night == 1}>
                                                 <img src={decrease} alt="icon" />
                                             </button>
                                         </li>

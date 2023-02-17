@@ -6,6 +6,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import henceforthApi from '../utils/henceforthApi';
 import { GlobalContext } from '../context/Provider';
 import { NumberValidation } from '../utils/henceforthValidations';
+import { Spin } from 'antd';
+import BackNextLayout from '../Components/boat/BackNextLayout';
 
 const BoatInfo = () => {
     const { authState } = React.useContext(GlobalContext)
@@ -23,6 +25,12 @@ const BoatInfo = () => {
     const [manufacturer_id, setManufacturerId] = useState("")
     const { Toast } = React.useContext(GlobalContext)
 
+    const [loading, setLoading] = React.useState(false)
+     
+    const [boatState , setboatState] = useState({
+
+    })
+
 
     const onSubmit = async (e: any) => {
         henceforthApi.setToken(authState?.access_token)
@@ -35,7 +43,7 @@ const BoatInfo = () => {
         uRLSearchParams.set("manufacturer_id", manufacturer_id)
 
         try {
-            if (!boatName) {
+            if (!boatName.trim()) {
                 Toast.error('Enter Boat Name')
             } else if (!category_id) {
                 Toast.error("Enter Category")
@@ -45,14 +53,14 @@ const BoatInfo = () => {
                 Toast.error("Enter manufacturer")
 
             }
+            else if (!boatModel.trim()) {
+                Toast.error("Enter Boat Model")
+            }
             else if (!boatSize) {
                 Toast.error("Enter Boat Size")
 
             }
-            else if (!boatModel) {
-                Toast.error("Enter Boat Model")
-
-            } else {
+            else {
                 navigate({
                     pathname: '/boat/passengers',
                     search: uRLSearchParams.toString()
@@ -61,9 +69,6 @@ const BoatInfo = () => {
         } catch (error) {
 
         }
-
-
-
     }
 
     const initialise = async () => {
@@ -83,8 +88,6 @@ const BoatInfo = () => {
         initialise()
     }, [])
 
-
-
     return (
         // boat-details
         <section className="boat-details-section h-100">
@@ -92,7 +95,7 @@ const BoatInfo = () => {
                 <form className="row h-100" onSubmit={onSubmit}>
                     <div className="col-lg-6">
                         <div className="banner-content h-100 d-flex flex-column justify-content-between">
-                            <div className="row justify-content-center justify-content-lg-end h-100">
+                            <div className="row justify-content-center justify-content-lg-end">
                                 <div className="col-11 col-lg-11">
                                     <h3 className='banner-title'>Please enter the details of the boat</h3>
                                 </div>
@@ -112,7 +115,7 @@ const BoatInfo = () => {
                                                     defaultValue={category_id}
                                                     onChange={setCategoryId}
                                                     style={{ width: '100%' }}
-                                                    options={[{ value: "", label: "Select" }, ...state?.category?.map((res: any) => { return { value: res?.id, label: res.category } })]}
+                                                    options={[{ value: "", label: "Select category" }, ...state?.category?.map((res: any) => { return { value: res?.id, label: res.category } })]}
                                                 />
                                             </Space>
                                         </div>
@@ -128,7 +131,7 @@ const BoatInfo = () => {
                                                     defaultValue={manufacturer_id}
                                                     onChange={setManufacturerId}
                                                     style={{ width: '100%' }}
-                                                    options={[{ value: "", label: "Select" }, ...state?.manufacturer?.map((res: any) => { return { value: res?.id, label: res.manufacturer } })]}
+                                                    options={[{ value: "", label: "Select manufacturer" }, ...state?.manufacturer?.map((res: any) => { return { value: res?.id, label: res.manufacturer } })]}
                                                 />
                                             </Space>
                                         </div>
@@ -137,56 +140,18 @@ const BoatInfo = () => {
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-2 mb-sm-3">
                                         <label htmlFor="input4" className="form-label">Model</label>
-                                        <input type="text" className="form-control" id='input4' placeholder='Enter model' value={boatModel} onChange={(e) => setBoatModel(e.target.value)} />                                    </div>
-                                </div>
-                                <div className="col-11 col-lg-11">
-                                    <div className="mb-2 mb-sm-3">
-                                        <label htmlFor="input5" className="form-label">Size</label>
-                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) => setBoatSize(e.target.value)} />
-                                    </div>
-                                </div>
-                                <div className="col-11 col-lg-11">
-                                    <div className="mb-2 mb-sm-3">
-                                        <label htmlFor="input4" className="form-label">Model</label>
                                         <input type="text" className="form-control" id='input4' placeholder='Enter model' value={boatModel} onChange={(e) => setBoatModel(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-2 mb-sm-3">
                                         <label htmlFor="input5" className="form-label">Size</label>
-                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) => setBoatSize(e.target.value)} />
-                                    </div>
-                                </div>
-                                <div className="col-11 col-lg-11">
-                                    <div className="mb-2 mb-sm-3">
-                                        <label htmlFor="input4" className="form-label">Model</label>
-                                        <input type="text" className="form-control" id='input4' placeholder='Enter model' value={boatModel} onChange={(e) => setBoatModel(e.target.value)} />
-                                    </div>
-                                </div>
-                                <div className="col-11 col-lg-11">
-                                    <div className="mb-2 mb-sm-3">
-                                        <label htmlFor="input5" className="form-label">Size</label>
-                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) => setBoatSize(e.target.value)} />
+                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) =>{setBoatSize(e.target.value.replace(/[^.0-9]/g, ""))}} />
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div className="col-md-6 sticky-bottom mt-auto bg-white ">
-                            <div className="row banner-footer border-top  justify-content-end">
-                                <div className="col-11 col-lg-11">
-                                    <ul className='d-flex justify-content-between'>
-                                        <li>
-                                            <button type='button' onClick={() => window.history.back()} className='btn back-btn border-0'>Back</button>
-                                        </li>
-                                        <li>
-                                            <button type='submit' className='btn btn-yellow px-3' >Next</button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
+                        <BackNextLayout />
                     </div>
                     <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
                         <div className="banner-image border">

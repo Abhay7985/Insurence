@@ -5,6 +5,7 @@ import bannerImage from '../assets/images/image_six.png';
 import BackNextLayout from '../Components/boat/BackNextLayout';
 import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
+import { NumberValidation } from '../utils/henceforthValidations';
 
 interface RouteData {
     price?: number,
@@ -88,14 +89,19 @@ const BoatPrice = () => {
     }, [])
 
     const handleChange = async (name: string, value: any, index: number) => {
+        console.log('name,value',name,value)
+        if(name === "price" && !NumberValidation(value)) return
+        if(name === "installments" && !NumberValidation(value)) return
+        if(name === "installment_price" && !NumberValidation(value)) return
+
         const data = routes[index] as any
         if (typeof value == "boolean") {
             data.selected = value
         }
-        console.log(data);
+
         data[name] = value
         setRoutes([...routes])
-    }
+            }
 
 
 
@@ -113,8 +119,8 @@ const BoatPrice = () => {
                                     {routes.map((res: any, index: number) =>
                                         <div className="col-11 col-lg-11" key={res.id}>
                                             <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value={res.id} checked={res.selected} id="boat-check-1" onChange={(e: any) => handleChange(e.target.name, e.target.checked, index)} />
-                                                <label className="form-check-label" htmlFor="boat-check-1">
+                                                <input className="form-check-input" type="checkbox" value={res.id} checked={res.selected} id={`boat-check-1${index}`} onChange={(e: any) => handleChange(e.target.name, e.target.checked, index)} />
+                                                <label className="form-check-label" htmlFor={`boat-check-1${index}`}>
                                                     {res.route_name}
                                                 </label>
                                             </div>
@@ -122,7 +128,7 @@ const BoatPrice = () => {
                                                 <div className="col-md-12">
                                                     <div className="mb-3 ps-sm-4">
                                                         <label htmlFor="exampleInputEmail1" className="form-label">Price (cash)</label>
-                                                        <input type="text" className="form-control" id="exampleInputEmail1" name='price' placeholder='Enter price' onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
+                                                        <input type="text" className="form-control" id="exampleInputEmail1" name='price' placeholder='Enter price' value={res.price?res.price:''} onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
                                                     </div>
                                                     <div className="ps-sm-4">
                                                         <label htmlFor="exampleInputEmail2" className="form-label">Price (installments)</label>

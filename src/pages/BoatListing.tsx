@@ -46,6 +46,16 @@ const BoatListing = () => {
         navigate({ search: urlSearchParams.toString() })
     }
 
+    const onChangePagination = (value: string) => {
+        if (value) {
+            urlSearchParams.set('page', value)
+        }
+        else {
+            urlSearchParams.delete('page')
+        }
+        navigate({ search: urlSearchParams.toString() })
+    }
+
     const boatListing = async () => {
         henceforthApi.setToken(authState?.access_token)
         try {
@@ -72,16 +82,6 @@ const BoatListing = () => {
         { status: henceofrthEnums.OrderStatus.unlisted, color: henceofrthEnums.OrderColor.unlisted },
     ]
 
-    const onChangePagination = (value: string) => {
-        if (value) {
-            urlSearchParams.set('page', value)
-        }
-        else {
-            urlSearchParams.delete('page')
-        }
-        navigate({ search: urlSearchParams.toString() })
-    }
-
     return (
         <Spin spinning={loading} >
             <section className="boat-listing py-5 px-2 px-sm-0">
@@ -89,7 +89,7 @@ const BoatListing = () => {
                     <div className="row gy-4">
                         <div className="col-12 mb-3">
                             <div className="boat-listing-header d-flex justify-content-between">
-                                <h2>{state.total} Boats</h2>
+                               <h2>{state.total==1 ? `${state.total}Boat` :`${state.total}Boats`}</h2>
                                 <div className="add-boat-btn">
                                     <Link to={`/boat/add/info`} className='nav-link'>
                                         <button className='btn btn-yellow d-flex align-items-center gap-2'>
@@ -106,7 +106,16 @@ const BoatListing = () => {
                                     <span className="search-icon border-0" id="basic-addon1">
                                         <img src={search} alt="icon" />
                                     </span>
-                                    <input type="text" className="form-control rounded-pill px-5" name='search' placeholder="Search..." value={urlSearchParams.get('search') as string} onChange={(e: any) => handleSearch(e.target.name, e.target.value)} />
+                                    <form onSubmit={(e: any) => {
+                                        e.preventDefault();
+                                        handleSearch('search', e.target.search.value);
+                                    }}>
+                                        <input type="text" className="form-control rounded-pill px-5" name='search' placeholder="Search..." onChange={(e: any) => {
+                                            if (!e.target.value) {
+                                                handleSearch(e.target.name, e.target.value);
+                                            }
+                                        }} />
+                                    </form>
                                 </div>
                                 <div className="add-boat-btn">
                                     <Select
@@ -145,8 +154,8 @@ const BoatListing = () => {
                                             <td >
                                                 <div className="boats d-flex gap-3 align-items-center" key={index}>
                                                     <div className="boat-image">
-                                                        {/* <img src={e.image ? `${""}` : boatImage} alt="img" className='img-fluid' /> */}
-                                                        <img src={boatImage} alt="img" className='img-fluid' />
+                                                        <img src={e.cover_image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${e.cover_image}` : boatImage} alt="img" className='img-fluid' />
+                                                        {/* <img src={boatImage} alt="img" className='img-fluid' /> */}
                                                     </div>
                                                     <p>{e?.name}</p>
                                                 </div>
@@ -160,7 +169,7 @@ const BoatListing = () => {
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>{e?.price}</td>
+                                            <td>&#36;{e?.price}</td>
                                             <td>{moment(e?.updated_at).format('MMMM Do')}</td>
                                             <td>
                                                 <ul className='d-flex gap-2'>
@@ -184,6 +193,7 @@ const BoatListing = () => {
                             <Pagination
                                 pageSize={state.per_page}
                                 total={state.total}
+                                // total={state.total_count}
                                 current={Number(urlSearchParams.has('page') ? urlSearchParams.get('page') : "1")}
                                 onChange={(page: any) => onChangePagination(page)}
                             />

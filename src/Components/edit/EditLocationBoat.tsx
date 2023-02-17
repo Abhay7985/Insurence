@@ -3,6 +3,7 @@ import React from "react"
 import { GlobalContext } from "../../context/Provider"
 import henceforthApi from "../../utils/henceforthApi"
 import CountryCodeJson from '../../utils/CountryCode.json'
+import { NumberValidation } from "../../utils/henceforthValidations"
 
 const EditLocationBoat = (props: any) => {
     const { Toast } = React.useContext(GlobalContext)
@@ -25,6 +26,7 @@ const EditLocationBoat = (props: any) => {
     const [loading, setLoading] = React.useState(false)
 
     const handleChange = async ({ name, value }: any) => {
+        if (name === "postCode" && !NumberValidation(value)) return
         setState((state: any) => {
             return {
                 ...state,
@@ -47,10 +49,15 @@ const EditLocationBoat = (props: any) => {
         }
         setLoading(true)
         try {
-            const apiRes = await henceforthApi.Boat.edit(state.boat_id, items)
-            Toast.success(apiRes.message)
-            setIsExpended(false)
-            await props.initialise()
+            if (state.address1 && state.city && state.state && state.postcode && state.country) {
+                const apiRes = await henceforthApi.Boat.edit(state.boat_id, items)
+                Toast.success(apiRes.message)
+                setIsExpended(false)
+                await props.initialise()
+            } else {
+                Toast.error("Enter Complete Address")
+            }
+
         } catch (error) {
             Toast.error(error)
         } finally {
@@ -117,8 +124,11 @@ const EditLocationBoat = (props: any) => {
                                                 defaultValue={state.country}
                                                 showSearch
                                                 className='w-100'
-                                                onChange={(e) => handleChange({ name: 'country', value: e })}
-                                                options={CountryCodeJson.map((res) => { return { value: res.code, label: res.name } })}
+                                                onChange={(e) => handleChange({
+                                                    name: 'country',
+                                                     value:CountryCodeJson.find(res => res.name == e)?.code
+                                                })}
+                                                options={CountryCodeJson.map((res) => { return { value: res.name, label: res.name } })}
                                             />
                                         </div>
                                     </div>
