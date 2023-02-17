@@ -44,31 +44,49 @@ const BoatPrice = () => {
                 })
             }
         }
+        const data = items.price_boat.route_prices
+        if (data.length) {
+            let _is_true = true
+            data.forEach(element => {
+                if (!element.price) {
+                    _is_true = false
+                    Toast.error(`Please enter price`)
+                    // Toast.error(`Please enter price of ${element.route_name}`)
+                    return
+                }
+                if (!element.installments) {
+                    _is_true = false
+                    Toast.error(`Please enter installments`)
+                    // Toast.error(`Please enter installments of ${element.route_name}`)
+                    return
+                }
+                if (!element.installments) {
+                    _is_true = false
+                    Toast.error(`Please enter installment price`)
+                    // Toast.error(`Please enter installment price of ${element.route_name}`)
+                    return
+                }
+            });
+            if (_is_true) {
+                try {
+                    setSpinning(true)
+                    let res = await henceforthApi.Boat.create(items)
+                    Toast.success(res.message)
+                    navigate({
+                        pathname: `/boat/${match?.params.id}/inquiry`,
+                        search: uRLSearchParams.toString()
+                    })
 
-
-        try {
-            if (!routes[0]?.selected) {
-                Toast.error("Select Routes")
-            } else if (!routes[0]?.price) {
-                Toast.error("Add Price")
-            } else if (!routes[0]?.installments || !routes[0]?.installment_price) {
-                Toast.error("Add Installments")
+                } catch (error) {
+                    Toast.error(error)
+                } finally {
+                    setSpinning(false)
+                }
             }
-            else {
-                setSpinning(true)
-                let res = await henceforthApi.Boat.create(items)
-                Toast.success(res.message)
-                navigate({
-                    pathname: `/boat/${match?.params.id}/inquiry`,
-                    search: uRLSearchParams.toString()
-                })
-            }
-
-        } catch (error) {
-            Toast.error(error)
-        } finally {
-            setSpinning(false)
+        } else {
+            Toast.error(`Please select routes`)
         }
+
     }
 
     const boatRoutes = async () => {
@@ -89,10 +107,10 @@ const BoatPrice = () => {
     }, [])
 
     const handleChange = async (name: string, value: any, index: number) => {
-        console.log('name,value',name,value)
-        if(name === "price" && !NumberValidation(value)) return
-        if(name === "installments" && !NumberValidation(value)) return
-        if(name === "installment_price" && !NumberValidation(value)) return
+        console.log('name,value', name, value)
+        if (name === "price" && !NumberValidation(value)) return
+        if (name === "installments" && !NumberValidation(value)) return
+        if (name === "installment_price" && !NumberValidation(value)) return
 
         const data = routes[index] as any
         if (typeof value == "boolean") {
@@ -101,7 +119,7 @@ const BoatPrice = () => {
 
         data[name] = value
         setRoutes([...routes])
-            }
+    }
 
 
 
@@ -128,7 +146,7 @@ const BoatPrice = () => {
                                                 <div className="col-md-12">
                                                     <div className="mb-3 ps-sm-4">
                                                         <label htmlFor="exampleInputEmail1" className="form-label">Price (cash)</label>
-                                                        <input type="text" className="form-control" id="exampleInputEmail1" name='price' placeholder='Enter price' value={res.price?res.price:''} onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
+                                                        <input type="text" className="form-control" id="exampleInputEmail1" name='price' placeholder='Enter price' value={res.price ? res.price : ''} onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
                                                     </div>
                                                     <div className="ps-sm-4">
                                                         <label htmlFor="exampleInputEmail2" className="form-label">Price (installments)</label>
