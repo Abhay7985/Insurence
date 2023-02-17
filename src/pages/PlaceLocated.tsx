@@ -307,7 +307,7 @@ function PlaceLocated() {
                                         <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input5" className="form-label">State (optional)</label>
-                                                <input type="text" className="form-control" id='input5' placeholder='Enter City' name="state" value={state.state} onChange={handleState} />
+                                                <input type="text" className="form-control" id='input5' placeholder='Enter State' name="state" value={state.state} onChange={handleState} />
                                             </div>
                                         </div>
                                         <div className="col-11 col-lg-11">
