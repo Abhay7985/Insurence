@@ -95,7 +95,7 @@ const BoatInfo = () => {
                 <form className="row h-100" onSubmit={onSubmit}>
                     <div className="col-lg-6">
                         <div className="banner-content h-100 d-flex flex-column justify-content-between">
-                            <div className="row justify-content-center justify-content-lg-end h-100">
+                            <div className="row justify-content-center justify-content-lg-end">
                                 <div className="col-11 col-lg-11">
                                     <h3 className='banner-title'>Please enter the details of the boat</h3>
                                 </div>
@@ -115,7 +115,7 @@ const BoatInfo = () => {
                                                     defaultValue={category_id}
                                                     onChange={setCategoryId}
                                                     style={{ width: '100%' }}
-                                                    options={[{ value: "", label: "Select" }, ...state?.category?.map((res: any) => { return { value: res?.id, label: res.category } })]}
+                                                    options={[{ value: "", label: "Select category" }, ...state?.category?.map((res: any) => { return { value: res?.id, label: res.category } })]}
                                                 />
                                             </Space>
                                         </div>
@@ -131,7 +131,7 @@ const BoatInfo = () => {
                                                     defaultValue={manufacturer_id}
                                                     onChange={setManufacturerId}
                                                     style={{ width: '100%' }}
-                                                    options={[{ value: "", label: "Select" }, ...state?.manufacturer?.map((res: any) => { return { value: res?.id, label: res.manufacturer } })]}
+                                                    options={[{ value: "", label: "Select manufacturer" }, ...state?.manufacturer?.map((res: any) => { return { value: res?.id, label: res.manufacturer } })]}
                                                 />
                                             </Space>
                                         </div>

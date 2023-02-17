@@ -185,7 +185,7 @@ const BoatDetails = () => {
                                 <div className="Location py-4">
                                     <h4 className='mb-4'>Location</h4>
 
-                                    <div style={{ height: '100vh', width: '100%' }}>
+                                    <div style={{ height: '400px', width: '100%', borderRadius:'6px', overflow:'hidden'}}>
                                         <HenceforthGoogleMap
                                             ref={googleMapRef}
                                             defaultCenter={defaultProps.center}
