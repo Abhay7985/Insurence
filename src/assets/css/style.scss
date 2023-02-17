@@ -11,9 +11,10 @@
 
 .banner-title {
     padding-block: 60px 42px;
-  @media (max-width:575px) {
-    padding-block: 30px 15px;
-  }
+
+    @media (max-width:575px) {
+        padding-block: 30px 15px;
+    }
 }
 
 // ************************************Boat Details section****************************
@@ -46,6 +47,7 @@
 
 .banner-footer {
     padding: 20px 0;
+
     @media (max-width:991px) {
         padding: 20px 15px;
     }
@@ -209,21 +211,26 @@
     height: 466px;
     overflow: hidden;
     border-radius: 10px 0 0 10px;
+
     img {
         height: 100%;
         width: 100%;
         object-fit: cover;
     }
+
     @media (max-width:991px) {
         height: 350px;
     }
+
     @media (max-width:767px) {
         border-radius: 10px;
         height: 210px;
     }
 }
-.boat-calender{
+
+.boat-calender {
     border-right: 1px solid $light-gray;
+
     @media (max-width:991px) {
         border-right: none;
     }
@@ -276,11 +283,12 @@
 }
 
 .table {
-    p{
+    p {
         @media (max-width:575px) {
             font-size: 14px;
         }
     }
+
     th,
     td {
         padding: 15px;
@@ -300,6 +308,7 @@
 
     td {
         font-size: 16px;
+
         @media (max-width:575px) {
             font-size: 14px;
         }
@@ -320,6 +329,7 @@
         height: 40px;
         width: 60px;
     }
+
     img {
         height: 100%;
         width: 100%;
@@ -369,6 +379,7 @@
 .user-profile {
     border: 1px solid $light-gray;
     padding-block: 41px;
+
     @media (max-width:575px) {
         padding-block: 20px;
     }
@@ -379,9 +390,11 @@
         border-radius: 50%;
         overflow: hidden;
         margin-bottom: 24px;
+
         @media (max-width:575px) {
             margin-bottom: 15px;
         }
+
         img {
             height: 100%;
             width: 100%;
@@ -544,7 +557,7 @@
 
 .ant-select-single.ant-select-show-arrow .ant-select-selection-item {
     font-size: 16px;
-    color: #707579 ;
+    color: #707579;
     font-weight: 500;
 }
 
@@ -600,23 +613,25 @@
     }
 }
 
-.photo-slider{
+.photo-slider {
     height: 100px;
     border-radius: 4px;
     margin-inline: 5px;
     overflow: hidden;
     position: relative;
 
-    img{
+    img {
         height: 100%;
         width: 100%;
         object-fit: cover;
         object-position: center;
     }
 }
-.slider-box{
+
+.slider-box {
     position: relative;
-    &::after{
+
+    &::after {
         content: '';
         position: absolute;
         right: 0;
@@ -626,23 +641,27 @@
         height: 20%;
         width: 0px;
         background: transparent;
-        box-shadow: 0px 0px 30px 70px rgb(255, 255, 255) ;
+        box-shadow: 0px 0px 30px 70px rgb(255, 255, 255);
     }
 }
 
 // .ant-float-btn-default
-.ant-float-btn-default{
+.ant-float-btn-default {
     z-index: 1111;
 }
 
-.ant-spin-nested-loading{
-    height: 100% ;
-}
-.ant-spin-container{
+.ant-spin-nested-loading {
     height: 100%;
 }
-.ant-badge-status-text{
+
+.ant-spin-container {
+    height: 100%;
+}
+
+.ant-badge-status-text {
     text-transform: capitalize !important;
     font-weight: 600;
     font-size: 16px;
-} 
+}
+
+// .ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input{height: 100%;margin-left: 7px;}
