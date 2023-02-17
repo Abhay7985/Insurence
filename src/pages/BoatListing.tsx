@@ -181,7 +181,6 @@ const BoatListing = () => {
                                                     <li>
                                                         <Link to={`/boat/${e?.id}/inquiry/edit`}> <HenceforthIcons.EditIcon /></Link>
                                                     </li>
-
                                                 </ul>
                                             </td>
                                         </tr>
@@ -193,6 +192,7 @@ const BoatListing = () => {
                             <Pagination
                                 pageSize={state.per_page}
                                 total={state.total}
+                                showSizeChanger={false}
                                 current={Number(urlSearchParams.has('page') ? urlSearchParams.get('page') : "1")}
                                 onChange={(page: any) => onChangePagination(page)}
                             />

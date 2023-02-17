@@ -27,6 +27,7 @@ const BoatPrice = () => {
     const [spinning, setSpinning] = React.useState(false)
 
     const [routes, setRoutes] = useState<Array<RouteData>>([])
+    const [index, setIndex] = useState<number>(0)
 
     const onSubmit = async (e: any) => {
         e.preventDefault()
@@ -60,7 +61,7 @@ const BoatPrice = () => {
                     // Toast.error(`Please enter installments of ${element.route_name}`)
                     return
                 }
-                if (!element.installments) {
+                if (!element.installment_price) {
                     _is_true = false
                     Toast.error(`Please enter installment price`)
                     // Toast.error(`Please enter installment price of ${element.route_name}`)

@@ -1,5 +1,5 @@
 import { Spin } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { useMatch } from 'react-router-dom';
 import HenceforthIcons from '../assets/icons/HenceforthIcons'
 import { GlobalContext } from '../context/Provider';
@@ -16,15 +16,19 @@ const EditAmenities = () => {
     const { authState, Toast } = React.useContext(GlobalContext)
     const [loading, setLoading] = React.useState(false)
     const [state, setState] = React.useState<Array<AmenitiesInterface>>([])
+    const [index , setIndex] = useState<number>(0)
+    
 
+    console.log(state);
+    
     const onSubmit = async (e: any) => {
         e.preventDefault()
         let items = {
             amenities: state.filter((res) => res.checked === true).map((res) => res.id)
         }
-        setLoading(true)
         try {
-            if(state[0]?.checked){
+            if(state[index].checked){
+                setLoading(true)
                 let apiRes = await henceforthApi.Boat.edit(match?.params.id as string, items)
                 Toast.success(apiRes.message)
                 window?.history?.back()
@@ -40,6 +44,7 @@ const EditAmenities = () => {
     }
 
     const handleChecked = (b: boolean, index: number) => {
+        setIndex(index)
         const item = state
         item[index]['checked'] = b
         setState([...item])

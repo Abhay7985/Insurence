@@ -1,5 +1,5 @@
 import { Spin } from "antd"
-import React from "react"
+import React, { useState } from "react"
 import { GlobalContext } from "../../context/Provider"
 import henceforthApi from "../../utils/henceforthApi"
 import { NumberValidation } from "../../utils/henceforthValidations"
@@ -23,11 +23,12 @@ const EditPriceBoat = (props: any) => {
     const [isExpended, setIsExpended] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
     const [dataRoute, setDataRoute] = React.useState<Array<RouteDataInterface>>([])
+    console.log(props);
 
     const handleChange = async (name: string, value: any, index: number) => {
-        if(name === "price" && !NumberValidation(value)) return
-        if(name === "installments" && !NumberValidation(value)) return
-        if(name === "installment_price" && !NumberValidation(value)) return
+        if (name === "price" && !NumberValidation(value)) return
+        if (name === "installments" && !NumberValidation(value)) return
+        if (name === "installment_price" && !NumberValidation(value)) return
         const data = dataRoute[index] as any
         if (typeof value == "boolean") {
             data.selected = value
@@ -58,22 +59,50 @@ const EditPriceBoat = (props: any) => {
                 }
             })
         }
+        const data = items.price_boat
 
-        setLoading(true)
-        try {
-            const apiRes = await henceforthApi.Boat.edit(state.id, items)
-            Toast.success(apiRes.message)
-            setIsExpended(false)
-            setState({
-                ...state,
-                prices: stateData
-            })
-            await props.initialise()
-        } catch (error) {
-            Toast.error(error)
-        } finally {
-            setLoading(false)
+        if (data.length) {
+            let _is_true = true
+            data.forEach(element => {
+                if (!element.price) {
+                    _is_true = false
+                    Toast.error(`Please enter price`)
+                    // Toast.error(`Please enter price of ${element.route_name}`)
+                    return
+                }
+                if (!element.installments) {
+                    _is_true = false
+                    Toast.error(`Please enter installments`)
+                    // Toast.error(`Please enter installments of ${element.route_name}`)
+                    return
+                }
+                if (!element.installment_price) {
+                    _is_true = false
+                    Toast.error(`Please enter installment price`)
+                    // Toast.error(`Please enter installment price of ${element.route_name}`)
+                    return
+                }
+            });
+            if (_is_true) {
+                try {
+                    setLoading(true)
+                    const apiRes = await henceforthApi.Boat.edit(state.id, items)
+                    Toast.success(apiRes.message)
+                    setIsExpended(false)
+                    setState({
+                        ...state,
+                        prices: stateData
+                    })
+                    await props.initialise()
 
+                } catch (error) {
+                    Toast.error(error)
+                } finally {
+                    setLoading(false)
+                }
+            }
+        } else {
+            Toast.error(`Please select routes`)
         }
     }
 

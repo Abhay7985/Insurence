@@ -56,7 +56,7 @@ const AddPhotos = () => {
     const onSubmit = async (e: any) => {
         e.preventDefault()
         try {
-            if (selectedFiles.length > 0) {
+            if (selectedFiles.length >= 5) {
                 setSpinning(true)
                 const photos = await uploadImages()
                 let items = {
@@ -72,7 +72,7 @@ const AddPhotos = () => {
                     search: uRLSearchParams.toString()
                 })
             } else {
-                Toast.error("Please Upload Image")
+                Toast.error("Please Upload Atleast 5 Images")
             }
 
         } catch (error) {
@@ -115,7 +115,7 @@ const AddPhotos = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <BackNextLayout />
+                                <BackNextLayout  />
                             </div>
 
                         </div>

@@ -56,11 +56,11 @@ const EditImage = () => {
             let items = {
                 photos: photos.map((res) => { return { photo: res } })
             }
-            if (photos.length > 0) {
+            if (photos.length >= 5) {
                 let res = await henceforthApi.Boat.edit(match?.params.id as string, items)
                 window.history.back()
             } else {
-                Toast.error("Add Images")
+                Toast.error("Add Atleast 5 Images")
             }
 
         } catch (error) {

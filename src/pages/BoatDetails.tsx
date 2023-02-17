@@ -59,6 +59,12 @@ const BoatDetails = () => {
             address1: ""
         }
     })
+    const copyText = (id: string, name: string) => {
+        if (id) {
+            navigator?.clipboard?.writeText(id)
+            Toast.success(`${name} copy successfull`)
+        }
+    }
 
     const initialise = async () => {
         henceforthApi.setToken(authState?.access_token)
@@ -110,12 +116,13 @@ const BoatDetails = () => {
                                     <h3 className='mt-4 mb-2'>{state.name}</h3>
                                     <p>{state.category} • {state?.address?.address1}</p>
                                 </div>
-                                <a href={`http://15.229.56.53/boat/${state.id}`} target="_blank">
-                                    <div className="share-btn align-self-end d-flex gap-2 align-items-center" >
+                                {/* <button onClick={() => copyText(`http://15.229.56.53/${state.id}`, "Link")}>
+                                </button> */}
+                                    <button className="btn border-0 p-0" onClick={() => copyText(`http://15.229.56.53/${state.id}`, "Link")} >
                                         <HenceforthIcons.Share />
-                                        <span> Share</span>
-                                    </div>
-                                </a>
+                                        <span role="button"> Share</span>
+                                    </button>
+
                             </div>
                         </div>
                         <div className="col-12">
@@ -185,11 +192,11 @@ const BoatDetails = () => {
                                 <div className="Location py-4">
                                     <h4 className='mb-4'>Location</h4>
 
-                                    <div style={{ height: '400px', width: '100%', borderRadius:'6px', overflow:'hidden'}}>
+                                    <div style={{ height: '400px', width: '100%', borderRadius: '6px', overflow: 'hidden' }}>
                                         <HenceforthGoogleMap
                                             ref={googleMapRef}
                                             defaultCenter={defaultProps.center}
-                                            center={{lat:state?.location?.latitude, lng:state?.location?.longitude}}
+                                            center={{ lat: state?.location?.latitude, lng: state?.location?.longitude }}
                                             zoom={defaultProps.zoom}
                                             defaultZoom={defaultProps.zoom}
                                             onGoogleApiLoaded={onGoogleApiLoaded}
