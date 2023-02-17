@@ -71,13 +71,35 @@ function PlaceLocated() {
         }
         try {
             setLoading(true)
-            let apiRes = await henceforthApi.Boat.create(items)
-            Toast.success(apiRes.message)
+            if (!form.latitude && !form.longitude) {
+                Toast.error("Enter Location")
 
-            navigate({
-                pathname: `/boat/${match?.params.id}/amenities`,
-                search: uRLSearchParams.toString()
-            })
+            } else if (!state.street) {
+                Toast.error("Enter Street")
+            } else if (!state.flat) {
+                Toast.error("Enter Flat")
+            }
+            else if (!state.city) {
+                Toast.error("Enter city Name")
+
+            } else if (!state.state) {
+                Toast.error("Enter state Name")
+            } else if (!state.postCode) {
+                Toast.error("Enter Postcode")
+            }
+            else if (!state.country) {
+                Toast.error("Enter Country")
+            }
+            else {
+                let apiRes = await henceforthApi.Boat.create(items)
+                Toast.success(apiRes.message)
+
+                navigate({
+                    pathname: `/boat/${match?.params.id}/amenities`,
+                    search: uRLSearchParams.toString()
+                })
+            }
+
 
         } catch (error: any) {
             // Toast.error(error)
@@ -107,6 +129,11 @@ function PlaceLocated() {
             country: CountryCodeJson.find(res => res.name == value)?.code as string
         })
     };
+    const onKeyDown = (keyEvent: any) => {
+        if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
+            keyEvent.preventDefault();
+        }
+    }
 
 
     const requestCurrenctLocation = () => {
@@ -156,10 +183,53 @@ function PlaceLocated() {
                 new (window as any).google.maps.event.addListener(
                     autocomplete,
                     "place_changed",
+
                     () => {
-                        let place = autocomplete?.getPlace();
+                        let place = autocomplete.getPlace();
                         let formatAddress = place.formatted_address
                         const address = place.address_components
+
+                        console.log("formatAddress", formatAddress);
+                        console.log("address", address);
+
+                        let items: any = {}
+                        if (Array.isArray(address) && address.length > 0) {
+                            let zipIndex = address.findIndex(res => res.types.includes("postal_code"))
+                            let administrativeAreaIndex = address.findIndex(res => res.types.includes("administrative_area_level_1", "political"))
+                            let localityIndex = address.findIndex(res => res.types.includes("locality", "political"))
+                            let countryIndex = address.findIndex(res => res.types.includes("country", "political"))
+                            let premiseIndex = address.findIndex(res => res.types.includes("premise", "street_number"))
+                            let sublocality1 = address.findIndex(res => res.types.includes('sublocality_level_1', 'sublocality', 'political'))
+                            let sublocality2 = address.findIndex(res => res.types.includes('sublocality_level_2', 'sublocality', 'political'))
+                            let route = address.findIndex(res => res.types.includes('route'))
+                            let subpremise = address.findIndex(res => res.types.includes('subpremise'))
+                            let street_number = address.findIndex(res => res.types.includes('street_number'))
+
+
+                            if (zipIndex > -1) {
+                                items.pin_code = address[zipIndex].long_name
+                            }
+                            if (administrativeAreaIndex > -1) {
+                                items.state = address[administrativeAreaIndex].long_name
+                            }
+                            if (localityIndex > -1) {
+                                items.city = address[localityIndex].long_name
+                            }
+                            if (countryIndex > -1) {
+                                items.country = address[countryIndex].long_name
+                            }
+                            if (premiseIndex > -1) {
+                                items.apartment_number = address[premiseIndex].long_name
+                            }
+                            if (street_number > -1) {
+                                items.street_number = address[street_number].long_name
+                            }
+                            if (route > -1) {
+                                items.route = address[route].long_name
+                            }
+                            items.full_address = formatAddress
+
+                        }
                         let latitude = place.geometry?.location.lat();
                         let longitude = place.geometry?.location.lng();
 
@@ -167,6 +237,17 @@ function PlaceLocated() {
                             ...form,
                             latitude,
                             longitude
+                        })
+                        setState((state) => {
+                            return {
+                                ...state,
+                                street: items?.route,
+                                flat: items?.street_number ? items?.street_number : items?.apartment_number,
+                                city: items?.city,
+                                state: items?.state,
+                                postCode: items?.pin_code,
+                                country: items?.country,
+                            }
                         })
                     }
                 );
@@ -181,7 +262,7 @@ function PlaceLocated() {
         <Spin spinning={loading} >
             <section className="select-passenger-section h-100">
                 <div className="container-fluid h-100">
-                    <form className="row h-100" onSubmit={onSubmit}>
+                    <form className="row h-100" onSubmit={onSubmit} onKeyDown={onKeyDown}>
                         <div className="col-lg-6">
                             <div className="banner-content h-100 d-flex flex-column ">
                                 <div className="row gy-2 justify-content-center justify-content-lg-end pb-5 pb-lg-0">
@@ -237,7 +318,7 @@ function PlaceLocated() {
                                                         <Select
                                                             showSearch
                                                             size={'middle'}
-                                                            defaultValue="Enter country / region"
+                                                            defaultValue={state.country?state.country:"Enter country / region"}
                                                             onChange={handleChange}
                                                             style={{ width: '100%' }}
                                                             autoClearSearchValue={true}

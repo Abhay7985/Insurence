@@ -1,7 +1,6 @@
 import React, { forwardRef } from "react";
 import GoogleMapReact from "google-map-react";
 const GoogleMap = forwardRef((props: any, refs: any) => {
-  console.log(props.defaultCenter.latitude);
   
   return <GoogleMapReact
     ref={refs}

@@ -39,13 +39,18 @@ const SafetyQuestions = () => {
             }
         }
         try {
-            setSpinning(true)
-            let res = await henceforthApi.Boat.create(items)
-            Toast.success(res.message)
-            navigate({
-                pathname: `/boat/${match?.params.id}/price`,
-                search: uRLSearchParams.toString()
-            })
+            if(state.rules){
+                setSpinning(true)
+                let res = await henceforthApi.Boat.create(items)
+                Toast.success(res.message)
+                navigate({
+                    pathname: `/boat/${match?.params.id}/price`,
+                    search: uRLSearchParams.toString()
+                })
+            }else{
+                Toast.error("Rules field is required")
+            }
+            
         } catch (error: any) {
             if (error.response.body.message.rules) return Toast.error(error.response.body.message.rules[0])
         } finally {

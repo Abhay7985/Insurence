@@ -125,7 +125,7 @@ const BoatDetails = () => {
                             <div className="row gy-4 py-4 ms-0">
                                 <div className="col-md-6 ps-0">
                                     <div className="morning-banner">
-                                        <img src={`${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}`} alt="img" className='img-fluid' />
+                                        <img src={state.cover_image ?`${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}` : BannerImage} alt="img" className='img-fluid' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
@@ -134,12 +134,11 @@ const BoatDetails = () => {
                                             <>
                                                 <div className="col-6 ps-0">
                                                     <div className="boat-group-image h-100">
-                                                        <img src={res.image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${res.image}` : BannerImage} alt="img" className='img-fluid w-100 h-100' />
+                                                        <img src={state.photos ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${res.image}` : BannerImage} alt="img" className='img-fluid w-100 h-100' />
                                                     </div>
                                                 </div>
                                             </>
                                         )}
-
                                     </div>
                                 </div>
                             </div>
