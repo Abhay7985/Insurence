@@ -28,7 +28,7 @@ const BoatDetails = () => {
     const match = useMatch(`boat/:id/inquiry`)
     const { authState, Toast } = React.useContext(GlobalContext)
     const [loading, setLoading] = React.useState(false)
-const googleMapRef=useRef() as any
+    const googleMapRef = useRef() as any
     const [state, setState] = useState({
         amenities: [],
         bathrooms: 0,
@@ -80,21 +80,21 @@ const googleMapRef=useRef() as any
 
     const createMerker = (position: google.maps.LatLng | google.maps.LatLngLiteral, map: google.maps.Map, icon?: any) => {
         return new google.maps.Marker({
-          position,
-          map,
-          draggable: false,
-          label:{text:state.name , color :"#FFFFFF"},
-          icon: icon,
+            position,
+            map,
+            draggable: false,
+            label: { text: state.name, color: "#FFFFFF" },
+            icon: icon,
         });
-      }
+    }
     const onGoogleApiLoaded = ({ map, maps, ref }: any) => {
         let latlng = new (window as any).google.maps.LatLng(
             state?.location?.latitude,
             state?.location?.longitude
-          )
-          createMerker(latlng,map)
+        )
+        createMerker(latlng, map)
         map.addListener("click", (event: google.maps.MapMouseEvent) => {
-     
+
         });
     }
 
@@ -107,16 +107,18 @@ const googleMapRef=useRef() as any
                         <div className="col-12">
                             <div className="boat-header d-flex justify-content-between">
                                 <div className="title">
-                                    <div className="left-arrow" role="button" onClick={()=>window.history.back()}>
+                                    <div className="left-arrow" role="button" onClick={() => window.history.back()}>
                                         <HenceforthIcons.DetailBack />
                                     </div>
                                     <h3 className='mt-4 mb-2'>{state.name}</h3>
                                     <p>{state.category} • {state?.address?.address1}</p>
                                 </div>
-                                <div className="share-btn align-self-end d-flex gap-2 align-items-center">
+                                <a href={`http://15.229.56.53/boat/${state.id}`} target="_blank">
+                                <div className="share-btn align-self-end d-flex gap-2 align-items-center" >
                                     <HenceforthIcons.Share />
-                                    <Link to='' className='text-black'>Share</Link>
+                                    <span> Share</span>
                                 </div>
+                                </a>
                             </div>
                         </div>
                         <div className="col-12">
@@ -186,7 +188,7 @@ const googleMapRef=useRef() as any
                                 {/* Location */}
                                 <div className="Location py-4">
                                     <h4 className='mb-4'>Location</h4>
-                                 
+
                                     <div style={{ height: '100vh', width: '100%' }}>
                                         <HenceforthGoogleMap
                                             ref={googleMapRef}

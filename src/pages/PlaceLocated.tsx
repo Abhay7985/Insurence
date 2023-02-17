@@ -38,14 +38,14 @@ function PlaceLocated() {
 
 
     const handleState = (e: any) => {
-     const name=e.target.name
-     const value=e.target.value
-        if(name === "postCode" && !NumberValidation(value)) return
+        const name = e.target.name
+        const value = e.target.value
+        if (name === "postCode" && !NumberValidation(value)) return
         setState({
             ...state,
             [name]: value
         })
-        
+
     }
 
     const onSubmit = async (e: any) => {
@@ -81,7 +81,7 @@ function PlaceLocated() {
 
         } catch (error: any) {
             // Toast.error(error)
-             
+
             if (error.response.body.message.address1) return Toast.error(`Please Enter Street`)
             if (error.response.body.message.city) return Toast.error(error.response.body.message.city[0])
             if (error.response.body.message.country) return Toast.error(error.response.body.message.country[0])
@@ -104,7 +104,7 @@ function PlaceLocated() {
     const handleChange = (value: string) => {
         setState({
             ...state,
-            country: value
+            country: CountryCodeJson.find(res => res.name == value)?.code as string
         })
     };
 
@@ -226,7 +226,7 @@ function PlaceLocated() {
                                         <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input5" className="form-label">Postcode (optional)</label>
-                                                <input type="text" className="form-control" id='input5' placeholder='Enter postcode' value={state.postCode}  name="postCode" onChange={handleState} />
+                                                <input type="text" className="form-control" id='input5' placeholder='Enter postcode' value={state.postCode} name="postCode" onChange={handleState} />
                                             </div>
                                         </div>
                                         <div className="col-11 col-lg-11">
@@ -240,7 +240,8 @@ function PlaceLocated() {
                                                             defaultValue="Enter country / region"
                                                             onChange={handleChange}
                                                             style={{ width: '100%' }}
-                                                            options={CountryCodeJson.map((res) => { return { value: res.code, label: res.name } })}
+                                                            autoClearSearchValue={true}
+                                                            options={CountryCodeJson.map((res) => { return { value: res.name, label: res.name } })}
 
                                                         />
                                                     </Space>
