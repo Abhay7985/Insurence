@@ -22,14 +22,13 @@ const AddPhotos = () => {
     const addFiles = (rowData: Array<any>) => {
         setSelectedFiles([...selectedFiles, ...rowData])
         console.log(rowData, "rowData");
-
     }
+
     const removeFiles = (index: number) => {
         const data = selectedFiles
         data.splice(index, 1)
         setSelectedFiles([...data])
     }
-    console.log(selectedFiles);
 
     const onSelectFiles = (files: any) => {
         let rowData = [] as any
@@ -38,7 +37,6 @@ const AddPhotos = () => {
         }
         addFiles(rowData)
         console.log("files", files.target.files);
-
     }
 
     const uploadImages = async () => {
@@ -57,23 +55,26 @@ const AddPhotos = () => {
     }
     const onSubmit = async (e: any) => {
         e.preventDefault()
-
         try {
-            setSpinning(true)
-            const photos = await uploadImages()
-            let items = {
-                photos: {
-                    boat_id: match?.params.id as string,
-                    photos: photos.map((res: any,index: number) => { return { photo: res,order:index+1 } })
+            if (selectedFiles.length > 0) {
+                setSpinning(true)
+                const photos = await uploadImages()
+                let items = {
+                    photos: {
+                        boat_id: match?.params.id as string,
+                        photos: photos.map((res: any, index: number) => { return { photo: res, order: index + 1 } })
+                    }
                 }
+                const apiRes = await henceforthApi.Boat.create(items)
+                Toast.success(apiRes.message)
+                navigate({
+                    pathname: `/boat/${match?.params.id}/safety-question`,
+                    search: uRLSearchParams.toString()
+                })
+            } else {
+                Toast.error("Please Upload Image")
             }
 
-            const apiRes = await henceforthApi.Boat.create(items)
-            Toast.success(apiRes.message)
-            navigate({
-                pathname: `/boat/${match?.params.id}/safety-question`,
-                search: uRLSearchParams.toString()
-            })
         } catch (error) {
             Toast.error(error)
         } finally {

@@ -46,6 +46,16 @@ const BoatListing = () => {
         navigate({ search: urlSearchParams.toString() })
     }
 
+    const onChangePagination = (value: string) => {
+        if (value) {
+            urlSearchParams.set('page', value)
+        }
+        else {
+            urlSearchParams.delete('page')
+        }
+        navigate({ search: urlSearchParams.toString() })
+    }
+
     const boatListing = async () => {
         henceforthApi.setToken(authState?.access_token)
         try {
@@ -71,16 +81,6 @@ const BoatListing = () => {
         { status: henceofrthEnums.OrderStatus.listed, color: henceofrthEnums.OrderColor.listed },
         { status: henceofrthEnums.OrderStatus.unlisted, color: henceofrthEnums.OrderColor.unlisted },
     ]
-
-    const onChangePagination = (value: string) => {
-        if (value) {
-            urlSearchParams.set('page', value)
-        }
-        else {
-            urlSearchParams.delete('page')
-        }
-        navigate({ search: urlSearchParams.toString() })
-    }
 
     return (
         <Spin spinning={loading} >
@@ -154,8 +154,8 @@ const BoatListing = () => {
                                             <td >
                                                 <div className="boats d-flex gap-3 align-items-center" key={index}>
                                                     <div className="boat-image">
-                                                        {/* <img src={e.image ? `${""}` : boatImage} alt="img" className='img-fluid' /> */}
-                                                        <img src={boatImage} alt="img" className='img-fluid' />
+                                                        <img src={e.cover_image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${e.cover_image}` : boatImage} alt="img" className='img-fluid' />
+                                                        {/* <img src={boatImage} alt="img" className='img-fluid' /> */}
                                                     </div>
                                                     <p>{e?.name}</p>
                                                 </div>

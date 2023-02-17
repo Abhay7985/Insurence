@@ -286,24 +286,9 @@ const EditBoatDetails = () => {
                                                 {/* photo-slider */}
                                                 <div className="slider-box mt-4">
                                                     <Slider {...settings}>
-                                                        <div className='slider-inner'>
-                                                            <PhotoSlider />
-                                                        </div>
-                                                        <div className='slider-inner'>
-                                                            <PhotoSlider />
-                                                        </div>
-                                                        <div className='slider-inner'>
-                                                            <PhotoSlider />
-                                                        </div>
-                                                        <div className='slider-inner'>
-                                                            <PhotoSlider />
-                                                        </div>
-                                                        <div className='slider-inner'>
-                                                            <PhotoSlider />
-                                                        </div>
-                                                        <div className='slider-inner'>
-                                                            <PhotoSlider />
-                                                        </div>
+                                                        {state.photos.map((res: any, index:number) => <div className='slider-inner'>
+                                                            <PhotoSlider {...res} />
+                                                        </div>)}
                                                     </Slider>
                                                 </div>
                                             </div>

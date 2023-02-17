@@ -47,15 +47,19 @@ const AmenitiesOffer = () => {
             }
         }
         try {
-            setLoading(true)
-            let apiRes = await henceforthApi.Boat.create(items)
-            Toast.success(apiRes.message)
-
-            navigate({
-                pathname: `/boat/${match?.params.id}/photos`,
-                search: uRLSearchParams.toString()
-            })
-
+            if(amenities.length>0){
+                setLoading(true)
+                let apiRes = await henceforthApi.Boat.create(items)
+                Toast.success(apiRes.message)
+    
+                navigate({
+                    pathname: `/boat/${match?.params.id}/photos`,
+                    search: uRLSearchParams.toString()
+                })    
+            } else{
+                Toast.error("Enter Amenities")
+            }
+        
         } catch (error: any) {
             if (error.response.body.message.amenities) return Toast.error(error.response.body.message.amenities[0])
         } finally {

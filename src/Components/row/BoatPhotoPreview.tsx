@@ -12,12 +12,12 @@ const BoatPhotoPreview = (props: any) => {
             <div className="modify-image d-flex gap-2 position-absolute justify-content-end align-items-center">
                 <ul className="modify-btn d-flex gap-2">
                     <li>
-                        <button className='edit'>
+                        <button type='button' className='edit'>
                             <img src={editIcon} alt="icon" />
                         </button>
                     </li>
                     <li>
-                        <button className='edit' onClick={props.onRemove}>
+                        <button type="button" className='edit' onClick={props.onRemove}>
                             <img src={deleteIcon} alt="icon" />
                         </button>
                     </li>
