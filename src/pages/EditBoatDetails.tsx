@@ -131,7 +131,7 @@ const EditBoatDetails = () => {
     const settings = {
         infinite: true,
         speed: 500,
-        slidesToShow: 4,
+        slidesToShow: state.photos.length >= 4 ? 4 : state.photos.length,
         slidesToScroll: 1,
         responsive: [
             {

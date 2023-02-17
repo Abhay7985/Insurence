@@ -20,7 +20,7 @@ const BoatPhotoView = (props: any) => {
                         </button>
                     </li>
                     <li>
-                        <button className='edit' onClick={props.removeImage}>
+                        <button className='edit' onClick={props.onRemove}>
                             <img src={deleteIcon} alt="icon" />
                         </button>
                     </li>

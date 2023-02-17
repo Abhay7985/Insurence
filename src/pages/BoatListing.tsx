@@ -1,7 +1,7 @@
 import addIcon from '../assets/icons/plus_white.svg'
 import search from '../assets/icons/search.svg'
 import boatImage from '../assets/images/boat_four.png'
-import { Badge, Pagination, Select, Space, Spin } from 'antd';
+import { Pagination, Select, Spin } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import henceforthApi from '../utils/henceforthApi';
 import React, { useEffect, useState } from 'react';
@@ -89,7 +89,7 @@ const BoatListing = () => {
                     <div className="row gy-4">
                         <div className="col-12 mb-3">
                             <div className="boat-listing-header d-flex justify-content-between">
-                               <h2>{state.total==1 ? `${state.total}Boat` :`${state.total}Boats`}</h2>
+                                <h2>{state.total == 1 ? `${state.total}Boat` : `${state.total}Boats`}</h2>
                                 <div className="add-boat-btn">
                                     <Link to={`/boat/add/info`} className='nav-link'>
                                         <button className='btn btn-yellow d-flex align-items-center gap-2'>
@@ -193,7 +193,6 @@ const BoatListing = () => {
                             <Pagination
                                 pageSize={state.per_page}
                                 total={state.total}
-                                // total={state.total_count}
                                 current={Number(urlSearchParams.has('page') ? urlSearchParams.get('page') : "1")}
                                 onChange={(page: any) => onChangePagination(page)}
                             />

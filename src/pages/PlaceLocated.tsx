@@ -1,13 +1,21 @@
-import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
+import { useLocation, useMatch, useNavigate } from "react-router-dom";
 import bannerImage from '../assets/images/image_two.png';
 import locationIcon from '../assets/icons/current_location.svg';
 import React, { Fragment, useRef, useState } from "react";
 import { GlobalContext, NEXT_PUBLIC_GOOGLE_API_KEY } from "../context/Provider";
-import { Checkbox, Select, Space, Spin, Switch } from "antd";
+import { Select, Space, Spin, Switch } from "antd";
 import BackNextLayout from "../Components/boat/BackNextLayout";
 import henceforthApi from "../utils/henceforthApi";
 import CountryCodeJson from '../utils/CountryCode.json'
 import { NumberValidation } from "../utils/henceforthValidations";
+import HenceforthGoogleMap from "../utils/henceforthGoogleMap";
+const defaultProps = {
+    center: {
+        lat: 20.593683,
+        lng: 78.962883
+    },
+    zoom: 11
+};
 
 function PlaceLocated() {
 
@@ -16,15 +24,12 @@ function PlaceLocated() {
     const match = useMatch(`boat/:id/place`)
     const uRLSearchParams = new URLSearchParams(location.search)
     const placeInputRef = useRef(null as any);
-
+    const googleMapRef = useRef() as any
     const { Toast } = React.useContext(GlobalContext)
     const [inputFocued, setInputFocused] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
-    const [form, setForm] = React.useState({
-        location_address: "",
-        latitude: 0,
-        longitude: 0,
-    })
+    const [form, setForm] = React.useState(defaultProps)
+
     const [state, setState] = useState({
         street: "",
         flat: "",
@@ -33,9 +38,7 @@ function PlaceLocated() {
         postCode: "",
         country: "",
         showLocation: false,
-
     })
-
 
     const handleState = (e: any) => {
         const name = e.target.name
@@ -45,7 +48,6 @@ function PlaceLocated() {
             ...state,
             [name]: value
         })
-
     }
 
     const onSubmit = async (e: any) => {
@@ -53,8 +55,8 @@ function PlaceLocated() {
         let items = {
             location: {
                 location: {
-                    latitude: form.latitude,
-                    longitude: form.longitude,
+                    latitude: form.center.lat,
+                    longitude: form.center.lng,
                 },
                 boat_id: match?.params.id
             },
@@ -71,7 +73,7 @@ function PlaceLocated() {
         }
         try {
             setLoading(true)
-            if (!form.latitude && !form.longitude) {
+            if (!form.center.lat && !form.center.lng) {
                 Toast.error("Enter Location")
 
             } else if (!state.street) {
@@ -93,17 +95,13 @@ function PlaceLocated() {
             else {
                 let apiRes = await henceforthApi.Boat.create(items)
                 Toast.success(apiRes.message)
-
                 navigate({
                     pathname: `/boat/${match?.params.id}/amenities`,
                     search: uRLSearchParams.toString()
                 })
             }
-
-
         } catch (error: any) {
             // Toast.error(error)
-
             if (error.response.body.message.address1) return Toast.error(`Please Enter Street`)
             if (error.response.body.message.city) return Toast.error(error.response.body.message.city[0])
             if (error.response.body.message.country) return Toast.error(error.response.body.message.country[0])
@@ -119,8 +117,6 @@ function PlaceLocated() {
             ...state,
             showLocation: value
         })
-
-
     };
 
     const handleChange = (value: string) => {
@@ -129,12 +125,12 @@ function PlaceLocated() {
             country: CountryCodeJson.find(res => res.name == value)?.code as string
         })
     };
+
     const onKeyDown = (keyEvent: any) => {
         if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
             keyEvent.preventDefault();
         }
     }
-
 
     const requestCurrenctLocation = () => {
         console.log('requestCurrenctLocation called');
@@ -143,13 +139,7 @@ function PlaceLocated() {
                 console.log("Latitude is :", successCallback.coords.latitude);
                 console.log("Longitude is :", successCallback.coords.longitude);
 
-                getLocationName(successCallback.coords.latitude,successCallback.coords.longitude)
-                // setForm({
-                //     ...form,
-                //     latitude: successCallback.coords.latitude,
-                //     longitude: successCallback.coords.longitude
-                // })
-
+                getLocationName(successCallback.coords.latitude, successCallback.coords.longitude)
             }, (errorCallback) => {
                 console.log('errorCallback', errorCallback.message);
 
@@ -161,112 +151,117 @@ function PlaceLocated() {
         }
     }
 
-    function loadGoogleMapScript(callback: any) {
-        if (
-            typeof (window as any).google === "object" &&
-            typeof (window as any).google.maps === "object"
-        ) {
-            callback();
-        } else {
-            const googleMapScript = document.createElement("script");
-            googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=${NEXT_PUBLIC_GOOGLE_API_KEY}&libraries=places`;
-            window.document.body.appendChild(googleMapScript);
-            googleMapScript.addEventListener("load", callback);
-        }
+
+    const getLocationName = async (lat: number, lng: number) => {
+        let address: any
+        let latlng = new (window as any).google.maps.LatLng(
+            lat,
+            lng
+        )
+        var geocoder = new (window as any).google.maps.Geocoder()
+        geocoder.geocode({ latLng: latlng }, async (results: any, status: any) => {
+            address = results[0].address_components
+            setLoactionsFromLatlng(address, '', lat, lng)
+        })
     }
-    const getLocationName = async (lat:number,lng:number) => {
-            let address: any
-                let latlng = new (window as any).google.maps.LatLng(
+
+    const setLoactionsFromLatlng = (address: Array<any>, formatAddress: string, lat: number, lng: number) => {
+        let items: any = {}
+        if (Array.isArray(address) && address.length > 0) {
+            let zipIndex = address.findIndex(res => res.types.includes("postal_code"))
+            let administrativeAreaIndex = address.findIndex(res => res.types.includes("administrative_area_level_1", "political"))
+            let localityIndex = address.findIndex(res => res.types.includes("locality", "political"))
+            let countryIndex = address.findIndex(res => res.types.includes("country", "political"))
+            let premiseIndex = address.findIndex(res => res.types.includes("premise", "street_number"))
+            let sublocality1 = address.findIndex(res => res.types.includes('sublocality_level_1', 'sublocality', 'political'))
+            let sublocality2 = address.findIndex(res => res.types.includes('sublocality_level_2', 'sublocality', 'political'))
+            let route = address.findIndex(res => res.types.includes('route'))
+            let subpremise = address.findIndex(res => res.types.includes('subpremise'))
+            let street_number = address.findIndex(res => res.types.includes('street_number'))
+            if (zipIndex > -1) {
+                items.pin_code = address[zipIndex]?.long_name
+              }
+              if (administrativeAreaIndex > -1) {
+                items.state = address[administrativeAreaIndex]?.long_name
+              }
+              if (localityIndex > -1) {
+                items.city = address[localityIndex]?.long_name
+              }
+              if (countryIndex > -1) {
+                items.country = address[countryIndex]?.long_name
+              }
+              if (premiseIndex > -1) {
+                items.apartment_number = address[premiseIndex]?.long_name
+              }
+              items.full_address = formatAddress
+              items.sublocality1 = address[sublocality1]?.long_name
+              items.sublocality2 = address[sublocality2]?.long_name
+              items.subpremise = address[subpremise]?.long_name
+              items.route = address[route]?.long_name
+              items.street_number = address[street_number]?.long_name
+        }
+
+        let latlng = new (window as any).google.maps.LatLng(
+            form.center.lat,
+            form.center.lng
+        )
+        let zoom = 12
+        if (items?.country && items?.state && items?.city && items?.sublocality1 && (items?.sublocality2 || items?.route) && (items?.subpremise || items?.street_number)) zoom = 18
+        if (items?.country && items?.state && items?.city && items?.sublocality1 && (items?.sublocality2 || items?.route) && items?.subpremise === undefined && items?.street_number === undefined) zoom = 18
+        if (items?.country && items?.state && items?.city && items?.sublocality1 === undefined && items?.sublocality2 === undefined) zoom = 15
+        if (items?.country && items?.state && items?.city === undefined && items?.sublocality1 === undefined && items?.sublocality2 === undefined) zoom = 8
+        if (items?.country && items?.state === undefined && items?.city === undefined && items?.sublocality1 === undefined && items?.sublocality2 === undefined) zoom = 5
+        setForm((form) => {
+            return {
+                ...form,
+                center: {
+                    ...form.center,
                     lat,
                     lng
-                )
-                var geocoder = new (window as any).google.maps.Geocoder()
-                geocoder.geocode({ latLng: latlng }, async (results: any, status: any) => {
-                    address = results[0].address_components
-                    setLoactionsFromLatlng(address,'',lat,lng)
-                })
-    }
-    const setLoactionsFromLatlng=(address:Array<any>,formatAddress:string,lat:number,lng:number)=>{
-        let items: any = {}
-                        if (Array.isArray(address) && address.length > 0) {
-                            let zipIndex = address.findIndex(res => res.types.includes("postal_code"))
-                            let administrativeAreaIndex = address.findIndex(res => res.types.includes("administrative_area_level_1", "political"))
-                            let localityIndex = address.findIndex(res => res.types.includes("locality", "political"))
-                            let countryIndex = address.findIndex(res => res.types.includes("country", "political"))
-                            let premiseIndex = address.findIndex(res => res.types.includes("premise", "street_number"))
-                            let sublocality1 = address.findIndex(res => res.types.includes('sublocality_level_1', 'sublocality', 'political'))
-                            let sublocality2 = address.findIndex(res => res.types.includes('sublocality_level_2', 'sublocality', 'political'))
-                            let route = address.findIndex(res => res.types.includes('route'))
-                            let subpremise = address.findIndex(res => res.types.includes('subpremise'))
-                            let street_number = address.findIndex(res => res.types.includes('street_number'))
-                            if (zipIndex > -1) {
-                                items.pin_code = address[zipIndex].long_name
-                            }
-                            if (administrativeAreaIndex > -1) {
-                                items.state = address[administrativeAreaIndex].long_name
-                            }
-                            if (localityIndex > -1) {
-                                items.city = address[localityIndex].long_name
-                            }
-                            if (countryIndex > -1) {
-                                items.country = address[countryIndex].long_name
-                            }
-                            if (premiseIndex > -1) {
-                                items.apartment_number = address[premiseIndex].long_name
-                            }
-                            if (street_number > -1) {
-                                items.street_number = address[street_number].long_name
-                            }
-                            if (route > -1) {
-                                items.route = address[route].long_name
-                            }
-                            items.full_address = formatAddress
-
-                        }
-                        let latitude = lat;
-                        let longitude = lng;
-
-                        setForm({
-                            ...form,
-                            latitude,
-                            longitude
-                        })
-                        setState((state) => {
-                            return {
-                                ...state,
-                                street: items?.route,
-                                flat: items?.street_number ? items?.street_number : items?.apartment_number,
-                                city: items?.city,
-                                state: items?.state,
-                                postCode: items?.pin_code,
-                                country: items?.country,
-                            }
-                        })
-    }
-    const initPlaceAPI = () => {
-        loadGoogleMapScript(() => {
-            if (placeInputRef) {
-                let autocomplete = new (window as any).google.maps.places.Autocomplete(
-                    placeInputRef.current
-                );
-                new (window as any).google.maps.event.addListener(
-                    autocomplete,
-                    "place_changed",
-                    () => {
-                        let place = autocomplete.getPlace();
-                        let formatAddress = place.formatted_address
-                        const address = place.address_components
-                        console.log("formatAddress", formatAddress);
-                        console.log("address", address);
-                        setLoactionsFromLatlng(address,formatAddress,place.geometry?.location.lat(),place.geometry?.location.lng())
-                    }
-                );
+                },
+                zoom
             }
+        })
+        setState((state) => {
+            return {
+                ...state,
+                street: items?.route,
+                flat: items?.street_number ? items?.street_number : items?.apartment_number,
+                city: items?.city,
+                state: items?.state,
+                postCode: items?.pin_code,
+                country: items?.country,
+            }
+        })
+    }
 
-        });
+    const initPlaceAPI = () => {
+        if (placeInputRef) {
+            let autocomplete = new (window as any).google.maps.places.Autocomplete(
+                placeInputRef.current
+            );
+            new (window as any).google.maps.event.addListener(
+                autocomplete,
+                "place_changed",
+                () => {
+                    let place = autocomplete.getPlace();
+                    let formatAddress = place.formatted_address
+                    const address = place.address_components
+                    setLoactionsFromLatlng(address, formatAddress, place.geometry?.location.lat(), place.geometry?.location.lng())
+                }
+            );
+        }
+
+
     };
 
-    React.useEffect(initPlaceAPI, []);
+
+
+    const onGoogleApiLoaded = ({ map, maps, ref }: any) => {
+        initPlaceAPI()
+    }
+    console.log('googleMapRef', googleMapRef?.current)
+    console.log('form', form)
 
     return (
         <Spin spinning={loading} >
@@ -279,7 +274,7 @@ function PlaceLocated() {
                                     <div className="col-11 col-lg-11">
                                         <h3 className='banner-title'>Where is your place located?</h3>
                                     </div>
-                                    {form.latitude == 0 ? <Fragment>
+                                    {form.center.lng == defaultProps.center.lng ? <Fragment>
                                         <div className="col-11 col-lg-11">
                                             <input type="text" ref={placeInputRef} className="form-control" placeholder="Enter your address" onFocus={() => setInputFocused(true)} onBlur={() => setTimeout(() => setInputFocused(false), 100)} />
 
@@ -356,8 +351,20 @@ function PlaceLocated() {
                             <BackNextLayout />
                         </div>
                         <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
-                            <div className="banner-image border">
+                            {/* <div className="banner-image border">
                                 <img src={bannerImage} alt="" />
+                            </div> */}
+                            <div style={{ height: '100vh', width: '100%' }}>
+                                <HenceforthGoogleMap
+                                    ref={googleMapRef}
+                                    defaultCenter={defaultProps.center}
+                                    center={form.center}
+                                    zoom={form.zoom}
+                                    defaultZoom={defaultProps.zoom}
+                                    onGoogleApiLoaded={onGoogleApiLoaded}
+
+
+                                />
                             </div>
                         </div>
                     </form>

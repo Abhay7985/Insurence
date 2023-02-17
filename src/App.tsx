@@ -46,11 +46,9 @@ const App = () => {
             <Route path="boat/:id/photos/edit" element={<EditImage />} />
             <Route path="boat/:id/amenities/edit" element={<EditAmenities />} />
             <Route path="calender" element={<ProviderCalender />} />
-
             <Route path="profile" element={<Profile />} />
             <Route path="change-password" element={<ChangePassword />} />
             <Route path="about" element={<About />} />
-
           </Route>
         </Fragment>
         :
