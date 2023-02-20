@@ -112,6 +112,9 @@ const Boat = {
   imageUpload: (key: string, file: any) =>
     requests.file(`provider/upload-image`, key, file)
 }
+const Subscribe={
+  subscribe:(item:any)=>requests.post(`subscribe`,item)
+}
 
 // boat-routes
 
@@ -159,6 +162,7 @@ const henceforthApi = {
   Common,
   Profile,
   Inquiry,
+  Subscribe,
   API_ROOT,
   API_FILE_ROOT_SMALL,
   API_FILE_ROOT_MEDIUM,
