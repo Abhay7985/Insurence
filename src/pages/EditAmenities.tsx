@@ -16,10 +16,6 @@ const EditAmenities = () => {
     const { authState, Toast } = React.useContext(GlobalContext)
     const [loading, setLoading] = React.useState(false)
     const [state, setState] = React.useState<Array<AmenitiesInterface>>([])
-    const [index , setIndex] = useState<number>(0)
-    
-
-    console.log(state);
     
     const onSubmit = async (e: any) => {
         e.preventDefault()
@@ -27,7 +23,7 @@ const EditAmenities = () => {
             amenities: state.filter((res) => res.checked === true).map((res) => res.id)
         }
         try {
-            if(state[index].checked){
+            if(items.amenities.length){
                 setLoading(true)
                 let apiRes = await henceforthApi.Boat.edit(match?.params.id as string, items)
                 Toast.success(apiRes.message)
@@ -44,7 +40,6 @@ const EditAmenities = () => {
     }
 
     const handleChecked = (b: boolean, index: number) => {
-        setIndex(index)
         const item = state
         item[index]['checked'] = b
         setState([...item])

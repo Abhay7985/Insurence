@@ -129,7 +129,7 @@ const BoatDetails = () => {
                             <div className="row gy-4 py-4 ms-0">
                                 <div className="col-md-6 ps-0">
                                     <div className="morning-banner">
-                                        <img src={state.cover_image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}` : BannerImage} alt="img" className='img-fluid' />
+                                        <img src={state.cover_image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}` : ""} alt="img" className='img-fluid' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">

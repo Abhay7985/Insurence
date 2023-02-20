@@ -53,18 +53,23 @@ const AddPhotos = () => {
         )
         return rowData
     }
+
     const onSubmit = async (e: any) => {
         e.preventDefault()
         try {
             if (selectedFiles.length >= 5) {
                 setSpinning(true)
                 const photos = await uploadImages()
+                console.log(photos);
+
                 let items = {
                     photos: {
                         boat_id: match?.params.id as string,
+                        cover_photo:photos[0],
                         photos: photos.map((res: any, index: number) => { return { photo: res, order: index + 1 } })
                     }
                 }
+
                 const apiRes = await henceforthApi.Boat.create(items)
                 Toast.success(apiRes.message)
                 navigate({
@@ -115,7 +120,7 @@ const AddPhotos = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <BackNextLayout  />
+                                <BackNextLayout />
                             </div>
 
                         </div>
