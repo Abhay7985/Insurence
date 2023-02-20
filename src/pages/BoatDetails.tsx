@@ -89,7 +89,7 @@ const BoatDetails = () => {
             position,
             map,
             draggable: false,
-            label: { text: state.name, color: "#FFFFFF" },
+            // label: { text: state.name, color: "#FFFFFF" },
             icon: icon,
         });
     }
@@ -154,7 +154,7 @@ const BoatDetails = () => {
                         <div className="col-lg-6 col-xl-7">
                             <div className="morning-content">
                                 <div className="content-title border-bottom pb-4">
-                                    <h4 className='mb-2'>{state.size}-foot speedboat for up to {state.passenger_day} passengers</h4>
+                                    <h4 className='mb-2'>{state.size}-foot Manufacturer for up to  passengers</h4>
                                     <p>{state.passenger_day} passengers day • {state.passenger_night} passengers overnight • {state.bedrooms} rooms • {state.bathrooms} bathrooms</p>
                                 </div>
                                 {/* aminities */}

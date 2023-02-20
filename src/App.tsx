@@ -44,7 +44,8 @@ const App = () => {
             <Route index element={<BoatListing />} />
             <Route path="inquiry/:type/:page" element={<InquiryPage />} />
             <Route path="boat/:id/inquiry" element={<BoatDetails />} />
-            <Route path="boat/:id/inquiry/edit" element={<EditBoatDetails />} />
+            <Route path="boat/:id/inquiry/edit/:type" element={<EditBoatDetails />} />
+            {/* <Route path="boat/:id/inquiry/edit" element={<EditBoatDetails />} /> */}
             <Route path="boat/:id/photos/edit" element={<EditImage />} />
             <Route path="boat/:id/amenities/edit" element={<EditAmenities />} />
             <Route path="calender" element={<ProviderCalender />} />

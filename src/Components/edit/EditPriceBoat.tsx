@@ -138,8 +138,7 @@ const EditPriceBoat = (props: any) => {
     }, [])
 
 
-    return <Spin spinning={loading}>
-        <div className="Pricing bg-white mb-4">
+    return         <div className="Pricing bg-white mb-4" id="price_tab">
             <div className="photo-header d-flex justify-content-between mb-3">
                 <h4>Pricing</h4>
             </div>
@@ -192,6 +191,6 @@ const EditPriceBoat = (props: any) => {
                     </div>
                 </div>}
         </div>
-    </Spin>
+    // </Spin>
 }
 export default EditPriceBoat

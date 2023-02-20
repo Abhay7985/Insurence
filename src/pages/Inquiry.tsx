@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spin, Tabs } from 'antd';
+import { Pagination, Spin, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import { Select, } from 'antd';
 import search from '../assets/icons/search.svg'
@@ -22,10 +22,11 @@ const InquiryPage = () => {
     const [state, setState] = React.useState({
         current_page: 0,
         data: [],
-        per_page: 10
+        per_page: 10,
+        total: 0
     })
-    const filternavigate = () => {
-        navigate({ search: uRLSearchParams.toString() })
+    const filternavigate = (type: string, page: number) => {
+        navigate({ pathname: `/inquiry/${type ? type : match?.params.type}/${page ? page : 1}`, search: uRLSearchParams.toString() })
     }
 
     const handleSearch = (name: string, value: any) => {
@@ -35,12 +36,17 @@ const InquiryPage = () => {
         } else {
             uRLSearchParams.delete(name)
         }
-        filternavigate()
+        filternavigate('', 0)
     }
 
     const handleSocialFilter = (value: string) => {
-        uRLSearchParams.set('social', value)
-        filternavigate()
+        if (value) {
+            uRLSearchParams.set('inquiry_mode', value)
+
+        } else {
+            uRLSearchParams.delete('inquiry_mode')
+        }
+        filternavigate('', 0)
     };
 
     const onChangeQuery = (path: string) => {
@@ -50,7 +56,12 @@ const InquiryPage = () => {
     const initialise = async () => {
         try {
             setLoading(true)
-            const apiRes = await henceforthApi.Inquiry.pagination()
+            const apiRes = await henceforthApi.Inquiry.pagination(
+                String(match?.params.type !== 'all' ? match?.params.type : ''),
+                String(match?.params.page),
+                uRLSearchParams.toString()
+            )
+            debugger
             setState(apiRes.data)
 
         } catch (error) {
@@ -59,6 +70,8 @@ const InquiryPage = () => {
             setLoading(false)
         }
     }
+
+
 
     const items: TabsProps['items'] = [
         {
@@ -83,7 +96,7 @@ const InquiryPage = () => {
 
     React.useEffect(() => {
         initialise()
-    }, [match?.params.type, match?.params.page, uRLSearchParams.get('social')])
+    }, [match?.params.type, match?.params.page, uRLSearchParams.get('inquiry_mode'), uRLSearchParams.get('search')])
 
     return (
         <Spin spinning={loading} className='h-100' >
@@ -95,13 +108,13 @@ const InquiryPage = () => {
                             <div className="title d-flex justify-content-between align-items-center">
                                 <h2>Inquiry</h2>
                                 <Select
-                                    defaultValue="All"
+                                    defaultValue=""
                                     style={{ width: 150 }}
                                     onChange={handleSocialFilter}
                                     options={[
-                                        { value: 'All', label: 'All' },
-                                        { value: 'Whatsapp', label: 'Whatsapp' },
-                                        { value: 'Email', label: 'Email' },
+                                        { value: '', label: 'All' },
+                                        { value: 'whatsapp', label: 'Whatsapp' },
+                                        { value: 'email', label: 'Email' },
                                     ]}
                                 />
                             </div>
@@ -125,7 +138,16 @@ const InquiryPage = () => {
                             </div>
                         </div>
                         <div className="col-12">
-                            <Tabs defaultActiveKey={match?.params.type} items={items} onChange={onChangeQuery} />
+                            <Tabs defaultActiveKey={match?.params.type} items={items} onChange={(e) => filternavigate(e, 0)} />
+                        </div>
+                        <div className="pagination justify-content-center">
+                            <Pagination
+                                pageSize={state.per_page}
+                                total={state.total}
+                                showSizeChanger={false}
+                                current={Number(match?.params.page) ? Number(match?.params.page) : 1}
+                                onChange={(page: any) => filternavigate('',page)}
+                            />
                         </div>
                     </div>
                 </div>
