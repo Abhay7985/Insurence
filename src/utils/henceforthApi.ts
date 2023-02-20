@@ -1,3 +1,4 @@
+import Item from 'antd/es/list/Item';
 import _superagent, { search } from 'superagent';
 const SuperagentPromise = require('superagent-promise');
 const superagent = SuperagentPromise(_superagent, global.Promise);
@@ -128,8 +129,8 @@ const Admin = {
     requests.get(`provider/boat-routes`),
 }
 const Common = {
-  do_spaces_file_upload: (key: string, file: any) =>
-    requests.file(`provider/upload-image`, key, file),
+  contact_us:(item:any)=>requests.post('contact-us',item),
+  do_spaces_file_upload: (key: string, file: any) => requests.file(`provider/upload-image`, key, file),
 }
 
 

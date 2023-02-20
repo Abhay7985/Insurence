@@ -52,6 +52,7 @@ function PlaceLocated() {
 
     const onSubmit = async (e: any) => {
         e.preventDefault()
+        setLoading(true)
         let items = {
             location: {
                 location: {
@@ -72,7 +73,6 @@ function PlaceLocated() {
             }
         }
         try {
-            setLoading(true)
             if (!form.center.lat && !form.center.lng) {
                 Toast.error("Enter Location")
 

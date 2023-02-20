@@ -6,19 +6,21 @@ import { useContext, useState } from "react";
 import { GlobalContext } from "../../context/Provider";
 import { error } from "console";
 import Spinner from "./AntSpinner";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
     const { Toast, loading, setLoading } = useContext(GlobalContext)
     const [state, setState] = useState("")
 
     const onSubmit = async () => {
+        debugger
         setLoading(true)
         const item = {
             email: state
         }
         try {
             if (!state.trim()) {
-                Toast.error("Please enter Email")
+               return Toast.error("Please Enter Email")
             }
             let apiRes = await henceforthApi.Subscribe.subscribe(item)
             Toast.success(apiRes.message)
@@ -73,7 +75,7 @@ const Footer = () => {
                                     <a href="#" className="nav-link">About Us</a>
                                 </li>
                                 <li>
-                                    <a href="#" className="nav-link">Contact Us</a>
+                                    <Link to="/contact" className="nav-link" role="button">Contact Us</Link>
                                 </li>
 
                             </ul>

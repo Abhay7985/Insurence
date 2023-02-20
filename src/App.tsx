@@ -21,6 +21,7 @@ import MainLayout from './layout/MainLayout';
 import BoatLayout from './layout/BoatLayout';
 import AddPhotos from './pages/AddPhotos';
 import EditBoatDetails from './pages/EditBoatDetails';
+import Contact from './pages/Contact-us';
 
 const App = () => {
   const { authState } = useContext(GlobalContext)
@@ -48,6 +49,8 @@ const App = () => {
             <Route path="calender" element={<ProviderCalender />} />
             <Route path="profile" element={<Profile />} />
             <Route path="change-password" element={<ChangePassword />} />
+            <Route path="contact" element={<Contact />} />
+
             <Route path="about" element={<About />} />
           </Route>
         </Fragment>

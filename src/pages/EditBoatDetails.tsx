@@ -25,6 +25,7 @@ const EditBoatDetails = () => {
     const location = useLocation()
     const { authState, Toast } = React.useContext(GlobalContext)
     const [loading, setLoading] = React.useState(false)
+    
     const [state, setState] = useState({
         amenities: [],
         bathrooms: 0,

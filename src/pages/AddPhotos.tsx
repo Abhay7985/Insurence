@@ -36,10 +36,11 @@ const AddPhotos = () => {
             rowData.push({ file: files[i], loading: false })
         }
         addFiles(rowData)
-        console.log("files", files.target.files);
+        console.log("files", files.target.name);
     }
 
     const uploadImages = async () => {
+        debugger
         const rowData = [] as any
         await Promise.all(
             selectedFiles.map(async (imageRes: any) => {
@@ -55,6 +56,7 @@ const AddPhotos = () => {
     }
 
     const onSubmit = async (e: any) => {
+        debugger
         e.preventDefault()
         try {
             if (selectedFiles.length >= 5) {
