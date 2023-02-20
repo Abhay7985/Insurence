@@ -22,6 +22,7 @@ import BoatLayout from './layout/BoatLayout';
 import AddPhotos from './pages/AddPhotos';
 import EditBoatDetails from './pages/EditBoatDetails';
 import Contact from './pages/Contact-us';
+import Faq from './pages/Faq';
 
 const App = () => {
   const { authState } = useContext(GlobalContext)
@@ -50,7 +51,8 @@ const App = () => {
             <Route path="profile" element={<Profile />} />
             <Route path="change-password" element={<ChangePassword />} />
             <Route path="contact" element={<Contact />} />
-
+            <Route path="faq" element={<Faq />} />
+            
             <Route path="about" element={<About />} />
           </Route>
         </Fragment>
