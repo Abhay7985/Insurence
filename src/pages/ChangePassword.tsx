@@ -45,7 +45,7 @@ const ChangePassword = () => {
                             <div className="name d-flex justify-content-between mb-4">
                                 <div className="user-info w-100">
                                     <div className="label d-flex justify-content-between">
-                                        <label htmlFor="" className='fw-bold mb-2'>Password</label>
+                                        <label htmlFor="" className='fw-bold mb-2 text-dark-black'>Password</label>
                                         <div className="edit-user ps-4">
                                             <button className='btn border-0 text-yellow fw-bold p-0' onClick={() => setEditEnable(!editEnable)}>{editEnable ? 'Cancel' : 'Update'}</button>
                                         </div>

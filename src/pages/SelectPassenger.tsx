@@ -58,7 +58,7 @@ const SelectPassenger = () => {
 
     }
     return (
-        <Spin spinning={loading} >
+        <Spin spinning={loading} className='h-100' >
             <section className="select-passenger-section h-100">
                 <div className="container-fluid h-100">
                     <form className="row h-100" onSubmit={onSubmit}>
@@ -157,8 +157,8 @@ const SelectPassenger = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <BackNextLayout />
                             </div>
+                            <BackNextLayout />
 
                         </div>
                         <div className="col-lg-6 pe-lg-0 d-none d-lg-block">

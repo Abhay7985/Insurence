@@ -6,7 +6,8 @@ h5,
 h6 {
     font-weight: bold;
     margin: 0;
-    font-family: 'Nunito', sans-serif !important;
+    color: $dark-black;
+
 
     &::first-letter {
         text-transform: capitalize;
@@ -14,8 +15,8 @@ h6 {
 }
 
 h2 {
-    font-size: 30px;
-    color: $dark-black;
+    font-size: 30px !important;
+   
 
     @media (max-width:575px) {
         font-size: 25px;
@@ -24,8 +25,7 @@ h2 {
 
 h3 {
     font-size: 26px;
-    color: $light-black;
-
+   
     @media (max-width:575px) {
         font-size: 22px;
     }
@@ -33,7 +33,6 @@ h3 {
 
 h4 {
     font-size: 22px;
-    color: $light-black;
 
     @media (max-width:575px) {
         font-size: 18px;
@@ -42,7 +41,6 @@ h4 {
 
 h5 {
     font-size: 20px;
-    color: $light-black;
 }
 
 .fs-12 {
@@ -66,6 +64,7 @@ h5 {
     font-weight: normal;
     font-family: 'Nunito', sans-serif !important;
     cursor: pointer !important;
+    padding: 11px 20px;
 
     &::first-letter {
         text-transform: capitalize;
@@ -80,7 +79,6 @@ p {
     margin: 0;
     font-size: 16px;
     color: $light-black;
-    font-family: 'Nunito', sans-serif !important;
 
     &::first-letter {
         text-transform: capitalize;
@@ -126,16 +124,23 @@ p {
 .text-yellow {
     color: $primary-color !important;
 }
-
+.text-dark-black{
+    color: $dark-black !important;
+}
 .text-black {
     color: $light-black !important;
+}
+.fw-600{
+    font-weight: 600 !important;
+}
+.fw-500{
+    font-weight: 500 !important;
 }
 
 label {
     color: $light-black;
     font-size: 16px;
     font-weight: normal;
-    font-family: 'Nunito', sans-serif !important;
 
     &::first-letter {
         text-transform: capitalize;
@@ -160,7 +165,6 @@ label {
     font-size: 16px;
     color: $light-black;
     font-weight: normal;
-    font-family: 'Nunito', sans-serif !important;
 
     &::first-letter {
         text-transform: capitalize;
@@ -171,8 +175,7 @@ label {
     box-shadow: none !important;
     border-radius: $radius;
     border: 1px solid $light-gray;
-    padding: 14px 20px;
-    font-family: 'Nunito', sans-serif !important;
+    padding: 11px 20px;
 
     &:hover {
         border-color: $primary-color;
@@ -228,7 +231,7 @@ label {
     box-shadow: none !important;
     border-radius: $radius;
     border: 1px solid $light-gray;
-    padding: 14px 20px;
+    padding: 10px 20px;
     font-family: 'Nunito', sans-serif !important;
     font-size: 16px;
 }
@@ -241,7 +244,7 @@ label {
     box-shadow: none !important;
     border-radius: $radius;
     border: 1px solid $light-gray;
-    padding: 14px 20px;
+    padding: 11px 20px;
 }
 
 .ant-input-affix-wrapper:hover {
@@ -268,7 +271,7 @@ ul {
         box-shadow: none !important;
         border-radius: $radius !important;
         border: 1px solid $light-gray !important;
-        padding: 10px 20px !important;
+        padding: 7px 20px !important;
         height: auto !important;
         font-family: 'Nunito', sans-serif;
         font-size: 16px;

@@ -49,7 +49,7 @@ const EditInfoPassengersBoat = (props: any) => {
         }
     }
 
-    return <Spin spinning={loading} >
+    return <Spin spinning={loading} className='h-100' >
         <div className="photo-header d-flex justify-content-between border px-4 py-4 rounded-1">
             <div className="edit-address w-100">
                 <div className="d-flex justify-content-between mb-2" >

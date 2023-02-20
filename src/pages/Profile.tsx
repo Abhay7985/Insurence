@@ -119,7 +119,7 @@ const Profile = () => {
   }
 
   return (
-    <Spin spinning={loading} >
+    <Spin spinning={loading} className='h-100' >
       <section className='profile-section py-5'>
         <div className="container">
           <div className="row gy-4 justify-content-between">
@@ -150,7 +150,7 @@ const Profile = () => {
                 <div className="name d-flex justify-content-between mb-4">
                   <div className="user-info w-100">
                     <div className="label d-flex justify-content-between mb-2">
-                      <label htmlFor="" className='fw-bold'>Name</label><br />
+                      <label htmlFor="" className='fw-bold text-dark-black'>Name</label><br />
                       <div className="edit-user ps-4">
                         <button className='btn border-0 text-yellow fw-bold p-0 text-capitalize' onClick={onChangeNameHide}>{show === true ? "Cancel" : "Edit"}</button>
                       </div>
@@ -171,7 +171,7 @@ const Profile = () => {
                 <div className="name d-flex justify-content-between">
                   <div className="user-info w-100">
                     <div className="label d-flex justify-content-between mb-2">
-                      <label htmlFor="editemail" className='fw-bold'>Email</label><br />
+                      <label htmlFor="editemail" className='fw-bold text-dark-black'>Email</label><br />
                       <div className="edit-user ps-4">
                         <button className='btn border-0 text-yellow fw-bold p-0 text-capitalize' onClick={onChangeEmailHide} >{emailShow === true ? "Cancel" : "Edit"}</button>
                       </div>

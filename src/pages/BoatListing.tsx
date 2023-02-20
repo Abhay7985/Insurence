@@ -83,7 +83,7 @@ const BoatListing = () => {
     ]
 
     return (
-        <Spin spinning={loading} >
+        <Spin spinning={loading} className='h-100' >
             <section className="boat-listing py-5 px-2 px-sm-0">
                 <div className="container">
                     <div className="row gy-4">
@@ -119,7 +119,6 @@ const BoatListing = () => {
                                 </div>
                                 <div className="add-boat-btn">
                                     <Select
-                                        defaultValue="Listing status"
                                         value={urlSearchParams.has("status") ? urlSearchParams.get("status") : ""}
                                         style={{ width: 150 }}
                                         onChange={handleChange}

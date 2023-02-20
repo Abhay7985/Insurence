@@ -68,7 +68,7 @@ const EditInfoBoat = (props: any) => {
     React.useEffect(() => {
         initialise()
     }, [])
-    return <Spin spinning={loading} >
+    return <Spin spinning={loading} className='h-100' >
         <div className="photo-header d-flex justify-content-between border px-4 py-4 rounded-1 mb-3" >
             <div className="edit-details w-100">
 

@@ -66,7 +66,7 @@ const EditLocationBoat = (props: any) => {
     }
 
 
-    return <Spin spinning={loading} >
+    return <Spin spinning={loading} className='h-100' >
         <div className="Location bg-white Pricing mb-4">
             <div className="photo-header d-flex justify-content-between mb-3" id='location_tab'>
                 <h4>Location</h4>

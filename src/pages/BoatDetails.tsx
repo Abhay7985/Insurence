@@ -102,7 +102,7 @@ const BoatDetails = () => {
     }
 
     return (
-        <Spin spinning={loading} >
+        <Spin spinning={loading} className='h-100' >
             <section className="morning-panormic py-4">
                 <div className="container">
                     {/* banner-row */}
@@ -118,10 +118,10 @@ const BoatDetails = () => {
                                 </div>
                                 {/* <button onClick={() => copyText(`http://15.229.56.53/${state.id}`, "Link")}>
                                 </button> */}
-                                    <button className="btn border-0 p-0" onClick={() => copyText(`http://15.229.56.53/${state.id}`, "Link")} >
-                                        <HenceforthIcons.Share />
-                                        <span role="button"> Share</span>
-                                    </button>
+                                <button className="btn border-0 p-0" onClick={() => copyText(`http://15.229.56.53/${state.id}`, "Link")} >
+                                    <HenceforthIcons.Share />
+                                    <span role="button"> Share</span>
+                                </button>
 
                             </div>
                         </div>
@@ -133,12 +133,12 @@ const BoatDetails = () => {
                                     </div>
                                 </div>
                                 <div className="col-md-6">
-                                    <div className="row gy-2 h-100">
-                                        {state?.photos?.map((res: any) =>
+                                    <div className="row gy-2">
+                                        {state?.photos?.slice(0, 4)?.map((res: any, index: number) =>
                                             <>
                                                 <div className="col-6 ps-0">
-                                                    <div className="boat-group-image h-100">
-                                                        <img src={state.photos ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${res.image}` : BannerImage} alt="img" className='img-fluid w-100 h-100' />
+                                                    <div className={`${index == 1 ? 'boat-group-image ' : index == 3 ? 'boat-group-image-last ' : ''} boat-image-list`}>
+                                                        <img src={state.photos ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${res.image}` : BannerImage} alt="img" className='img-fluid' />
                                                     </div>
                                                 </div>
                                             </>
@@ -162,7 +162,7 @@ const BoatDetails = () => {
                                     <h4 className='mb-2'>Amenities</h4>
                                     <div className="aminities-list d-flex gap-5">
                                         <ul>
-                                            {state?.amenities?.map((e: any, index: number) => <li key={index}>{e?.amenity}</li>)}
+                                            {state?.amenities?.map((e: any, index: number) => <li key={index} className='fw-600 text-dark-black'>{e?.amenity}</li>)}
                                         </ul>
                                     </div>
                                 </div>
@@ -174,13 +174,13 @@ const BoatDetails = () => {
                                             <div className="pet-image">
                                                 <img src={petIcon} alt="icon" className='img-fluid' />
                                             </div>
-                                            <p>Pets are {state?.pets_allowed === 0 ? 'not allowed' : "allowed"}</p>
+                                            <p className='text-dark-black'>Pets are {state?.pets_allowed === 0 ? 'not allowed' : "allowed"}</p>
                                         </li>
                                         <li className='d-flex gap-3 align-items-center'>
                                             <div className="smoking">
                                                 <img src={smoking} alt="icon" className='img-fluid' />
                                             </div>
-                                            <p>Smoking is {state?.smoking_allowed === 0 ? 'not allowed' : "allowed"}</p>
+                                            <p className='text-dark-black'>Smoking is {state?.smoking_allowed === 0 ? 'not allowed' : "allowed"}</p>
                                         </li>
                                         <li>
                                             <p>{state?.rules}</p>
@@ -209,7 +209,7 @@ const BoatDetails = () => {
                         {/* price-card */}
                         <div className="col-lg-6 col-xl-5">
                             <div className="price-card px-4 py-4">
-                                <h4 className='mb-3'>From ${state.minimum_price}</h4>
+                                <h4 className='mb-4 mt-1'>From ${state.minimum_price}</h4>
                                 <div className="select-date">
                                     <DatePicker onChange={onChange} />
                                 </div>

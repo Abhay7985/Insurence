@@ -86,7 +86,7 @@ const InquiryPage = () => {
     }, [match?.params.type, match?.params.page, uRLSearchParams.get('social')])
 
     return (
-        <Spin spinning={loading} >
+        <Spin spinning={loading} className='h-100' >
             {/* inquiry section */}
             <section className='inquiry-section py-5'>
                 <div className="container">

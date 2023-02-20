@@ -48,7 +48,7 @@ const EditBasicBoat = (props: any) => {
     }
 
 
-    return <Spin spinning={loading} >
+    return <Spin spinning={loading} className='h-100' >
         <div className="Listing-basics bg-white Pricing mb-4">
             <div className="photo-header d-flex justify-content-between mb-3">
                 <h4>Listing basics</h4>
