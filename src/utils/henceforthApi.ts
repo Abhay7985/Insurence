@@ -116,8 +116,8 @@ const Boat = {
 // boat-routes
 
 const Inquiry = {
-  pagination: () =>
-    requests.get(`provider/inquiry`),
+  pagination: (search: any) =>
+    requests.get(`provider/inquiry?${search}`),
 };
 
 const Admin = {

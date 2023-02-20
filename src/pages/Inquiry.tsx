@@ -39,7 +39,12 @@ const InquiryPage = () => {
     }
 
     const handleSocialFilter = (value: string) => {
-        uRLSearchParams.set('social', value)
+        if (value) {
+            uRLSearchParams.set('inquiry_mode', value)
+
+        } else {
+            uRLSearchParams.delete('inquiry_mode')
+        }
         filternavigate()
     };
 
@@ -50,7 +55,9 @@ const InquiryPage = () => {
     const initialise = async () => {
         try {
             setLoading(true)
-            const apiRes = await henceforthApi.Inquiry.pagination()
+            const apiRes = await henceforthApi.Inquiry.pagination(
+                uRLSearchParams.toString()
+            )
             setState(apiRes.data)
 
         } catch (error) {
@@ -83,7 +90,7 @@ const InquiryPage = () => {
 
     React.useEffect(() => {
         initialise()
-    }, [match?.params.type, match?.params.page, uRLSearchParams.get('social')])
+    }, [match?.params.type, match?.params.page, uRLSearchParams.get('inquiry_mode'), uRLSearchParams.get('search')])
 
     return (
         <Spin spinning={loading} >
@@ -95,13 +102,13 @@ const InquiryPage = () => {
                             <div className="title d-flex justify-content-between align-items-center">
                                 <h2>Inquiry</h2>
                                 <Select
-                                    defaultValue="All"
+                                    defaultValue=""
                                     style={{ width: 150 }}
                                     onChange={handleSocialFilter}
                                     options={[
-                                        { value: 'All', label: 'All' },
-                                        { value: 'Whatsapp', label: 'Whatsapp' },
-                                        { value: 'Email', label: 'Email' },
+                                        { value: '', label: 'All' },
+                                        { value: 'whatsapp', label: 'Whatsapp' },
+                                        { value: 'email', label: 'Email' },
                                     ]}
                                 />
                             </div>

@@ -32,10 +32,10 @@ const Tablelayout = (props: any) => {
     }
     const onDelete = async (id: number) => {
         try {
-            
+
             await props.initialise()
         } catch (error) {
-            
+
         }
     }
 
@@ -129,7 +129,7 @@ const Tablelayout = (props: any) => {
         <TableHeading Array={headings}>
             {props?.data?.map((res: any, index: number) =>
                 <tr>
-                    <th>{Number(match?.params.page) - 1}{index}</th>
+                    <th>{Number(match?.params.page) == 0 ? index + 1 : (Number(match?.params.page) - 1) * props.per_page + (index + 1)}</th>
                     <td>
                         <div className="boats d-flex gap-2 align-items-center">
                             <div className="boat-image">
