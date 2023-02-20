@@ -35,7 +35,7 @@ function PlaceLocated() {
         flat: "",
         city: "",
         state: "",
-        postCode: "",
+        postCode:"",
         country: "",
         showLocation: false,
     })
@@ -43,7 +43,7 @@ function PlaceLocated() {
     const handleState = (e: any) => {
         const name = e.target.name
         const value = e.target.value
-        if (name === "postCode" && !NumberValidation(value)) return
+        if (name == "postCode" && !NumberValidation(value)) return false
         setState({
             ...state,
             [name]: value

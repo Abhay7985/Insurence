@@ -236,7 +236,7 @@ const EditBoatDetails = () => {
                                                     <div className="accordion-body text-start">
                                                         <ul>
                                                             <li>
-                                                                <a href="#pricing_tab" className={`${location.hash === '#pricing_tab' ? 'active-tab' : ''} nav-link`}>Pricing</a>
+                                                                <a href="#price_tab" className={`${location.hash === '#price_tab' ? 'active-tab' : ''} nav-link`}>Pricing</a>
                                                             </li>
                                                             <li>
                                                                 <Link to={`/calender`} className="nav-link">Calender availability</Link>
@@ -286,7 +286,7 @@ const EditBoatDetails = () => {
                                                 {/* photo-slider */}
                                                 <div className="slider-box mt-4">
                                                     <Slider {...settings}>
-                                                        {state.photos.map((res: any, index:number) => <div className='slider-inner'>
+                                                        {state.photos.map((res: any, index: number) => <div className='slider-inner'>
                                                             <PhotoSlider {...res} />
                                                         </div>)}
                                                     </Slider>
@@ -338,16 +338,16 @@ const EditBoatDetails = () => {
 
                                         </div>
                                         {state.name && state.prices &&
-                                                <EditPriceBoat {...state} initialise={initialise} />
-                                            }
+                                            <EditPriceBoat {...state} initialise={initialise} />
+                                        }
 
                                         {/* Pricing and Availability */}
                                         <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                             {/* Pricing */}
 
                                             {/* edit-pricing */}
-                                        
-                                         
+
+
                                             {/* Calender availability */}
                                             <div className="Calender-availability bg-white p-4 ">
                                                 <div className="photo-header d-flex justify-content-between mb-3">
@@ -361,23 +361,23 @@ const EditBoatDetails = () => {
                                             </div>
                                         </div>
                                         {/* Rules & Includes */}
-                                        <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                                            {/* Rules */}
-                                            {state.name &&
+                                        {/* <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab"> */}
+                                        {/* Rules */}
+                                        {state.name &&
 
-                                                <div className="roules Pricing bg-white mb-4">
-                                                    <div className="photo-header d-flex justify-content-between mb-3">
-                                                        <h4>Rules</h4>
-                                                    </div>
-                                                    {/* smoking */}
-                                                    <EditRuleSmokingAllowed {...state} initialise={initialise} />
-                                                    {/* pets */}
-                                                    <EditRulePetsAllowed {...state} initialise={initialise} />
-                                                    {/* Rules and Security */}
-                                                    <EditSecurityBoat {...state} initialise={initialise} />
+                                            <div className="roules Pricing bg-white mb-4" id="rules_tab">
+                                                <div className="photo-header d-flex justify-content-between mb-3">
+                                                    <h4>Rules</h4>
                                                 </div>
-                                            }
-                                        </div>
+                                                {/* smoking */}
+                                                <EditRuleSmokingAllowed {...state} initialise={initialise} />
+                                                {/* pets */}
+                                                <EditRulePetsAllowed {...state} initialise={initialise} />
+                                                {/* Rules and Security */}
+                                                <EditSecurityBoat {...state} initialise={initialise} />
+                                            </div>
+                                        }
+                                        {/* </div> */}
 
                                     </div>
                                 </div>

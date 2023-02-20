@@ -12,30 +12,30 @@ const Tablelayout = (props: any) => {
     const match = useMatch('/inquiry/:type/:page')
 
     const { authState, Toast } = React.useContext(GlobalContext)
-
     const [loading, setLoading] = React.useState(false)
-
     const handleStatus = async (id: number, status: string) => {
         const items = {
             status
         }
-        setLoading(true)
+
         try {
-            const apiRes = await henceforthApi.Boat.status(id, items)
+            const apiRes = await henceforthApi.Inquiry.inquiryStatus(id, items)
             Toast.success(apiRes.message)
         } catch (error) {
             Toast.error(error)
         } finally {
-            setLoading(false)
+
         }
 
     }
-    const onDelete = async (id: number) => {
+    const onDelete = async (id: any) => {
+        setLoading(true)
         try {
-
-            await props.initialise()
+            const apiRes = await henceforthApi.Inquiry.deleteInquiry(id)
         } catch (error) {
-
+            Toast.success(error)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -127,7 +127,7 @@ const Tablelayout = (props: any) => {
 
     return <Spin spinning={loading} className='h-100'>
         <TableHeading Array={headings}>
-            {props?.data?.map((res: any, index: number) =>
+            {Array.isArray(props?.data) && props?.data?.map((res: any, index: number) =>
                 <tr>
                     <th>{Number(match?.params.page) == 0 ? index + 1 : (Number(match?.params.page) - 1) * props.per_page + (index + 1)}</th>
                     <td>
