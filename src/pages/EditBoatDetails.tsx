@@ -161,7 +161,7 @@ const EditBoatDetails = () => {
         ]
     };
     return (
-        <Spin spinning={loading} >
+        // <Spin spinning={loading} className='h-100' >
             <section className='morning-panormic-listing py-5' >
                 <div className="container">
                     <div className="row">
@@ -386,7 +386,7 @@ const EditBoatDetails = () => {
                     </div>
                 </div>
             </section>
-        </Spin>
+        // </Spin>
     )
 }
 

@@ -41,7 +41,7 @@ const EditRuleSmokingAllowed = (props: any) => {
 
         }
     }
-    return <Spin spinning={loading} ><div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1 mb-3">
+    return <Spin spinning={loading} className='h-100' ><div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1 mb-3">
         <form className="edit-field" onSubmit={onSubmit}>
             <h6 className='mb-2'>Smoking Allowed</h6>
             {isExpended ?

@@ -265,7 +265,7 @@ function PlaceLocated() {
     console.log('form', form)
 
     return (
-        <Spin spinning={loading} >
+        <Spin spinning={loading} className='h-100' >
             <section className="select-passenger-section h-100">
                 <div className="container-fluid h-100">
                     <form className="row h-100" onSubmit={onSubmit} onKeyDown={onKeyDown}>
@@ -355,7 +355,7 @@ function PlaceLocated() {
                             {/* <div className="banner-image border">
                                 <img src={bannerImage} alt="" />
                             </div> */}
-                            <div style={{ height: '100vh', width: '100%' }}>
+                            <div style={{ height: '100vh', width: '50%', position:'fixed'}}>
                                 <HenceforthGoogleMap
                                     ref={googleMapRef}
                                     defaultCenter={defaultProps.center}
