@@ -74,7 +74,7 @@ const BoatListing = () => {
 
     useEffect(() => {
         boatListing()
-    }, [urlSearchParams.toString()])
+    }, [urlSearchParams.toString(), urlSearchParams.get('search')])
 
     let dotColor = [
         { status: henceofrthEnums.OrderStatus.draft, color: henceofrthEnums.OrderColor.draft },

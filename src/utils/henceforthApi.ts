@@ -113,15 +113,20 @@ const Boat = {
   imageUpload: (key: string, file: any) =>
     requests.file(`provider/upload-image`, key, file)
 }
-const Subscribe={
-  subscribe:(item:any)=>requests.post(`subscribe`,item)
+const Subscribe = {
+  subscribe: (item: any) => requests.post(`subscribe`, item)
 }
 
 // boat-routes
 
 const Inquiry = {
-  pagination: () =>
-    requests.get(`provider/inquiry`),
+  pagination: (status: string, page: string, search: any) =>
+    requests.get(`provider/inquiry?page=${page}${status ? `&status=${status}` : ''}${search ? `&${search}` : ''}`),
+    inquiryStatus:(id: any,items: any)=>
+    requests.put(`provider/inquiry/${id}`,items),
+    deleteInquiry:(id: any) => {
+      requests.del(`provider/inquiry/${id}`)
+    }
 };
 
 const Admin = {
