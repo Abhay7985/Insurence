@@ -84,9 +84,10 @@ function PlaceLocated() {
             else if (!state.city) {
                 Toast.error("Enter City Name")
 
-            } else if (!state.state) {
-                Toast.error("Enter State Name")
             } 
+            // else if (!state.state) {
+            //     Toast.error("Enter State Name")
+            // } 
             // else if (!state.postCode) {
             //     Toast.error("Enter Postcode")
             // }
@@ -107,7 +108,7 @@ function PlaceLocated() {
             if (error.response.body.message.city) return Toast.error(error.response.body.message.city[0])
             if (error.response.body.message.country) return Toast.error(error.response.body.message.country[0])
             if (error.response.body.message.postcode) return Toast.error(error.response.body.message.postcode[0])
-            if (error.response.body.message.state) return Toast.error(error.response.body.message.state[0])
+            // if (error.response.body.message.state) return Toast.error(error.response.body.message.state[0])
         } finally {
             setLoading(false)
         }

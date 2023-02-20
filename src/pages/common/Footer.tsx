@@ -1,6 +1,36 @@
 import HenceforthIcons from "../../assets/icons/HenceforthIcons"
+import { Button, Checkbox, Form, Input } from 'antd';
+import henceforthApi from "../../utils/henceforthApi";
+import { stat } from "fs/promises";
+import { useContext, useState } from "react";
+import { GlobalContext } from "../../context/Provider";
+import { error } from "console";
+import Spinner from "./AntSpinner";
 
 const Footer = () => {
+    const { Toast, loading, setLoading } = useContext(GlobalContext)
+    const [state, setState] = useState("")
+
+    const onSubmit = async () => {
+        setLoading(true)
+        const item = {
+            email: state
+        }
+        try {
+            if (!state.trim()) {
+                Toast.error("Please enter Email")
+            }
+            let apiRes = await henceforthApi.Subscribe.subscribe(item)
+            Toast.success(apiRes.message)
+        } catch (error) {
+            Toast.error(error)
+        } finally {
+            setState("")
+            setLoading(false)
+
+        }
+    }
+
     return (
         <>
             {/* Footer */}
@@ -14,10 +44,13 @@ const Footer = () => {
                             <div className="row justify-content-center">
                                 <div className="col-md-8 col-lg-5">
                                     <div className="subscribe mx-auto">
-                                        <div className="input-group mb-3 form-control p-0 rounded-pill">
-                                            <input type="text" className="form-control border-0 rounded-pill" placeholder="Enter your email" />
-                                            <button className="btn btn-yellow rounded-pill px-4 m-1" type="button" id="button-addon2">Subscribe</button>
-                                        </div>
+                                        <Form onFinish={onSubmit}>
+                                            <div className="input-group mb-3 form-control p-0 rounded-pill">
+                                                <Input type="text" className="form-control border-0 rounded-pill" value={state} name="email" placeholder="Enter your email"
+                                                    onChange={(e: any) => setState(e.target.value)} />
+                                                <Button className="btn btn-yellow rounded-pill px-4 m-2 h-100" htmlType="submit" id="button-addon2">{loading ? <Spinner/>:"Subscribe" }</Button>
+                                            </div>
+                                        </Form>
                                     </div>
                                 </div>
                             </div>
