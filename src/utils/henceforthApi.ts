@@ -122,11 +122,9 @@ const Subscribe = {
 const Inquiry = {
   pagination: (status: string, page: string, search: any) =>
     requests.get(`provider/inquiry?page=${page}${status ? `&status=${status}` : ''}${search ? `&${search}` : ''}`),
-    inquiryStatus:(id: any,items: any)=>
-    requests.put(`provider/inquiry/${id}`,items),
-    deleteInquiry:(id: any) => {
-      requests.del(`provider/inquiry/${id}`)
-    }
+  inquiryStatus: (id: any, items: any) =>
+    requests.put(`provider/inquiry/${id}`, items),
+  deleteInquiry: (id: any) => requests.del(`provider/inquiry/${id}`)
 };
 
 const Admin = {
@@ -134,7 +132,7 @@ const Admin = {
     requests.get(`provider/boat-routes`),
 }
 const Common = {
-  contact_us:(item:any)=>requests.post('contact-us',item),
+  contact_us: (item: any) => requests.post('contact-us', item),
   do_spaces_file_upload: (key: string, file: any) => requests.file(`provider/upload-image`, key, file),
 }
 
