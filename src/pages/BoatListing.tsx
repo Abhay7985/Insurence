@@ -178,7 +178,7 @@ const BoatListing = () => {
                                                         </Link>
                                                     </li>
                                                     <li>
-                                                        <Link to={`/boat/${e?.id}/inquiry/edit`}> <HenceforthIcons.EditIcon /></Link>
+                                                        <Link to={`/boat/${e?.id}/inquiry/edit/${henceofrthEnums.EditType.details}`}> <HenceforthIcons.EditIcon /></Link>
                                                     </li>
                                                 </ul>
                                             </td>

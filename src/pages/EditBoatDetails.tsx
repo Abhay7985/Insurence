@@ -21,11 +21,11 @@ import henceofrthValidations from "../utils/henceforthValidations";
 const EditBoatDetails = () => {
 
 
-    const match = useMatch(`boat/:id/inquiry/edit`)
+    const match = useMatch(`boat/:id/inquiry/edit/:type`)
     const location = useLocation()
     const { authState, Toast } = React.useContext(GlobalContext)
     const [loading, setLoading] = React.useState(false)
-    
+
     const [state, setState] = useState({
         amenities: [],
         bathrooms: 0,
@@ -163,33 +163,34 @@ const EditBoatDetails = () => {
     };
     return (
         // <Spin spinning={loading} className='h-100' >
-            <section className='morning-panormic-listing py-5' >
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12 mb-5">
-                            <div className="title d-flex justify-content-between">
-                                <h2>{state.name}</h2>
-                                <div className="list-btn d-flex gap-4">
-                                    <a href="#" className='d-flex gap-2 align-items-center text-dark'>
-                                        <Dropdown menu={{ items: StatusItem }}>
-                                            <Badge color={state?.status == henceofrthEnums.OrderStatus.listed ?
-                                                henceofrthEnums.OrderColor.listed :
-                                                state?.status == henceofrthEnums.OrderStatus.unlisted ?
-                                                    henceofrthEnums.OrderColor.unlisted :
-                                                    henceofrthEnums.OrderColor.draft}
-                                                text={state?.status} />
-                                        </Dropdown>
-                                    </a>
-                                    <Link to={`/boat/${match?.params.id}/inquiry`}>
-                                        <button className='btn btn-outline-yellow'>Preview Listing</button>
-                                    </Link>
-                                </div>
+        <section className='morning-panormic-listing py-5' >
+            <div className="container">
+                <div className="row">
+                    <div className="col-12 mb-5">
+                        <div className="title d-flex justify-content-between">
+                            <h2>{state.name}</h2>
+                            <div className="list-btn d-flex gap-4">
+                                <a href="#" className='d-flex gap-2 align-items-center text-dark'>
+                                    <Dropdown menu={{ items: StatusItem }}>
+                                        <Badge color={state?.status == henceofrthEnums.OrderStatus.listed ?
+                                            henceofrthEnums.OrderColor.listed :
+                                            state?.status == henceofrthEnums.OrderStatus.unlisted ?
+                                                henceofrthEnums.OrderColor.unlisted :
+                                                henceofrthEnums.OrderColor.draft}
+                                            text={state?.status} />
+                                    </Dropdown>
+                                </a>
+                                <Link to={`/boat/${match?.params.id}/inquiry`}>
+                                    <button className='btn btn-outline-yellow'>Preview Listing</button>
+                                </Link>
                             </div>
                         </div>
-                        <div className="col-12">
-                            <div className="tab-box row">
-                                {/* tabs */}
-                                <div className='col-md-3'><div className='bg-white h-100'>
+                    </div>
+                    <div className="col-12">
+                        <div className="tab-box row">
+                            {/* tabs */}
+                            <div className='col-md-3'>
+                                <div className='bg-white h-100'>
                                     <div className="nav flex-column nav-pills bg-white" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                         {/* Listing accordian */}
                                         <button className="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
@@ -197,11 +198,11 @@ const EditBoatDetails = () => {
                                             <div className="accordion" id="accordionExample">
                                                 <div className="accordion-item">
                                                     <h2 className="accordion-header" id="headingOne">
-                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        <Link to={`/boat/${match?.params.id}/inquiry/edit/${henceofrthEnums.EditType.details}#photos_tab`} className="accordion-button">
                                                             Listing Details
-                                                        </button>
+                                                        </Link>
                                                     </h2>
-                                                    <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                    <div className={`accordion-collapse ${match?.params.type == henceofrthEnums.EditType.details ? 'collapse show' : 'collapse'}`}>
                                                         <div className="accordion-body text-start">
                                                             <ul>
                                                                 <li>
@@ -229,11 +230,12 @@ const EditBoatDetails = () => {
                                         <div className="accordion" id="pricingAccordian">
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header" id="headingOne">
-                                                    <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#pricing" aria-expanded="true" aria-controls="pricing">
+                                                    <Link to={`/boat/${match?.params.id}/inquiry/edit/${henceofrthEnums.EditType.price}#price_tab`} className="accordion-button">
                                                         Pricing and Availability
-                                                    </button>
+                                                    </Link>
+
                                                 </h2>
-                                                <div id="pricing" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#pricingAccordian">
+                                                <div className={`accordion-collapse ${match?.params.type == henceofrthEnums.EditType.price ? 'collapse show' : 'collapse'}`}>
                                                     <div className="accordion-body text-start">
                                                         <ul>
                                                             <li>
@@ -251,11 +253,11 @@ const EditBoatDetails = () => {
                                         <div className="accordion" id="RulesAccordian">
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header" id="headingOne">
-                                                    <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#rules" aria-expanded="true" aria-controls="rules">
+                                                    <Link to={`/boat/${match?.params.id}/inquiry/edit/${henceofrthEnums.EditType.rules}#rules_tab`} className="accordion-button">
                                                         Rules & Includes
-                                                    </button>
+                                                    </Link>
                                                 </h2>
-                                                <div id="rules" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#RulesAccordian">
+                                                <div className={`accordion-collapse ${match?.params.type == henceofrthEnums.EditType.rules ? 'collapse show' : 'collapse'}`}>
                                                     <div className="accordion-body text-start">
                                                         <ul>
                                                             <li>
@@ -267,14 +269,13 @@ const EditBoatDetails = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </div></div>
-                                {/* content  */}
-                                <div className='col-md-9'>
-                                    <div className="tab-content w-100" id="v-pills-tabContent">
-                                        {/* Listing accordian */}
-                                        <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-
-                                            {/* photos */}
+                                </div>
+                            </div>
+                            {/* content  */}
+                            <div className='col-md-9'>
+                                <div className="tab-content w-100" id="v-pills-tabContent">
+                                    {match?.params.type == henceofrthEnums.EditType.details &&
+                                        <div className=" ">
                                             <div className="photos Pricing bg-white mb-4" >
                                                 <div className="photo-header d-flex justify-content-between">
                                                     <h4>Photos ({state.photos.length})</h4>
@@ -338,18 +339,14 @@ const EditBoatDetails = () => {
                                             }
 
                                         </div>
-                                        {state.name && state.prices &&
-                                            <EditPriceBoat {...state} initialise={initialise} />
-                                        }
-
-                                        {/* Pricing and Availability */}
-                                        <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                                            {/* Pricing */}
-
-                                            {/* edit-pricing */}
+                                    }
+                                    {match?.params.type == henceofrthEnums.EditType.price &&
+                                        <div >
+                                            {state.name && state.prices &&
+                                                <EditPriceBoat {...state} initialise={initialise} />
+                                            }
 
 
-                                            {/* Calender availability */}
                                             <div className="Calender-availability bg-white p-4 ">
                                                 <div className="photo-header d-flex justify-content-between mb-3">
                                                     <h4>Calender availability</h4>
@@ -361,32 +358,30 @@ const EditBoatDetails = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        {/* Rules & Includes */}
-                                        {/* <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab"> */}
-                                        {/* Rules */}
-                                        {state.name &&
+                                    }
+                                    {match?.params.type == henceofrthEnums.EditType.rules && state.name &&
 
-                                            <div className="roules Pricing bg-white mb-4" id="rules_tab">
-                                                <div className="photo-header d-flex justify-content-between mb-3">
-                                                    <h4>Rules</h4>
-                                                </div>
-                                                {/* smoking */}
-                                                <EditRuleSmokingAllowed {...state} initialise={initialise} />
-                                                {/* pets */}
-                                                <EditRulePetsAllowed {...state} initialise={initialise} />
-                                                {/* Rules and Security */}
-                                                <EditSecurityBoat {...state} initialise={initialise} />
+                                        <div className="roules Pricing bg-white mb-4" id="rules_tab">
+                                            <div className="photo-header d-flex justify-content-between mb-3">
+                                                <h4>Rules</h4>
                                             </div>
-                                        }
-                                        {/* </div> */}
+                                            {/* smoking */}
+                                            <EditRuleSmokingAllowed {...state} initialise={initialise} />
+                                            {/* pets */}
+                                            <EditRulePetsAllowed {...state} initialise={initialise} />
+                                            {/* Rules and Security */}
+                                            <EditSecurityBoat {...state} initialise={initialise} />
+                                        </div>
+                                    }
+                                    {/* </div> */}
 
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
         // </Spin>
     )
 }
