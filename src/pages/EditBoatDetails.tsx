@@ -85,7 +85,7 @@ const EditBoatDetails = () => {
     }
 
     const initialise = async (b: boolean) => {
-        setLoading(b)
+        setLoading(true)
         henceforthApi.setToken(authState?.access_token)
         try {
             let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
@@ -101,6 +101,20 @@ const EditBoatDetails = () => {
     useEffect(() => {
         initialise(true)
     }, [match?.params.id])
+
+    const deleteListing = async(id: any) => {
+        setLoading(true)
+        try {
+            const apiRes = await henceforthApi.Boat.deleteBoat(id)
+            Toast.success(apiRes.message)
+            window.history.back()
+        } catch (error) {
+            Toast.error(error)
+        }finally{
+            setLoading(false)
+        }
+
+    }
 
     const StatusItem: MenuProps['items'] = [
         {
@@ -184,12 +198,10 @@ const EditBoatDetails = () => {
                                 <Link to={`/boat/${match?.params.id}/inquiry`}>
                                     <button className='btn btn-outline-yellow fw-600'>Preview Listing</button>
                                 </Link>
-                                <Link to={`/boat/${match?.params.id}/inquiry`}>
-                                    <button className='btn btn-outline-red d fw-600'>
+                                    <button className='btn btn-outline-red d fw-600' onClick={() => deleteListing(match?.params.id)}>
                                         <HenceforthIcons.DeleteRed />
                                         <span className='ms-2 align-middle'>Delete Listing</span>
                                     </button>
-                                </Link>
                             </div>
                         </div>
                     </div>

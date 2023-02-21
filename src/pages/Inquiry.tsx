@@ -61,7 +61,7 @@ const InquiryPage = () => {
                 String(match?.params.page),
                 uRLSearchParams.toString()
             )
-            debugger
+            
             setState(apiRes.data)
 
         } catch (error) {

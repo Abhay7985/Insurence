@@ -34,8 +34,22 @@ const AmenitiesOffer = () => {
         setAmenities([...prev]);
     };
 
-    const onSubmit = async (e: any) => {
-        e.preventDefault()
+
+    const handleAmenities = async () => {
+        try {
+            let res = await henceforthApi.Boat.boatAmenities()
+            console.log(res);
+            setAmenitiesOffers(res.data)
+        } catch (error) {
+        }
+    }
+    const deleteQuery = () => {
+        uRLSearchParams.delete("action")
+        navigate({
+            search: uRLSearchParams.toString()
+        })
+    }
+    const saveAndExit = async (b: boolean) => {
         let items = {
             amenities: {
                 boat_id: Number(match?.params.id),
@@ -48,39 +62,43 @@ const AmenitiesOffer = () => {
                 setLoading(true)
                 let apiRes = await henceforthApi.Boat.create(items)
                 Toast.success(apiRes.message)
-                navigate({
+                if (b) navigate(`/`, { replace: true })
+                else navigate({
                     pathname: `/boat/${match?.params.id}/photos`,
                     search: uRLSearchParams.toString()
                 })
+
             } else {
                 Toast.error("Enter Amenities")
+                deleteQuery()
             }
         } catch (error: any) {
+            deleteQuery ()
             if (error.response.body.message.amenities) return Toast.error(error.response.body.message.amenities[0])
         } finally {
             setLoading(false)
         }
     }
-
-    const handleAmenities = async () => {
-        try {
-            let res = await henceforthApi.Boat.boatAmenities()
-            console.log(res);
-            setAmenitiesOffers(res.data)
-        } catch (error) {
-        }
+    const onSubmit = async (e: any) => {
+        e.preventDefault()
+        saveAndExit(false)
     }
+    useEffect(() => {
+        if (uRLSearchParams.get("action") === "save_and_exit") {
+            saveAndExit(true)
+        }
+    }, [uRLSearchParams.get("action")])
 
     useEffect(() => {
         handleAmenities()
     }, [])
 
     return (
-        // <Spin spinning={loading} className='h-100'>
-            <section className="Confirm-address-section h-100 px-2 px-md-0">
-                <div className="container-fluid h-100">
-                    <form className="row h-100" onSubmit={onSubmit}>
-                        <div className="col-lg-6">
+        <section className="Confirm-address-section h-100 px-2 px-md-0">
+            <div className="container-fluid h-100">
+                <form className="row h-100" onSubmit={onSubmit}>
+                    <div className="col-lg-6">
+                        <Spin spinning={loading}>
                             <div className="banner-content h-100 d-flex flex-column ">
                                 <div className="row justify-content-center justify-content-lg-end gy-3 gy-sm-4">
                                     <div className="col-12 col-lg-11 mb-2 mb-md-4">
@@ -98,17 +116,17 @@ const AmenitiesOffer = () => {
                                         </div>)}
                                 </div>
                             </div>
-                            <BackNextLayout />
+                        </Spin>
+                        <BackNextLayout />
+                    </div>
+                    <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
+                        <div className="banner-image border">
+                            <img src={bannerImage} alt="" />
                         </div>
-                        <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
-                            <div className="banner-image border">
-                                <img src={bannerImage} alt="" />
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </section>
-        // </Spin>
+                    </div>
+                </form>
+            </div>
+        </section>
     )
 }
 

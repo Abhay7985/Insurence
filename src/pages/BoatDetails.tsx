@@ -34,8 +34,9 @@ const onChange1: DatePickerProps['onChange'] = (date, dateString) => {
 };
 
 const BoatDetails = () => {
-
     const [visible, setVisible] = useState(false);
+    const [currentImg, setCurrentImg] = useState(0);
+
 
     const match = useMatch(`boat/:id/inquiry`)
     const { authState, Toast } = React.useContext(GlobalContext)
@@ -113,7 +114,11 @@ const BoatDetails = () => {
         createMerker(latlng, map)
     }
 
-    const [modal2Open, setModal2Open] = useState(false);
+    const handleImagePreview = (index:number) => {
+        setVisible(true)
+        setCurrentImg(index)
+    }
+
     return (
         <Spin spinning={loading} className='h-100' >
             <section className="morning-panormic py-4">
@@ -142,16 +147,16 @@ const BoatDetails = () => {
                             <div className="row gy-4 py-4 ms-0"  >
                                 <div className="col-md-6 ps-0">
                                     <div className="morning-banner">
-                                        <img src={state.cover_image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}` : ""} alt="img" className='img-fluid' onClick={() => setVisible(true)} />
+                                        <img src={state.cover_image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}` : ""} alt="img" className='img-fluid' onClick={() => handleImagePreview(0)} />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="row gy-2">
-                                        {state?.photos?.slice(0, 4)?.map((res: any, index: number) =>
+                                        {state?.photos?.slice(1, 5)?.map((res: any, index: number) =>
                                             <>
                                                 <div className="col-6 ps-0">
                                                     <div className={`${index == 1 ? 'boat-group-image ' : index == 3 ? 'boat-group-image-last ' : ''} boat-image-list`}>
-                                                        <img src={state.photos ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${res.image}` : BannerImage} alt="img" className='img-fluid' onClick={() => setVisible(true)} />
+                                                        <img src={state.photos ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${res.image}` : BannerImage} alt="img" className='img-fluid' onClick={() => handleImagePreview(index+1)} />
                                                     </div>
                                                 </div>
                                             </>
@@ -252,19 +257,10 @@ const BoatDetails = () => {
                 </div>
             </section>
 
-            {/* image-modal */}
             <>
-                {/* <Image
-                    preview={{ visible: false }}
-                    width={200}
-                    src="https://gw.alipayobjects.com/zos/antfincdn/LlvErxo8H9/photo-1503185912284-5271ff81b9a8.webp"
-                    onClick={() => setVisible(true)}
-                /> */}
                 <div style={{ display: 'none' }}>
-                    <Image.PreviewGroup preview={{ visible, onVisibleChange: (vis) => setVisible(vis) }}>
-                        <Image src="https://gw.alipayobjects.com/zos/antfincdn/LlvErxo8H9/photo-1503185912284-5271ff81b9a8.webp" />
-                        <Image src="https://gw.alipayobjects.com/zos/antfincdn/cV16ZqzMjW/photo-1473091540282-9b846e7965e3.webp" />
-                        <Image src="https://gw.alipayobjects.com/zos/antfincdn/x43I27A55%26/photo-1438109491414-7198515b166b.webp" />
+                    <Image.PreviewGroup preview={{ visible, onVisibleChange: (vis) => setVisible(vis),current:currentImg }}>
+                    {state?.photos?.map((res: any, index: number) => <Image src={`${henceforthApi.API_FILE_ROOT_ORIGINAL}${res.image}`} />)}
                     </Image.PreviewGroup>
                 </div>
             </>

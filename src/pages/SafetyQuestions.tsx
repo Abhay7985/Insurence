@@ -1,5 +1,5 @@
 import { Spin } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useMatch, useNavigate } from 'react-router-dom';
 import bannerImage from '../assets/images/image_five.png';
 import BackNextLayout from '../Components/boat/BackNextLayout';
@@ -20,7 +20,7 @@ const SafetyQuestions = () => {
         rules: ""
 
     })
-
+const actionComparison=uRLSearchParams.get("action") as string === "save_and_exit"
     const handleState = (e: any) => {
         setState({
             ...state,
@@ -28,8 +28,7 @@ const SafetyQuestions = () => {
         })
     }
 
-    const onSubmit = async (e: any) => {
-        e.preventDefault()
+    const saveAndExit = async (b: boolean) => {
         let items = {
             safety_question: {
                 boat_id: match?.params.id,
@@ -39,25 +38,34 @@ const SafetyQuestions = () => {
             }
         }
         try {
-            if (state.rules) {
-                setSpinning(true)
-                let res = await henceforthApi.Boat.create(items)
-                Toast.success(res.message)
-                navigate({
-                    pathname: `/boat/${match?.params.id}/price`,
-                    search: uRLSearchParams.toString()
-                })
-            } else {
-                Toast.error("Rules field is required")
-            }
+            setSpinning(true)
+            let res = await henceforthApi.Boat.create(items)
+            Toast.success(res.message)
+            if (b) navigate(`/`, { replace: true })
+            else navigate({
+                pathname: `/boat/${match?.params.id}/price`,
+                search: uRLSearchParams.toString()
+            })
 
         } catch (error: any) {
+            uRLSearchParams.delete("action")
+            navigate({
+                search: uRLSearchParams.toString()
+            })
             if (error.response.body.message.rules) return Toast.error(error.response.body.message.rules[0])
         } finally {
             setSpinning(false)
         }
     }
-
+    const onSubmit = async (e: any) => {
+        e.preventDefault()
+        saveAndExit(false)
+    }
+    useEffect(() => {
+        if (actionComparison) {
+            saveAndExit(true)
+        }
+    }, [uRLSearchParams.get("action")])
     return (
         <section className="Confirm-address-section h-100">
             <div className="container-fluid h-100">

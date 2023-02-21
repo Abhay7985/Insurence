@@ -21,18 +21,20 @@ const Tablelayout = (props: any) => {
         try {
             const apiRes = await henceforthApi.Inquiry.inquiryStatus(id, items)
             Toast.success(apiRes.message)
+            await props.initialise()
         } catch (error) {
             Toast.error(error)
         } finally {
             setLoading(false)
         }
     }
-    
+
     const onDelete = async (id: any) => {
         setLoading(true)
         try {
             const apiRes = await henceforthApi.Inquiry.deleteInquiry(id)
             Toast.success(apiRes.message)
+            await props.initialise()
         } catch (error) {
             Toast.error(error)
         } finally {

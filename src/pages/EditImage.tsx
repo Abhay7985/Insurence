@@ -54,6 +54,7 @@ const EditImage = () => {
             setSpinning(true)
             const photos = await uploadImages()
             let items = {
+                
                 photos: photos.map((res) => { return { photo: res } })
             }
             if (photos.length >= 5) {
@@ -74,15 +75,19 @@ const EditImage = () => {
         let items = {
             cover_photo: img
         }
-
+        alert("hello")
+        setSpinning(true)
         try {
             let res = await henceforthApi.Boat.edit(match?.params.id as string, items)
             Toast.success(res.message)
         } catch (error) {
-
+            Toast.error(error)
+        }finally{
+            setSpinning(false)
         }
 
     }
+
     const removeImage = async (index: number) => {
         debugger
         const data = photos

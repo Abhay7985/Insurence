@@ -2,7 +2,7 @@ import bannerImage from '../assets/images/image_two.png';
 import increase from '../assets/icons/add_circle_outline.svg';
 import decrease from '../assets/icons/remove_circle_outline.svg';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import React from 'react';
+import React, { useEffect } from 'react';
 import henceforthApi from '../utils/henceforthApi';
 import { GlobalContext } from '../context/Provider';
 import BackNextLayout from '../Components/boat/BackNextLayout';
@@ -21,10 +21,8 @@ const SelectPassenger = () => {
     const [bathrooms, setBathrooms] = React.useState(1)
     const [loading, setLoading] = React.useState(false)
 
-
-    const onSubmit = async (e: any) => {
-        e.preventDefault()
-
+    const actionComparison=uRLSearchParams.get("action") as string === "save_and_exit"
+    const saveAndExit = async (b: boolean) => {
         const items = {
             boat: {
                 name: uRLSearchParams.get("name"),
@@ -37,32 +35,45 @@ const SelectPassenger = () => {
                 bedrooms: bedrooms,
                 bathrooms: bathrooms
             }
-            // navigate({
-            //     pathname: '/boat/passengers',
-            //     search: uRLSearchParams.toString()
-            // })
         }
         try {
             setLoading(true)
             const apiRes = await henceforthApi.Boat.create(items)
             Toast.success(apiRes.message)
-            navigate({
-                pathname: `/boat/${apiRes.boat_id}/place`
-            })
+            if (b) {
+                navigate(`/`, { replace: true })
+            } else {
+                navigate({
+                    pathname: `/boat/${apiRes.boat_id}/place`
+                })
+            }
         } catch (error) {
             console.log('error', error);
             Toast.error(error)
+            uRLSearchParams.delete("action")
+            navigate({
+                search: uRLSearchParams.toString()
+            })
         } finally {
             setLoading(false)
         }
-
     }
+    const onSubmit = async (e: any) => {
+        e.preventDefault()
+        saveAndExit(false)
+    }
+    useEffect(() => {
+        if (actionComparison) {
+            saveAndExit(true)
+        }
+    }, [uRLSearchParams.get("action")])
+
     return (
-        <Spin spinning={loading} className='h-100' >
-            <section className="select-passenger-section h-100">
-                <div className="container-fluid h-100">
-                    <form className="row h-100" onSubmit={onSubmit}>
-                        <div className="col-lg-6">
+        <section className="select-passenger-section h-100">
+            <div className="container-fluid h-100">
+                <form className="row h-100" onSubmit={onSubmit}>
+                    <div className="col-lg-6">
+                        <Spin spinning={loading}  >
                             <div className="banner-content h-100 d-flex flex-column ">
                                 <div className="row gy-2 justify-content-center justify-content-lg-end pb-5 pb-lg-0">
                                     <div className="col-11 col-lg-11">
@@ -158,18 +169,18 @@ const SelectPassenger = () => {
                                     </div>
                                 </div>
                             </div>
-                            <BackNextLayout />
+                        </Spin>
+                        <BackNextLayout />
 
+                    </div>
+                    <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
+                        <div className="banner-image border">
+                            <img src={bannerImage} alt="" />
                         </div>
-                        <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
-                            <div className="banner-image border">
-                                <img src={bannerImage} alt="" />
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </section>
-        </Spin>
+                    </div>
+                </form>
+            </div>
+        </section>
     )
 }
 export default SelectPassenger;
