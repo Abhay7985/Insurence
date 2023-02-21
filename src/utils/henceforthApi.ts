@@ -1,3 +1,4 @@
+import Item from 'antd/es/list/Item';
 import _superagent, { search } from 'superagent';
 const SuperagentPromise = require('superagent-promise');
 const superagent = SuperagentPromise(_superagent, global.Promise);
@@ -112,15 +113,18 @@ const Boat = {
   imageUpload: (key: string, file: any) =>
     requests.file(`provider/upload-image`, key, file)
 }
-const Subscribe={
-  subscribe:(item:any)=>requests.post(`subscribe`,item)
+const Subscribe = {
+  subscribe: (item: any) => requests.post(`subscribe`, item)
 }
 
 // boat-routes
 
 const Inquiry = {
-  pagination: () =>
-    requests.get(`provider/inquiry`),
+  pagination: (status: string, page: string, search: any) =>
+    requests.get(`provider/inquiry?page=${page}${status ? `&status=${status}` : ''}${search ? `&${search}` : ''}`),
+  inquiryStatus: (id: any, items: any) =>
+    requests.put(`provider/inquiry/${id}`, items),
+  deleteInquiry: (id: any) => requests.del(`provider/inquiry/${id}`)
 };
 
 const Admin = {
@@ -128,8 +132,8 @@ const Admin = {
     requests.get(`provider/boat-routes`),
 }
 const Common = {
-  do_spaces_file_upload: (key: string, file: any) =>
-    requests.file(`provider/upload-image`, key, file),
+  contact_us: (item: any) => requests.post('contact-us', item),
+  do_spaces_file_upload: (key: string, file: any) => requests.file(`provider/upload-image`, key, file),
 }
 
 

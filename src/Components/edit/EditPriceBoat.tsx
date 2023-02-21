@@ -138,14 +138,20 @@ const EditPriceBoat = (props: any) => {
     }, [])
 
 
-    return <Spin spinning={loading}>
-        <div className="Pricing bg-white mb-4">
-            <div className="photo-header d-flex justify-content-between mb-3">
-                <h4>Pricing</h4>
+    return <div className="Pricing bg-white mb-4" id="price_tab">
+        <div className="photo-header d-flex justify-content-between mb-3">
+            <h4>Pricing</h4>
+            <div className="edit-photo ps-4" >
+                {isExpended ?
+                    <button className='btn p-0 border-0 text-yellow fw-bold' type="button" onClick={() => { setIsExpended(false); setState(props) }}>Cancel</button> :
+                    <button className='btn p-0 border-0 text-yellow fw-bold' type="button" onClick={() => setIsExpended(true)}>Edit</button>}
             </div>
+        </div>
 
-            {isExpended ?
-                <form className="row justify-content-center justify-content-lg-end gy-4 py-4" onSubmit={onSubmit} id="calender_tab">
+        {isExpended ?
+            <form className="row justify-content-center justify-content-lg-end gy-4 py-4" onSubmit={onSubmit} id="calender_tab">
+                <Spin spinning={loading}>
+
                     {dataRoute.map((res: RouteDataInterface, index: number) =>
                         <div className="col-12" key={res.id}>
                             <div className="form-check">
@@ -175,23 +181,19 @@ const EditPriceBoat = (props: any) => {
                                 </div>}
                         </div>
                     )}
-                    <div className="col-12">
-                        <button className='btn btn-yellow px-4 rounded-2' type="submit">Save</button>
+                </Spin>
+
+                <div className="col-12">
+                    <button className='btn btn-yellow px-4 rounded-2' type="submit" disabled={loading}>Save</button>
+                </div>
+            </form> : state?.prices?.map((res: any) =>
+                <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1 mb-2">
+                    <div className="listing-content" key={res.id}>
+                        <h6 className='mb-2'>{res?.route}</h6>
+                        <p>${res?.price} <span className='fs-14'>or</span> {res?.installments} in ${res?.installment_price}</p>
                     </div>
-                </form> :
-                <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
-                    {state?.prices?.map((res: any) =>
-                        <div className="listing-content" key={res.id}>
-                            <h6 className='mb-2'>{res?.route}</h6>
-                            <p>${res?.price} <span className='fs-14'>or</span> {res?.installments} in ${res?.installment_price}</p>
-                        </div>)}
-                    <div className="edit-photo ps-4" >
-                        {isExpended ?
-                            <button className='btn p-0 border-0 text-yellow fw-bold' type="button" onClick={() => { setIsExpended(false); setState(props) }}>Cancel</button> :
-                            <button className='btn p-0 border-0 text-yellow fw-bold' type="button" onClick={() => setIsExpended(true)}>Edit</button>}
-                    </div>
-                </div>}
-        </div>
-    </Spin>
+                </div>)}
+    </div>
+    // </Spin>
 }
 export default EditPriceBoat

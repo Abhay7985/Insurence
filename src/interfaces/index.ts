@@ -124,3 +124,9 @@ export interface boatListingData {
     status: string,
     updated_at: string
 }
+export interface contactUs{
+    name:string,
+    email:string,
+    phone:number,
+    message:string
+} 

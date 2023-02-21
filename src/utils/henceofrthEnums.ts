@@ -22,9 +22,15 @@ enum OrderColor {
     listed = "#32CD32",
     unlisted = "#FF0000",
 }
+enum EditType {
+    details = "details",
+    price = "price",
+    rules = "rules",
+}
 export default {
     OrderStatus,
     OrderColor,
     InquiryStatus,
     InquiryColor,
+    EditType,
 }
