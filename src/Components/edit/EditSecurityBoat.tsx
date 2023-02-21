@@ -29,12 +29,21 @@ const EditSecurityBoat = (props: any) => {
                 rules: state.rules
             }
         }
+        const data = items.safety_question.rules
         setLoading(true)
         try {
-            const apiRes = await henceforthApi.Boat.edit(state.id, items)
-            Toast.success(apiRes.message)
-            setIsExpended(false)
-            await props.initialise()
+
+            if(!data.trim()){
+                Toast.error("Enter Rules")
+            }else{
+
+                const apiRes = await henceforthApi.Boat.edit(state.id, items)
+                Toast.success(apiRes.message)
+                setIsExpended(false)
+                await props.initialise()
+            }
+
+            
         } catch (error) {
             Toast.error(error)
         } finally {
@@ -48,7 +57,7 @@ const EditSecurityBoat = (props: any) => {
             <div className="edit-listing">
                 <h6 className='mb-2'>Rules and Security</h6>
                 {isExpended ?
-                    <form className="edit-input mt-4" onSubmit={onSubmit}>
+                    <form className="edit-input mt-4 w-100" onSubmit={onSubmit}>
                         <textarea className='form-control' placeholder="Enter rules" value={state.rules} name="rules" onChange={(e) => handleChange(e.target)} ></textarea>
                         <div className="save-btn mt-4">
                             <button className='btn btn-yellow rounded-2' type="submit">Save</button>

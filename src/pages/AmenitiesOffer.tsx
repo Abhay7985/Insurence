@@ -76,7 +76,7 @@ const AmenitiesOffer = () => {
     }, [])
 
     return (
-        <Spin spinning={loading} className='h-100'>
+        // <Spin spinning={loading} className='h-100'>
             <section className="Confirm-address-section h-100 px-2 px-md-0">
                 <div className="container-fluid h-100">
                     <form className="row h-100" onSubmit={onSubmit}>
@@ -108,7 +108,7 @@ const AmenitiesOffer = () => {
                     </form>
                 </div>
             </section>
-        </Spin>
+        // </Spin>
     )
 }
 

@@ -39,18 +39,18 @@ const Footer = () => {
             <footer className='footer'>
                 <div className="container">
                     <div className="row gy-3 gy-sm-4 justify-content-lg-between">
-                        <div className="col-md-11 text-center">
+                        <div className="col-md-12 text-center">
                             <h5>Subscribe to our newsletter</h5>
                         </div>
-                        <div className="col-lg-11">
+                        <div className="col-lg-12">
                             <div className="row justify-content-center">
-                                <div className="col-md-8 col-lg-5">
-                                    <div className="subscribe mx-auto">
+                                <div className="col-md-8 col-lg-6">
+                                    <div className="subscribe">
                                         <Form onFinish={onSubmit}>
                                             <div className="input-group mb-3 form-control p-0 rounded-pill">
                                                 <Input type="text" className="form-control border-0 rounded-pill" value={state} name="email" placeholder="Enter your email"
                                                     onChange={(e: any) => setState(e.target.value)} />
-                                                <Button className="btn btn-yellow rounded-pill px-4 m-2 h-100" htmlType="submit" id="button-addon2">{loading ? <Spinner/>:"Subscribe" }</Button>
+                                                <Button className="btn btn-yellow rounded-pill px-4 m-1 py-2 h-100" htmlType="submit" id="button-addon2">{loading ? <Spinner/>:"Subscribe" }</Button>
                                             </div>
                                         </Form>
                                     </div>
@@ -58,7 +58,7 @@ const Footer = () => {
                             </div>
 
                         </div>
-                        <div className="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div className="col-12 col-sm-6 col-md-4 col-lg-2">
                             <ul >
                                 <li>
                                     <div className="footer-logo">

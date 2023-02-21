@@ -39,11 +39,11 @@
     }
 }
 
-.banner-content {
+// .banner-content {
 
-    overflow-y: auto;
-    overflow-x: hidden;
-}
+//     overflow-y: auto;
+//     overflow-x: hidden;
+// }
 
 .banner-footer {
     padding: 20px 0;
@@ -146,11 +146,16 @@
 
 .uploaded-image {
     min-height: 176px;
+    max-height: 176px;
     cursor: pointer;
+    overflow: hidden;
+    border: 1px solid rgb(241, 241, 241);
+    border-radius: 4px;
     transition: 0.5s;
 
     img {
         height: 100%;
+        width: 100%;
         min-height: 176px;
     }
 
@@ -233,11 +238,11 @@
     }
 
     @media (max-width:991px) {
-        height: 350px;
+        height: 400px;
     }
 
     @media (max-width:767px) {
-        border-radius: 10px;
+        border-radius: 10px 10px 0 0;
         height: 210px;
     }
 }
@@ -252,19 +257,24 @@
         width: 100%;
         object-fit: cover;
     }
+    @media (max-width:767px) {
+        border-radius: 10px;
+        height: 150px;
+    }
 }
 .boat-group-image {
 
   &:nth-child(1){
     border-radius: 0px 10px 0px 0px;
-    border: 1px solid;
   }
+  @media (max-width:767px) {
+    border-radius: 0px 10px 0px 0px;
+}
 }
 .boat-group-image-last {
 
   &:nth-child(1){
     border-radius: 0px 0px 10px 0px;
-    border: 1px solid;
   }
 }
 
@@ -279,23 +289,27 @@
 .price-card {
     box-shadow: 0px 4px 14px #0000001A;
     border-radius: 10px;
-    position: relative;
+   
     input{
         margin-top: 19px;
     }
-    &::before{
-        position: absolute;
-        content: 'Date';
-        top: 25px;
-        bottom: 0;
-        left: 45px;
-        margin: auto;
-        font-weight: 700;
-        text-transform: uppercase;
-        z-index: 1;
-        height: 20px;
-        width: 20px;
+    .select-date{
+        position: relative;
+        &::before{
+            position: absolute;
+            content: 'Date';
+            top: 25px !important;
+            bottom: 0 !important;
+            left: 20px !important;
+            margin: auto;
+            font-weight: 700;
+            text-transform: uppercase;
+            z-index: 1;
+            height: 100% !important;
+            width: 20px !important;
+        }
     }
+
     .ant-picker-suffix{
         position: relative;
         &::after{
@@ -348,7 +362,12 @@
     }
     p{
         font-size: 15px;
+        font-weight: 600;
     }
+}
+
+.location{
+    cursor: pointer;
 }
 
 // ************************************Boat Listing section****************************
@@ -496,10 +515,7 @@
     .tab-box {
         height: 100%;
 
-        .tab-content {
-            height: 100%;
-            overflow: auto;
-        }
+     
 
         .nav {
             min-width: 300px;

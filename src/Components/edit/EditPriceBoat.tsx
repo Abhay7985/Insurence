@@ -26,9 +26,9 @@ const EditPriceBoat = (props: any) => {
     console.log(props);
 
     const handleChange = async (name: string, value: any, index: number) => {
-        if (name === "price" && !NumberValidation(value)) return
-        if (name === "installments" && !NumberValidation(value)) return
-        if (name === "installment_price" && !NumberValidation(value)) return
+        if (name === "price" && isNaN(value)) return
+        if (name === "installments" && isNaN(value)) return
+        if (name === "installment_price" && isNaN(value)) return
         const data = dataRoute[index] as any
         if (typeof value == "boolean") {
             data.selected = value
@@ -138,13 +138,20 @@ const EditPriceBoat = (props: any) => {
     }, [])
 
 
-    return         <div className="Pricing bg-white mb-4" id="price_tab">
-            <div className="photo-header d-flex justify-content-between mb-3">
-                <h4>Pricing</h4>
+    return <div className="Pricing bg-white mb-4" id="price_tab">
+        <div className="photo-header d-flex justify-content-between mb-3">
+            <h4>Pricing</h4>
+            <div className="edit-photo ps-4" >
+                {isExpended ?
+                    <button className='btn p-0 border-0 text-yellow fw-bold' type="button" onClick={() => { setIsExpended(false); setState(props) }}>Cancel</button> :
+                    <button className='btn p-0 border-0 text-yellow fw-bold' type="button" onClick={() => setIsExpended(true)}>Edit</button>}
             </div>
+        </div>
 
-            {isExpended ?
-                <form className="row justify-content-center justify-content-lg-end gy-4 py-4" onSubmit={onSubmit} id="calender_tab">
+        {isExpended ?
+            <form className="row justify-content-center justify-content-lg-end gy-4 py-4" onSubmit={onSubmit} id="calender_tab">
+                <Spin spinning={loading}>
+
                     {dataRoute.map((res: RouteDataInterface, index: number) =>
                         <div className="col-12" key={res.id}>
                             <div className="form-check">
@@ -158,14 +165,14 @@ const EditPriceBoat = (props: any) => {
                                     <div className="col-md-12">
                                         <div className="mb-3 ps-sm-4">
                                             <label htmlFor="exampleInputEmail1" className="form-label">Price (cash)</label>
-                                            <input type="text" className="form-control" id="exampleInputEmail1" placeholder='Enter price' name="price" value={res.price} onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
+                                            <input type="text" className="form-control" id="exampleInputEmail1" placeholder='Enter price' name="price" value={res.price} onChange={(e) => handleChange(e.target.name, e.target.value.replace(/[^0-9\.]/g, ""), index)} />
                                         </div>
                                         <div className="ps-sm-4">
                                             <label htmlFor="exampleInputEmail2" className="form-label">Price (installments)</label>
                                             <div className="price-input d-flex gap-3 align-items-center">
-                                                <input type="text" className="form-control" placeholder='Enter installments' name="installments" value={res.installments} onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
+                                                <input type="text" className="form-control" placeholder='Enter installments' name="installments" value={res.installments} onChange={(e) => handleChange(e.target.name, e.target.value.replace(/[^0-9\.]/g, ""), index)} />
                                                 <span>*</span>
-                                                <input type="text" className="form-control" placeholder='Enter price' name="installment_price" value={res.installment_price} onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
+                                                <input type="text" className="form-control" placeholder='Enter price' name="installment_price" value={res.installment_price} onChange={(e) => handleChange(e.target.name, e.target.value.replace(/[^0-9\.]/g, ""), index)} />
                                                 <span>=</span>
                                                 <input type="text" className="form-control" placeholder='' value={(res?.installments || 0) * (res?.installment_price || 0)} disabled />
                                             </div>
@@ -174,23 +181,19 @@ const EditPriceBoat = (props: any) => {
                                 </div>}
                         </div>
                     )}
-                    <div className="col-12">
-                        <button className='btn btn-yellow px-4 rounded-2' type="submit">Save</button>
+                </Spin>
+
+                <div className="col-12">
+                    <button className='btn btn-yellow px-4 rounded-2' type="submit" disabled={loading}>Save</button>
+                </div>
+            </form> : state?.prices?.map((res: any) =>
+                <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1 mb-2">
+                    <div className="listing-content" key={res.id}>
+                        <h6 className='mb-2'>{res?.route}</h6>
+                        <p>${res?.price} <span className='fs-14'>or</span> {res?.installments} in ${res?.installment_price}</p>
                     </div>
-                </form> :
-                <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
-                    {state?.prices?.map((res: any) =>
-                        <div className="listing-content" key={res.id}>
-                            <h6 className='mb-2'>{res?.route}</h6>
-                            <p>${res?.price} <span className='fs-14'>or</span> {res?.installments} in ${res?.installment_price}</p>
-                        </div>)}
-                    <div className="edit-photo ps-4" >
-                        {isExpended ?
-                            <button className='btn p-0 border-0 text-yellow fw-bold' type="button" onClick={() => { setIsExpended(false); setState(props) }}>Cancel</button> :
-                            <button className='btn p-0 border-0 text-yellow fw-bold' type="button" onClick={() => setIsExpended(true)}>Edit</button>}
-                    </div>
-                </div>}
-        </div>
+                </div>)}
+    </div>
     // </Spin>
 }
 export default EditPriceBoat
