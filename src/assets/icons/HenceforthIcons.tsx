@@ -126,6 +126,16 @@ const DetailBack = () => <svg id="detail_back" xmlns="http://www.w3.org/2000/svg
     <path id="Path_1359" data-name="Path 1359" d="M0,0H34V34H0Z" fill="none" />
     <path id="Path_1360" data-name="Path 1360" d="M18.5,21l-6.488-6.5L18.5,8l-2-2L8,14.5,16.5,23Z" transform="translate(3.333 2.5)" />
 </svg>
+const DeleteRed = () => <svg xmlns="http://www.w3.org/2000/svg" width="12.444" height="16" viewBox="0 0 12.444 16">
+<g id="delete" transform="translate(-42.667)">
+  <g id="Group_39491" data-name="Group 39491" transform="translate(42.667)">
+    <g id="Group_39490" data-name="Group 39490" transform="translate(0)">
+      <path id="Path_52099" data-name="Path 52099" d="M64,96a1.777,1.777,0,0,0,1.778,1.778h7.111A1.777,1.777,0,0,0,74.667,96V85.333H64Z" transform="translate(-63.111 -81.777)" fill="red"/>
+      <path id="Path_52100" data-name="Path 52100" d="M52,.889,51.111,0H46.667l-.889.889H42.667V2.667H55.111V.889Z" transform="translate(-42.667)" fill="red"/>
+    </g>
+  </g>
+</g>
+</svg>
 
 
 
@@ -153,7 +163,8 @@ const HenceforthIcons = {
     Youtube,
     Tiktok,
     Share,
-    DetailBack
+    DetailBack,
+    DeleteRed
 }
 
 export default HenceforthIcons;
