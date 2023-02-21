@@ -107,11 +107,12 @@ const BoatPrice = () => {
         boatRoutes()
     }, [])
 
+
     const handleChange = async (name: string, value: any, index: number) => {
         console.log('name,value', name, value)
-        if (name === "price" && !NumberValidation(value)) return
-        if (name === "installments" && !NumberValidation(value)) return
-        if (name === "installment_price" && !NumberValidation(value)) return
+        if (name === "price" && isNaN(value)) return
+        if (name === "installments" && isNaN(value)) return
+        if (name === "installment_price" && isNaN(value)) return
 
         const data = routes[index] as any
         if (typeof value == "boolean") {
@@ -147,14 +148,14 @@ const BoatPrice = () => {
                                                 <div className="col-md-12">
                                                     <div className="mb-3 ps-sm-4">
                                                         <label htmlFor="exampleInputEmail1" className="form-label">Price (cash)</label>
-                                                        <input type="text" className="form-control" id="exampleInputEmail1" name='price' placeholder='Enter price' value={res.price ? res.price : ''} onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
+                                                        <input type="text" className="form-control" id="exampleInputEmail1" name='price'  placeholder='Enter price' value={res.price} onChange={(e) => handleChange(e.target.name, e.target.value.replace(/[^0-9\.]/g, ""), index)} />
                                                     </div>
                                                     <div className="ps-sm-4">
                                                         <label htmlFor="exampleInputEmail2" className="form-label">Price (installments)</label>
                                                         <div className="price-input d-flex gap-3 align-items-center">
-                                                            <input type="text" className="form-control" placeholder='Enter installments' name='installments' onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
+                                                            <input type="text" className="form-control" placeholder='Enter installments' name='installments' value={res.installments}  onChange={(e) => handleChange(e.target.name, e.target.value.replace(/[^0-9\.]/g,""), index)} />
                                                             <span>*</span>
-                                                            <input type="text" className="form-control" placeholder='Enter price' name='installment_price' onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
+                                                            <input type="text" className="form-control" placeholder='Enter price' name='installment_price' value={res.installment_price} onChange={(e) => handleChange(e.target.name, e.target.value.replace(/[^.0-9]/g, ""), index)} />
                                                             <span>=</span>
                                                             <input type="text" className="form-control" placeholder='$00' value={Number(res?.installments || 0) * Number(res?.installment_price || 0)} disabled />
                                                         </div>

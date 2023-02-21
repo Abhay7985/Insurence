@@ -26,9 +26,9 @@ const EditPriceBoat = (props: any) => {
     console.log(props);
 
     const handleChange = async (name: string, value: any, index: number) => {
-        if (name === "price" && !NumberValidation(value)) return
-        if (name === "installments" && !NumberValidation(value)) return
-        if (name === "installment_price" && !NumberValidation(value)) return
+        if (name === "price" && isNaN(value)) return
+        if (name === "installments" && isNaN(value)) return
+        if (name === "installment_price" && isNaN(value)) return
         const data = dataRoute[index] as any
         if (typeof value == "boolean") {
             data.selected = value
@@ -165,14 +165,14 @@ const EditPriceBoat = (props: any) => {
                                     <div className="col-md-12">
                                         <div className="mb-3 ps-sm-4">
                                             <label htmlFor="exampleInputEmail1" className="form-label">Price (cash)</label>
-                                            <input type="text" className="form-control" id="exampleInputEmail1" placeholder='Enter price' name="price" value={res.price} onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
+                                            <input type="text" className="form-control" id="exampleInputEmail1" placeholder='Enter price' name="price" value={res.price} onChange={(e) => handleChange(e.target.name, e.target.value.replace(/[^0-9\.]/g, ""), index)} />
                                         </div>
                                         <div className="ps-sm-4">
                                             <label htmlFor="exampleInputEmail2" className="form-label">Price (installments)</label>
                                             <div className="price-input d-flex gap-3 align-items-center">
-                                                <input type="text" className="form-control" placeholder='Enter installments' name="installments" value={res.installments} onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
+                                                <input type="text" className="form-control" placeholder='Enter installments' name="installments" value={res.installments} onChange={(e) => handleChange(e.target.name, e.target.value.replace(/[^0-9\.]/g, ""), index)} />
                                                 <span>*</span>
-                                                <input type="text" className="form-control" placeholder='Enter price' name="installment_price" value={res.installment_price} onChange={(e) => handleChange(e.target.name, e.target.value, index)} />
+                                                <input type="text" className="form-control" placeholder='Enter price' name="installment_price" value={res.installment_price} onChange={(e) => handleChange(e.target.name, e.target.value.replace(/[^0-9\.]/g, ""), index)} />
                                                 <span>=</span>
                                                 <input type="text" className="form-control" placeholder='' value={(res?.installments || 0) * (res?.installment_price || 0)} disabled />
                                             </div>
