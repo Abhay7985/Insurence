@@ -61,7 +61,7 @@ const InquiryPage = () => {
                 String(match?.params.page),
                 uRLSearchParams.toString()
             )
-            debugger
+            
             setState(apiRes.data)
 
         } catch (error) {
@@ -70,8 +70,6 @@ const InquiryPage = () => {
             setLoading(false)
         }
     }
-
-
 
     const items: TabsProps['items'] = [
         {

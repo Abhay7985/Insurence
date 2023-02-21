@@ -2,6 +2,7 @@
 import deleteIcon from '../../assets/icons/delete.svg';
 
 const BoatPhotoPreview = (props: any) => {
+   
     return <div className="col-md-6">
         <div className="uploaded-image position-relative">
             <div className="upload-images">

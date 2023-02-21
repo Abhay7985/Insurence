@@ -108,6 +108,8 @@ const Boat = {
     requests.get(`provider/boats?${search}`),
   viewBoatDetails: (id: any) =>
     requests.get(`provider/boats/${id}`),
+    deleteBoat: (id: any) =>
+    requests.del(`provider/boats/${id}`),
   boatAmenities: () =>
     requests.get(`provider/boat-amenities`),
   imageUpload: (key: string, file: any) =>

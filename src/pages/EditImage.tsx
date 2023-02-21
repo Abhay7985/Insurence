@@ -57,6 +57,7 @@ const EditImage = () => {
             setSpinning(true)
             const photos = await uploadImages()
             let items = {
+
                 photos: photos.map((res) => { return { photo: res } })
             }
             if (photos.length >= 5) {
@@ -82,7 +83,9 @@ const EditImage = () => {
             Toast.success(res.message)
             initialiseImuges()
         } catch (error) {
-
+            Toast.error(error)
+        } finally {
+            setSpinning(false)
         }
     }
 
