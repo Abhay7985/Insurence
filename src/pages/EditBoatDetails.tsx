@@ -15,6 +15,7 @@ import henceofrthEnums from '../utils/henceofrthEnums';
 import Slider from "react-slick";
 import PhotoSlider from './common/PhotoSlider';
 import henceofrthValidations from "../utils/henceforthValidations";
+import HenceforthIcons from '../assets/icons/HenceforthIcons';
 
 
 
@@ -169,8 +170,8 @@ const EditBoatDetails = () => {
                     <div className="col-12 mb-5">
                         <div className="title d-flex justify-content-between">
                             <h2>{state.name}</h2>
-                            <div className="list-btn d-flex gap-4">
-                                <a href="#" className='d-flex gap-2 align-items-center text-dark'>
+                            <div className="list-btn d-flex gap-3">
+                                <a href="#" className='d-flex gap-2 align-items-center text-dark me-3'>
                                     <Dropdown menu={{ items: StatusItem }}>
                                         <Badge color={state?.status == henceofrthEnums.OrderStatus.listed ?
                                             henceofrthEnums.OrderColor.listed :
@@ -181,7 +182,13 @@ const EditBoatDetails = () => {
                                     </Dropdown>
                                 </a>
                                 <Link to={`/boat/${match?.params.id}/inquiry`}>
-                                    <button className='btn btn-outline-yellow'>Preview Listing</button>
+                                    <button className='btn btn-outline-yellow fw-600'>Preview Listing</button>
+                                </Link>
+                                <Link to={`/boat/${match?.params.id}/inquiry`}>
+                                    <button className='btn btn-outline-red d fw-600'>
+                                        <HenceforthIcons.DeleteRed />
+                                        <span className='ms-2 align-middle'>Delete Listing</span>
+                                    </button>
                                 </Link>
                             </div>
                         </div>
@@ -279,7 +286,7 @@ const EditBoatDetails = () => {
                                             <div className="photos Pricing bg-white mb-4" >
                                                 <div className="photo-header d-flex justify-content-between">
                                                     <h4>Photos ({state.photos.length})</h4>
-                                                   
+
                                                     <div className="edit-photo" id='listing_tab'>
                                                         <Link to={`/boat/${match?.params.id}/photos/edit`} >
                                                             <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
@@ -287,7 +294,7 @@ const EditBoatDetails = () => {
                                                     </div>
                                                 </div>
                                                 {/* photo-slider */}
-                                                <div className={`slider-box mt-4 ${state.photos.length?'d-block':'d-none'}`}>
+                                                <div className={`slider-box mt-4 ${state.photos.length ? 'd-block' : 'd-none'}`}>
                                                     <Slider {...settings}>
                                                         {state.photos.map((res: any, index: number) => <div className='slider-inner'>
                                                             <PhotoSlider {...res} />
@@ -319,7 +326,7 @@ const EditBoatDetails = () => {
                                                         <div className="edit-photo">
                                                             <Link to={`/boat/${match?.params.id}/amenities/edit`}>
                                                                 <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                            </Link> 
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                 </div>}
