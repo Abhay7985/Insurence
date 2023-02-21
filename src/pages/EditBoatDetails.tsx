@@ -361,8 +361,6 @@ const EditBoatDetails = () => {
                                             </div>
                                         </div>
                                         {/* Rules & Includes */}
-                                        <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                                            {/* Rules */}
                                             {state.name &&
 
                                                 <div className="roules Pricing bg-white mb-4">
@@ -377,6 +375,8 @@ const EditBoatDetails = () => {
                                                     <EditSecurityBoat {...state} initialise={initialise} />
                                                 </div>
                                             }
+                                        <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                            {/* Rules */}
                                         </div>
 
                                     </div>

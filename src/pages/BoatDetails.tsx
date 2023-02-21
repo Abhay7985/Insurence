@@ -118,7 +118,7 @@ const BoatDetails = () => {
                                 </div>
                                 {/* <button onClick={() => copyText(`http://15.229.56.53/${state.id}`, "Link")}>
                                 </button> */}
-                                <button className="btn border-0 p-0" onClick={() => copyText(`http://15.229.56.53/${state.id}`, "Link")} >
+                                <button className="btn border-0 p-0  text-decoration-underline" onClick={() => copyText(`http://15.229.56.53/${state.id}`, "Link")} >
                                     <HenceforthIcons.Share />
                                     <span role="button"> Share</span>
                                 </button>
@@ -151,7 +151,7 @@ const BoatDetails = () => {
                     {/* content-row */}
                     <div className="row gy-4">
                         {/* content */}
-                        <div className="col-lg-6 col-xl-7">
+                        <div className="col-lg-6 col-xl-7 order-2 order-md-1">
                             <div className="morning-content">
                                 <div className="content-title border-bottom pb-4">
                                     <h4 className='mb-2'>{state.size}-foot speedboat for up to {state.passenger_day} passengers</h4>
@@ -207,7 +207,7 @@ const BoatDetails = () => {
                             </div>
                         </div>
                         {/* price-card */}
-                        <div className="col-lg-6 col-xl-5">
+                        <div className="col-lg-6 col-xl-5 order-1 order-md-2">
                             <div className="price-card px-4 py-4">
                                 <h4 className='mb-4 mt-1'>From ${state.minimum_price}</h4>
                                 <div className="select-date">
@@ -219,7 +219,7 @@ const BoatDetails = () => {
                                         <>
                                             <div className="price-list py-3 border-bottom" key={e?.id}>
                                                 <div className="price-list-title d-flex justify-content-between mb-2">
-                                                    <p>{e?.date}</p>
+                                                    <h6>{e?.date}</h6>
                                                     <p className='fw-bold'>${e?.price}<span className='fw-normal fs-14 px-1'>or</span> {e?.installments}x in ${e?.installment_price}</p>
                                                 </div>
                                                 <div className="price-list-title d-flex justify-content-between">

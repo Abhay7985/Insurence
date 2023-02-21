@@ -1,7 +1,7 @@
 type TypeProps = {
     buttonName?: string
 }
-const BackNextLayout = (props: TypeProps) => <div className=" mx-0 row banner-footer border-top mt-auto justify-content-end sticky-bottom">
+const BackNextLayout = (props: TypeProps) => <div className="mx-0 row banner-footer border-top mt-auto justify-content-end sticky-bottom">
     <div className="col-12 col-lg-11 px-0">
         <ul className='d-flex justify-content-between'>
             <li>
