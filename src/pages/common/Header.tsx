@@ -17,10 +17,10 @@ const Header = () => {
         boxShadow: 'none',
     };
 
-    const initialise = async (e:any) => {
+    const initialise = async (e: any) => {
         e.preventDefault()
-       
-            uRLSearchParams.set("action", "save_and_exit")
+
+        uRLSearchParams.set("action", "save_and_exit")
         navigate({
             search: uRLSearchParams.toString()
         })
@@ -63,42 +63,33 @@ const Header = () => {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                    {location.pathname !== "/boat/add/info" &&
-                        <form className="d-flex" role="search" onSubmit={initialise}>
-                            {authState.access_token && !location.pathname.includes('/boat') || location.pathname == `/boat/${id}/inquiry` ?
-                                <ul className='d-flex flex-column flex-lg-row flex-wrap align-items-center gap-3 gap-lg-5 mt-3 mt-lg-0'>
-                                    <li>
-                                        <Link to='/' className='nav-link'>Boats</Link>
-                                    </li>
-                                    <li>
-                                        <Link to={`inquiry/all/1`} className='nav-link'>Inquiry</Link>
-                                    </li>
-                                    <li>
-                                        <Link to='/calender' className='nav-link'>Calender</Link>
-                                    </li>
-                                    <li>
-                                        <Dropdown menu={{ items }}
-                                            dropdownRender={(menu) => (
-                                                <div >
-                                                    {React.cloneElement(menu as React.ReactElement, { style: menuStyle })}
-                                                    <Divider style={{ margin: 0 }} />
-                                                </div>
-                                            )}
-                                            arrow className="btnn h-100">
-                                            <Button><Avatar style={{ backgroundColor: '#FF9100' }} icon={<img src={henceforthApi.FILES.imageOriginal(authState.image, placeholder)} />} />&nbsp;{authState?.name}</Button>
-                                        </Dropdown>
-                                    </li>
-                                </ul> :
 
-                                <ul className='d-flex gap-2 flex-wrap'>
-                                    <li>
-                                        <button className="btn btn-outline-dark" type="button">Help</button>
-                                    </li>
-                                    <li>
-                                        <Button htmlType="submit" className="btn btn-yellow h-100" >Save & Exit</Button>
-                                    </li>
-                                </ul>}
-                        </form>}
+                    <form className="d-flex" role="search" onSubmit={initialise}>
+                        {authState.access_token &&
+                            <ul className='d-flex flex-column flex-lg-row flex-wrap align-items-center gap-3 gap-lg-5 mt-3 mt-lg-0'>
+                                <li>
+                                    <Link to='/' className='nav-link'>Boats</Link>
+                                </li>
+                                <li>
+                                    <Link to={`inquiry/all/1`} className='nav-link'>Inquiry</Link>
+                                </li>
+                                <li>
+                                    <Link to='/calender' className='nav-link'>Calender</Link>
+                                </li>
+                                <li>
+                                    <Dropdown menu={{ items }}
+                                        dropdownRender={(menu) => (
+                                            <div >
+                                                {React.cloneElement(menu as React.ReactElement, { style: menuStyle })}
+                                                <Divider style={{ margin: 0 }} />
+                                            </div>
+                                        )}
+                                        arrow className="btnn h-100">
+                                        <Button><Avatar style={{ backgroundColor: '#FF9100' }} icon={<img src={henceforthApi.FILES.imageOriginal(authState.image, placeholder)} />} />&nbsp;{authState?.name}</Button>
+                                    </Dropdown>
+                                </li>
+                            </ul>}
+                    </form>
                 </div>
 
             </nav>
