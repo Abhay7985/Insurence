@@ -86,7 +86,7 @@ const Footer = () => {
                                     <a href="#" className="nav-link">Terms & Conditions</a>
                                 </li>
                                 <li>
-                                    <a href="#" className="nav-link">FAQs</a>
+                                    <Link to="/faq" className="nav-link">FAQs</Link>
                                 </li>
                             </ul>
                         </div>

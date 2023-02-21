@@ -29,12 +29,21 @@ const EditSecurityBoat = (props: any) => {
                 rules: state.rules
             }
         }
+        const data = items.safety_question.rules
         setLoading(true)
         try {
-            const apiRes = await henceforthApi.Boat.edit(state.id, items)
-            Toast.success(apiRes.message)
-            setIsExpended(false)
-            await props.initialise()
+
+            if(!data.trim()){
+                Toast.error("Enter Rules")
+            }else{
+
+                const apiRes = await henceforthApi.Boat.edit(state.id, items)
+                Toast.success(apiRes.message)
+                setIsExpended(false)
+                await props.initialise()
+            }
+
+            
         } catch (error) {
             Toast.error(error)
         } finally {

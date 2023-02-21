@@ -35,7 +35,7 @@ function PlaceLocated() {
         flat: "",
         city: "",
         state: "",
-        postCode:"",
+        postCode: "",
         country: "",
         showLocation: false,
     })
@@ -84,7 +84,7 @@ function PlaceLocated() {
             else if (!state.city) {
                 Toast.error("Enter City Name")
 
-            } 
+            }
             // else if (!state.state) {
             //     Toast.error("Enter State Name")
             // } 
@@ -182,25 +182,25 @@ function PlaceLocated() {
             let street_number = address.findIndex(res => res.types.includes('street_number'))
             if (zipIndex > -1) {
                 items.pin_code = address[zipIndex]?.long_name
-              }
-              if (administrativeAreaIndex > -1) {
+            }
+            if (administrativeAreaIndex > -1) {
                 items.state = address[administrativeAreaIndex]?.long_name
-              }
-              if (localityIndex > -1) {
+            }
+            if (localityIndex > -1) {
                 items.city = address[localityIndex]?.long_name
-              }
-              if (countryIndex > -1) {
+            }
+            if (countryIndex > -1) {
                 items.country = address[countryIndex]?.long_name
-              }
-              if (premiseIndex > -1) {
+            }
+            if (premiseIndex > -1) {
                 items.apartment_number = address[premiseIndex]?.long_name
-              }
-              items.full_address = formatAddress
-              items.sublocality1 = address[sublocality1]?.long_name
-              items.sublocality2 = address[sublocality2]?.long_name
-              items.subpremise = address[subpremise]?.long_name
-              items.route = address[route]?.long_name
-              items.street_number = address[street_number]?.long_name
+            }
+            items.full_address = formatAddress
+            items.sublocality1 = address[sublocality1]?.long_name
+            items.sublocality2 = address[sublocality2]?.long_name
+            items.subpremise = address[subpremise]?.long_name
+            items.route = address[route]?.long_name
+            items.street_number = address[street_number]?.long_name
         }
 
         let latlng = new (window as any).google.maps.LatLng(
@@ -314,7 +314,12 @@ function PlaceLocated() {
                                         <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input5" className="form-label">Postcode (optional)</label>
-                                                <input type="text" className="form-control" id='input5' placeholder='Enter postcode' value={state.postCode} name="postCode" onChange={handleState} />
+                                                <input type="text" className="form-control" id='input5' placeholder='Enter postcode' value={state.postCode}
+                                                    onKeyPress={(e) => {
+                                                        if (!/[0-9]/.test(e.key)) {
+                                                            e.preventDefault();
+                                                        }
+                                                    }} name="postCode" onChange={handleState} />
                                             </div>
                                         </div>
                                         <div className="col-11 col-lg-11">
@@ -356,7 +361,7 @@ function PlaceLocated() {
                             {/* <div className="banner-image border">
                                 <img src={bannerImage} alt="" />
                             </div> */}
-                            <div style={{ height: '100vh', width: '50%', position:'fixed'}}>
+                            <div style={{ height: '100vh', width: '50%', position: 'fixed' }}>
                                 <HenceforthGoogleMap
                                     ref={googleMapRef}
                                     defaultCenter={defaultProps.center}

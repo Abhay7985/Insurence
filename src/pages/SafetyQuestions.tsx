@@ -39,7 +39,7 @@ const SafetyQuestions = () => {
             }
         }
         try {
-            if(state.rules){
+            if (state.rules) {
                 setSpinning(true)
                 let res = await henceforthApi.Boat.create(items)
                 Toast.success(res.message)
@@ -47,10 +47,10 @@ const SafetyQuestions = () => {
                     pathname: `/boat/${match?.params.id}/price`,
                     search: uRLSearchParams.toString()
                 })
-            }else{
+            } else {
                 Toast.error("Rules field is required")
             }
-            
+
         } catch (error: any) {
             if (error.response.body.message.rules) return Toast.error(error.response.body.message.rules[0])
         } finally {
@@ -59,11 +59,11 @@ const SafetyQuestions = () => {
     }
 
     return (
-        <Spin spinning={spinning}>
-            <section className="Confirm-address-section h-100">
-                <div className="container-fluid h-100">
-                    <form className="row h-100" onSubmit={onSubmit}>
-                        <div className="col-lg-6">
+        <section className="Confirm-address-section h-100">
+            <div className="container-fluid h-100">
+                <form className="row h-100" onSubmit={onSubmit}>
+                    <div className="col-lg-6">
+                        <Spin spinning={spinning}  >
                             <div className="banner-content h-100 d-flex flex-column ">
                                 <div className="row justify-content-center justify-content-lg-end gy-2 gy-sm-4 pb-5">
                                     <div className="col-11 col-lg-11">
@@ -104,23 +104,23 @@ const SafetyQuestions = () => {
                                         <h4 className='mb-2'>Rules and Security</h4>
                                         <p className='mb-3'>Set additional and vessel safety rules.</p>
                                         <div className="form-floating">
-                                            <textarea className="text-area" placeholder="Type here"  onChange={(e: any) => setState({ ...state, rules: e.target.value })}></textarea>
+                                            <textarea className="text-area" placeholder="Type here" onChange={(e: any) => setState({ ...state, rules: e.target.value })}></textarea>
                                             {/* <label htmlFor="floatingTextarea">Type here...</label> */}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <BackNextLayout />
+                        </Spin>
+                        <BackNextLayout />
+                    </div>
+                    <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
+                        <div className="banner-image border">
+                            <img src={bannerImage} alt="" />
                         </div>
-                        <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
-                            <div className="banner-image border">
-                                <img src={bannerImage} alt="" />
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </section>
-        </Spin>
+                    </div>
+                </form>
+            </div>
+        </section>
     )
 }
 
