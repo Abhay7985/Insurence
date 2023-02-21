@@ -1,12 +1,21 @@
 import { Input, Select, Spin } from "antd"
-import React from "react"
+import React, { useEffect, useRef } from "react"
 import { GlobalContext } from "../../context/Provider"
 import henceforthApi from "../../utils/henceforthApi"
 import CountryCodeJson from '../../utils/CountryCode.json'
 import { NumberValidation } from "../../utils/henceforthValidations"
-
+import NEXT_PUBLIC_GOOGLE_API_KEY from "../../context/Provider"
+const defaultProps = {
+    center: {
+        lat: 20.593683,
+        lng: 78.962883
+    },
+    zoom: 11
+};
 const EditLocationBoat = (props: any) => {
     const { Toast } = React.useContext(GlobalContext)
+    const placeInputRef = useRef(null as any);
+    const [form, setForm] = React.useState(defaultProps)
 
     const [state, setState] = React.useState({
         id: 1,
@@ -49,6 +58,20 @@ const EditLocationBoat = (props: any) => {
         }
         setLoading(true)
         try {
+            if (!state.full_address) {
+                // return Toast.error("Please Enter Street Address")
+            }
+            if (!state.city.trim()) {
+                return Toast.error("Please Enter city ")
+            }
+            if (!state.state.trim()) {
+                return Toast.error("Please Enter State ")
+            }
+            if (!state.postcode.trim()) {
+                return Toast.error("Please Enter postcode ")
+            }
+
+
             if (state.address1 && state.city && state.state && state.postcode && state.country) {
                 const apiRes = await henceforthApi.Boat.edit(state.boat_id, items)
                 Toast.success(apiRes.message)
@@ -64,7 +87,115 @@ const EditLocationBoat = (props: any) => {
             setLoading(false)
         }
     }
+    const setLoactionsFromLatlng = (address: Array<any>, formatAddress: string, lat: number, lng: number) => {
+        let items: any = {}
+        if (Array.isArray(address) && address.length > 0) {
+            let zipIndex = address.findIndex(res => res.types.includes("postal_code"))
+            let administrativeAreaIndex = address.findIndex(res => res.types.includes("administrative_area_level_1", "political"))
+            let localityIndex = address.findIndex(res => res.types.includes("locality", "political"))
+            let countryIndex = address.findIndex(res => res.types.includes("country", "political"))
+            let premiseIndex = address.findIndex(res => res.types.includes("premise", "street_number"))
+            let sublocality1 = address.findIndex(res => res.types.includes('sublocality_level_1', 'sublocality', 'political'))
+            let sublocality2 = address.findIndex(res => res.types.includes('sublocality_level_2', 'sublocality', 'political'))
+            let route = address.findIndex(res => res.types.includes('route'))
+            let subpremise = address.findIndex(res => res.types.includes('subpremise'))
+            let street_number = address.findIndex(res => res.types.includes('street_number'))
+            if (zipIndex > -1) {
+                items.pin_code = address[zipIndex]?.long_name
+            }
+            if (administrativeAreaIndex > -1) {
+                items.state = address[administrativeAreaIndex]?.long_name
+            }
+            if (localityIndex > -1) {
+                items.city = address[localityIndex]?.long_name
+            }
+            if (countryIndex > -1) {
+                items.country = address[countryIndex]?.long_name
+            }
+            if (premiseIndex > -1) {
+                items.apartment_number = address[premiseIndex]?.long_name
+            }
+            items.full_address = formatAddress
+            items.sublocality1 = address[sublocality1]?.long_name
+            items.sublocality2 = address[sublocality2]?.long_name
+            items.subpremise = address[subpremise]?.long_name
+            items.route = address[route]?.long_name
+            items.street_number = address[street_number]?.long_name
+        }
 
+        let latlng = new (window as any).google.maps.LatLng(
+            form.center.lat,
+            form.center.lng
+        )
+        let zoom = 12
+        if (items?.country && items?.state && items?.city && items?.sublocality1 && (items?.sublocality2 || items?.route) && (items?.subpremise || items?.street_number)) zoom = 18
+        if (items?.country && items?.state && items?.city && items?.sublocality1 && (items?.sublocality2 || items?.route) && items?.subpremise === undefined && items?.street_number === undefined) zoom = 18
+        if (items?.country && items?.state && items?.city && items?.sublocality1 === undefined && items?.sublocality2 === undefined) zoom = 15
+        if (items?.country && items?.state && items?.city === undefined && items?.sublocality1 === undefined && items?.sublocality2 === undefined) zoom = 8
+        if (items?.country && items?.state === undefined && items?.city === undefined && items?.sublocality1 === undefined && items?.sublocality2 === undefined) zoom = 5
+        setForm((form) => {
+            return {
+                ...form,
+                center: {
+                    ...form.center,
+                    lat,
+                    lng
+                },
+                zoom
+            }
+        })
+        setState((state: any) => {
+            return {
+                ...state,
+                street: items?.route,
+                flat: items?.street_number ? items?.street_number : items?.apartment_number,
+                city: items?.city,
+                state: items?.state,
+                postCode: items?.pin_code,
+                country: items?.country,
+            }
+        })
+    }
+    function loadGoogleMapScript(callback: any) {
+        if (
+            typeof (window as any).google === "object" &&
+            typeof (window as any).google.maps === "object"
+        ) {
+            callback();
+        } else {
+            const googleMapScript = document.createElement("script");
+            googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDL3YG2rrntEN8bLoQtln4K26PeNiBklDU&libraries=places`;
+            window.document.body.appendChild(googleMapScript);
+            googleMapScript.addEventListener("load", callback);
+        }
+    }
+
+    const initPlaceAPI = () => {
+        loadGoogleMapScript(() => {
+            if (placeInputRef) {
+                let autocomplete = new (window as any).google.maps.places.Autocomplete(
+                    placeInputRef.current
+                );
+                new (window as any).google.maps.event.addListener(
+                    autocomplete,
+                    "place_changed",
+                    () => {
+                        let place = autocomplete.getPlace();
+                        let formatAddress = place.formatted_address
+                        const address = place.address_components
+                        setLoactionsFromLatlng(address, formatAddress, place.geometry?.location.lat(), place.geometry?.location.lng())
+                    }
+                );
+            }
+
+        });
+    };
+
+    useEffect(() => {
+        if(isExpended){
+            initPlaceAPI()
+        }
+    }, [isExpended])
 
     return <Spin spinning={loading} className='h-100' >
         <div className="Location bg-white Pricing mb-4">
@@ -86,34 +217,39 @@ const EditLocationBoat = (props: any) => {
                             <div className="row">
                                 <div className="col-12">
                                     <div className="address mb-3">
-                                        <label className="form-label">Street address</label>
-                                        <Input placeholder="House name/number +street /road" value={state.address1} name="address1" onChange={(e) => handleChange(e.target)} />
+                                        <label htmlFor="ddd" className="form-label">Street address</label><br />
+                                        <input placeholder="House name/number +street /road" id="ddd" className="form-control" ref={placeInputRef} value={state.full_address} name="address" onChange={(e) => handleChange(e.target)} />
+                                        {/* <input type="text" ref={placeInputRef} /> */}
                                     </div>
                                 </div>
 
 
                                 <div className="col-12">
                                     <div className="address mb-3">
-                                        <label className="form-label">Flat, suite. (Optional)</label>
-                                        <Input placeholder="Flat, suite, building access code" value={state.address2} name="address2" onChange={(e) => handleChange(e.target)} />
+                                        <label htmlFor="input1" className="form-label">Flat, suite. (Optional)</label>
+                                        <input placeholder="Flat, suite, building access code" className="form-control" id="input1" value={state.address2} name="address2" onChange={(e) => handleChange(e.target)} />
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
                                     <div className="address mb-3">
                                         <label className="form-label">City</label>
-                                        <Input placeholder="Enter City" value={state.city} name="city" onChange={(e) => handleChange(e.target)} />
+                                        <input placeholder="Enter City" className="form-control" value={state.city} name="city" onChange={(e) => handleChange(e.target)} />
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
                                     <div className="address mb-3">
                                         <label className="form-label">State</label>
-                                        <Input placeholder="Enter State" value={state.state} name="state" onChange={(e) => handleChange(e.target)} />
+                                        <input placeholder="Enter State" className="form-control" value={state.state} name="state" onChange={(e) => handleChange(e.target)} />
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
                                     <div className="address mb-3">
                                         <label className="form-label">Postcode</label>
-                                        <Input placeholder="Enter Postcode" value={state.postcode} name="postcode" onChange={(e) => handleChange(e.target)} />
+                                        <input placeholder="Enter Postcode" value={state.postcode} className="form-control" name="postcode" onKeyPress={(e) => {
+                                            if (!/[0-9]/.test(e.key)) {
+                                                e.preventDefault();
+                                            }
+                                        }} onChange={(e) => handleChange(e.target)} />
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
@@ -121,12 +257,12 @@ const EditLocationBoat = (props: any) => {
                                         <label className="form-label">Country</label>
                                         <div className="select">
                                             <Select
-                                                defaultValue={state.country}
                                                 showSearch
                                                 className='w-100'
+                                                defaultValue={state.country ? state.country : "Enter country / region"}
                                                 onChange={(e) => handleChange({
                                                     name: 'country',
-                                                     value:CountryCodeJson.find(res => res.name == e)?.code
+                                                    value: CountryCodeJson.find(res => res.name == e)?.code
                                                 })}
                                                 options={CountryCodeJson.map((res) => { return { value: res.name, label: res.name } })}
                                             />
