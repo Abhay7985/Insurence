@@ -36,6 +36,7 @@
         height: 100%;
         width: 100%;
         object-fit: cover;
+        object-position: bottom;
     }
 }
 
@@ -791,3 +792,7 @@
 //         width: 120px;
 //     }
 // }
+
+.ant-modal-footer{
+    display: none;
+}

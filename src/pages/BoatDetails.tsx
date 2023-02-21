@@ -11,6 +11,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import { GlobalContext } from '../context/Provider';
 import HenceforthIcons from '../assets/icons/HenceforthIcons';
 import HenceforthGoogleMap from '../utils/henceforthGoogleMap';
+import { Image } from 'antd';
+
+const contentStyle: React.CSSProperties = {
+    margin: 0,
+    height: '500px',
+    color: '#fff',
+    lineHeight: '160px',
+    textAlign: 'center',
+    background: '#364d79',
+};
 
 const defaultProps = {
     center: {
@@ -19,11 +29,13 @@ const defaultProps = {
     },
     zoom: 11
 };
-const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+const onChange1: DatePickerProps['onChange'] = (date, dateString) => {
     console.log(date, dateString);
 };
 
 const BoatDetails = () => {
+
+    const [visible, setVisible] = useState(false);
 
     const match = useMatch(`boat/:id/inquiry`)
     const { authState, Toast } = React.useContext(GlobalContext)
@@ -101,6 +113,7 @@ const BoatDetails = () => {
         createMerker(latlng, map)
     }
 
+    const [modal2Open, setModal2Open] = useState(false);
     return (
         <Spin spinning={loading} className='h-100' >
             <section className="morning-panormic py-4">
@@ -126,10 +139,10 @@ const BoatDetails = () => {
                             </div>
                         </div>
                         <div className="col-12">
-                            <div className="row gy-4 py-4 ms-0">
+                            <div className="row gy-4 py-4 ms-0"  >
                                 <div className="col-md-6 ps-0">
                                     <div className="morning-banner">
-                                        <img src={state.cover_image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}` : ""} alt="img" className='img-fluid' />
+                                        <img src={state.cover_image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}` : ""} alt="img" className='img-fluid' onClick={() => setVisible(true)} />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
@@ -138,7 +151,7 @@ const BoatDetails = () => {
                                             <>
                                                 <div className="col-6 ps-0">
                                                     <div className={`${index == 1 ? 'boat-group-image ' : index == 3 ? 'boat-group-image-last ' : ''} boat-image-list`}>
-                                                        <img src={state.photos ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${res.image}` : BannerImage} alt="img" className='img-fluid' />
+                                                        <img src={state.photos ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${res.image}` : BannerImage} alt="img" className='img-fluid' onClick={() => setVisible(true)} />
                                                     </div>
                                                 </div>
                                             </>
@@ -211,7 +224,7 @@ const BoatDetails = () => {
                             <div className="price-card px-4 py-4">
                                 <h4 className='mb-4 mt-1'>From ${state.minimum_price}</h4>
                                 <div className="select-date mb-2">
-                                    <DatePicker onChange={onChange} placeholder='Add Date'/>
+                                    <DatePicker onChange={onChange1} placeholder='Add Date' />
                                 </div>
                                 {/* price-list-1 */}
                                 {state?.prices?.map((e: any, index: number) => {
@@ -220,10 +233,10 @@ const BoatDetails = () => {
                                             <div className="price-list py-3 border-bottom" key={e?.id}>
                                                 <div className="price-list-title d-flex justify-content-between mb-2">
                                                     <h6>{e?.date}</h6>
-                                                    <p className='fw-bold'>${e?.price}<span className='fw-normal fs-14 px-1'>or</span> {e?.installments}x in ${e?.installment_price}</p>
+                                                    <p className='fw-bold'>${e?.price}<span className='fw-600 fs-14 px-1'>or</span> {e?.installments}x in ${e?.installment_price}</p>
                                                 </div>
                                                 <div className="price-list-title d-flex justify-content-between">
-                                                    <p className='fs-14'>{e?.route}</p>
+                                                    <p className='fs-14 fw-600'>{e?.route}</p>
                                                     <div className="choose-btn align-self-end">
                                                         <button className='btn btn-yellow fs-14 py-0'>Choose</button>
                                                     </div>
@@ -238,7 +251,24 @@ const BoatDetails = () => {
                     </div>
                 </div>
             </section>
-        </Spin>
+
+            {/* image-modal */}
+            <>
+                {/* <Image
+                    preview={{ visible: false }}
+                    width={200}
+                    src="https://gw.alipayobjects.com/zos/antfincdn/LlvErxo8H9/photo-1503185912284-5271ff81b9a8.webp"
+                    onClick={() => setVisible(true)}
+                /> */}
+                <div style={{ display: 'none' }}>
+                    <Image.PreviewGroup preview={{ visible, onVisibleChange: (vis) => setVisible(vis) }}>
+                        <Image src="https://gw.alipayobjects.com/zos/antfincdn/LlvErxo8H9/photo-1503185912284-5271ff81b9a8.webp" />
+                        <Image src="https://gw.alipayobjects.com/zos/antfincdn/cV16ZqzMjW/photo-1473091540282-9b846e7965e3.webp" />
+                        <Image src="https://gw.alipayobjects.com/zos/antfincdn/x43I27A55%26/photo-1438109491414-7198515b166b.webp" />
+                    </Image.PreviewGroup>
+                </div>
+            </>
+        </Spin >
     )
 }
 

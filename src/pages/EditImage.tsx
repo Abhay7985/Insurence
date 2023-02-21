@@ -17,6 +17,9 @@ const EditImage = () => {
     const [spinning, setSpinning] = React.useState(false)
     const [selectedFiles, setSelectedFiles] = React.useState<Array<any>>([])
     const [photos, setPhotos] = React.useState<Array<ImageResType>>([])
+    const [state, setState] = React.useState({
+        cover_image: ""
+    })
 
     const addFiles = (rowData: Array<any>) => {
         setSelectedFiles([...selectedFiles, ...rowData])
@@ -74,15 +77,15 @@ const EditImage = () => {
         let items = {
             cover_photo: img
         }
-
         try {
             let res = await henceforthApi.Boat.edit(match?.params.id as string, items)
             Toast.success(res.message)
+            initialiseImuges()
         } catch (error) {
 
         }
-
     }
+
     const removeImage = async (index: number) => {
         debugger
         const data = photos
@@ -95,6 +98,7 @@ const EditImage = () => {
             setSpinning(true)
 
             const apiRes = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
+            setState(apiRes.data)
             console.log('apiRes', apiRes);
             setPhotos(apiRes.data.photos)
         } catch (error) {
@@ -145,7 +149,7 @@ const EditImage = () => {
                                             <BoatPhotoPreview {...res} index={index} onRemove={() => removeFiles(index)} />
                                         )}
                                         {photos?.map((res: any, index: number) =>
-                                            <BoatPhotoView {...res} index={index} onRemove={() => { removeImage(index) }} initialiseCover={initialiseCover} />
+                                            <BoatPhotoView {...res} index={index} onRemove={() => { removeImage(index) }} initialiseCover={initialiseCover} cover_image={state.cover_image} />
                                         )}
                                     </div>
                                 </div>
