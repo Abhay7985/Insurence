@@ -67,7 +67,7 @@ const AddPhotos = () => {
                 let items = {
                     photos: {
                         boat_id: match?.params.id as string,
-                        cover_photo:photos[0],
+                        cover_photo: photos[0],
                         photos: photos.map((res: any, index: number) => { return { photo: res, order: index + 1 } })
                     }
                 }

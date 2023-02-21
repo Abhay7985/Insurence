@@ -71,8 +71,6 @@ const InquiryPage = () => {
         }
     }
 
-
-
     const items: TabsProps['items'] = [
         {
             key: 'all',
