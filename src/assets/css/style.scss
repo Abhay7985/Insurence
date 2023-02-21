@@ -157,12 +157,6 @@
         height: 100%;
         width: 100%;
         min-height: 176px;
-    }
-
-    &:hover {
-        .cover-image {
-            opacity: 1;
-        }
 
     }
 
@@ -174,7 +168,6 @@
         font-size: 12px;
         color: $white;
         padding: 2px 5px;
-        opacity: 0;
         transition: 0.5s;
     }
 }
@@ -187,8 +180,8 @@
 }
 
 .edit {
-    height: 36px;
-    width: 36px;
+    height: 30px;
+    width: 30px;
     background: $white;
     border: 1px solid $light-gray;
     border-radius: 50%;
@@ -517,14 +510,14 @@
 
      
 
-        .nav {
+        .tab-nav {
             min-width: 300px;
             max-height: 700px;
             width: 300px;
             padding: 20px 20px;
             min-height: 622px;
-            position: sticky;
-            top: 100px;
+            position: sticky !important;
+            top: 100px !important;
         }
     }
 

@@ -116,7 +116,7 @@ const AddPhotos = () => {
                                     <div className="col-11 col-lg-11">
                                         <div className="row gy-4">
                                             {selectedFiles.map((res: any, index: number) =>
-                                                <BoatPhotoPreview {...res} onRemove={() => removeFiles(index)} />
+                                                <BoatPhotoPreview {...res} index={index} onRemove={() => removeFiles(index)} />
                                             )}
 
                                         </div>

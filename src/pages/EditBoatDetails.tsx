@@ -190,7 +190,7 @@ const EditBoatDetails = () => {
                         <div className="tab-box row">
                             {/* tabs */}
                             <div className='col-md-3'>
-                                <div className='bg-white h-100'>
+                                <div className='bg-white h-100 tab-nav'>
                                     <div className="nav flex-column nav-pills bg-white" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                         {/* Listing accordian */}
                                         <button className="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
@@ -279,6 +279,7 @@ const EditBoatDetails = () => {
                                             <div className="photos Pricing bg-white mb-4" >
                                                 <div className="photo-header d-flex justify-content-between">
                                                     <h4>Photos ({state.photos.length})</h4>
+                                                   
                                                     <div className="edit-photo" id='listing_tab'>
                                                         <Link to={`/boat/${match?.params.id}/photos/edit`} >
                                                             <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
@@ -286,7 +287,7 @@ const EditBoatDetails = () => {
                                                     </div>
                                                 </div>
                                                 {/* photo-slider */}
-                                                <div className="slider-box mt-4">
+                                                <div className={`slider-box mt-4 ${state.photos.length?'d-block':'d-none'}`}>
                                                     <Slider {...settings}>
                                                         {state.photos.map((res: any, index: number) => <div className='slider-inner'>
                                                             <PhotoSlider {...res} />
@@ -318,7 +319,7 @@ const EditBoatDetails = () => {
                                                         <div className="edit-photo">
                                                             <Link to={`/boat/${match?.params.id}/amenities/edit`}>
                                                                 <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                            </Link>
+                                                            </Link> 
                                                         </div>
                                                     </div>
                                                 </div>}

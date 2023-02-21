@@ -54,10 +54,17 @@ const EditSecurityBoat = (props: any) => {
 
     return <Spin spinning={loading} className='h-100' >
         <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
-            <div className="edit-listing">
-                <h6 className='mb-2'>Rules and Security</h6>
+            <div className="edit-listing w-100">
+                <div className="title d-flex justify-content-between ">
+                    <h6 className='mb-2'>Rules and Security</h6>
+                    <div className="edit-photo ps-4" >
+                        {isExpended ?
+                            <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => { setIsExpended(false); setState(props) }}>Cancel</button> :
+                            <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => setIsExpended(true)}>Edit</button>}
+                    </div>
+                </div>
                 {isExpended ?
-                    <form className="edit-input mt-4 w-100" onSubmit={onSubmit}>
+                    <form className="edit-input mt-2 w-100" onSubmit={onSubmit}>
                         <textarea className='form-control' placeholder="Enter rules" value={state.rules} name="rules" onChange={(e) => handleChange(e.target)} ></textarea>
                         <div className="save-btn mt-4">
                             <button className='btn btn-yellow rounded-2' type="submit">Save</button>
@@ -68,11 +75,7 @@ const EditSecurityBoat = (props: any) => {
                     </div>
                 }
             </div>
-            <div className="edit-photo ps-4" >
-                {isExpended ?
-                    <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => { setIsExpended(false); setState(props) }}>Cancel</button> :
-                    <button className='btn p-0 border-0 text-yellow fw-bold' onClick={() => setIsExpended(true)}>Edit</button>}
-            </div>
+
         </div>
     </Spin>
 }
