@@ -210,8 +210,8 @@ const BoatDetails = () => {
                         <div className="col-lg-6 col-xl-5 order-1 order-md-2">
                             <div className="price-card px-4 py-4">
                                 <h4 className='mb-4 mt-1'>From ${state.minimum_price}</h4>
-                                <div className="select-date">
-                                    <DatePicker onChange={onChange} />
+                                <div className="select-date mb-2">
+                                    <DatePicker onChange={onChange} placeholder='Add Date'/>
                                 </div>
                                 {/* price-list-1 */}
                                 {state?.prices?.map((e: any, index: number) => {

@@ -190,7 +190,7 @@ const EditBoatDetails = () => {
                         <div className="tab-box row">
                             {/* tabs */}
                             <div className='col-md-3'>
-                                <div className='bg-white h-100'>
+                                <div className='bg-white h-100 tab-nav'>
                                     <div className="nav flex-column nav-pills bg-white" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                         {/* Listing accordian */}
                                         <button className="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">

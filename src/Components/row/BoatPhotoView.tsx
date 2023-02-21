@@ -11,8 +11,8 @@ const BoatPhotoView = (props: any) => {
             <div className="upload-images">
                 <img src={henceforthApi.FILES.imageOriginal(props.image, uploadImage)} alt="img" className='img-fluid' />
             </div>
-            <div className="modify-image d-flex gap-2 position-absolute justify-content-between align-items-center">
-                <p className='cover-image' onClick={() => props.initialiseCover(props.image)}>COVER PHOTO</p>
+            {props.index === 0 ? <p className='cover-image position-absolute top-0 mt-2 ms-2' onClick={() => props.initialiseCover(props.image)}>COVER PHOTO</p> : ''}
+            <div className="modify-image d-flex gap-2 position-absolute justify-content-end align-items-center">
                 <ul className="modify-btn d-flex gap-2">
                     <li>
                         <button className='edit'>

@@ -142,10 +142,10 @@ const EditImage = () => {
                                 <div className="col-12">
                                     <div className="row gy-4">
                                         {selectedFiles.map((res: any, index: number) =>
-                                            <BoatPhotoPreview {...res} onRemove={() => removeFiles(index)} />
+                                            <BoatPhotoPreview {...res} index={index} onRemove={() => removeFiles(index)} />
                                         )}
                                         {photos?.map((res: any, index: number) =>
-                                            <BoatPhotoView {...res} onRemove={() => { removeImage(index) }} initialiseCover={initialiseCover} />
+                                            <BoatPhotoView {...res} index={index} onRemove={() => { removeImage(index) }} initialiseCover={initialiseCover} />
                                         )}
                                     </div>
                                 </div>
