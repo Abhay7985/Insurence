@@ -279,6 +279,7 @@ const EditBoatDetails = () => {
                                             <div className="photos Pricing bg-white mb-4" >
                                                 <div className="photo-header d-flex justify-content-between">
                                                     <h4>Photos ({state.photos.length})</h4>
+                                                   
                                                     <div className="edit-photo" id='listing_tab'>
                                                         <Link to={`/boat/${match?.params.id}/photos/edit`} >
                                                             <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
@@ -286,7 +287,7 @@ const EditBoatDetails = () => {
                                                     </div>
                                                 </div>
                                                 {/* photo-slider */}
-                                                <div className="slider-box mt-4">
+                                                <div className={`slider-box mt-4 ${state.photos.length?'d-block':'d-none'}`}>
                                                     <Slider {...settings}>
                                                         {state.photos.map((res: any, index: number) => <div className='slider-inner'>
                                                             <PhotoSlider {...res} />
@@ -318,7 +319,7 @@ const EditBoatDetails = () => {
                                                         <div className="edit-photo">
                                                             <Link to={`/boat/${match?.params.id}/amenities/edit`}>
                                                                 <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                            </Link>
+                                                            </Link> 
                                                         </div>
                                                     </div>
                                                 </div>}
