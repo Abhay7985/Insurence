@@ -54,10 +54,13 @@ const AddPhotos = () => {
         )
         return rowData
     }
-
-    const onSubmit = async (e: any) => {
-        debugger
-        e.preventDefault()
+    const deleteQuery=()=>{
+        uRLSearchParams.delete("action")
+        navigate({
+            search: uRLSearchParams.toString()
+        })    
+    }
+    const saveAndExit = async (b: boolean) => {
         try {
             if (selectedFiles.length >= 5) {
                 setSpinning(true)
@@ -67,35 +70,46 @@ const AddPhotos = () => {
                 let items = {
                     photos: {
                         boat_id: match?.params.id as string,
-                        cover_photo:photos[0],
+                        cover_photo: photos[0],
                         photos: photos.map((res: any, index: number) => { return { photo: res, order: index + 1 } })
                     }
                 }
 
                 const apiRes = await henceforthApi.Boat.create(items)
                 Toast.success(apiRes.message)
-                navigate({
+                if (b) navigate(`/`, { replace: true })
+                else navigate({
                     pathname: `/boat/${match?.params.id}/safety-question`,
                     search: uRLSearchParams.toString()
                 })
             } else {
                 Toast.error("Please Upload Atleast 5 Images")
+                deleteQuery()
             }
 
         } catch (error) {
             Toast.error(error)
+            deleteQuery()
         } finally {
             setSpinning(false)
         }
-
     }
-
+    const onSubmit = async (e: any) => {
+        e.preventDefault()
+        saveAndExit(false)
+    }
+ 
+    useEffect(() => {
+        if (uRLSearchParams.get("action") === "save_and_exit"||uRLSearchParams.get("action") === "save_and_exit_") {
+            saveAndExit(true)
+        }
+    }, [uRLSearchParams.get("action")])
     return (
         <section className="Confirm-address-section h-100">
-            <Spin spinning={spinning}>
-                <div className="container-fluid h-100">
-                    <form className="row h-100" onSubmit={onSubmit}>
-                        <div className="col-lg-6">
+            <div className="container-fluid h-100">
+                <form className="row h-100" onSubmit={onSubmit}>
+                    <div className="col-lg-6">
+                        <Spin spinning={spinning}>
                             <div className="banner-content h-100 d-flex flex-column ">
                                 <div className="row justify-content-center justify-content-lg-end gy-4 pb-5">
                                     <div className="col-11 col-lg-11 mb-2 mb-sm-4">
@@ -124,16 +138,16 @@ const AddPhotos = () => {
                                 </div>
                                 <BackNextLayout />
                             </div>
+                        </Spin>
 
+                    </div>
+                    <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
+                        <div className="banner-image border">
+                            <img src={bannerImage} alt="" />
                         </div>
-                        <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
-                            <div className="banner-image border">
-                                <img src={bannerImage} alt="" />
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </Spin>
+                    </div>
+                </form>
+            </div>
         </section>
     )
 }

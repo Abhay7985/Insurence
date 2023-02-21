@@ -1,7 +1,7 @@
 import { useLocation, useMatch, useNavigate } from "react-router-dom";
 import bannerImage from '../assets/images/image_two.png';
 import locationIcon from '../assets/icons/current_location.svg';
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { GlobalContext, NEXT_PUBLIC_GOOGLE_API_KEY } from "../context/Provider";
 import { Select, Space, Spin, Switch } from "antd";
 import BackNextLayout from "../Components/boat/BackNextLayout";
@@ -50,70 +50,11 @@ function PlaceLocated() {
         })
     }
 
-    const onSubmit = async (e: any) => {
-        e.preventDefault()
-        setLoading(true)
-        let items = {
-            location: {
-                location: {
-                    latitude: form.center.lat,
-                    longitude: form.center.lng,
-                },
-                boat_id: match?.params.id
-            },
-            address: {
-                address1: state.street,
-                address2: state.flat,
-                city: state.city,
-                state: state.state,
-                postcode: state.postCode,
-                country: state.country,
-                show_location: state.showLocation,
-                boat_id: match?.params.id
-            }
-        }
-        try {
-            if (!form.center.lat && !form.center.lng) {
-                Toast.error("Enter Location")
+    // const onSubmit = async (e: any) => {
+    //     e.preventDefault()
 
-            } else if (!state.street) {
-                Toast.error("Enter Street")
-            } else if (!state.flat) {
-                Toast.error("Enter Flat Name")
-            }
-            else if (!state.city) {
-                Toast.error("Enter City Name")
-
-            }
-            // else if (!state.state) {
-            //     Toast.error("Enter State Name")
-            // } 
-            // else if (!state.postCode) {
-            //     Toast.error("Enter Postcode")
-            // }
-            else if (!state.country) {
-                Toast.error("Enter Country")
-            }
-            else {
-                let apiRes = await henceforthApi.Boat.create(items)
-                Toast.success(apiRes.message)
-                navigate({
-                    pathname: `/boat/${match?.params.id}/amenities`,
-                    search: uRLSearchParams.toString()
-                })
-            }
-        } catch (error: any) {
-            // Toast.error(error)
-            if (error.response.body.message.address1) return Toast.error(`Please Enter Street`)
-            if (error.response.body.message.city) return Toast.error(error.response.body.message.city[0])
-            if (error.response.body.message.country) return Toast.error(error.response.body.message.country[0])
-            if (error.response.body.message.postcode) return Toast.error(error.response.body.message.postcode[0])
-            // if (error.response.body.message.state) return Toast.error(error.response.body.message.state[0])
-        } finally {
-            setLoading(false)
-        }
-    }
-
+    // }
+    const actionComparison = uRLSearchParams.get("action") as string === "save_and_exit"
     const onChange = (value: any) => {
         setState({
             ...state,
@@ -264,13 +205,101 @@ function PlaceLocated() {
     }
     console.log('googleMapRef', googleMapRef?.current)
     console.log('form', form)
+    const deleteQuery = () => {
+        uRLSearchParams.delete("action")
+        navigate({
+            search: uRLSearchParams.toString()
+        })
+    }
+    const saveAndExit = async (b: boolean) => {
+        setLoading(true)
+        let items = {
+            location: {
+                location: {
+                    latitude: form.center.lat,
+                    longitude: form.center.lng,
+                },
+                boat_id: match?.params.id
+            },
+            address: {
+                address1: state.street,
+                address2: state.flat,
+                city: state.city,
+                state: state.state,
+                postcode: state.postCode,
+                country: state.country,
+                show_location: state.showLocation,
+                boat_id: match?.params.id
+            }
+        }
+        try {
+            if (!form.center.lat && !form.center.lng) {
+                Toast.error("Enter Location")
+                deleteQuery()
+
+            } else if (!state.street) {
+                Toast.error("Enter Street")
+                deleteQuery()
+            } else if (!state.flat) {
+                Toast.error("Enter Flat Name")
+                deleteQuery()
+            }
+            else if (!state.city) {
+                Toast.error("Enter City Name")
+                deleteQuery()
+
+            }
+            // else if (!state.state) {
+            //     Toast.error("Enter State Name")
+            // } 
+            // else if (!state.postCode) {
+            //     Toast.error("Enter Postcode")
+            // }
+            else if (!state.country) {
+                Toast.error("Enter Country")
+                deleteQuery()
+            }
+            else {
+                let apiRes = await henceforthApi.Boat.create(items)
+                Toast.success(apiRes.message)
+                if (b) {
+                    navigate(`/`, { replace: true })
+                } else {
+                    navigate({
+                        pathname: `/boat/${match?.params.id}/amenities`,
+                        search: uRLSearchParams.toString()
+                    })
+                }
+            }
+        } catch (error: any) {
+            // Toast.error(error)
+            deleteQuery()
+            if (error.response.body.message.address1) return Toast.error(`Please Enter Street`)
+            if (error.response.body.message.city) return Toast.error(error.response.body.message.city[0])
+            if (error.response.body.message.country) return Toast.error(error.response.body.message.country[0])
+            if (error.response.body.message.postcode) return Toast.error(error.response.body.message.postcode[0])
+            // if (error.response.body.message.state) return Toast.error(error.response.body.message.state[0])
+        } finally {
+            setLoading(false)
+        }
+    }
+    const onSubmit = async (e: any) => {
+        e.preventDefault()
+        saveAndExit(false)
+    }
+
+    useEffect(() => {
+        if (actionComparison) {
+            saveAndExit(true)
+        }
+    }, [uRLSearchParams.get("action")])
 
     return (
-        <Spin spinning={loading} className='h-100' >
-            <section className="select-passenger-section h-100">
-                <div className="container-fluid h-100">
-                    <form className="row h-100" onSubmit={onSubmit} onKeyDown={onKeyDown}>
-                        <div className="col-lg-6">
+        <section className="select-passenger-section h-100">
+            <div className="container-fluid h-100">
+                <form className="row h-100" onSubmit={onSubmit} onKeyDown={onKeyDown}>
+                    <div className="col-lg-6">
+                        <Spin spinning={loading} >
                             <div className="banner-content h-100 d-flex flex-column ">
                                 <div className="row gy-2 justify-content-center justify-content-lg-end pb-5 pb-lg-0">
                                     <div className="col-11 col-lg-11">
@@ -319,7 +348,7 @@ function PlaceLocated() {
                                                         if (!/[0-9]/.test(e.key)) {
                                                             e.preventDefault();
                                                         }
-                                                    }} name="postCode" onChange={handleState} />
+                                                    }} name="postCode" onChange={handleState} maxLength={6} />
                                             </div>
                                         </div>
                                         <div className="col-11 col-lg-11">
@@ -355,29 +384,30 @@ function PlaceLocated() {
                                     </Fragment>}
                                 </div>
                             </div>
-                            <BackNextLayout />
-                        </div>
-                        <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
-                            {/* <div className="banner-image border">
+                        </Spin>
+
+                        <BackNextLayout />
+                    </div>
+                    <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
+                        {/* <div className="banner-image border">
                                 <img src={bannerImage} alt="" />
                             </div> */}
-                            <div style={{ height: '100vh', width: '50%', position: 'fixed' }}>
-                                <HenceforthGoogleMap
-                                    ref={googleMapRef}
-                                    defaultCenter={defaultProps.center}
-                                    center={form.center}
-                                    zoom={form.zoom}
-                                    defaultZoom={defaultProps.zoom}
-                                    onGoogleApiLoaded={onGoogleApiLoaded}
+                        <div style={{ height: '100vh', width: '50%', position: 'fixed' }}>
+                            <HenceforthGoogleMap
+                                ref={googleMapRef}
+                                defaultCenter={defaultProps.center}
+                                center={form.center}
+                                zoom={form.zoom}
+                                defaultZoom={defaultProps.zoom}
+                                onGoogleApiLoaded={onGoogleApiLoaded}
 
 
-                                />
-                            </div>
+                            />
                         </div>
-                    </form>
-                </div>
-            </section>
-        </Spin>
+                    </div>
+                </form>
+            </div>
+        </section>
     )
 }
 
