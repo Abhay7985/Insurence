@@ -140,7 +140,7 @@ const BoatInfo = () => {
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-2 mb-sm-3">
                                         <label htmlFor="input4" className="form-label">Model</label>
-                                        <input type="text" className="form-control" id='input4' placeholder='Enter model' value={boatModel} onChange={(e) => setBoatModel(e.target.value.replace(/[^.0-9]/g, ""))} />
+                                        <input type="text" className="form-control" id='input4' placeholder='Enter model' value={boatModel} onChange={(e) => setBoatModel(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className="col-11 col-lg-11">

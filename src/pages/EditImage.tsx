@@ -17,6 +17,9 @@ const EditImage = () => {
     const [spinning, setSpinning] = React.useState(false)
     const [selectedFiles, setSelectedFiles] = React.useState<Array<any>>([])
     const [photos, setPhotos] = React.useState<Array<ImageResType>>([])
+    const [state, setState] = React.useState({
+        cover_image: ""
+    })
 
     const addFiles = (rowData: Array<any>) => {
         setSelectedFiles([...selectedFiles, ...rowData])
@@ -54,7 +57,7 @@ const EditImage = () => {
             setSpinning(true)
             const photos = await uploadImages()
             let items = {
-                
+
                 photos: photos.map((res) => { return { photo: res } })
             }
             if (photos.length >= 5) {
@@ -75,17 +78,15 @@ const EditImage = () => {
         let items = {
             cover_photo: img
         }
-        alert("hello")
-        setSpinning(true)
         try {
             let res = await henceforthApi.Boat.edit(match?.params.id as string, items)
             Toast.success(res.message)
+            initialiseImuges()
         } catch (error) {
             Toast.error(error)
-        }finally{
+        } finally {
             setSpinning(false)
         }
-
     }
 
     const removeImage = async (index: number) => {
@@ -100,6 +101,7 @@ const EditImage = () => {
             setSpinning(true)
 
             const apiRes = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
+            setState(apiRes.data)
             console.log('apiRes', apiRes);
             setPhotos(apiRes.data.photos)
         } catch (error) {
@@ -150,7 +152,7 @@ const EditImage = () => {
                                             <BoatPhotoPreview {...res} index={index} onRemove={() => removeFiles(index)} />
                                         )}
                                         {photos?.map((res: any, index: number) =>
-                                            <BoatPhotoView {...res} index={index} onRemove={() => { removeImage(index) }} initialiseCover={initialiseCover} />
+                                            <BoatPhotoView {...res} index={index} onRemove={() => { removeImage(index) }} initialiseCover={initialiseCover} cover_image={state.cover_image} />
                                         )}
                                     </div>
                                 </div>

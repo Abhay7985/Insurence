@@ -114,8 +114,9 @@ const BoatDetails = () => {
         createMerker(latlng, map)
     }
 
-    const handleImagePreview = (index:number) => {
+    const handleImagePreview = (image: string) => {
         setVisible(true)
+        const index = state.photos.findIndex((res: any) => res.image === image)
         setCurrentImg(index)
     }
 
@@ -128,15 +129,15 @@ const BoatDetails = () => {
                         <div className="col-12">
                             <div className="boat-header d-flex justify-content-between">
                                 <div className="title">
-                                    <div className="left-arrow" role="button" onClick={() => window.history.back()}>
-                                        <HenceforthIcons.DetailBack />
-                                    </div>
+                                    <Link to={`/`}>
+                                        <div className="left-arrow" role="button" >
+                                            <HenceforthIcons.DetailBack />
+                                        </div>
+                                    </Link>
                                     <h3 className='mt-4 mb-2'>{state.name}</h3>
                                     <p>{state.category} • {state?.address?.address1}</p>
                                 </div>
-                                {/* <button onClick={() => copyText(`http://15.229.56.53/${state.id}`, "Link")}>
-                                </button> */}
-                                <button className="btn border-0 p-0  text-decoration-underline" onClick={() => copyText(`http://15.229.56.53/${state.id}`, "Link")} >
+                                <button className="btn border-0 p-0  text-decoration-underline" onClick={() => copyText(`${window.location.origin}/${state.id}`, "Link")} >
                                     <HenceforthIcons.Share />
                                     <span role="button"> Share</span>
                                 </button>
@@ -147,19 +148,17 @@ const BoatDetails = () => {
                             <div className="row gy-4 py-4 ms-0"  >
                                 <div className="col-md-6 ps-0">
                                     <div className="morning-banner">
-                                        <img src={state.cover_image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}` : ""} alt="img" className='img-fluid' onClick={() => handleImagePreview(0)} />
+                                        <img src={state.cover_image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}` : ""} alt="img" className='img-fluid' onClick={() => handleImagePreview(state.cover_image)} />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="row gy-2">
-                                        {state?.photos?.slice(1, 5)?.map((res: any, index: number) =>
-                                            <>
-                                                <div className="col-6 ps-0">
-                                                    <div className={`${index == 1 ? 'boat-group-image ' : index == 3 ? 'boat-group-image-last ' : ''} boat-image-list`}>
-                                                        <img src={state.photos ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${res.image}` : BannerImage} alt="img" className='img-fluid' onClick={() => handleImagePreview(index+1)} />
-                                                    </div>
+                                        {(state?.photos?.filter((res: any) => res.image !== state.cover_image))?.slice(0, 4)?.map((res: any, index: number) =>
+                                            <div className="col-6 ps-0">
+                                                <div className={`${index == 1 ? 'boat-group-image ' : index == 3 ? 'boat-group-image-last ' : ''} boat-image-list`}>
+                                                    <img src={state.photos ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${res.image}` : BannerImage} alt="img" className='img-fluid' onClick={() => handleImagePreview(res.image)} />
                                                 </div>
-                                            </>
+                                            </div>
                                         )}
                                     </div>
                                 </div>
@@ -259,8 +258,8 @@ const BoatDetails = () => {
 
             <>
                 <div style={{ display: 'none' }}>
-                    <Image.PreviewGroup preview={{ visible, onVisibleChange: (vis) => setVisible(vis),current:currentImg }}>
-                    {state?.photos?.map((res: any, index: number) => <Image src={`${henceforthApi.API_FILE_ROOT_ORIGINAL}${res.image}`} />)}
+                    <Image.PreviewGroup preview={{ visible, onVisibleChange: (vis) => setVisible(vis), current: currentImg }}>
+                        {state?.photos?.map((res: any, index: number) => <Image src={`${henceforthApi.API_FILE_ROOT_ORIGINAL}${res.image}`} />)}
                     </Image.PreviewGroup>
                 </div>
             </>

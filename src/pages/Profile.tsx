@@ -2,7 +2,8 @@ import { Input, Spin } from 'antd';
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useMatch } from 'react-router-dom';
 import HenceforthIcons from '../assets/icons/HenceforthIcons'
-import profile from '../assets/images/banner_one.png';
+import placeholder from '../assets/images/placeholder.png'
+
 import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
 import Spinner from './common/AntSpinner';
@@ -70,16 +71,18 @@ const Profile = () => {
     }
   }
   const onChnageEmail = async () => {
+    setLoading(true)
     try {
       const item = {
         email: state.email
       }
       let apiRes = await henceforthApi.Auth.editProfile(item)
       loginSuccess(apiRes.update)(authDispatch)
+      setEmailShow(false)
     } catch (error) {
-
+      console.log(error)
     } finally {
-
+       setLoading(false)
     }
   }
   const onChangeNameHide = () => {
@@ -100,7 +103,7 @@ const Profile = () => {
       setEmailShow(false)
       setState({
         ...state,
-        name: ""
+        email: ""
       })
     }
     else {
@@ -135,7 +138,7 @@ const Profile = () => {
             <div className="col-lg-5">
               <div className="user-profile">
                 <div className="profile-image mx-auto">
-                  <img src={authState.image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${authState.image}` : profile} alt="img" className='img-fluid' />
+                  <img src={authState.image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${authState.image}` : placeholder} alt="img" className='img-fluid' />
                 </div>
                 <div className="profile-btn text-center">
                   <input type="file" onChange={imageUpload} id='profileUpload' />
@@ -182,7 +185,7 @@ const Profile = () => {
                       <div className="edit-input">
                         <Input type="email" defaultValue={authState.email} name="email" className="form-control w-100 mt-3 mb-4" placeholder="Enter email" onChange={onhandleChnage} />
                         <div className="save-btn">
-                          <button className='btn btn-yellow' onClick={onChnageEmail}>Save</button>
+                          <button className='btn btn-yellow' onClick={onChnageEmail} disabled={loading}>Save</button>
                         </div>
                       </div> : ""}
                   </div>

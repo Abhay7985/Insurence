@@ -11,16 +11,17 @@ const BoatPhotoView = (props: any) => {
             <div className="upload-images">
                 <img src={henceforthApi.FILES.imageOriginal(props.image, uploadImage)} alt="img" className='img-fluid' />
             </div>
-            {props.index === 0 ? <p className='cover-image position-absolute top-0 mt-2 ms-2' onClick={() => props.initialiseCover(props.image)}>COVER PHOTO</p> : ''}
+            {props.image === props.cover_image ? <p className='cover-image position-absolute top-0 mt-2 ms-2' >COVER PHOTO</p> : ''}
             <div className="modify-image d-flex gap-2 position-absolute justify-content-end align-items-center">
                 <ul className="modify-btn d-flex gap-2">
+                    {props.image !== props.cover_image &&
                     <li>
-                        <button className='edit'>
+                        <button className='edit' type='button' onClick={() => props.initialiseCover(props.image)}>
                             <img src={editIcon} alt="icon" />
                         </button>
-                    </li>
+                    </li>}
                     <li>
-                        <button className='edit' onClick={props.onRemove}>
+                        <button className='edit' type='button' onClick={props.onRemove}>
                             <img src={deleteIcon} alt="icon" />
                         </button>
                     </li>

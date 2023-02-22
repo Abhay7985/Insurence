@@ -240,21 +240,17 @@ function PlaceLocated() {
             } else if (!state.street) {
                 Toast.error("Enter Street")
                 deleteQuery()
-            } else if (!state.flat) {
-                Toast.error("Enter Flat Name")
-                deleteQuery()
             }
             else if (!state.city) {
                 Toast.error("Enter City Name")
                 deleteQuery()
-
             }
-            // else if (!state.state) {
-            //     Toast.error("Enter State Name")
-            // } 
-            // else if (!state.postCode) {
-            //     Toast.error("Enter Postcode")
-            // }
+            else if(!state.state){
+                Toast.error("Enter State Name")
+            }
+            else if(!state.postCode){
+                Toast.error("Enter PostCode")
+            }
             else if (!state.country) {
                 Toast.error("Enter Country")
                 deleteQuery()
@@ -336,13 +332,13 @@ function PlaceLocated() {
                                         </div>
                                         <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
-                                                <label htmlFor="input5" className="form-label">State (optional)</label>
+                                                <label htmlFor="input5" className="form-label">State </label>
                                                 <input type="text" className="form-control" id='input5' placeholder='Enter State' name="state" value={state.state} onChange={handleState} />
                                             </div>
                                         </div>
                                         <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
-                                                <label htmlFor="input5" className="form-label">Postcode (optional)</label>
+                                                <label htmlFor="input5" className="form-label">Postcode </label>
                                                 <input type="text" className="form-control" id='input5' placeholder='Enter postcode' value={state.postCode}
                                                     onKeyPress={(e) => {
                                                         if (!/[0-9]/.test(e.key)) {

@@ -16,25 +16,25 @@ const EditAmenities = () => {
     const { authState, Toast } = React.useContext(GlobalContext)
     const [loading, setLoading] = React.useState(false)
     const [state, setState] = React.useState<Array<AmenitiesInterface>>([])
-    
+
     const onSubmit = async (e: any) => {
         e.preventDefault()
         let items = {
             amenities: state.filter((res) => res.checked === true).map((res) => res.id)
         }
         try {
-            if(items.amenities.length){
+            if (items.amenities.length) {
                 setLoading(true)
                 let apiRes = await henceforthApi.Boat.edit(match?.params.id as string, items)
                 Toast.success(apiRes.message)
                 window?.history?.back()
-            } else{
+            } else {
                 Toast.error("Please Select Amenities")
             }
         } catch (error) {
             Toast.error(error)
-            
-        }finally{
+
+        } finally {
             setLoading(false)
         }
     }
@@ -49,7 +49,7 @@ const EditAmenities = () => {
     const initialiseDetails = async () => {
         henceforthApi.setToken(authState?.access_token)
         try {
-            
+
             let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
             return res
         } catch (error) {
@@ -110,8 +110,8 @@ const EditAmenities = () => {
                                         {state.map((res: AmenitiesInterface, index: number) =>
                                             <div className="col-12 col-lg-12" key={index}>
                                                 <div className="form-check">
-                                                    <input className="form-check-input" type="checkbox"  checked={res.checked} id={`check1${index}`} onChange={(e) => handleChecked(e.target.checked, index)}  />
-                                                    <label className="form-check-label" htmlFor={`check1${index}`}>
+                                                    <input className="form-check-input" type="checkbox" checked={res.checked} onChange={(e) => handleChecked(e.target.checked, index)} id={"amenity" + res.amenity} />
+                                                    <label className="form-check-label" htmlFor={"amenity" + res.amenity}>
                                                         {res?.amenity}
                                                     </label>
                                                 </div>

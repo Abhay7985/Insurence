@@ -16,6 +16,7 @@ import Slider from "react-slick";
 import PhotoSlider from './common/PhotoSlider';
 import henceofrthValidations from "../utils/henceforthValidations";
 import HenceforthIcons from '../assets/icons/HenceforthIcons';
+import { message, Popconfirm } from 'antd';
 
 
 
@@ -102,15 +103,17 @@ const EditBoatDetails = () => {
         initialise(true)
     }, [match?.params.id])
 
-    const deleteListing = async(id: any) => {
+
+    const deleteListing = async (id: any) => {
         setLoading(true)
         try {
+
             const apiRes = await henceforthApi.Boat.deleteBoat(id)
             Toast.success(apiRes.message)
             window.history.back()
         } catch (error) {
             Toast.error(error)
-        }finally{
+        } finally {
             setLoading(false)
         }
 
@@ -198,10 +201,26 @@ const EditBoatDetails = () => {
                                 <Link to={`/boat/${match?.params.id}/inquiry`}>
                                     <button className='btn btn-outline-yellow fw-600'>Preview Listing</button>
                                 </Link>
-                                    <button className='btn btn-outline-red d fw-600' onClick={() => deleteListing(match?.params.id)}>
+                                {/* <button className='btn btn-outline-red d fw-600' onClick={() => deleteListing(match?.params.id)}>
                                         <HenceforthIcons.DeleteRed />
                                         <span className='ms-2 align-middle'>Delete Listing</span>
-                                    </button>
+                                    </button> */}
+                                <Popconfirm
+                                    title="Delete the Details"
+                                    description="Are you sure"
+                                    okText="Yes"
+                                    okType="danger"
+                                    cancelText="No"
+                                    onConfirm={() => {
+                                        deleteListing(match?.params.id)
+                                    }}
+
+                                >
+                                    <a href="#" className="btn btn-outline-red d fw-600">
+                                        {/* <img src={resetIcon} alt="icon" /> */}
+                                        <span className="ms-2">Delete Listing </span>
+                                    </a>
+                                </Popconfirm>
                             </div>
                         </div>
                     </div>

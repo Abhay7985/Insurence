@@ -1,5 +1,5 @@
 import { Input, Select, Spin } from "antd"
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { GlobalContext } from "../../context/Provider"
 import henceforthApi from "../../utils/henceforthApi"
 import CountryCodeJson from '../../utils/CountryCode.json'
@@ -16,7 +16,6 @@ const EditLocationBoat = (props: any) => {
     const { Toast } = React.useContext(GlobalContext)
     const placeInputRef = useRef(null as any);
     const [form, setForm] = React.useState(defaultProps)
-
     const [state, setState] = React.useState({
         id: 1,
         address1: "",
@@ -42,6 +41,7 @@ const EditLocationBoat = (props: any) => {
                 [name]: value
             }
         })
+
     }
 
     const onSubmit = async (e: any) => {
@@ -58,8 +58,8 @@ const EditLocationBoat = (props: any) => {
         }
         setLoading(true)
         try {
-            if (!state.full_address) {
-                // return Toast.error("Please Enter Street Address")
+            if (!state.address1) {
+                return Toast.error("Please Enter Street Address")
             }
             if (!state.city.trim()) {
                 return Toast.error("Please Enter city ")
@@ -147,12 +147,14 @@ const EditLocationBoat = (props: any) => {
         setState((state: any) => {
             return {
                 ...state,
-                street: items?.route,
+                address1: items?.full_address ? items?.full_address : '',
+                address2: items?.street_number ? items?.street_number : '',
+                // street: items?.route,
                 flat: items?.street_number ? items?.street_number : items?.apartment_number,
-                city: items?.city,
-                state: items?.state,
-                postCode: items?.pin_code,
-                country: items?.country,
+                city: items?.city ? items?.city : '',
+                state: items?.state ? items?.state : '',
+                postcode: items?.pin_code ? items?.pin_code : '',
+                country: items?.country ? items?.country : '',
             }
         })
     }
@@ -186,20 +188,21 @@ const EditLocationBoat = (props: any) => {
                         setLoactionsFromLatlng(address, formatAddress, place.geometry?.location.lat(), place.geometry?.location.lng())
                     }
                 );
+
             }
 
         });
     };
 
     useEffect(() => {
-        if(isExpended){
+        if (isExpended) {
             initPlaceAPI()
         }
     }, [isExpended])
 
     return <Spin spinning={loading} className='h-100' >
-        <div className="Location bg-white Pricing mb-4">
-            <div className="photo-header d-flex justify-content-between mb-3" id='location_tab'>
+        <div className="Location bg-white Pricing mt-5" id='location_tab'>
+            <div className="photo-header d-flex justify-content-between mb-4" >
                 <h4>Location</h4>
             </div>
             <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
@@ -218,7 +221,7 @@ const EditLocationBoat = (props: any) => {
                                 <div className="col-12">
                                     <div className="address mb-3">
                                         <label htmlFor="ddd" className="form-label">Street address</label><br />
-                                        <input placeholder="House name/number +street /road" id="ddd" className="form-control" ref={placeInputRef} value={state.full_address} name="address" onChange={(e) => handleChange(e.target)} />
+                                        <input placeholder="House name/number +street /road" id="ddd" className="form-control" ref={placeInputRef} value={state.address1} name="address1" onChange={(e) => handleChange(e.target)} />
                                         {/* <input type="text" ref={placeInputRef} /> */}
                                     </div>
                                 </div>
@@ -259,7 +262,8 @@ const EditLocationBoat = (props: any) => {
                                             <Select
                                                 showSearch
                                                 className='w-100'
-                                                defaultValue={state.country ? state.country : "Enter country / region"}
+                                                // defaultValue={state.country ? state.country : "Enter country / region"}
+                                                value={state.country ? state.country : "Enter country / region"}
                                                 onChange={(e) => handleChange({
                                                     name: 'country',
                                                     value: CountryCodeJson.find(res => res.name == e)?.code

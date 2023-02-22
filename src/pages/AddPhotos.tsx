@@ -1,6 +1,5 @@
 import bannerImage from '../assets/images/image_four.png';
 import uploadIcon from '../assets/icons/upload_photo.svg';
-import BoatPhotoView from '../Components/row/BoatPhotoView';
 import BackNextLayout from '../Components/boat/BackNextLayout';
 import { useLocation, useMatch, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
