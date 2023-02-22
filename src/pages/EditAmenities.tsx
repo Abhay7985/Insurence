@@ -98,24 +98,26 @@ const EditAmenities = () => {
                                     <HenceforthIcons.LeftArrow />
                                 </div>
                                 <div className="col-lg-12">
-                                    <div className="title d-flex justify-content-between align-items-center py-3 flex-wrap gap-2">
+                                    <div className="title">
                                         <h2>Edit Amenities</h2>
-                                        <div className="save-btn">
-                                            <button className="btn btn-yellow" type='submit'>Save Changes</button>
-                                        </div>
                                     </div>
                                 </div>
                                 <div className="col-lg-12">
-                                    <div className="row gy-4">
-                                        {state.map((res: AmenitiesInterface, index: number) =>
-                                            <div className="col-12 col-lg-12" key={index}>
-                                                <div className="form-check">
-                                                    <input className="form-check-input" type="checkbox" checked={res.checked} onChange={(e) => handleChecked(e.target.checked, index)} id={"amenity" + res.amenity} />
-                                                    <label className="form-check-label" htmlFor={"amenity" + res.amenity}>
-                                                        {res?.amenity}
-                                                    </label>
-                                                </div>
-                                            </div>)}
+                                    <div className="edit-amenties d-flex justify-content-between flex-wrap flex-sm-nowrap gap-3">
+                                        <div className="row gy-4">
+                                            {state.map((res: AmenitiesInterface, index: number) =>
+                                                <div className="col-12 col-lg-12" key={index}>
+                                                    <div className="form-check">
+                                                        <input className="form-check-input" type="checkbox" checked={res.checked} onChange={(e) => handleChecked(e.target.checked, index)} id={"amenity" + res.amenity} />
+                                                        <label className="form-check-label" htmlFor={"amenity" + res.amenity}>
+                                                            {res?.amenity}
+                                                        </label>
+                                                    </div>
+                                                </div>)}
+                                        </div>
+                                        <div className="save-btn align-self-end">
+                                            <button className="btn btn-yellow text-nowrap" type='submit'>Save Changes</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -241,35 +241,39 @@
     }
 }
 
-.boat-image-list{
+.boat-image-list {
     height: 196px;
     max-height: 100%;
     overflow: hidden;
-       
+
     img {
         height: 100%;
         width: 100%;
         object-fit: cover;
     }
+
     @media (max-width:767px) {
         border-radius: 10px;
         height: 150px;
     }
 }
+
 .boat-group-image {
 
-  &:nth-child(1){
-    border-radius: 0px 10px 0px 0px;
-  }
-  @media (max-width:767px) {
-    border-radius: 0px 10px 0px 0px;
+    &:nth-child(1) {
+        border-radius: 0px 10px 0px 0px;
+    }
+
+    @media (max-width:767px) {
+        border-radius: 0px 10px 0px 0px;
+    }
 }
-}
+
 .boat-group-image-last {
 
-  &:nth-child(1){
-    border-radius: 0px 0px 10px 0px;
-  }
+    &:nth-child(1) {
+        border-radius: 0px 0px 10px 0px;
+    }
 }
 
 .boat-calender {
@@ -283,13 +287,15 @@
 .price-card {
     box-shadow: 0px 4px 14px #0000001A;
     border-radius: 10px;
-   
-    input{
+
+    input {
         margin-top: 19px;
     }
-    .select-date{
+
+    .select-date {
         position: relative;
-        &::before{
+
+        &::before {
             position: absolute;
             content: 'Date';
             top: 25px !important;
@@ -304,9 +310,10 @@
         }
     }
 
-    .ant-picker-suffix{
+    .ant-picker-suffix {
         position: relative;
-        &::after{
+
+        &::after {
             position: absolute;
             content: '';
             top: 0;
@@ -317,8 +324,8 @@
             height: 20px;
             width: 20px;
         }
-    
-        svg{
+
+        svg {
             opacity: 0;
         }
     }
@@ -354,13 +361,14 @@
         padding: 14px 26px;
         border-radius: $radius;
     }
-    p{
+
+    p {
         font-size: 15px;
         font-weight: 600;
     }
 }
 
-.location{
+.location {
     cursor: pointer;
 }
 
@@ -509,7 +517,7 @@
     .tab-box {
         height: 100%;
 
-     
+
 
         .tab-nav {
             min-width: 300px;
@@ -793,6 +801,46 @@
 //     }
 // }
 
-.ant-modal-footer{
+.ant-modal-footer {
     display: none;
+}
+
+// show-more-image
+.show-more-image {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 0px;
+
+    .btn {
+        color: $white;
+        font-size: 35px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        background: linear-gradient(rgba(0, 0, 0, 0.404), rgba(0, 0, 0, 0.358));
+
+        &:active {
+            color: $white;
+        }
+
+        &:focus {
+            color: $white;
+        }
+    }
+}
+
+.ant-radio-button-wrapper {
+    height: 100% !important;
+   
+  span{
+    vertical-align: text-top;
+  }
+}
+
+.ant-picker-calendar .ant-picker-calendar-header{
+    padding: 25px 20px !important;
 }
