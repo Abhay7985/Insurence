@@ -108,10 +108,10 @@ const EditAmenities = () => {
                                 <div className="col-lg-12">
                                     <div className="row gy-4">
                                         {state.map((res: AmenitiesInterface, index: number) =>
-                                            <div className="col-12 col-lg-12">
+                                            <div className="col-12 col-lg-12" key={index}>
                                                 <div className="form-check">
-                                                    <input className="form-check-input" type="checkbox" checked={res.checked} onChange={(e) => handleChecked(e.target.checked, index)} id="check1" />
-                                                    <label className="form-check-label" htmlFor="check1">
+                                                    <input className="form-check-input" type="checkbox"  checked={res.checked} id={`check1${index}`} onChange={(e) => handleChecked(e.target.checked, index)}  />
+                                                    <label className="form-check-label" htmlFor={`check1${index}`}>
                                                         {res?.amenity}
                                                     </label>
                                                 </div>
