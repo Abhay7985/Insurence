@@ -136,7 +136,7 @@ const Tablelayout = (props: any) => {
                     <td>
                         <div className="boats d-flex gap-2 align-items-center">
                             <div className="boat-image">
-                                <img src={boatImage} alt="img" className='img-fluid' />
+                                <img src={res.cover_image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${res.cover_image}`: boatImage} alt="img" className='img-fluid' />
                             </div>
                             <p>{res.boat_name}</p>
                         </div>
