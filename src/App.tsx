@@ -52,7 +52,7 @@ const App = () => {
             <Route path="change-password" element={<ChangePassword />} />
             <Route path="contact" element={<Contact />} />
             <Route path="faq" element={<Faq />} />
-            
+
             <Route path="about" element={<About />} />
           </Route>
         </Fragment>
