@@ -22,15 +22,7 @@ const BoatHeader = () => {
             search: uRLSearchParams.toString()
         })
     }
-    const onChangeExit = async () => {
-        try {
-
-        } catch (error) {
-
-        } finally {
-
-        }
-    }
+   
 
     return (
         <div className="container">
@@ -50,7 +42,7 @@ const BoatHeader = () => {
                                     <button className="btn btn-outline-dark" type="button">Help</button>
                                 </li>
                                 <li>
-                                    <Button htmlType="submit" className="btn btn-yellow h-100" onClick={onChangeExit}>Save & Exit</Button>
+                                    <Button htmlType="submit" className="btn btn-yellow h-100" >Save & Exit</Button>
                                 </li>
                             </ul>}
                     </form>

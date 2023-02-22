@@ -7,6 +7,7 @@ import { useLocation, useMatch, useNavigate } from 'react-router-dom';
 import Tablelayout from '../Components/inquiry/TableLayout';
 import henceforthApi from '../utils/henceforthApi';
 import { GlobalContext } from '../context/Provider';
+import henceofrthEnums from '../utils/henceofrthEnums';
 
 const InquiryPage = () => {
     const match = useMatch('/inquiry/:type/:page')
@@ -17,6 +18,10 @@ const InquiryPage = () => {
     const [inqieryData, setInquiryData] = React.useState({
         name: "",
         boat_name: "",
+        email: "",
+        phone: Number(),
+        id:Number(),
+        status:""
     })
     const [loading, setLoading] = React.useState(false)
     const [state, setState] = React.useState({
@@ -38,7 +43,21 @@ const InquiryPage = () => {
         }
         filternavigate('', 0)
     }
-
+    const handleStatus = async (id: number, status: string) => {
+        const items = {
+            status
+        }
+        setLoading(true)
+        try {
+            const apiRes = await henceforthApi.Inquiry.inquiryStatus(id, items)
+            Toast.success(apiRes.message)
+            await initialise()
+        } catch (error) {
+            Toast.error(error)
+        } finally {
+            setLoading(false)
+        }
+    }
     const handleSocialFilter = (value: string) => {
         if (value) {
             uRLSearchParams.set('inquiry_mode', value)
@@ -61,7 +80,7 @@ const InquiryPage = () => {
                 String(match?.params.page),
                 uRLSearchParams.toString()
             )
-            
+
             setState(apiRes.data)
 
         } catch (error) {
@@ -95,6 +114,8 @@ const InquiryPage = () => {
     React.useEffect(() => {
         initialise()
     }, [match?.params.type, match?.params.page, uRLSearchParams.get('inquiry_mode'), uRLSearchParams.get('search')])
+
+    console.log(inqieryData)
 
     return (
         <Spin spinning={loading} className='h-100' >
@@ -144,7 +165,7 @@ const InquiryPage = () => {
                                 total={state.total}
                                 showSizeChanger={false}
                                 current={Number(match?.params.page) ? Number(match?.params.page) : 1}
-                                onChange={(page: any) => filternavigate('',page)}
+                                onChange={(page: any) => filternavigate('', page)}
                             />
                         </div>
                     </div>
@@ -165,26 +186,27 @@ const InquiryPage = () => {
                                 <div className="col-lg-6">
                                     <div className="inquiry-name">
                                         <h6 className='mb-2'>Name</h6>
-                                        <p>{inqieryData?.boat_name}</p>
+                                        <p>{inqieryData?.name}</p>
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
                                     <div className="inquiry-name">
                                         <h6 className='mb-2'>Phone No.</h6>
-                                        <p>+91-9654123752</p>
+                                        <p>{inqieryData.phone ? '+91' : ""}{inqieryData.phone ? inqieryData.phone : "Not Avaiable"}</p>
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
                                     <div className="inquiry-name">
                                         <h6 className='mb-2'>Email</h6>
-                                        <p>johndoe123@gmail.com</p>
+                                        <p>{inqieryData?.email}</p>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
                         <div className="modal-footer px-sm-4">
-                            <button type="button" className="btn btn-yellow w-100 py-2">Resolve this Enquiry</button>
+                        
+                            <button type="button" className="btn btn-yellow w-100 py-2" data-bs-dismiss="modal"  onClick={()=>handleStatus(inqieryData.id,"resolved")} disabled={henceofrthEnums.InquiryStatus.resolved===inqieryData.status as any}>Resolve this Enquiry</button>
                         </div>
                     </div>
                 </div>
