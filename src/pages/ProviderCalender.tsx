@@ -1,5 +1,5 @@
 import { Calendar } from 'antd'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Select } from 'antd';
 import HenceforthIcons from '../assets/icons/HenceforthIcons';
 
@@ -8,6 +8,8 @@ const handleChange = (value: string) => {
 };
 
 const ProviderCalender = () => {
+
+  const [show,setshow]=useState(false)
 
   const initialise=async()=>{
        try{
@@ -18,6 +20,7 @@ const ProviderCalender = () => {
 
        }
   }
+  
   useEffect(()=>{
     initialise()
   },[])
@@ -59,6 +62,7 @@ const ProviderCalender = () => {
                 </div>
               </div>
             </div>
+    
             <div className="col-lg-3 px-0">
               <div className="sidebar-calender py-4">
                 <div className="cross px-4">

@@ -3,8 +3,8 @@ import _superagent, { search } from 'superagent';
 const SuperagentPromise = require('superagent-promise');
 const superagent = SuperagentPromise(_superagent, global.Promise);
 
-const API_ROOT = `http://15.229.56.53:8082/api/`;
-
+// const API_ROOT = `http://15.229.56.53:8082/api/`;
+const API_ROOT = `https://aluguel.lanchasalvador.com.br:8081/`;
 const BUCKET_ROOT = `https://lanchastaging.s3.sa-east-1.amazonaws.com/`;
 
 const API_FILE_ROOT_MEDIUM = `${BUCKET_ROOT}medium/`;
