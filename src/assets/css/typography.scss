@@ -175,6 +175,7 @@ label {
     font-size: 16px;
     color: $light-black;
     font-weight: normal;
+    padding-inline: 7px;
 
     &::first-letter {
         text-transform: capitalize;

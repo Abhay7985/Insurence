@@ -294,7 +294,10 @@
 
     .select-date {
         position: relative;
-
+        ::placeholder{
+            padding: 0;
+            font-weight: 600;
+        }
         &::before {
             position: absolute;
             content: 'Date';
