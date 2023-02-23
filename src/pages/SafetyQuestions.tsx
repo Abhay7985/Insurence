@@ -29,6 +29,7 @@ const actionComparison=uRLSearchParams.get("action") as string === "save_and_exi
     }
 
     const saveAndExit = async (b: boolean) => {
+        setSpinning(true)
         let items = {
             safety_question: {
                 boat_id: match?.params.id,
@@ -38,7 +39,9 @@ const actionComparison=uRLSearchParams.get("action") as string === "save_and_exi
             }
         }
         try {
-            setSpinning(true)
+            if(!state.rules){
+               return Toast.error("Enter Rules and Security")
+            }
             let res = await henceforthApi.Boat.create(items)
             Toast.success(res.message)
             if (b) navigate(`/`, { replace: true })

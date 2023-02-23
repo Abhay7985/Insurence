@@ -186,7 +186,7 @@ const InquiryPage = () => {
                                 <div className="col-lg-6">
                                     <div className="inquiry-name">
                                         <h6 className='mb-2'>Name</h6>
-                                        <p>{inqieryData?.name}</p>
+                                        <p>{inqieryData?.name ? inqieryData?.name :"Not Avaiable"  }</p>
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
@@ -198,7 +198,7 @@ const InquiryPage = () => {
                                 <div className="col-lg-6">
                                     <div className="inquiry-name">
                                         <h6 className='mb-2'>Email</h6>
-                                        <p>{inqieryData?.email}</p>
+                                        <p>{inqieryData?.email ? inqieryData?.email :"Not Avaiable" }</p>
                                     </div>
                                 </div>
                             </div>
