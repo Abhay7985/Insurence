@@ -9,7 +9,7 @@ const handleChange = (value: string) => {
 
 const ProviderCalender = () => {
 
-  const [show,setshow]=useState(false)
+  const [hideShow, setHideShow] = useState(true)
 
   const initialise=async()=>{
        try{
@@ -20,6 +20,12 @@ const ProviderCalender = () => {
 
        }
   }
+  const toggleHandler = (pass: boolean) => {
+    setHideShow(false)
+}
+const toggleHandler2 = (passed: Boolean) => {
+    setHideShow(true)
+}
   
   useEffect(()=>{
     initialise()
@@ -65,9 +71,10 @@ const ProviderCalender = () => {
     
             <div className="col-lg-3 px-0">
               <div className="sidebar-calender py-4">
-                <div className="cross px-4">
+                <div className="cross px-4" role="button" onClick={() => toggleHandler(false)}>
                   <HenceforthIcons.Cross />
                 </div>
+                  
                 <div className="edit-date border-bottom px-4 py-4">
                   <button className='btn border-0 p-0 d-flex justify-content-between w-100 align-items-center'>
                     <span>Edit Date</span>
