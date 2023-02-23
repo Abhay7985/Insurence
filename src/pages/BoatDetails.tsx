@@ -2,12 +2,11 @@ import leftArrow from '../assets/icons/arrow_back.svg';
 import BannerImage from '../assets/images/boat_one.png';
 import petIcon from '../assets/images/pet.png';
 import smoking from '../assets/images/cigar.png';
-import currentLocation from '../assets/icons/exact_location.svg';
 import { DatePickerProps, Spin } from 'antd';
 import { DatePicker, Space } from 'antd';
 import henceforthApi from '../utils/henceforthApi';
 import { Link, useMatch } from 'react-router-dom';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { GlobalContext } from '../context/Provider';
 import HenceforthIcons from '../assets/icons/HenceforthIcons';
 import HenceforthGoogleMap from '../utils/henceforthGoogleMap';
@@ -29,18 +28,23 @@ const defaultProps = {
     },
     zoom: 11
 };
-const onChange1: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString);
-};
+
 
 const BoatDetails = () => {
     const [visible, setVisible] = useState(false);
     const [currentImg, setCurrentImg] = useState(0);
-
-
     const match = useMatch(`boat/:id/inquiry`)
     const { authState, Toast } = React.useContext(GlobalContext)
     const [loading, setLoading] = React.useState(false)
+    const [Date, setDate] = useState("")
+    const [Filter, setDateFilter] = useState({
+        prices: [],
+        loading:false
+    })
+    const [dateRes, setDateRes] = useState({
+        prices: []
+
+    })
     const googleMapRef = useRef() as any
     const [state, setState] = useState({
         amenities: [],
@@ -78,24 +82,45 @@ const BoatDetails = () => {
             Toast.success(`${name} copy successfull`)
         }
     }
-
     const initialise = async () => {
         henceforthApi.setToken(authState?.access_token)
         try {
             setLoading(true)
             let res = await henceforthApi.Boat.viewBoatDetails(match?.params.id)
             setState(res.data);
-
+            // initialise1(0)
         } catch (error) {
             Toast.error(error)
         } finally {
             setLoading(false)
         }
     }
+    const initialise1 = async () => {
+        let formatdate = Date.split('-').join("/")
+        try {
+            // setDateFilter({
+            //     ...loading,
+            //     loading:true
+            // })
+            let apiRes = await henceforthApi.Boat.filerDate(match?.params.id, formatdate)
+            setDateFilter(apiRes.data)
+        } catch (error) {
+            console.log(error)
+        } finally {
+            // setLoading(false)
+        }
+    }
+    const onChange1: DatePickerProps['onChange'] = async (date, dateString: any) => {
+        setDate(dateString)
+    };
 
     useEffect(() => {
         initialise()
     }, [match?.params.id])
+    useEffect(() => {
+        initialise1()
+    }, [Date])
+
 
     const createMerker = (position: google.maps.LatLng | google.maps.LatLngLiteral, map: google.maps.Map, icon?: any) => {
         return new google.maps.Marker({
@@ -236,9 +261,9 @@ const BoatDetails = () => {
                                     <DatePicker onChange={onChange1} placeholder='Add Date' />
                                 </div>
                                 {/* price-list-1 */}
-                                {state?.prices?.map((e: any, index: number) => {
+                                {Filter?.prices?.map((e: any, index: number) => {
                                     return (
-                                        <>
+                                        <Spin spinning={loading}>
                                             <div className="price-list py-3 border-bottom" key={e?.id}>
                                                 <div className="price-list-title d-flex justify-content-between mb-2">
                                                     <h6>{e?.date}</h6>
@@ -251,7 +276,7 @@ const BoatDetails = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </>
+                                        </Spin>
                                     )
                                 }
                                 )}

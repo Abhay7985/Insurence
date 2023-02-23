@@ -2,37 +2,87 @@ import { Calendar } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Select } from 'antd';
 import HenceforthIcons from '../assets/icons/HenceforthIcons';
-
+import henceforthApi from '../utils/henceforthApi';
+import { Badge } from 'antd';
+import type { BadgeProps } from 'antd';
+import { months } from 'moment';
 const handleChange = (value: string) => {
   console.log(`selected ${value}`);
 };
 
 const ProviderCalender = () => {
-
+  const [state, setState] = useState({
+    data: [
+      {
+        name: ""
+      }
+    ]
+  })
+  const [boatId,setBoatId]=useState("")
+  const [month,setMonth]=useState("")
   const [hideShow, setHideShow] = useState(true)
+  const [listData,getListedData]=useState({
+    data:[]
+  })
+  const initialise = async () => {
+    try {
+      let apiRes = await henceforthApi.Boat.getBoatListing("")
+      setState(apiRes.data)
+    } catch (error) {
+      console.log(error)
+    } finally {
 
-  const initialise=async()=>{
-       try{
-        
-       }catch(error){
-
-       }finally{
-
-       }
+    }
   }
-  const toggleHandler = (pass: boolean) => {
+  const initialise1=async()=>{
+    try{
+     let apiRes=await henceforthApi.Calender.dateCalender(boatId,"",4)
+     getListedData(apiRes.data)
+    }catch(error){
+
+    }finally{
+
+    }
+  }
+  const toggleHandler = () => {
     setHideShow(false)
-}
-const toggleHandler2 = (passed: Boolean) => {
+  }
+  const toggleHandler2 = () => {
     setHideShow(true)
-}
-  
-  useEffect(()=>{
+  }
+  // const monthCellRender = (value) => {
+  //   const num = getMonthData(value);
+  //   return num ? (
+  //     <div className="notes-month">
+  //       <section>{num}</section>
+  //       <span>Backlog number</span>
+  //     </div>
+  //   ) : null;
+  // };
+
+  const dateCellRender = () => {
+// 
+    return (
+      <ul className="events">
+        {listData.data.map((item:any) => (
+          <li key={item.content}>
+            <Badge status={item.type as BadgeProps['status']} text={item.content} />
+          </li>
+        ))}
+      </ul>
+    );
+  };
+  let months1
+  console.log(months1)
+
+  useEffect(() => {
     initialise()
+  }, [])
+  useEffect(()=>{
+    initialise1()
   },[])
-
-
-
+  console.log(listData)
+  console.log(boatId)
   return (
     <>
       {/* Calender-section */}
@@ -45,15 +95,10 @@ const toggleHandler2 = (passed: Boolean) => {
                 <div className="col-12">
                   <div className="select-date px-sm-4 d-flex justify-content-between align-items-center flex-wrap flex-md-nowrap gap-2">
                     <Select
-                      defaultValue="Morning Panoramic"
+                      defaultValue="Select"
                       style={{ width: '100%' }}
-                      onChange={handleChange}
-                      options={[
-                        { value: 'jack', label: 'Jack' },
-                        { value: 'lucy', label: 'Lucy' },
-                        { value: 'Yiminghe', label: 'yiminghe' },
-                        { value: 'disabled', label: 'Disabled', disabled: true },
-                      ]}
+                      onChange={(value)=>setBoatId(value)}
+                      options={[{ value: "", label: "Select manufacturer" }, ...state?.data?.map((res: any) => { return { value: res?.id, label: res.name }  })]}
                     />
                     <div className="edit-pricing px-sm-4">
                       <button className='btn text-yellow p-0 border-0 text-decoration-underline text-nowrap fw-bold d-flex align-items-center'>
@@ -64,17 +109,17 @@ const toggleHandler2 = (passed: Boolean) => {
                   </div>
                 </div>
                 <div className="col-12">
-                  <Calendar />
+                  <Calendar dateCellRender={dateCellRender} onPanelChange={(e:any)=>setMonth(e)}  />
                 </div>
               </div>
             </div>
-    
+
             <div className="col-lg-3 px-0">
               <div className="sidebar-calender py-4">
-                <div className="cross px-4" role="button" onClick={() => toggleHandler(false)}>
+                <div className="cross px-4" role="button" onClick={() => toggleHandler()}>
                   <HenceforthIcons.Cross />
                 </div>
-                  
+
                 <div className="edit-date border-bottom px-4 py-4">
                   <button className='btn border-0 p-0 d-flex justify-content-between w-100 align-items-center'>
                     <span>Edit Date</span>

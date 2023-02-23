@@ -3,8 +3,8 @@ import _superagent, { search } from 'superagent';
 const SuperagentPromise = require('superagent-promise');
 const superagent = SuperagentPromise(_superagent, global.Promise);
 
-// const API_ROOT = `http://15.229.56.53:8082/api/`;
-const API_ROOT = `https://aluguel.lanchasalvador.com.br:8082/api/`;
+// const API_ROOT = `http://192.168.29.54:8080/api/` 
+const API_ROOT = `https://aluguel.backend.lanchasalvador.com.br/api/`;
 const BUCKET_ROOT = `https://lanchastaging.s3.sa-east-1.amazonaws.com/`;
 
 const API_FILE_ROOT_MEDIUM = `${BUCKET_ROOT}medium/`;
@@ -113,12 +113,16 @@ const Boat = {
   boatAmenities: () =>
     requests.get(`provider/boat-amenities`),
   imageUpload: (key: string, file: any) =>
-    requests.file(`provider/upload-image`, key, file)
+    requests.file(`provider/upload-image`, key, file),
+  filerDate:(id:any,priceing_date:any)=>
+    requests.get(`boat-details/${id}/prices${priceing_date !== 0? `?priceing_date=${priceing_date}`:""}`)
 }
 const Subscribe = {
   subscribe: (item: any) => requests.post(`subscribe`, item)
 }
-
+const Calender={
+   dateCalender:(id:any,month:string,year:number)=>requests.get(`provider/boat-price-month/${id}?month=${month}&year=${year}`)
+}
 // boat-routes
 
 const Inquiry = {
@@ -166,6 +170,7 @@ const henceforthApi = {
   token,
   Auth,
   Common,
+  Calender,
   Profile,
   Inquiry,
   Subscribe,
