@@ -6,6 +6,7 @@ import React from "react";
 import placeholder from '../../assets/images/placeholder.png'
 import { Button, Divider, Dropdown, MenuProps, Avatar } from "antd";
 import henceforthApi from '../../utils/henceforthApi';
+import moment from 'moment';
 
 const Header = () => {
     const { authState, logOutNow } = useContext(GlobalContext)
@@ -74,7 +75,7 @@ const Header = () => {
                                     <Link to={`inquiry/all/1`} className='nav-link'>Inquiry</Link>
                                 </li>
                                 <li>
-                                    <Link to='/calender' className='nav-link'>Calender</Link>
+                                    <Link to={`/calender?available_date=${moment().valueOf()}`} className='nav-link'>Calender</Link>
                                 </li>
                                 <li>
                                     <Dropdown menu={{ items }}
