@@ -3,8 +3,10 @@ import _superagent, { search } from 'superagent';
 const SuperagentPromise = require('superagent-promise');
 const superagent = SuperagentPromise(_superagent, global.Promise);
 
-// const API_ROOT = `http://192.168.29.54:8080/api/` 
-const API_ROOT = `https://aluguel.backend.lanchasalvador.com.br/api/`;
+const API_ROOT = `http://192.168.29.54:8080/api/`
+// const API_ROOT = `https://aluguel.backend.lanchasalvador.com.br/api/`;
+// const API_ROOT = `https://staging.database.lanchasalvador.com.br/api/`;
+
 const BUCKET_ROOT = `https://lanchastaging.s3.sa-east-1.amazonaws.com/`;
 
 const API_FILE_ROOT_MEDIUM = `${BUCKET_ROOT}medium/`;
@@ -108,20 +110,21 @@ const Boat = {
     requests.get(`provider/boats?${search}`),
   viewBoatDetails: (id: any) =>
     requests.get(`provider/boats/${id}`),
-    deleteBoat: (id: any) =>
+  deleteBoat: (id: any) =>
     requests.del(`provider/boats/${id}`),
   boatAmenities: () =>
     requests.get(`provider/boat-amenities`),
   imageUpload: (key: string, file: any) =>
     requests.file(`provider/upload-image`, key, file),
-  filerDate:(id:any,priceing_date:any)=>
-    requests.get(`boat-details/${id}/prices${priceing_date !== 0? `?priceing_date=${priceing_date}`:""}`)
+  filerDate: (id: any, priceing_date: any) =>
+    requests.get(`boat-details/${id}/prices${priceing_date !== 0 ? `?priceing_date=${priceing_date}` : ""}`)
 }
 const Subscribe = {
   subscribe: (item: any) => requests.post(`subscribe`, item)
 }
-const Calender={
-   dateCalender:(id:any,month:string,year:number)=>requests.get(`provider/boat-price-month/${id}?month=${month}&year=${year}`)
+const Calender = {
+  dateCalender: (id: string, month: number, year: number) => requests.get(`provider/boat-price-month/${id}?month=${month}&year=${year}`),
+  viewPrice: (id: string, available_date: string) => requests.get(`provider/show-boatprice-date/${id}?available_date=${available_date}`)
 }
 // boat-routes
 
