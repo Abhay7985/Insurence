@@ -1,9 +1,7 @@
-import Item from 'antd/es/list/Item';
 import _superagent, { search } from 'superagent';
 const SuperagentPromise = require('superagent-promise');
 const superagent = SuperagentPromise(_superagent, global.Promise);
 
-// const API_ROOT = `http://192.168.29.54:8080/api/`
 // const API_ROOT = `https://aluguel.backend.lanchasalvador.com.br/api/`;
 const API_ROOT = `https://staging.api.lanchasalvador.com.br/api/`;
 

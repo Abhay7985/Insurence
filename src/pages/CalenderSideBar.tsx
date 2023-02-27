@@ -58,11 +58,12 @@ const CalendarSideBar = () => {
 
     }
 
-    const onSubmit = async () => {
+    const onSubmit = async (b: boolean) => {
+
         const queryDate = moment(Number(uRLSearchParams.get('available_date')))
         const items = {
             available_day: queryDate.weekday(),
-            available: true,
+            available: b,
             route_prices: routeDatas.filter(((res: any) => res.selected == true)).map((res: any) => {
                 return {
                     route_id: res.id,
@@ -124,8 +125,6 @@ const CalendarSideBar = () => {
         } catch (error) {
 
         }
-
-
     }
 
 
@@ -212,7 +211,7 @@ const CalendarSideBar = () => {
                             <div className="available d-flex justify-content-between align-items-center">
                                 <p> Available</p>
                                 <div className="form-check form-switch">
-                                    <input className="form-check-input form-check-toggle" type="checkbox" role="switch" id="flexSwitchCheckChecked" />
+                                    <input className="form-check-input form-check-toggle" type="checkbox" role="switch" id="flexSwitchCheckChecked" onChange={(e) => onSubmit(e.target.checked)} />
                                 </div>
                             </div>
                         </div>
@@ -225,7 +224,7 @@ const CalendarSideBar = () => {
 
                                 })}
                                 <div className="col-12">
-                                    <button className='btn btn-yellow px-4 rounded-2' disabled={loading} onClick={onSubmit}>{loading ? <Spinner /> : "Done"}</button>
+                                    <button className='btn btn-yellow px-4 rounded-2' disabled={loading} onClick={() => onSubmit(false)}>{loading ? <Spinner /> : "Done"}</button>
                                 </div>
 
                             </div>
