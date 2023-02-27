@@ -28,6 +28,12 @@ const CalendarSideBar = () => {
 
     const [state, setState] = React.useState({
         prices: [],
+        date: {
+            available: false
+        },
+        week: {
+            available: false
+        }
     })
 
     const queryDate = moment(Number(uRLSearchParams.get('available_date')))
@@ -127,7 +133,6 @@ const CalendarSideBar = () => {
         }
     }
 
-
     const getSidebarValue = async (routes: Array<any>) => {
         const date = queryDate.format("YYYY/MM/DD")
         try {
@@ -151,7 +156,9 @@ const CalendarSideBar = () => {
 
             setState({
                 ...state,
-                prices: apiRes.data
+                prices: apiRes.data,
+                date: apiRes.date,
+                week: apiRes.week,
             })
             setRouteData(rowData)
 
@@ -211,7 +218,7 @@ const CalendarSideBar = () => {
                             <div className="available d-flex justify-content-between align-items-center">
                                 <p> Available</p>
                                 <div className="form-check form-switch">
-                                    <input className="form-check-input form-check-toggle" type="checkbox" role="switch" id="flexSwitchCheckChecked" onChange={(e) => onSubmit(e.target.checked)} />
+                                    <input className="form-check-input form-check-toggle" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked={uRLSearchParams.get("edit") == "date" ? state?.date?.available : state?.week?.available} onChange={(e) => onSubmit(e.target.checked)} />
                                 </div>
                             </div>
                         </div>

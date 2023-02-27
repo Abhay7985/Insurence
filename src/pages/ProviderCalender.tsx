@@ -7,7 +7,7 @@ import { Badge } from 'antd';
 import type { BadgeProps } from 'antd';
 import moment from 'moment';
 import mim, { Dayjs } from 'dayjs';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../context/Provider';
 import CalendarSideBar from './CalenderSideBar';
 
@@ -110,9 +110,11 @@ const ProviderCalender = () => {
                       options={[{ value: "", label: "Select manufacturer" }, ...state?.data?.map((res: any) => { return { value: `${res?.id}`, label: res.name } })]}
                     />
                     <div className="edit-pricing px-sm-4">
-                      <button className='btn text-yellow p-0 border-0 text-decoration-underline text-nowrap fw-bold d-flex align-items-center'>
-                        <HenceforthIcons.EditPencil />
-                        <span>Edit pricing & availability</span>
+                      <button className='btn text-yellow p-0 border-0 text-decoration-underline text-nowrap fw-bold d-flex align-items-center' disabled={!uRLSearchParams.has("boat_id")}>
+                        <Link to={`/boat/${uRLSearchParams.get("boat_id")}/inquiry/edit/price#price_tab`}>
+                          <HenceforthIcons.EditPencil />
+                          <span>Edit pricing & availability</span>
+                        </Link>
                       </button>
                     </div>
                   </div>
@@ -125,78 +127,6 @@ const ProviderCalender = () => {
             {uRLSearchParams.get("show_sidebar") == "on" &&
               <CalendarSideBar />
             }
-            {/* Side bAR */}
-            {/* <div className="col-lg-3 px-0">
-              <div className="sidebar-calender py-4">
-                <div className="cross px-4" role="button" >
-                  <HenceforthIcons.Cross />
-                </div>
-
-                <div className="edit-date border-bottom px-4 py-4">
-                  <button className='btn border-0 p-0 d-flex justify-content-between w-100 align-items-center'>
-                    <span>Edit Date</span>
-                    <HenceforthIcons.ChevronRight />
-                  </button>
-                </div>
-                <div className="edit-date border-bottom px-4 py-4">
-                  <button className='btn border-0 p-0 d-flex justify-content-between w-100 align-items-center' onClick={getweekDay}>
-                    <span>Edit {queryDate.format('dddd')}</span>
-                    <HenceforthIcons.ChevronRight />
-                  </button>
-                </div>
-                <div className="Available px-4 py-4 border-bottom">
-                  <h6 className='fs-16 mb-3'>Available</h6>
-                  <ul>
-                    {sideData.map((res: any) => {
-                      return (
-                        <>
-                          <li>{res.route_name}</li>
-                          <li>{res.price} or {res.installments}x in {res.installment_price} </li>
-                        </>
-                      )
-                    })}
-
-                  </ul>
-                </div>
-                <div className="edit-tuesday py-4 border-bottom">
-                  <div className="edit-tuesday-header py-4 border-bottom px-4">
-                    <h5 className='mb-3'>Edit {queryDate.format('dddd')}</h5>
-                    <div className="available d-flex justify-content-between align-items-center">
-                      <p> Available</p>
-                      <div className="form-check form-switch">
-                        <input className="form-check-input form-check-toggle" type="checkbox" role="switch" id="flexSwitchCheckChecked" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="px-4">
-                    <div className="row justify-content-center justify-content-lg-end gy-4 py-4">
-                      <h6 className='fs-16'>Pricing</h6>
-                      {weekDay.map((res: any, index: number) => {
-                        return <Weeklisting {...res} index={index} handleChange={handleChange} />
-
-                      })}
-                      <div className="col-12">
-                        <button className='btn btn-yellow px-4 rounded-2' onClick={onSubmit}>Done</button>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-                <div className="edit-tuesday py-4 border-bottom">
-                  <div className="edit-tuesday-header py-4 border-bottom px-4">
-                    <h5 className='mb-3'>Tue, 29 Nov 2022</h5>
-                    <div className="available d-flex justify-content-between align-items-center">
-                      <p> Available</p>
-                      <div className="form-check form-switch">
-                        <input className="form-check-input form-check-toggle" type="checkbox" role="switch" id="flexSwitchCheckChecked" />
-                      </div>
-                    </div>
-                  </div>
-                  <DateListingPrice />
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       </section>
