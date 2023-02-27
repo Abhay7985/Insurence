@@ -2,8 +2,11 @@ import _superagent, { search } from 'superagent';
 const SuperagentPromise = require('superagent-promise');
 const superagent = SuperagentPromise(_superagent, global.Promise);
 
-// const API_ROOT = `https://aluguel.backend.lanchasalvador.com.br/api/`;
-const API_ROOT = `https://staging.api.lanchasalvador.com.br/api/`;
+const IS_STAGING = (window.origin.includes('staging') || window.origin.includes('localhost'));
+const LIVE_API_ROOT = `https://aluguel.backend.lanchasalvador.com.br/api/`;
+const STAGING_API_ROOT = `https://staging.api.lanchasalvador.com.br/api/`;
+
+const API_ROOT = IS_STAGING ? STAGING_API_ROOT : LIVE_API_ROOT
 
 const BUCKET_ROOT = `https://lanchastaging.s3.sa-east-1.amazonaws.com/`;
 
@@ -123,7 +126,7 @@ const Subscribe = {
 const Calender = {
   dateCalender: (id: string, month: number, year: number) => requests.get(`provider/boat-price-month/${id}?month=${month}&year=${year}`),
   viewPrice: (id: string, available_date: string) => requests.get(`provider/show-boatprice-date/${id}?available_date=${available_date}`),
-  
+
   getWeekPrice: (id: string, available_day: string) => requests.get(`provider/boat-price-weekday/${id}?available_day=${available_day}`),
   getDatePrice: (id: string, available_date: string) => requests.get(`provider/boat-price-date/${id}?available_date=${available_date}`),
 
