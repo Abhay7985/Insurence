@@ -24,11 +24,11 @@ const Weeklisting = (props: RouteDataInterface) => {
           <div className="ps-sm-4">
             <label htmlFor="exampleInputEmail2" className="form-label">Price (installments)</label>
             <div className="price-input d-flex gap-3 align-items-center">
-              <input type="email" className="form-control" name="installments" value={props.installments} onChange={(e) => props.handleChange(e.target.name, e.target.value.replace(/[^0-9\.]/g, ""))} />
+              <input type="text" className="form-control" name="installments" value={props.installments} onChange={(e) => props.handleChange(e.target.name, e.target.value.replace(/[^0-9\.]/g, ""))} />
               <span>*</span>
-              <input type="email" className="form-control" name="installment_price" value={props.installment_price} onChange={(e) => props.handleChange(e.target.name, e.target.value.replace(/[^0-9\.]/g, ""))} />
+              <input type="text" className="form-control" name="installment_price" value={props.installment_price} onChange={(e) => props.handleChange(e.target.name, e.target.value.replace(/[^0-9\.]/g, ""))} />
               <span>=</span>
-              <input type="email" className="form-control" name="" value={(props?.installment_price || 0) * (props?.installment_price || 0)} disabled />
+              <input type="text" className="form-control" name="" value={(props?.installment_price || 0) * (props?.installment_price || 0)} disabled />
             </div>
           </div>
         </div>

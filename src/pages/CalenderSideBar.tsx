@@ -64,8 +64,8 @@ const CalendarSideBar = () => {
     const onSubmit = async (b: boolean) => {
 
         const queryDate = moment(Number(uRLSearchParams.get('available_date')))
+        console.log(queryDate.format('YYYY/MM/DD'))
         const items = {
-            available_day: queryDate.weekday(),
             available: b,
             route_prices: routeDatas.filter(((res: any) => res.selected == true)).map((res: any) => {
                 return {
@@ -75,6 +75,11 @@ const CalendarSideBar = () => {
                     installment_price: Number(res.installment_price)
                 }
             })
+        } as any
+        if(uRLSearchParams.get("edit") == "date"){
+            items.available_date= queryDate.format('YYYY/MM/DD')
+        }else{
+            items.available_day=  queryDate.weekday()
         }
         const data = items.route_prices
         if (data.length) {
@@ -215,7 +220,7 @@ const CalendarSideBar = () => {
                             <div className="available d-flex justify-content-between align-items-center">
                                 <p> Available</p>
                                 <div className="form-check form-switch">
-                                    <input className="form-check-input form-check-toggle" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked={uRLSearchParams.get("edit") == "date" ? state?.date_available : state?.day_available} onChange={(e) => onSubmit(e.target.checked)} />
+                                    <input className="form-check-input form-check-toggle" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked={uRLSearchParams.get("edit") === "date" ? state?.date_available : state?.day_available} onChange={(e) => onSubmit(e.target.checked)} />
                                 </div>
                             </div>
                         </div>
