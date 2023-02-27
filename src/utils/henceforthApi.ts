@@ -125,9 +125,12 @@ const Subscribe = {
 const Calender = {
   dateCalender: (id: string, month: number, year: number) => requests.get(`provider/boat-price-month/${id}?month=${month}&year=${year}`),
   viewPrice: (id: string, available_date: string) => requests.get(`provider/show-boatprice-date/${id}?available_date=${available_date}`),
-  weekDay:(id:string,available_day:string)=>requests.get(`provider/boat-price-weekday/${id}?available_day=${available_day}`),
-  editDayPrice:(id:string,item:any)=>requests.put(`provider/boat-price-weekday/${id}`,item),
-  datePrice:(id:string,available_date:string)=>requests.get(`provider/boat-price-date/${id}?available_date=${available_date}`)
+  
+  getWeekPrice: (id: string, available_day: string) => requests.get(`provider/boat-price-weekday/${id}?available_day=${available_day}`),
+  getDatePrice: (id: string, available_date: string) => requests.get(`provider/boat-price-date/${id}?available_date=${available_date}`),
+
+  editWeekPrice: (id: string, item: any) => requests.put(`provider/boat-price-weekday/${id}`, item),
+  editDatePrice: (id: string, item: any) => requests.put(`provider/boat-price-date/${id}`, item)
 }
 // boat-routes
 

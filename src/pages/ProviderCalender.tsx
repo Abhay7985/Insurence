@@ -8,56 +8,25 @@ import type { BadgeProps } from 'antd';
 import moment from 'moment';
 import mim, { Dayjs } from 'dayjs';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Weeklisting from './WeekListing';
-import DateListingPrice from './DateListingPrice';
-import Item from 'antd/es/list/Item';
 import { GlobalContext } from '../context/Provider';
 import CalendarSideBar from './CalenderSideBar';
 
-interface RouteDataInterface {
-  id: number,
-  route_name: string,
-  selected?: boolean,
-  price?: number,
-  installments?: number,
-  installment_price?: number
-}
 
 const ProviderCalender = () => {
   const { Toast } = React.useContext(GlobalContext)
   const [loading, setLoading] = React.useState(false)
   const navigate = useNavigate()
   const location = useLocation()
-  const [hideshow,setHideShow]=useState(false)
   const uRLSearchParams = new URLSearchParams(location.search);
-  // const [hideshow, setHideshow] = useState(false)
   const [state, setState] = useState({
     data: [] as any
   })
-  const [sideData, setSideData] = useState([] as any)
 
-  const [weekDay, setWeekDay] = useState([] as any)
-  const [editData, setEditData] = useState(
-    {
-      available_day: "",
-      available: true,
-      route_prices: [
-        {
-          route_id: Number(),
-          price: Number(),
-          installments: Number(),
-          installment_price: Number()
-        }
-      ]
-    }
-  )
+
   const [listData, getListedData] = useState({
     data: []
   })
-  const [stateEdit, setStateEdit] = React.useState({
-    prices: [],
-    // ...props,
-  })
+
   const queryDate = moment(Number(uRLSearchParams.get('available_date')))
 
   console.log("dAY", queryDate.format('YYYY/MM/DD'))
@@ -65,7 +34,6 @@ const ProviderCalender = () => {
   const initialiseBoatLists = async () => {
     try {
       let apiRes = await henceforthApi.Boat.getBoatListing("")
-      handleQuery('boat_id', apiRes.data.data[0].id)
       setState(apiRes.data)
 
     } catch (error) {
@@ -74,112 +42,17 @@ const ProviderCalender = () => {
 
     }
   }
-  const getSidebarValue = async (id: string) => {
-  
-    if (id) {
-      const date = queryDate.format("YYYY/MM/DD")
-      console.log(date, 'date')
-      try {
-        let apiRes = await henceforthApi.Calender.viewPrice(id, date)
-        setSideData(apiRes.data)
-      } catch (error) {
 
-      } finally {
 
-      }
-    }
-
-  }
-
-  const onSubmit = async () => {
-    const stateData: any = weekDay.filter(((res: any) => res.selected == true)).map((res: any) => {
-      return {
-        available_day: res.day,
-        route_id: res.id,
-        price: res.price,
-        installments: res.installments,
-        installment_price: res.installment_price
-      }
-    })
-    console.log(stateData)
-    const items = {
-      available_day: queryDate.format('DD'),
-      available: true,
-      route_prices: weekDay.filter(((res: any) => res.selected == true)).map((res: any) => {
-        return {
-          route_id: res.id,
-          price: res.price,
-          installments: res.installments,
-          installment_price: res.installment_price
-        }
-      })
-    }
-    const data = items.route_prices
-    if (data.length) {
-      let _is_true = true
-      data.forEach((element: any) => {
-        if (!element.price) {
-          _is_true = false
-          Toast.error(`Please enter price`)
-          // Toast.error(`Please enter price of ${element.route_name}`)
-          return
-        }
-        if (!element.installments) {
-          _is_true = false
-          Toast.error(`Please enter installments`)
-          // Toast.error(`Please enter installments of ${element.route_name}`)
-          return
-        }
-        if (!element.installment_price) {
-          _is_true = false
-          Toast.error(`Please enter installment price`)
-          // Toast.error(`Please enter installment price of ${element.route_name}`)
-          return
-        }
-      });
-      if (_is_true) {
-        try {
-          // setLoading(true)
-          const apiRes = await henceforthApi.Calender.editDayPrice(uRLSearchParams.get("boat_id") as string, items)
-          Toast.success(apiRes.message)
-          // setIsExpended(false)
-          setEditData({
-            ...editData,
-            route_prices: stateData
-          })
-          // await props.initialise()
-
-        } catch (error) {
-          // Toast.error(error)
-        } finally {
-          // setLoading(false)
-          setEditData({
-            route_prices: [
-              {
-                route_id: "",
-                price: "",
-                installments: "",
-                installment_price: ""
-              }
-            ]
-          } as any)
-
-        }
-      }
-    } else {
-      // Toast.error(`Please select routes`)
-    }
-  }
 
   const dateCellRender = (value: Dayjs) => {
     // 
     const listDatas = listData.data.find((res: any) => res.day === value.date() && queryDate.month() === value.month()) as any;
-    console.log('listDatas?.id', listDatas)
     if (!listDatas) {
       return <></>
     }
     return (
-      <ul className="events" onClick={() => {getSidebarValue(uRLSearchParams.get("boat_id") as string);setHideShow(true ? true :false)}}>
+      <ul className="events" onClick={() => handleQuery("show_sidebar", "on")}>
         <li key={value.date()}>
           <Badge status={'success' as BadgeProps['status']} text={`${listDatas?.price ? listDatas?.price : ""}`} />
           <Badge status={'success' as BadgeProps['status']} text={`${listDatas?.description ? listDatas?.description : ""}`} />
@@ -192,14 +65,16 @@ const ProviderCalender = () => {
 
   const handleQuery = (key: string, value: string) => {
     uRLSearchParams.set(key, value)
+    if (uRLSearchParams.has("edit")) {
+      uRLSearchParams.delete("edit")
+    }
     navigate({ search: uRLSearchParams.toString() })
   }
 
   const initialiseCalendarData = async () => {
-    setLoading(true)
     const boat_id = uRLSearchParams.get("boat_id")
     if (boat_id) {
-
+      setLoading(true)
       try {
         let apiRes = await henceforthApi.Calender.dateCalender(boat_id, queryDate.month(), queryDate.year(),)
         getListedData(apiRes)
@@ -217,7 +92,6 @@ const ProviderCalender = () => {
   React.useEffect(() => {
     initialiseCalendarData()
   }, [uRLSearchParams.get("boat_id"), uRLSearchParams.get("available_date"),])
-  console.log(weekDay)
   return (
     <Spin spinning={loading}>
       {/* Calender-section */}
@@ -230,7 +104,7 @@ const ProviderCalender = () => {
                 <div className="col-12">
                   <div className="select-date px-sm-4 d-flex justify-content-between align-items-center flex-wrap flex-md-nowrap gap-2">
                     <Select
-                      value={uRLSearchParams.get("boat_id")}
+                      value={uRLSearchParams.get("boat_id") || ""}
                       style={{ width: '100%' }}
                       onChange={(value) => handleQuery('boat_id', value)}
                       options={[{ value: "", label: "Select manufacturer" }, ...state?.data?.map((res: any) => { return { value: `${res?.id}`, label: res.name } })]}
@@ -248,11 +122,9 @@ const ProviderCalender = () => {
                 </div>
               </div>
             </div>
-            
-            {hideshow===true ?  
-            <CalendarSideBar sideData={sideData} />
-            :""}
-            
+            {uRLSearchParams.get("show_sidebar") == "on" &&
+              <CalendarSideBar />
+            }
             {/* Side bAR */}
             {/* <div className="col-lg-3 px-0">
               <div className="sidebar-calender py-4">
