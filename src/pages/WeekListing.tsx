@@ -13,9 +13,7 @@ const Weeklisting = (props: RouteDataInterface) => {
       </label>
     </div>
     {
-      props.selected &&
-
-      <div className="row justify-content-end py-3">
+      props.selected && <div className="row justify-content-end py-3">
         <div className="col-md-12">
           <div className="mb-3 ps-sm-4">
             <label htmlFor="exampleInputEmail1" className="form-label">Price (cash)</label>
@@ -28,7 +26,7 @@ const Weeklisting = (props: RouteDataInterface) => {
               <span>*</span>
               <input type="text" className="form-control" name="installment_price" value={props.installment_price} onChange={(e) => props.handleChange(e.target.name, e.target.value.replace(/[^0-9\.]/g, ""))} />
               <span>=</span>
-              <input type="text" className="form-control" name="" value={(props?.installment_price || 0) * (props?.installment_price || 0)} disabled />
+              <input type="text" className="form-control" name="" value={Number(props?.installments || 0) * Number(props?.installment_price || 0)} disabled />
             </div>
           </div>
         </div>
