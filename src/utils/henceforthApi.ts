@@ -2,9 +2,10 @@ import _superagent, { search } from 'superagent';
 const SuperagentPromise = require('superagent-promise');
 const superagent = SuperagentPromise(_superagent, global.Promise);
 
+const API_BASE_URL=`lanchasalvador.com.br/api/`
 const IS_STAGING = (window.origin.includes('staging') || window.origin.includes('localhost'));
-const LIVE_API_ROOT = `https://aluguel.backend.lanchasalvador.com.br/api/`;
-const STAGING_API_ROOT = `https://staging.api.lanchasalvador.com.br/api/`;
+const LIVE_API_ROOT = `https://aluguel.backend.${API_BASE_URL}`;
+const STAGING_API_ROOT = `https://staging.api.${API_BASE_URL}`;
 
 const API_ROOT = IS_STAGING ? STAGING_API_ROOT : LIVE_API_ROOT
 
