@@ -1,4 +1,4 @@
-import { Calendar } from 'antd'
+import { Calendar, Spin } from 'antd'
 import React, { Fragment, useEffect, useState } from 'react'
 import { Select } from 'antd';
 import HenceforthIcons from '../assets/icons/HenceforthIcons';
@@ -12,6 +12,7 @@ import Weeklisting from './WeekListing';
 import DateListingPrice from './DateListingPrice';
 import Item from 'antd/es/list/Item';
 import { GlobalContext } from '../context/Provider';
+import CalendarSideBar from './CalenderSideBar';
 
 interface RouteDataInterface {
   id: number,
@@ -24,15 +25,17 @@ interface RouteDataInterface {
 
 const ProviderCalender = () => {
   const { Toast } = React.useContext(GlobalContext)
-
+  const [loading, setLoading] = React.useState(false)
   const navigate = useNavigate()
   const location = useLocation()
+  const [hideshow,setHideShow]=useState(false)
   const uRLSearchParams = new URLSearchParams(location.search);
   // const [hideshow, setHideshow] = useState(false)
   const [state, setState] = useState({
     data: [] as any
   })
   const [sideData, setSideData] = useState([] as any)
+
   const [weekDay, setWeekDay] = useState([] as any)
   const [editData, setEditData] = useState(
     {
@@ -72,7 +75,7 @@ const ProviderCalender = () => {
     }
   }
   const getSidebarValue = async (id: string) => {
-
+  
     if (id) {
       const date = queryDate.format("YYYY/MM/DD")
       console.log(date, 'date')
@@ -85,36 +88,6 @@ const ProviderCalender = () => {
 
       }
     }
-
-  }
-  const getweekDay = async () => {
-    try {
-      let apiRes = await henceforthApi.Calender.weekDay(uRLSearchParams.get("boat_id") as string, queryDate.format('DD'))
-      setWeekDay(apiRes.data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  const getweekDate=async()=>{
-     try{
-       let apiRes=await henceforthApi.Calender.datePrice(uRLSearchParams.get("boat_id") as string,queryDate.format('YYYY/MM/DD')) 
-     }catch(error){
-      console.log(error)
-     }
-  }
-
-
-  const handleChange = async (name: string, value: any, index: number) => {
-    console.log(name, value, index)
-    if (name === "price" && isNaN(value)) return
-    if (name === "installments" && isNaN(value)) return
-    if (name === "installment_price" && isNaN(value)) return
-    const data = weekDay[index] as any
-    if (typeof value == "boolean") {
-      data.selected = value
-    }
-    data[name] = value
-    setWeekDay([...weekDay])
 
   }
 
@@ -131,7 +104,7 @@ const ProviderCalender = () => {
     console.log(stateData)
     const items = {
       available_day: queryDate.format('DD'),
-      available:true,
+      available: true,
       route_prices: weekDay.filter(((res: any) => res.selected == true)).map((res: any) => {
         return {
           route_id: res.id,
@@ -183,13 +156,13 @@ const ProviderCalender = () => {
           setEditData({
             route_prices: [
               {
-                route_id:"",
-                price:"",
-                installments:"",
-                installment_price:""
+                route_id: "",
+                price: "",
+                installments: "",
+                installment_price: ""
               }
             ]
-          }as any)
+          } as any)
 
         }
       }
@@ -197,7 +170,6 @@ const ProviderCalender = () => {
       // Toast.error(`Please select routes`)
     }
   }
-
 
   const dateCellRender = (value: Dayjs) => {
     // 
@@ -207,7 +179,7 @@ const ProviderCalender = () => {
       return <></>
     }
     return (
-      <ul className="events" onClick={() => getSidebarValue(uRLSearchParams.get("boat_id") as string)}>
+      <ul className="events" onClick={() => {getSidebarValue(uRLSearchParams.get("boat_id") as string);setHideShow(true ? true :false)}}>
         <li key={value.date()}>
           <Badge status={'success' as BadgeProps['status']} text={`${listDatas?.price ? listDatas?.price : ""}`} />
           <Badge status={'success' as BadgeProps['status']} text={`${listDatas?.description ? listDatas?.description : ""}`} />
@@ -224,6 +196,7 @@ const ProviderCalender = () => {
   }
 
   const initialiseCalendarData = async () => {
+    setLoading(true)
     const boat_id = uRLSearchParams.get("boat_id")
     if (boat_id) {
 
@@ -233,7 +206,7 @@ const ProviderCalender = () => {
       } catch (error) {
 
       } finally {
-
+        setLoading(false)
       }
     }
   }
@@ -246,7 +219,7 @@ const ProviderCalender = () => {
   }, [uRLSearchParams.get("boat_id"), uRLSearchParams.get("available_date"),])
   console.log(weekDay)
   return (
-    <>
+    <Spin spinning={loading}>
       {/* Calender-section */}
       <section className="calender-section px-3">
         <div className="container-fluid">
@@ -275,8 +248,13 @@ const ProviderCalender = () => {
                 </div>
               </div>
             </div>
-
-            <div className="col-lg-3 px-0">
+            
+            {hideshow===true ?  
+            <CalendarSideBar sideData={sideData} />
+            :""}
+            
+            {/* Side bAR */}
+            {/* <div className="col-lg-3 px-0">
               <div className="sidebar-calender py-4">
                 <div className="cross px-4" role="button" >
                   <HenceforthIcons.Cross />
@@ -308,7 +286,6 @@ const ProviderCalender = () => {
 
                   </ul>
                 </div>
-                {/* edit-tuesday */}
                 <div className="edit-tuesday py-4 border-bottom">
                   <div className="edit-tuesday-header py-4 border-bottom px-4">
                     <h5 className='mb-3'>Edit {queryDate.format('dddd')}</h5>
@@ -319,7 +296,6 @@ const ProviderCalender = () => {
                       </div>
                     </div>
                   </div>
-                  {/* edit-pricing */}
 
                   <div className="px-4">
                     <div className="row justify-content-center justify-content-lg-end gy-4 py-4">
@@ -335,7 +311,6 @@ const ProviderCalender = () => {
                     </div>
                   </div>
                 </div>
-                {/* edit-date */}
                 <div className="edit-tuesday py-4 border-bottom">
                   <div className="edit-tuesday-header py-4 border-bottom px-4">
                     <h5 className='mb-3'>Tue, 29 Nov 2022</h5>
@@ -346,15 +321,14 @@ const ProviderCalender = () => {
                       </div>
                     </div>
                   </div>
-                  {/* edit-date-pricing */}
                   <DateListingPrice />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
-    </>
+    </Spin>
   )
 }
 
