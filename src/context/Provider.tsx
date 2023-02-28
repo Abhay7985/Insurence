@@ -76,7 +76,9 @@ function GlobalProvider(props: GlobleContextProviderProps) {
 
     const [messageApi, contextHolder] = message.useMessage();
 
-    henceforthApi.setToken(authState?.access_token)
+    if(authState?.access_token){
+        henceforthApi.setToken(authState?.access_token||"")
+    }
     const error = (error: any) => {
         const msg = error?.response?.body?.message
         messageApi.open({

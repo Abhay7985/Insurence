@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Weeklisting from './WeekListing';
 import { GlobalContext } from '../context/Provider';
 import Spinner from './common/AntSpinner';
+import { Spin } from 'antd';
 
 interface RouteDataInterface {
     id: number,
@@ -24,12 +25,13 @@ const CalendarSideBar = () => {
     const uRLSearchParams = new URLSearchParams(location.search);
 
     const [loading, setLoading] = useState(false)
+    const [spinningCheckbox, setSpinningCheckbox] = useState(false)
     const [routeDatas, setRouteData] = React.useState<Array<RouteDataInterface>>([])
 
     const [state, setState] = React.useState({
         prices: [],
-        date_available:Boolean(),
-        day_available:Boolean(),
+        date_available: false,
+        day_available: false,
 
     })
 
@@ -60,12 +62,23 @@ const CalendarSideBar = () => {
         setRouteData([...routeDatas])
 
     }
+    const getBoatPrice = async () => {
+        const date = queryDate.format("YYYY/MM/DD")
 
-    const onSubmit = async (b: boolean) => {
+        let apiRes = await henceforthApi.Calender.viewPrice(uRLSearchParams.get("boat_id") as string, date)
+        setState({
+            ...state,
+            prices: apiRes.data,
+            date_available: apiRes?.date_available,
+            day_available: apiRes?.day_available,
+        })
+        return apiRes
+    }
+
+    const onSubmit = async (b: boolean, isOpen: boolean, isSpinning: boolean) => {
 
         const queryDate = moment(Number(uRLSearchParams.get('available_date')))
-        console.log(queryDate.format('YYYY/MM/DD'))
-        debugger
+        console.log(String(queryDate.weekday()))
         const items = {
             available: b,
             route_prices: routeDatas.filter(((res: any) => res.selected == true)).map((res: any) => {
@@ -77,10 +90,10 @@ const CalendarSideBar = () => {
                 }
             })
         } as any
-        if(uRLSearchParams.get("edit") == "date"){
-            items.available_date= queryDate.format('YYYY/MM/DD')
-        }else{
-            items.available_day=  queryDate.weekday()
+        if (uRLSearchParams.get("edit") == "date") {
+            items.available_date = queryDate.format('YYYY/MM/DD')
+        } else {
+            items.available_day = queryDate.weekday()
         }
         const data = items.route_prices
         if (data.length) {
@@ -108,19 +121,26 @@ const CalendarSideBar = () => {
             if (_is_true) {
                 try {
                     setLoading(true)
+                    setSpinningCheckbox(isSpinning)
                     let apiRes: any
                     if (uRLSearchParams.get("edit") == "date") {
                         apiRes = await henceforthApi.Calender.editDatePrice(uRLSearchParams.get("boat_id") as string, items)
                     } else {
                         apiRes = await henceforthApi.Calender.editWeekPrice(uRLSearchParams.get("boat_id") as string, items)
                     }
+                    getBoatPrice()
                     Toast.success(apiRes.message)
-                    handleQuery("edit", "")
+                    if (isOpen) {
+                        handleQuery("edit", "")
+                    } else {
+                        // await getBoatPrice()
+                    }
 
                 } catch (error) {
                     Toast.error(error)
                 } finally {
                     setLoading(false)
+                    setSpinningCheckbox(false)
                 }
             }
         } else {
@@ -135,12 +155,12 @@ const CalendarSideBar = () => {
 
         }
     }
+   
 
     const getSidebarValue = async (routes: Array<any>) => {
-        const date = queryDate.format("YYYY/MM/DD")
         try {
             let rowData: Array<RouteDataInterface> = []
-            let apiRes = await henceforthApi.Calender.viewPrice(uRLSearchParams.get("boat_id") as string, date)
+            let apiRes = await getBoatPrice()
             routes?.forEach((element: RouteDataInterface) => {
                 const findData: any = apiRes?.data?.find((res: any) => res.route_id === element.id)
                 if (findData) {
@@ -156,13 +176,6 @@ const CalendarSideBar = () => {
                     rowData.push(element)
                 }
             });
-
-            setState({
-                ...state,
-                prices: apiRes.data,
-                date_available: apiRes?.date_available,
-                day_available: apiRes?.day_available,
-            })
             setRouteData(rowData)
 
         } catch (error) {
@@ -181,6 +194,7 @@ const CalendarSideBar = () => {
 
     // }, [uRLSearchParams.get("edit")])
     React.useEffect(() => {
+    
     }, [])
     React.useEffect(() => {
         initialiseRoutes()
@@ -213,18 +227,20 @@ const CalendarSideBar = () => {
 
                 {uRLSearchParams.has("edit") &&
                     <div className="edit-tuesday py-4 border-bottom">
+                        <Spin spinning={spinningCheckbox}>
 
-                        <div className="edit-tuesday-header py-4 border-bottom px-4">
-                            {uRLSearchParams.get("edit") == "date" ?
-                                <h5 className='mb-3'>{queryDate.format('ddd, DD MMM YYYY')}</h5> :
-                                <h5 className='mb-3'>Edit {queryDate.format('dddd')}</h5>}
-                            <div className="available d-flex justify-content-between align-items-center">
-                                <p> Available</p>
-                                <div className="form-check form-switch">
-                                    <input className="form-check-input form-check-toggle" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked={uRLSearchParams.get("edit") === "date" ? state?.date_available : state?.day_available} onChange={(e) => onSubmit(e.target.checked)} />
+                            <div className="edit-tuesday-header py-4 border-bottom px-4">
+                                {uRLSearchParams.get("edit") == "date" ?
+                                    <h5 className='mb-3'>{queryDate.format('ddd, DD MMM YYYY')}</h5> :
+                                    <h5 className='mb-3'>Edit {queryDate.format('dddd')}</h5>}
+                                <div className="available d-flex justify-content-between align-items-center">
+                                    <p> Available</p>
+                                    <div className="form-check form-switch">
+                                        <input className="form-check-input form-check-toggle" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked={uRLSearchParams.get("edit") == "date" ? state?.date_available : state?.day_available} onChange={(e) => onSubmit(e.target.checked, false, true)} />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </Spin>
 
                         <div className="px-4">
                             <div className="row justify-content-center justify-content-lg-end gy-4 py-4">
@@ -234,7 +250,7 @@ const CalendarSideBar = () => {
 
                                 })}
                                 <div className="col-12">
-                                    <button className='btn btn-yellow px-4 rounded-2' disabled={loading} onClick={() => onSubmit(false)}>{loading ? <Spinner /> : "Done"}</button>
+                                    <button className='btn btn-yellow px-4 rounded-2' disabled={loading} onClick={() => onSubmit(uRLSearchParams.get("edit") == "date" ? state?.date_available : state?.day_available, true, false)}>{loading ? <Spinner /> : "Done"}</button>
                                 </div>
 
                             </div>

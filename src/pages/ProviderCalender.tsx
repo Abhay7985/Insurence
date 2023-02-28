@@ -5,7 +5,7 @@ import HenceforthIcons from '../assets/icons/HenceforthIcons';
 import henceforthApi from '../utils/henceforthApi';
 import { Badge } from 'antd';
 import type { BadgeProps } from 'antd';
-import moment from 'moment';
+import moment, { isDate } from 'moment';
 import mim, { Dayjs } from 'dayjs';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../context/Provider';
@@ -44,9 +44,8 @@ const ProviderCalender = () => {
   }
 
 
-
+console.log(moment().subtract(1,'day').valueOf())
   const dateCellRender = (value: Dayjs) => {
-    // 
     const listDatas = listData.data.find((res: any) => res.day === value.date() && queryDate.month() === value.month()) as any;
     if (!listDatas) {
       return <></>
@@ -54,8 +53,8 @@ const ProviderCalender = () => {
     return (
       <ul className="events" onClick={() => handleQuery("show_sidebar", "on")}>
         <li key={value.date()}>
-          <Badge status={'success' as BadgeProps['status']} text={`${listDatas?.price ? listDatas?.price : ""}`} />
-          <Badge status={'success' as BadgeProps['status']} text={`${listDatas?.description ? listDatas?.description : ""}`} />
+          <Badge status={'warning' as BadgeProps['status']} text={listDatas?.price ? <span className={moment().subtract(1,'day').valueOf()<=moment(value.toString()).valueOf()? '':'text-secondary'}>{listDatas?.price}</span> : <></>} />
+          <Badge status={'warning' as BadgeProps['status']} text={listDatas?.description ? <span className={moment().subtract(1,'day').valueOf()<=moment(value.toString()).valueOf() ? '' :'text-secondary'}>{listDatas?.description }</span> : <></>}/>
 
         </li>
         {/* ))} */}
@@ -120,7 +119,9 @@ const ProviderCalender = () => {
                   </div>
                 </div>
                 <div className="col-12">
-                  <Calendar dateCellRender={dateCellRender} onSelect={(e: any) => handleQuery('available_date', `${moment(e.$d).valueOf()}`)} />
+                  <Calendar dateCellRender={dateCellRender} disabledDate={(date) => {
+                    if (date.endOf('d').valueOf() < Date.now()){return true;}return false;
+                  }} onSelect={(e: any) => handleQuery('available_date', `${moment(e.$d).valueOf()}`)} />
                 </div>
               </div>
             </div>
