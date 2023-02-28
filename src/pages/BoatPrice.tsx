@@ -12,7 +12,7 @@ interface RouteData {
     selected?: boolean
     installments?: number,
     date?: string,
-    priceing_date?: string,
+    priceing_date?: number,
     route_id: number,
     installment_price: number,
     route_name: string,
