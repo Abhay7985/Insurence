@@ -90,7 +90,7 @@ console.log(moment().subtract(1,'day').valueOf())
   }, [])
   React.useEffect(() => {
     initialiseCalendarData()
-  }, [uRLSearchParams.get("boat_id"), uRLSearchParams.get("available_date"),])
+  }, [uRLSearchParams.get("boat_id"), uRLSearchParams.get("available_date"),uRLSearchParams.get("edit")])
   return (
     <Spin spinning={loading}>
       {/* Calender-section */}
