@@ -366,7 +366,7 @@ function PlaceLocated() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-11 col-lg-11">
+                                        {/* <div className="col-11 col-lg-11">
                                             <div className="mb-3 d-flex justify-content-between align-items-start">
                                                 <div className="specific-location">
                                                     <h4 className='mb-2'>Show your specific location</h4>
@@ -376,7 +376,7 @@ function PlaceLocated() {
                                                     <Switch size="small" defaultChecked onChange={onChange} />
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </Fragment>}
                                 </div>
                             </div>

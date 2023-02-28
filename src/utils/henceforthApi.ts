@@ -1,10 +1,14 @@
-import Item from 'antd/es/list/Item';
 import _superagent, { search } from 'superagent';
 const SuperagentPromise = require('superagent-promise');
 const superagent = SuperagentPromise(_superagent, global.Promise);
 
-// const API_ROOT = `http://15.229.56.53:8082/api/`;
-const API_ROOT = `https://aluguel.lanchasalvador.com.br:8082/api/`;
+const API_BASE_URL=`lanchasalvador.com.br/api/`
+const IS_STAGING = (window.origin.includes('staging') || window.origin.includes('localhost'));
+const LIVE_API_ROOT = `https://aluguel.backend.${API_BASE_URL}`;
+const STAGING_API_ROOT = `https://staging.api.${API_BASE_URL}`;
+
+const API_ROOT = IS_STAGING ? STAGING_API_ROOT : LIVE_API_ROOT
+
 const BUCKET_ROOT = `https://lanchastaging.s3.sa-east-1.amazonaws.com/`;
 
 const API_FILE_ROOT_MEDIUM = `${BUCKET_ROOT}medium/`;
@@ -108,17 +112,28 @@ const Boat = {
     requests.get(`provider/boats?${search}`),
   viewBoatDetails: (id: any) =>
     requests.get(`provider/boats/${id}`),
-    deleteBoat: (id: any) =>
+  deleteBoat: (id: any) =>
     requests.del(`provider/boats/${id}`),
   boatAmenities: () =>
     requests.get(`provider/boat-amenities`),
   imageUpload: (key: string, file: any) =>
-    requests.file(`provider/upload-image`, key, file)
+    requests.file(`provider/upload-image`, key, file),
+  filerDate: (id: any, priceing_date: any) =>
+    requests.get(`boat-details/${id}/prices${priceing_date !== 0 ? `?priceing_date=${priceing_date}` : ""}`)
 }
 const Subscribe = {
   subscribe: (item: any) => requests.post(`subscribe`, item)
 }
+const Calender = {
+  dateCalender: (id: string, month: number, year: number) => requests.get(`provider/boat-price-month/${id}?month=${month}&year=${year}`),
+  viewPrice: (id: string, available_date: string) => requests.get(`provider/show-boatprice-date/${id}?available_date=${available_date}`),
 
+  getWeekPrice: (id: string, available_day: string) => requests.get(`provider/boat-price-weekday/${id}?available_day=${available_day}`),
+  getDatePrice: (id: string, available_date: string) => requests.get(`provider/boat-price-date/${id}?available_date=${available_date}`),
+
+  editWeekPrice: (id: string, item: any) => requests.put(`provider/boat-price-weekday/${id}`, item),
+  editDatePrice: (id: string, item: any) => requests.put(`provider/boat-price-date/${id}`, item)
+}
 // boat-routes
 
 const Inquiry = {
@@ -166,6 +181,7 @@ const henceforthApi = {
   token,
   Auth,
   Common,
+  Calender,
   Profile,
   Inquiry,
   Subscribe,

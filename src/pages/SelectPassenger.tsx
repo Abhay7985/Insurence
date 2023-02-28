@@ -15,10 +15,10 @@ const SelectPassenger = () => {
     const location = useLocation()
     const uRLSearchParams = new URLSearchParams(location.search)
 
-    const [passengerDay, setPassengerDay] = React.useState(1)
-    const [passengerNight, setPassengerNight] = React.useState(1)
-    const [bedrooms, setBedrooms] = React.useState(1)
-    const [bathrooms, setBathrooms] = React.useState(1)
+    const [passengerDay, setPassengerDay] = React.useState(10)
+    const [passengerNight, setPassengerNight] = React.useState(10)
+    const [bedrooms, setBedrooms] = React.useState(10)
+    const [bathrooms, setBathrooms] = React.useState(10)
     const [loading, setLoading] = React.useState(false)
 
     const actionComparison=uRLSearchParams.get("action") as string === "save_and_exit"
@@ -90,7 +90,8 @@ const SelectPassenger = () => {
                                                         </button>
                                                     </li>
                                                     <li>
-                                                        <input type="text" className='form-control' value={passengerDay} />
+                                                        <p>{passengerDay}</p>
+                                                        {/* <input type="text" className='form-control' value={passengerDay} /> */}
                                                     </li>
                                                     <li>
                                                         <button type='button' className='btn border-0' onClick={() => setPassengerDay(passengerDay + 1)} >
@@ -112,7 +113,8 @@ const SelectPassenger = () => {
                                                         </button>
                                                     </li>
                                                     <li>
-                                                        <input type="text" className='form-control' value={passengerNight} />
+                                                        <p>{passengerNight}</p>
+                                                        {/* <input type="text" className='form-control' value={passengerNight} /> */}
                                                     </li>
                                                     <li>
                                                         <button type='button' className='btn border-0' onClick={() => setPassengerNight(passengerNight + 1)} >
@@ -134,7 +136,8 @@ const SelectPassenger = () => {
                                                         </button>
                                                     </li>
                                                     <li>
-                                                        <input type="text" className='form-control' value={bedrooms} />
+                                                        <p>{bedrooms}</p>
+                                                        {/* <input type="text" className='form-control' value={bedrooms} /> */}
                                                     </li>
                                                     <li>
                                                         <button type='button' className='btn border-0' onClick={() => setBedrooms(bedrooms + 1)}>
@@ -156,7 +159,8 @@ const SelectPassenger = () => {
                                                         </button>
                                                     </li>
                                                     <li>
-                                                        <input type="text" className='form-control' value={bathrooms} />
+                                                        <p>{bathrooms}</p>
+                                                        {/* <input type="text" className='form-control' value={bathrooms} /> */}
                                                     </li>
                                                     <li>
                                                         <button type='button' className='btn border-0' onClick={() => setBathrooms(bathrooms + 1)}>

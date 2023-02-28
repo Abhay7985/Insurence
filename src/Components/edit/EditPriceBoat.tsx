@@ -1,17 +1,9 @@
 import { Spin } from "antd"
 import React, { useState } from "react"
 import { GlobalContext } from "../../context/Provider"
+import { RouteDataInterface } from "../../interfaces"
 import henceforthApi from "../../utils/henceforthApi"
-import { NumberValidation } from "../../utils/henceforthValidations"
 
-interface RouteDataInterface {
-    id: number,
-    route_name: string,
-    selected?: boolean,
-    price?: number,
-    installments?: number,
-    installment_price?: number
-}
 
 const EditPriceBoat = (props: any) => {
     const { Toast } = React.useContext(GlobalContext)
@@ -23,8 +15,7 @@ const EditPriceBoat = (props: any) => {
     const [isExpended, setIsExpended] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
     const [dataRoute, setDataRoute] = React.useState<Array<RouteDataInterface>>([])
-    console.log(props);
-
+    
     const handleChange = async (name: string, value: any, index: number) => {
         if (name === "price" && isNaN(value)) return
         if (name === "installments" && isNaN(value)) return

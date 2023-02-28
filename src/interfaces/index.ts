@@ -12,6 +12,15 @@ export interface UserInfoInterface {
     email_verified?: boolean,
     photo:any
 }
+export interface RouteDataInterface {
+    id: number,
+    route_name: string,
+    selected?: boolean,
+    price?: number,
+    installments?: number,
+    installment_price?: number,
+    handleChange?:any
+}
 
 export interface ApisListResponse {
     data: {
