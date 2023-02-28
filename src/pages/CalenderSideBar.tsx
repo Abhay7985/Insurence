@@ -198,8 +198,8 @@ const CalendarSideBar = () => {
     }, [])
     React.useEffect(() => {
         initialiseRoutes()
-
-    }, [uRLSearchParams.get("edit")])
+         
+    }, [uRLSearchParams.get("edit"),uRLSearchParams.get("available_date")])
 
     return (
         <div className="col-lg-3 px-0">

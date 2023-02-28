@@ -5,7 +5,7 @@ import HenceforthIcons from '../assets/icons/HenceforthIcons';
 import henceforthApi from '../utils/henceforthApi';
 import { Badge } from 'antd';
 import type { BadgeProps } from 'antd';
-import moment, { isDate } from 'moment';
+import moment, { isDate, months } from 'moment';
 import mim, { Dayjs } from 'dayjs';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../context/Provider';
@@ -123,7 +123,7 @@ console.log(moment().subtract(1,'day').valueOf())
                    dateCellRender={dateCellRender}
                    disabledDate={(date) => {
                     if (date.endOf('d').valueOf() < Date.now()){return true;}return false;
-                  }} onSelect={(e: any) => handleQuery('available_date', `${moment(e.$d).valueOf()}`)}/>
+                  }}  onSelect={(e: any) => handleQuery('available_date', `${moment(e.$d).valueOf()}`)}  />
                 </div>
               </div>
             </div>
