@@ -119,9 +119,11 @@ console.log(moment().subtract(1,'day').valueOf())
                   </div>
                 </div>
                 <div className="col-12">
-                  <Calendar dateCellRender={dateCellRender} disabledDate={(date) => {
+                  <Calendar
+                   dateCellRender={dateCellRender}
+                   disabledDate={(date) => {
                     if (date.endOf('d').valueOf() < Date.now()){return true;}return false;
-                  }} onSelect={(e: any) => handleQuery('available_date', `${moment(e.$d).valueOf()}`)} />
+                  }} onSelect={(e: any) => handleQuery('available_date', `${moment(e.$d).valueOf()}`)}/>
                 </div>
               </div>
             </div>
