@@ -28,8 +28,8 @@ const CalendarSideBar = () => {
 
     const [state, setState] = React.useState({
         prices: [],
-        date_available:false,
-        day_available:false,
+        date_available:Boolean(),
+        day_available:Boolean(),
 
     })
 
@@ -65,6 +65,7 @@ const CalendarSideBar = () => {
 
         const queryDate = moment(Number(uRLSearchParams.get('available_date')))
         console.log(queryDate.format('YYYY/MM/DD'))
+        debugger
         const items = {
             available: b,
             route_prices: routeDatas.filter(((res: any) => res.selected == true)).map((res: any) => {
