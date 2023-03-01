@@ -29,7 +29,6 @@ const defaultProps = {
     zoom: 11
 };
 
-
 const BoatDetails = () => {
     const [visible, setVisible] = useState(false);
     const [currentImg, setCurrentImg] = useState(0);
