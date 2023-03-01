@@ -294,10 +294,12 @@
 
     .select-date {
         position: relative;
-        ::placeholder{
+
+        ::placeholder {
             padding: 0;
             font-weight: 600;
         }
+
         &::before {
             position: absolute;
             content: 'Date';
@@ -838,19 +840,26 @@
 
 .ant-radio-button-wrapper {
     height: 100% !important;
-   
-  span{
-    vertical-align: text-top;
-  }
+
+    span {
+        vertical-align: text-top;
+    }
 }
 
-.ant-picker-calendar .ant-picker-calendar-header{
+.ant-picker-calendar .ant-picker-calendar-header {
     padding: 25px 20px !important;
 }
 
-.ant-radio-group .ant-radio-button-wrapper{
+.ant-radio-group .ant-radio-button-wrapper {
     border-radius: 5px;
 }
-.ant-radio-group .ant-radio-button-wrapper:last-child{
+
+.ant-radio-group .ant-radio-button-wrapper:last-child {
     display: none;
+}
+
+.price-input {
+    .form-control {
+        padding: 7px 5px;
+    }
 }

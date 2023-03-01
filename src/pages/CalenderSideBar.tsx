@@ -236,7 +236,7 @@ const CalendarSideBar = () => {
                                 <div className="available d-flex justify-content-between align-items-center">
                                     <p> Available</p>
                                     <div className="form-check form-switch">
-                                        <input className="form-check-input form-check-toggle" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked={uRLSearchParams.get("edit") == "date" ? state?.date_available : state?.day_available} onChange={(e) => onSubmit(e.target.checked, false, true)} />
+                                        <input className="form-check-input form-check-toggle px-1" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked={uRLSearchParams.get("edit") == "date" ? state?.date_available : state?.day_available} onChange={(e) => onSubmit(e.target.checked, false, true)} />
                                     </div>
                                 </div>
                             </div>

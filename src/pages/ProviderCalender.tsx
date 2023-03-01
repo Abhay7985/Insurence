@@ -5,7 +5,7 @@ import HenceforthIcons from '../assets/icons/HenceforthIcons';
 import henceforthApi from '../utils/henceforthApi';
 import { Badge } from 'antd';
 import type { BadgeProps } from 'antd';
-import moment, { isDate, months } from 'moment';
+import moment, { isDate, months, monthsShort } from 'moment';
 import mim, { Dayjs } from 'dayjs';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../context/Provider';
@@ -75,7 +75,7 @@ console.log(moment().subtract(1,'day').valueOf())
     if (boat_id) {
       setLoading(true)
       try {
-        let apiRes = await henceforthApi.Calender.dateCalender(boat_id, queryDate.month(), queryDate.year(),)
+        let apiRes = await henceforthApi.Calender.dateCalender(boat_id, queryDate.month()+1, queryDate.year(),)
         getListedData(apiRes)
       } catch (error) {
 
@@ -90,7 +90,7 @@ console.log(moment().subtract(1,'day').valueOf())
   }, [])
   React.useEffect(() => {
     initialiseCalendarData()
-  }, [uRLSearchParams.get("boat_id"), uRLSearchParams.get("available_date"),])
+  }, [uRLSearchParams.get("boat_id"), uRLSearchParams.get("available_date"),uRLSearchParams.get("edit")])
   return (
     <Spin spinning={loading}>
       {/* Calender-section */}
