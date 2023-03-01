@@ -254,7 +254,7 @@ const EditLocationBoat = (props: any) => {
                                             <label className="form-label">City</label>
                                             {/* <input placeholder="Enter City" className="form-control" value={state.city} name="city" onChange={(e) => handleChange(e.target)} /> */}
                                             <Select
-                                                defaultValue={LanchaPlaces.findIndex((res) => res.name == state.city)}
+                                                defaultValue={LanchaPlaces.findIndex((res) => res.name == state.city)>=0?LanchaPlaces.findIndex((res) => res.name == state.city):'Select'}
                                                 style={{ width: '100%' }}
                                                 onChange={(value) => {
                                                     setForm({
@@ -306,8 +306,8 @@ const EditLocationBoat = (props: any) => {
                                         </div>
                                     </div> */}
                                     <div className="address mb-3">
-                                        <label className="form-label">State</label>
-                                        <input placeholder="Enter State" className="form-control" value={state.country} name="state" disabled />
+                                        <label className="form-label">Country</label>
+                                        <input placeholder="Enter Country" className="form-control" value={state.country} name="state" disabled />
                                     </div>
                                 </div>
                             </div>
