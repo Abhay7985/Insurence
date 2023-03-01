@@ -146,8 +146,8 @@ const EditPriceBoat = (props: any) => {
                     {dataRoute.map((res: RouteDataInterface, index: number) =>
                         <div className="col-12" key={res.id}>
                             <div className="form-check">
-                                <input className="form-check-input" type="checkbox" checked={res.selected} onChange={(e) => handleChange(e.target.name, e.target.checked, index)} />
-                                <label className="form-check-label" htmlFor="boat-check-1">
+                                <input className="form-check-input" type="checkbox" checked={res.selected} onChange={(e) => handleChange(e.target.name, e.target.checked, index)} id={`route_name'${res.route_name}`}/>
+                                <label className="form-check-label" htmlFor={`route_name'${res.route_name}`}>
                                     {res.route_name}
                                 </label>
                             </div>

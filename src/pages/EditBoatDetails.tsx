@@ -390,7 +390,7 @@ const EditBoatDetails = () => {
                                                 <div className="photo-header d-flex justify-content-between mb-3">
                                                     <h4>Calender availability</h4>
                                                     <div className="edit-photo">
-                                                        <Link to={`/calender`}>
+                                                        <Link to={`/calender?boat_id=${match.params.id}`}>
                                                             <button className='btn p-0 border-0 text-yellow fw-bold'>Open calender</button>
                                                         </Link>
                                                     </div>

@@ -9,6 +9,8 @@ import henceforthApi from "../utils/henceforthApi";
 import CountryCodeJson from '../utils/CountryCode.json'
 import { NumberValidation } from "../utils/henceforthValidations";
 import HenceforthGoogleMap from "../utils/henceforthGoogleMap";
+import Places from '../utils/Places.json'
+
 const defaultProps = {
     center: {
         lat: 20.593683,
@@ -16,6 +18,10 @@ const defaultProps = {
     },
     zoom: 11
 };
+interface location {
+    lat: number
+    lng: number
+}
 
 function PlaceLocated() {
 
@@ -29,7 +35,7 @@ function PlaceLocated() {
     const [inputFocued, setInputFocused] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
     const [form, setForm] = React.useState(defaultProps)
-
+    // const [liveLoction,setLocation]=useState(Pleces)
     const [state, setState] = useState({
         street: "",
         flat: "",
@@ -109,6 +115,7 @@ function PlaceLocated() {
     }
 
     const setLoactionsFromLatlng = (address: Array<any>, formatAddress: string, lat: number, lng: number) => {
+
         let items: any = {}
         if (Array.isArray(address) && address.length > 0) {
             let zipIndex = address.findIndex(res => res.types.includes("postal_code"))
@@ -143,11 +150,11 @@ function PlaceLocated() {
             items.route = address[route]?.long_name
             items.street_number = address[street_number]?.long_name
         }
-
-        let latlng = new (window as any).google.maps.LatLng(
-            form.center.lat,
-            form.center.lng
-        )
+console.log('items',items)
+        // let latlng = new (window as any).google.maps.LatLng(
+        //     form.center.lat,
+        //     form.center.lng
+        // )
         let zoom = 12
         if (items?.country && items?.state && items?.city && items?.sublocality1 && (items?.sublocality2 || items?.route) && (items?.subpremise || items?.street_number)) zoom = 18
         if (items?.country && items?.state && items?.city && items?.sublocality1 && (items?.sublocality2 || items?.route) && items?.subpremise === undefined && items?.street_number === undefined) zoom = 18
@@ -245,10 +252,10 @@ function PlaceLocated() {
                 Toast.error("Enter City Name")
                 deleteQuery()
             }
-            else if(!state.state){
+            else if (!state.state) {
                 Toast.error("Enter State Name")
             }
-            else if(!state.postCode){
+            else if (!state.postCode) {
                 Toast.error("Enter PostCode")
             }
             else if (!state.country) {
@@ -303,7 +310,24 @@ function PlaceLocated() {
                                     </div>
                                     {form.center.lng == defaultProps.center.lng ? <Fragment>
                                         <div className="col-11 col-lg-11">
-                                            <input type="text" ref={placeInputRef} className="form-control" placeholder="Enter your address" onFocus={() => setInputFocused(true)} onBlur={() => setTimeout(() => setInputFocused(false), 100)} />
+                                            <Select
+                                                defaultValue="select"
+                                                style={{ width: '100%' }}
+                                                onChange={(value) => {
+                                                    setForm({
+                                                        ...form,
+                                                        center: {
+                                                            ...form.center,
+                                                            lat: +Places[+value].lat ? +Places[+value].lat : defaultProps.center.lat,
+                                                            lng: +Places[+value].lng ? +Places[+value].lng : defaultProps.center.lng,
+                                                        },
+                                                        zoom: 12
+                                                    })
+                                                    getLocationName(+Places[+value].lat,+Places[+value].lng)
+                                                }}
+                                                options={Places.map((res, index) => { return { value: index, label: res.name } })}
+                                            />
+                                            {/* <input type="text" ref={placeInputRef} className="form-control" placeholder="Enter your address" onFocus={() => setInputFocused(true)} onBlur={() => setTimeout(() => setInputFocused(false), 100)} /> */}
 
                                             {inputFocued && <div className="location border mt-1 d-flex gap-3 align-items-center nav-link" onClick={requestCurrenctLocation}>
                                                 <div className="location-icon">
@@ -356,6 +380,7 @@ function PlaceLocated() {
                                                             showSearch
                                                             size={'middle'}
                                                             defaultValue={state.country ? state.country : "Enter country / region"}
+                                                            value={state.country}
                                                             onChange={handleChange}
                                                             style={{ width: '100%' }}
                                                             autoClearSearchValue={true}

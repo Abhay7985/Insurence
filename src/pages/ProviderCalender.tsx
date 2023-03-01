@@ -42,9 +42,6 @@ const ProviderCalender = () => {
 
     }
   }
-
-
-console.log(moment().subtract(1,'day').valueOf())
   const dateCellRender = (value: Dayjs) => {
     const listDatas = listData.data.find((res: any) => res.day === value.date() && queryDate.month() === value.month()) as any;
     if (!listDatas) {
