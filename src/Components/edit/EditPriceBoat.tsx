@@ -156,7 +156,7 @@ const EditPriceBoat = (props: any) => {
                                     <div className="col-md-12">
                                         <div className="mb-3 ps-sm-4">
                                             <label htmlFor="exampleInputEmail1" className="form-label">Price (cash)</label>
-                                            <input type="text" className="form-control" id="exampleInputEmail1" placeholder='Enter price' name="price" value={res.price} onChange={(e) => handleChange(e.target.name, e.target.value.replace(/[^0-9\.]/g, ""), index)} />
+                                            <input type="text" className="form-control px-2" id="exampleInputEmail1" placeholder='Enter price' name="price" value={res.price} onChange={(e) => handleChange(e.target.name, e.target.value.replace(/[^0-9\.]/g, ""), index)} />
                                         </div>
                                         <div className="ps-sm-4">
                                             <label htmlFor="exampleInputEmail2" className="form-label">Price (installments)</label>

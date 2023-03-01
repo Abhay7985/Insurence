@@ -110,7 +110,7 @@ console.log(moment().subtract(1,'day').valueOf())
                     />
                     <div className="edit-pricing px-sm-4">
                       <button className='btn text-yellow p-0 border-0 text-decoration-underline text-nowrap fw-bold d-flex align-items-center' disabled={!uRLSearchParams.has("boat_id")}>
-                        <Link to={`/boat/${uRLSearchParams.get("boat_id")}/inquiry/edit/price#price_tab`}>
+                        <Link to={`/boat/${uRLSearchParams.get("boat_id")}/inquiry/edit/price#price_tab`}  className='text-yellow'>
                           <HenceforthIcons.EditPencil />
                           <span>Edit pricing & availability</span>
                         </Link>
