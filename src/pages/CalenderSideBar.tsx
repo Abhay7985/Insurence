@@ -7,6 +7,7 @@ import Weeklisting from './WeekListing';
 import { GlobalContext } from '../context/Provider';
 import Spinner from './common/AntSpinner';
 import { Spin } from 'antd';
+import { avaiableprice } from '../interfaces';
 
 interface RouteDataInterface {
     id: number,
@@ -262,7 +263,7 @@ const CalendarSideBar = () => {
                     <div className="Available px-4 py-4 border-bottom">
                         <p className='fs-16 mb-3'>Available</p>
                         <ul>
-                            {state?.prices?.map((res: any) => {
+                            {state?.prices?.map((res: avaiableprice) => {
                                 return (
                                     <div className='mb-3'>
                                         <li>{res.route_name}</li>

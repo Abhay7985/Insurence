@@ -139,3 +139,9 @@ export interface contactUs{
     phone:number,
     message:string
 } 
+export interface avaiableprice{
+    route_name:string,
+    price:number,
+    installments:number,
+    installment_price:number
+}
