@@ -57,7 +57,7 @@ const App = () => {
           </Route>
         </Fragment>
         :
-        <Route index element={<SignIn />} />
+        <Route path="*" element={<SignIn />} />
       }
     </Routes>
   );
