@@ -518,11 +518,14 @@
 // ************************************Morning panormic lisiting section****************************
 .morning-panormic-listing {
     background: $white-2;
-
+ .Pricing{
+    padding: 40px;
+    @media (max-width:1199px) {
+       padding: 20px;
+    }
+ }
     .tab-box {
         height: 100%;
-
-
 
         .tab-nav {
             min-width: 300px;
@@ -532,6 +535,24 @@
             min-height: 622px;
             position: sticky !important;
             top: 100px !important;
+            @media (max-width:1199px) {
+                min-width: 220px;
+                width: 220px; 
+                padding: 0px;
+                min-height: fit-content;
+            }
+            @media (max-width:991px) {
+                min-width: 200px;
+                width: 200px; 
+                padding: 0px;
+                min-height: fit-content;
+            }
+            @media (max-width:767px) {
+                min-width: 200px;
+                width: 100%; 
+                padding: 0px;
+                min-height: fit-content;
+            }
         }
     }
 

@@ -185,9 +185,9 @@ const EditBoatDetails = () => {
             <div className="container">
                 <div className="row">
                     <div className="col-12 mb-5">
-                        <div className="title d-flex justify-content-between">
+                        <div className="title d-flex justify-content-between flex-wrap">
                             <h2>{state.name}</h2>
-                            <div className="list-btn d-flex gap-3">
+                            <div className="list-btn d-flex gap-3 flex-wrap">
                                 <a href="#" className='d-flex gap-2 align-items-center text-dark me-3'>
                                     <Dropdown menu={{ items: StatusItem }}>
                                         <Badge color={state?.status == henceofrthEnums.OrderStatus.listed ?
@@ -387,7 +387,7 @@ const EditBoatDetails = () => {
 
 
                                             <div className="Calender-availability bg-white p-4 ">
-                                                <div className="photo-header d-flex justify-content-between mb-3">
+                                                <div className="photo-header d-flex justify-content-between mb-3 flex-wrap">
                                                     <h4>Calender availability</h4>
                                                     <div className="edit-photo">
                                                         <Link to={`/calender`}>

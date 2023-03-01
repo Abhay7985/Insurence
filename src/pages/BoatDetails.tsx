@@ -265,7 +265,7 @@ const BoatDetails = () => {
                                     return (
                                         <Spin spinning={loading}>
                                             <div className="price-list py-3 border-bottom" key={e?.id}>
-                                                <div className="price-list-title d-flex justify-content-between mb-2">
+                                                <div className="price-list-title d-flex justify-content-between mb-2 flex-wrap">
                                                     <h6>{e?.date}</h6>
                                                     <p className='fw-bold'>${e?.price}<span className='fw-600 fs-14 px-1'>or</span> {e?.installments}x in ${e?.installment_price}</p>
                                                 </div>
