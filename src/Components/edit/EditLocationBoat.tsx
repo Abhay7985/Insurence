@@ -4,7 +4,8 @@ import { GlobalContext } from "../../context/Provider"
 import henceforthApi from "../../utils/henceforthApi"
 import CountryCodeJson from '../../utils/CountryCode.json'
 import { NumberValidation } from "../../utils/henceforthValidations"
-import NEXT_PUBLIC_GOOGLE_API_KEY from "../../context/Provider"
+import LanchaPlaces from './../../utils/LanchaPlaces.json'
+
 const defaultProps = {
     center: {
         lat: 20.593683,
@@ -87,7 +88,7 @@ const EditLocationBoat = (props: any) => {
             setLoading(false)
         }
     }
-    const setLoactionsFromLatlng = (address: Array<any>, formatAddress: string, lat: number, lng: number) => {
+    const setLoactionsFromLatlng = (address: Array<any>, formatAddress: string, lat: number, lng: number, cityName: string) => {
         let items: any = {}
         if (Array.isArray(address) && address.length > 0) {
             let zipIndex = address.findIndex(res => res.types.includes("postal_code"))
@@ -147,14 +148,13 @@ const EditLocationBoat = (props: any) => {
         setState((state: any) => {
             return {
                 ...state,
-                address1: items?.full_address ? items?.full_address : '',
-                address2: items?.street_number ? items?.street_number : '',
-                // street: items?.route,
+                address1: items?.full_address || state.address1,
+                address2: items?.street_number || state.address2,
                 flat: items?.street_number ? items?.street_number : items?.apartment_number,
-                city: items?.city ? items?.city : '',
-                state: items?.state ? items?.state : '',
-                postcode: items?.pin_code ? items?.pin_code : '',
-                country: items?.country ? items?.country : '',
+                city: cityName || items?.city || state.city,
+                state: items?.state || state.state,
+                postcode: items?.pin_code || state.postcode,
+                country: items?.country || state?.country,
             }
         })
     }
@@ -174,25 +174,39 @@ const EditLocationBoat = (props: any) => {
 
     const initPlaceAPI = () => {
         loadGoogleMapScript(() => {
-            if (placeInputRef) {
-                let autocomplete = new (window as any).google.maps.places.Autocomplete(
-                    placeInputRef.current
-                );
-                new (window as any).google.maps.event.addListener(
-                    autocomplete,
-                    "place_changed",
-                    () => {
-                        let place = autocomplete.getPlace();
-                        let formatAddress = place.formatted_address
-                        const address = place.address_components
-                        setLoactionsFromLatlng(address, formatAddress, place.geometry?.location.lat(), place.geometry?.location.lng())
-                    }
-                );
+            // if (placeInputRef) {
+            //     let autocomplete = new (window as any).google.maps.places.Autocomplete(
+            //         placeInputRef.current
+            //     );
+            //     new (window as any).google.maps.event.addListener(
+            //         autocomplete,
+            //         "place_changed",
+            //         () => {
+            //             let place = autocomplete.getPlace();
+            //             let formatAddress = place.formatted_address
+            //             const address = place.address_components
+            //             setLoactionsFromLatlng(address, formatAddress, place.geometry?.location.lat(), place.geometry?.location.lng(), "")
+            //         }
+            //     );
 
-            }
+            // }
 
         });
     };
+
+    const getLocationName = async (lat: number, lng: number, cityName: string) => {
+        let address: any
+        let latlng = new (window as any).google.maps.LatLng(
+            lat,
+            lng
+        )
+        var geocoder = new (window as any).google.maps.Geocoder()
+        geocoder.geocode({ latLng: latlng }, async (results: any, status: any) => {
+            address = results[0].address_components
+            setLoactionsFromLatlng(address, '', lat, lng, cityName)
+        })
+    }
+
 
     useEffect(() => {
         if (isExpended) {
@@ -221,7 +235,7 @@ const EditLocationBoat = (props: any) => {
                                 <div className="col-12">
                                     <div className="address mb-3">
                                         <label htmlFor="ddd" className="form-label">Street address</label><br />
-                                        <input placeholder="House name/number +street /road" id="ddd" className="form-control" ref={placeInputRef} value={state.address1} name="address1" onChange={(e) => handleChange(e.target)} />
+                                        <input placeholder="House name/number +street /road" id="ddd" className="form-control" value={state.address1} name="address1" onChange={(e) => handleChange(e.target)} />
                                         {/* <input type="text" ref={placeInputRef} /> */}
                                     </div>
                                 </div>
@@ -233,16 +247,35 @@ const EditLocationBoat = (props: any) => {
                                         <input placeholder="Flat, suite, building access code" className="form-control" id="input1" value={state.address2} name="address2" onChange={(e) => handleChange(e.target)} />
                                     </div>
                                 </div>
-                                <div className="col-lg-6">
-                                    <div className="address mb-3">
-                                        <label className="form-label">City</label>
-                                        <input placeholder="Enter City" className="form-control" value={state.city} name="city" onChange={(e) => handleChange(e.target)} />
-                                    </div>
-                                </div>
+
+                                {state.city &&
+                                    <div className="col-lg-6">
+                                        <div className="address mb-3">
+                                            <label className="form-label">City</label>
+                                            {/* <input placeholder="Enter City" className="form-control" value={state.city} name="city" onChange={(e) => handleChange(e.target)} /> */}
+                                            <Select
+                                                defaultValue={LanchaPlaces.findIndex((res) => res.name == state.city)}
+                                                style={{ width: '100%' }}
+                                                onChange={(value) => {
+                                                    setForm({
+                                                        ...form,
+                                                        center: {
+                                                            ...form.center,
+                                                            lat: +LanchaPlaces[+value].lat ? +LanchaPlaces[+value].lat : defaultProps.center.lat,
+                                                            lng: +LanchaPlaces[+value].lng ? +LanchaPlaces[+value].lng : defaultProps.center.lng,
+                                                        },
+                                                        zoom: 12
+                                                    })
+                                                    getLocationName(+LanchaPlaces[+value].lat, +LanchaPlaces[+value].lng, LanchaPlaces[+value].name,)
+                                                }}
+                                                options={LanchaPlaces.map((res, index) => { return { value: index, label: res.name } })}
+                                            />
+                                        </div>
+                                    </div>}
                                 <div className="col-lg-6">
                                     <div className="address mb-3">
                                         <label className="form-label">State</label>
-                                        <input placeholder="Enter State" className="form-control" value={state.state} name="state" onChange={(e) => handleChange(e.target)} />
+                                        <input placeholder="Enter State" className="form-control" value={state.state} name="state" disabled />
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
@@ -252,11 +285,11 @@ const EditLocationBoat = (props: any) => {
                                             if (!/[0-9]/.test(e.key)) {
                                                 e.preventDefault();
                                             }
-                                        }} onChange={(e) => handleChange(e.target)} />
+                                        }} disabled />
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
-                                    <div className="address mb-3">
+                                    {/* <div className="address mb-3">
                                         <label className="form-label">Country</label>
                                         <div className="select">
                                             <Select
@@ -271,6 +304,10 @@ const EditLocationBoat = (props: any) => {
                                                 options={CountryCodeJson.map((res) => { return { value: res.name, label: res.name } })}
                                             />
                                         </div>
+                                    </div> */}
+                                    <div className="address mb-3">
+                                        <label className="form-label">State</label>
+                                        <input placeholder="Enter State" className="form-control" value={state.country} name="state" disabled />
                                     </div>
                                 </div>
                             </div>

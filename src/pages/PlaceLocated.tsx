@@ -9,14 +9,15 @@ import henceforthApi from "../utils/henceforthApi";
 import CountryCodeJson from '../utils/CountryCode.json'
 import { NumberValidation } from "../utils/henceforthValidations";
 import HenceforthGoogleMap from "../utils/henceforthGoogleMap";
-import Places from '../utils/Places.json'
+import LanchaPlaces from '../utils/LanchaPlaces.json'
 
 const defaultProps = {
     center: {
         lat: 20.593683,
         lng: 78.962883
     },
-    zoom: 11
+    zoom: 11,
+    city: ""
 };
 interface location {
     lat: number
@@ -88,7 +89,7 @@ function PlaceLocated() {
                 console.log("Latitude is :", successCallback.coords.latitude);
                 console.log("Longitude is :", successCallback.coords.longitude);
 
-                getLocationName(successCallback.coords.latitude, successCallback.coords.longitude)
+                getLocationName(successCallback.coords.latitude, successCallback.coords.longitude, "")
             }, (errorCallback) => {
                 console.log('errorCallback', errorCallback.message);
 
@@ -101,7 +102,8 @@ function PlaceLocated() {
     }
 
 
-    const getLocationName = async (lat: number, lng: number) => {
+    const getLocationName = async (lat: number, lng: number, cityName: string) => {
+        debugger
         let address: any
         let latlng = new (window as any).google.maps.LatLng(
             lat,
@@ -110,12 +112,12 @@ function PlaceLocated() {
         var geocoder = new (window as any).google.maps.Geocoder()
         geocoder.geocode({ latLng: latlng }, async (results: any, status: any) => {
             address = results[0].address_components
-            setLoactionsFromLatlng(address, '', lat, lng)
+            setLoactionsFromLatlng(address, '', lat, lng, cityName)
         })
     }
 
-    const setLoactionsFromLatlng = (address: Array<any>, formatAddress: string, lat: number, lng: number) => {
-
+    const setLoactionsFromLatlng = (address: Array<any>, formatAddress: string, lat: number, lng: number, cityName: string) => {
+        debugger
         let items: any = {}
         if (Array.isArray(address) && address.length > 0) {
             let zipIndex = address.findIndex(res => res.types.includes("postal_code"))
@@ -150,7 +152,7 @@ function PlaceLocated() {
             items.route = address[route]?.long_name
             items.street_number = address[street_number]?.long_name
         }
-console.log('items',items)
+        console.log('items', items)
         // let latlng = new (window as any).google.maps.LatLng(
         //     form.center.lat,
         //     form.center.lng
@@ -177,7 +179,7 @@ console.log('items',items)
                 ...state,
                 street: items?.route,
                 flat: items?.street_number ? items?.street_number : items?.apartment_number,
-                city: items?.city,
+                city: cityName || items?.city,
                 state: items?.state,
                 postCode: items?.pin_code,
                 country: items?.country,
@@ -197,7 +199,7 @@ console.log('items',items)
                     let place = autocomplete.getPlace();
                     let formatAddress = place.formatted_address
                     const address = place.address_components
-                    setLoactionsFromLatlng(address, formatAddress, place.geometry?.location.lat(), place.geometry?.location.lng())
+                    setLoactionsFromLatlng(address, formatAddress, place.geometry?.location.lat(), place.geometry?.location.lng(), "")
                 }
             );
         }
@@ -318,14 +320,14 @@ console.log('items',items)
                                                         ...form,
                                                         center: {
                                                             ...form.center,
-                                                            lat: +Places[+value].lat ? +Places[+value].lat : defaultProps.center.lat,
-                                                            lng: +Places[+value].lng ? +Places[+value].lng : defaultProps.center.lng,
+                                                            lat: +LanchaPlaces[+value].lat ? +LanchaPlaces[+value].lat : defaultProps.center.lat,
+                                                            lng: +LanchaPlaces[+value].lng ? +LanchaPlaces[+value].lng : defaultProps.center.lng,
                                                         },
                                                         zoom: 12
                                                     })
-                                                    getLocationName(+Places[+value].lat,+Places[+value].lng)
+                                                    getLocationName(+LanchaPlaces[+value].lat, +LanchaPlaces[+value].lng, LanchaPlaces[+value].name)
                                                 }}
-                                                options={Places.map((res, index) => { return { value: index, label: res.name } })}
+                                                options={LanchaPlaces.map((res, index) => { return { value: index, label: res.name } })}
                                             />
                                             {/* <input type="text" ref={placeInputRef} className="form-control" placeholder="Enter your address" onFocus={() => setInputFocused(true)} onBlur={() => setTimeout(() => setInputFocused(false), 100)} /> */}
 
@@ -348,18 +350,20 @@ console.log('items',items)
                                                 <input type="text" className="form-control" id='input4' placeholder='Enter flat, suite, etc.' value={state.flat} name="flat" onChange={handleState} />
                                             </div>
                                         </div>
-                                        <div className="col-11 col-lg-11">
+                                        {/* <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input5" className="form-label">City</label>
-                                                <input type="text" className="form-control" id='input5' placeholder='Enter City' value={state.city} name="city" onChange={handleState} />
+                                                <input type="text" className="form-control" id='input5' placeholder='Enter City' value={state.city} name="city" disabled />
                                             </div>
-                                        </div>
+                                        </div> */}
+
                                         <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input5" className="form-label">State </label>
-                                                <input type="text" className="form-control" id='input5' placeholder='Enter State' name="state" value={state.state} onChange={handleState} />
+                                                <input type="text" className="form-control" id='input5' placeholder='Enter State' name="state" value={state.state} disabled />
                                             </div>
                                         </div>
+
                                         <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input5" className="form-label">Postcode </label>
@@ -368,10 +372,18 @@ console.log('items',items)
                                                         if (!/[0-9]/.test(e.key)) {
                                                             e.preventDefault();
                                                         }
-                                                    }} name="postCode" onChange={handleState} maxLength={6} />
+                                                    }} name="postCode" disabled />
                                             </div>
                                         </div>
+
                                         <div className="col-11 col-lg-11">
+                                            <div className="mb-2 mb-sm-3">
+                                                <label htmlFor="input5" className="form-label">Country</label>
+                                                <input type="text" className="form-control" id='input5' placeholder='Enter State' name="state" value={state.country} disabled />
+                                            </div>
+                                        </div>
+
+                                        {/* <div className="col-11 col-lg-11">
                                             <div className="mb-5">
                                                 <label htmlFor="input2" className="form-label">Country / Region</label>
                                                 <div className="category">
@@ -390,7 +402,7 @@ console.log('items',items)
                                                     </Space>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
                                         {/* <div className="col-11 col-lg-11">
                                             <div className="mb-3 d-flex justify-content-between align-items-start">
                                                 <div className="specific-location">
