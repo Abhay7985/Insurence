@@ -55,7 +55,7 @@ const EditSecurityBoat = (props: any) => {
     return <Spin spinning={loading} className='h-100' >
         <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
             <div className="edit-listing w-100">
-                <div className="title d-flex justify-content-between ">
+                <div className="title d-flex justify-content-between flex-wrap">
                     <h6 className='mb-2'>Rules and Security</h6>
                     <div className="edit-photo ps-4" >
                         {isExpended ?

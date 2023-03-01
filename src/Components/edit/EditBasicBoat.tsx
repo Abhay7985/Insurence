@@ -50,12 +50,12 @@ const EditBasicBoat = (props: any) => {
 
     return <Spin spinning={loading} className='h-100' >
         <div className="Listing-basics bg-white Pricing mb-4">
-            <div className="photo-header d-flex justify-content-between mb-3">
+            <div className="photo-header d-flex justify-content-between mb-3 flex-wrap">
                 <h4>Listing basics</h4>
             </div>
             <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1" >
                 <div className="listing-content w-100">
-                    <div className="listing-title d-flex justify-content-between mb-2">
+                    <div className="listing-title d-flex justify-content-between mb-2 flex-wrap">
                         <h6>Listing Title</h6>
                         <div className="edit-photo ps-4" >
                             {isExpended ?

@@ -295,6 +295,11 @@
     .select-date {
         position: relative;
 
+        ::placeholder {
+            padding: 0;
+            font-weight: 600;
+        }
+
         &::before {
             position: absolute;
             content: 'Date';
@@ -513,11 +518,14 @@
 // ************************************Morning panormic lisiting section****************************
 .morning-panormic-listing {
     background: $white-2;
-
+ .Pricing{
+    padding: 40px;
+    @media (max-width:1199px) {
+       padding: 20px;
+    }
+ }
     .tab-box {
         height: 100%;
-
-
 
         .tab-nav {
             min-width: 300px;
@@ -527,6 +535,24 @@
             min-height: 622px;
             position: sticky !important;
             top: 100px !important;
+            @media (max-width:1199px) {
+                min-width: 220px;
+                width: 220px; 
+                padding: 0px;
+                min-height: fit-content;
+            }
+            @media (max-width:991px) {
+                min-width: 200px;
+                width: 200px; 
+                padding: 0px;
+                min-height: fit-content;
+            }
+            @media (max-width:767px) {
+                min-width: 200px;
+                width: 100%; 
+                padding: 0px;
+                min-height: fit-content;
+            }
         }
     }
 
@@ -835,18 +861,26 @@
 
 .ant-radio-button-wrapper {
     height: 100% !important;
-   
-  span{
-    vertical-align: text-top;
-  }
+
+    span {
+        vertical-align: text-top;
+    }
 }
 
-.ant-picker-calendar .ant-picker-calendar-header{
+.ant-picker-calendar .ant-picker-calendar-header {
     padding: 25px 20px !important;
 }
 
-.price-input{
-    .form-control{
-        padding: 7px 5px;
+.ant-radio-group .ant-radio-button-wrapper {
+    border-radius: 5px;
+}
+
+.ant-radio-group .ant-radio-button-wrapper:last-child {
+    display: none;
+}
+
+.price-input {
+    .form-control {
+        padding: 7px 7px;
     }
 }
