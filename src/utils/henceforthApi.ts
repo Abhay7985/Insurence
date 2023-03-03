@@ -116,6 +116,8 @@ const Boat = {
     requests.del(`provider/boats/${id}`),
   boatAmenities: () =>
     requests.get(`provider/boat-amenities`),
+  extraAmenities:()=>
+    requests.get(`provider/extra-amenities`),
   imageUpload: (key: string, file: any) =>
     requests.file(`provider/upload-image`, key, file),
   filerDate: (id: any, priceing_date: any) =>

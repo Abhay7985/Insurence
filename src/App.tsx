@@ -24,6 +24,7 @@ import Contact from './pages/Contact-us';
 import Social from './pages/Social'
 import FaqPage from './pages/FaqPage';
 import Extra from './pages/Extra';
+import EditExtraAmenities from './pages/EditExtraAmenities';
 
 const App = () => {
   const { authState } = useContext(GlobalContext)
@@ -49,6 +50,8 @@ const App = () => {
             <Route path="boat/:id/inquiry/edit/:type" element={<EditBoatDetails />} />
             <Route path="boat/:id/photos/edit" element={<EditImage />} />
             <Route path="boat/:id/amenities/edit" element={<EditAmenities />} />
+            <Route path="boat/:id/extraamenities/edit" element={<EditExtraAmenities />} />
+
             <Route path="calender" element={<ProviderCalender />} />
             <Route path="profile" element={<Profile />} />
             <Route path="change-password" element={<ChangePassword />} />

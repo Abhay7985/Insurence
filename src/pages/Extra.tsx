@@ -15,7 +15,7 @@ const Extra = () => {
 
     const navigate = useNavigate()
     const location = useLocation()
-    const match = useMatch(`boat/:id/amenities`)
+    const match = useMatch(`boat/:id/extra`)
     const uRLSearchParams = new URLSearchParams(location.search)
     const { Toast } = React.useContext(GlobalContext)
     const [loading, setLoading] = React.useState(false)
@@ -37,7 +37,7 @@ const Extra = () => {
 
     const handleAmenities = async () => {
         try {
-            let res = await henceforthApi.Boat.boatAmenities()
+            let res = await henceforthApi.Boat.extraAmenities()
             console.log(res);
             setExtraOffers(res.data)
         } catch (error) {
@@ -51,9 +51,9 @@ const Extra = () => {
     }
     const saveAndExit = async (b: boolean) => {
         let items = {
-            amenities: {
+            extra_amenity: {
                 boat_id: Number(match?.params.id),
-                amenities: extra
+                extra_amenity: extra
             }
         }
 
@@ -92,7 +92,7 @@ const Extra = () => {
     useEffect(() => {
         handleAmenities()
     }, [])
-
+   console.log(match?.params.id)
     return (
         <section className="Confirm-address-section h-100 px-2 px-md-0">
             <div className="container-fluid h-100">
@@ -110,7 +110,7 @@ const Extra = () => {
                                             <div className="form-check">
                                                 <input className="form-check-input" type="checkbox" value={e?.id} onChange={(e: any) => handleChecked(e)} id={`check1${index}`} />
                                                 <label className="form-check-label" htmlFor={`check1${index}`}>
-                                                    {e?.amenity}
+                                                    {e?.extra_amenity} <span className='text-dark'>&#36;{e?.price}</span>
                                                 </label>
                                             </div>
                                         </div>)}

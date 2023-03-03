@@ -64,8 +64,8 @@ const AmenitiesOffer = () => {
                 Toast.success(apiRes.message)
                 if (b) navigate(`/`, { replace: true })
                 else navigate({
-                    pathname: `/boat/${match?.params.id}/photos`,
-                    // pathname: `/boat/${match?.params.id}/extra`,
+                    // pathname: `/boat/${match?.params.id}/photos`,
+                    pathname: `/boat/${match?.params.id}/extra`,
                     search: uRLSearchParams.toString()
                 })
 

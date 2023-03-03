@@ -20,7 +20,11 @@ const defaultProps = {
     city: ""
 };
 interface location {
-   name:string
+    data: {
+        id: Number,
+        location: { latitude: number, longitude: number },
+        location_name: string
+    }[]
 }
 
 
@@ -36,7 +40,7 @@ function PlaceLocated() {
     const [inputFocued, setInputFocused] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
     const [form, setForm] = React.useState(defaultProps)
-    const [address,setAddress]=useState({} as location)
+    const [address, setAddress] = useState({} as location)
     const [state, setState] = useState({
         street: "",
         flat: "",
@@ -157,23 +161,23 @@ function PlaceLocated() {
         //     form.center.lat,
         //     form.center.lng
         // )
-        let zoom = 12
-        if (items?.country && items?.state && items?.city && items?.sublocality1 && (items?.sublocality2 || items?.route) && (items?.subpremise || items?.street_number)) zoom = 18
-        if (items?.country && items?.state && items?.city && items?.sublocality1 && (items?.sublocality2 || items?.route) && items?.subpremise === undefined && items?.street_number === undefined) zoom = 18
-        if (items?.country && items?.state && items?.city && items?.sublocality1 === undefined && items?.sublocality2 === undefined) zoom = 15
-        if (items?.country && items?.state && items?.city === undefined && items?.sublocality1 === undefined && items?.sublocality2 === undefined) zoom = 8
-        if (items?.country && items?.state === undefined && items?.city === undefined && items?.sublocality1 === undefined && items?.sublocality2 === undefined) zoom = 5
-        setForm((form) => {
-            return {
-                ...form,
-                center: {
-                    ...form.center,
-                    lat,
-                    lng
-                },
-                zoom
-            }
-        })
+        // let zoom = 12
+        // if (items?.country && items?.state && items?.city && items?.sublocality1 && (items?.sublocality2 || items?.route) && (items?.subpremise || items?.street_number)) zoom = 18
+        // if (items?.country && items?.state && items?.city && items?.sublocality1 && (items?.sublocality2 || items?.route) && items?.subpremise === undefined && items?.street_number === undefined) zoom = 18
+        // if (items?.country && items?.state && items?.city && items?.sublocality1 === undefined && items?.sublocality2 === undefined) zoom = 15
+        // if (items?.country && items?.state && items?.city === undefined && items?.sublocality1 === undefined && items?.sublocality2 === undefined) zoom = 8
+        // if (items?.country && items?.state === undefined && items?.city === undefined && items?.sublocality1 === undefined && items?.sublocality2 === undefined) zoom = 5
+        // setForm((form) => {
+        //     return {
+        //         ...form,
+        //         center: {
+        //             ...form.center,
+        //             lat,
+        //             lng
+        //         },
+        //         zoom
+        //     }
+        // })
         setState((state) => {
             return {
                 ...state,
@@ -208,10 +212,10 @@ function PlaceLocated() {
     };
     const initaliseLocation = async () => {
         try {
-            let apiRes=await henceforthApi.Location.getLoctaion()
-            setAddress(apiRes.data)
+            let apiRes = await henceforthApi.Location.getLoctaion()
+            setAddress(apiRes)
         } catch (error) {
-          console.log(error)
+            console.log(error)
         }
     }
 
@@ -305,6 +309,10 @@ function PlaceLocated() {
             saveAndExit(true)
         }
     }, [uRLSearchParams.get("action")])
+    useEffect(() => {
+        initaliseLocation()
+    }, [])
+    console.log(address)
 
     return (
         <section className="select-passenger-section h-100">
@@ -327,14 +335,14 @@ function PlaceLocated() {
                                                         ...form,
                                                         center: {
                                                             ...form.center,
-                                                            lat: +LanchaPlaces[+value].lat ? +LanchaPlaces[+value].lat : defaultProps.center.lat,
-                                                            lng: +LanchaPlaces[+value].lng ? +LanchaPlaces[+value].lng : defaultProps.center.lng,
+                                                            lat: +address.data[+value].location.latitude ? +address.data[+value].location.latitude : defaultProps.center.lat,
+                                                            lng: +address.data[+value].location.longitude ? +address.data[+value].location.longitude : defaultProps.center.lng,
                                                         },
                                                         zoom: 12
                                                     })
-                                                    getLocationName(+LanchaPlaces[+value].lat, +LanchaPlaces[+value].lng, LanchaPlaces[+value].name)
+                                                    getLocationName(address.data[+value].location.latitude, address.data[+value].location.longitude, '')
                                                 }}
-                                                options={LanchaPlaces.map((res, index) => { return { value: index, label: res.name } })}
+                                                options={address?.data?.map((res, index: number) => { return { value: index, label: res.location_name } })}
                                             />
                                             {/* <input type="text" ref={placeInputRef} className="form-control" placeholder="Enter your address" onFocus={() => setInputFocused(true)} onBlur={() => setTimeout(() => setInputFocused(false), 100)} /> */}
 
