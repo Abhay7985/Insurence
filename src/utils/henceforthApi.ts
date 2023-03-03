@@ -2,7 +2,7 @@ import _superagent, { search } from 'superagent';
 const SuperagentPromise = require('superagent-promise');
 const superagent = SuperagentPromise(_superagent, global.Promise);
 
-const API_BASE_URL=`lanchasalvador.com.br/api/`
+const API_BASE_URL = `lanchasalvador.com.br/api/`
 const IS_STAGING = (window.origin.includes('staging') || window.origin.includes('localhost'));
 const LIVE_API_ROOT = `https://aluguel.backend.${API_BASE_URL}`;
 const STAGING_API_ROOT = `https://staging.api.${API_BASE_URL}`;
@@ -148,7 +148,14 @@ const Admin = {
   routes: () =>
     requests.get(`provider/boat-routes`),
 }
+const social = {
+  socialContent: (title: string) => requests.get(`show-pages/${title}`)
+}
+const Location={
+  getLoctaion:()=>requests.get('provider/boat-locations')
+}
 const Common = {
+  faq: () => requests.get(`faq`),
   contact_us: (item: any) => requests.post('contact-us', item),
   do_spaces_file_upload: (key: string, file: any) => requests.file(`provider/upload-image`, key, file),
 }
@@ -181,9 +188,11 @@ const henceforthApi = {
   token,
   Auth,
   Common,
+  social,
   Calender,
   Profile,
   Inquiry,
+  Location,
   Subscribe,
   API_ROOT,
   API_FILE_ROOT_SMALL,

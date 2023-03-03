@@ -1,7 +1,6 @@
 import { Fragment, useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import SignIn from './pages/auth/signin';
-import About from './pages/about';
 import BoatInfo from './pages/BoatInfo';
 import SelectPassenger from './pages/SelectPassenger';
 import PlaceLocated from './pages/PlaceLocated';
@@ -22,7 +21,9 @@ import BoatLayout from './layout/BoatLayout';
 import AddPhotos from './pages/AddPhotos';
 import EditBoatDetails from './pages/EditBoatDetails';
 import Contact from './pages/Contact-us';
-import Faq from './pages/Faq';
+import Social from './pages/Social'
+import FaqPage from './pages/FaqPage';
+import Extra from './pages/Extra';
 
 const App = () => {
   const { authState } = useContext(GlobalContext)
@@ -35,6 +36,7 @@ const App = () => {
             <Route path="passengers" element={<SelectPassenger />} />
             <Route path=":id/place" element={<PlaceLocated />} />
             <Route path=":id/amenities" element={<AmenitiesOffer />} />
+            <Route path=":id/extra" element={< Extra/>} />
             <Route path=":id/photos" element={<AddPhotos />} />
             <Route path=":id/safety-question" element={<SafetyQuestions />} />
             <Route path=":id/price" element={<BoatPrice />} />
@@ -51,9 +53,10 @@ const App = () => {
             <Route path="profile" element={<Profile />} />
             <Route path="change-password" element={<ChangePassword />} />
             <Route path="contact" element={<Contact />} />
-            <Route path="faq" element={<Faq />} />
-
-            <Route path="about" element={<About />} />
+            <Route path="faq" element={<FaqPage />} />
+            
+            <Route path=":type" element={<Social />} />
+             
           </Route>
         </Fragment>
         :

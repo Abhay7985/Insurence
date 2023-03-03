@@ -20,9 +20,9 @@ const defaultProps = {
     city: ""
 };
 interface location {
-    lat: number
-    lng: number
+   name:string
 }
+
 
 function PlaceLocated() {
 
@@ -36,7 +36,7 @@ function PlaceLocated() {
     const [inputFocued, setInputFocused] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
     const [form, setForm] = React.useState(defaultProps)
-    // const [liveLoction,setLocation]=useState(Pleces)
+    const [address,setAddress]=useState({} as location)
     const [state, setState] = useState({
         street: "",
         flat: "",
@@ -206,7 +206,14 @@ function PlaceLocated() {
 
 
     };
-
+    const initaliseLocation = async () => {
+        try {
+            let apiRes=await henceforthApi.Location.getLoctaion()
+            setAddress(apiRes.data)
+        } catch (error) {
+          console.log(error)
+        }
+    }
 
 
     const onGoogleApiLoaded = ({ map, maps, ref }: any) => {

@@ -27,10 +27,16 @@ enum EditType {
     price = "price",
     rules = "rules",
 }
+enum PageType {
+    Term = "term",
+    AboutUs = "aboutUs",
+    Faq = "faq"
+}
 export default {
     OrderStatus,
     OrderColor,
     InquiryStatus,
     InquiryColor,
     EditType,
+    PageType,
 }

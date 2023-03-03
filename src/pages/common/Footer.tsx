@@ -7,6 +7,7 @@ import { GlobalContext } from "../../context/Provider";
 import { error } from "console";
 import Spinner from "./AntSpinner";
 import { Link } from "react-router-dom";
+import henceofrthEnums from "../../utils/henceofrthEnums";
 
 const Footer = () => {
     const { Toast, loading, setLoading } = useContext(GlobalContext)
@@ -72,7 +73,7 @@ const Footer = () => {
                         <div className="col-6 col-sm-6 col-md-4 col-lg-2">
                             <ul>
                                 <li>
-                                    <a href="#" className="nav-link">About Us</a>
+                                    <Link to={henceofrthEnums.PageType.AboutUs} className="nav-link">About Us</Link>
                                 </li>
                                 <li>
                                     <Link to="/contact" className="nav-link" role="button">Contact Us</Link>
@@ -83,10 +84,10 @@ const Footer = () => {
                         <div className="col-6 col-sm-6 col-md-4 col-lg-2">
                             <ul>
                                 <li>
-                                    <a href="#" className="nav-link">Terms & Conditions</a>
+                                    <Link to={henceofrthEnums.PageType.Term} className="nav-link">Terms & Conditions</Link>
                                 </li>
                                 <li>
-                                    <Link to="/faq" className="nav-link">FAQs</Link>
+                                    <Link to={henceofrthEnums.PageType.Faq} className="nav-link">FAQs</Link>
                                 </li>
                             </ul>
                         </div>

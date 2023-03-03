@@ -15,7 +15,6 @@ import henceofrthEnums from '../utils/henceofrthEnums';
 import Slider from "react-slick";
 import PhotoSlider from './common/PhotoSlider';
 import henceofrthValidations from "../utils/henceforthValidations";
-import HenceforthIcons from '../assets/icons/HenceforthIcons';
 import { message, Popconfirm } from 'antd';
 
 

@@ -884,3 +884,31 @@
         padding: 7px 7px;
     }
 }
+
+.contact-image{
+    height: 500px;
+    overflow: hidden;
+    border-radius: 16px;
+    img{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+.ant-input-group .ant-input-group-addon .ant-select.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    background-color: inherit;
+    border: 1px solid transparent !important;
+    box-shadow: none;
+}
+
+.social-image{
+    height: 350px;
+    border-radius: 6px;
+    overflow: hidden;
+    img{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+}
