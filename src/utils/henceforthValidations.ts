@@ -102,6 +102,16 @@ const showPrice = (price: number) => {
 const  capFirst=(str:string) =>{
     return str[0].toUpperCase() + str.slice(1);
 }
+const BrazilianReal = (val: number) => {
+    let int = Number.isInteger(val % 1)
+    if (int) {
+        return `R$${~~val}`
+    } else {
+        let intVal = (String(val))?.split(".")?.join(",");
+        return `R$${intVal}`
+    }
+
+}
 
 const henceforthValidations = {
     roundOffCeil,
@@ -112,6 +122,7 @@ const henceforthValidations = {
     UserNameValidation,
     MobileNumberValidation,
     NumberValidation,
+    BrazilianReal,
     ResultValidation,
     MobileNumberWithInValidation,
     FoodLicenseValidation,

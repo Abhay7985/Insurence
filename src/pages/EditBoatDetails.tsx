@@ -364,7 +364,7 @@ const EditBoatDetails = () => {
                                                         </div>
                                                     </div>
                                                 </div>}
-                                             {state.name && 
+                                                {state.name && 
                                                    <div className="Listing-basics bg-white Pricing mb-4" id='extraamenities_tab'>
                                                    <div className="photo-header d-flex justify-content-between mb-3">
                                                        <h4>Extra Amenities</h4>
@@ -385,7 +385,7 @@ const EditBoatDetails = () => {
                                                            </Link>
                                                        </div>
                                                    </div>
-                                               </div>}   
+                                               </div>}
                                             {/* Location */}
                                             {state.name &&
                                                 <EditLocationBoat {...state.address} initialise={initialise} />
