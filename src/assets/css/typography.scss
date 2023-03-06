@@ -64,7 +64,7 @@ h5 {
     font-weight: normal;
     font-family: 'Nunito', sans-serif !important;
     cursor: pointer !important;
-    padding: 8px 20px;
+    padding: 6px 20px;
 
     &::first-letter {
         text-transform: capitalize;
@@ -283,7 +283,7 @@ ul {
         box-shadow: none !important;
         border-radius: $radius !important;
         border: 1px solid $light-gray !important;
-        padding: 4px 20px !important;
+        padding: 2px 20px !important;
         height: auto !important;
         font-family: 'Nunito', sans-serif;
         font-size: 16px;
