@@ -7,7 +7,7 @@ import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
 import extras from "../assets/images/extras.png"
 import henceforthValidations from '../utils/henceforthValidations';
-interface amenities {
+export interface amenities {
     id: number,
     amenity: string
 }
@@ -111,7 +111,7 @@ const Extra = () => {
                                             <div className="form-check">
                                                 <input className="form-check-input" type="checkbox" value={e?.id} onChange={(e: any) => handleChecked(e)} id={`check1${index}`} />
                                                 <label className="form-check-label" htmlFor={`check1${index}`}>
-                                                    {e?.extra_amenity} <span className='text-dark'>{henceforthValidations.BrazilianReal(e?.price)}</span>
+                                                    {e?.extra_amenity} - <span className='text-dark'>{henceforthValidations.BrazilianReal(e?.price)}</span>
                                                 </label>
                                             </div>
                                         </div>)}

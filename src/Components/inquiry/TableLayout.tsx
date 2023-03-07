@@ -8,6 +8,7 @@ import henceofrthEnums from "../../utils/henceofrthEnums";
 import henceforthApi from "../../utils/henceforthApi";
 import { GlobalContext } from "../../context/Provider";
 import { useMatch } from "react-router-dom";
+import henceforthValidations from "../../utils/henceforthValidations";
 const Tablelayout = (props: any) => {
     const match = useMatch('/inquiry/:type/:page')
 
@@ -122,6 +123,7 @@ const Tablelayout = (props: any) => {
         "ROUTE",
         "PRICE",
         "DATE",
+        "Extra's",
         "ENQUIRY VIA",
         "STATUS",
         "ACTION"
@@ -136,7 +138,7 @@ const Tablelayout = (props: any) => {
                     <td>
                         <div className="boats d-flex gap-2 align-items-center">
                             <div className="boat-image">
-                                <img src={res.cover_image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${res.cover_image}`: boatImage} alt="img" className='img-fluid' />
+                                <img src={res.cover_image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${res.cover_image}` : boatImage} alt="img" className='img-fluid' />
                             </div>
                             <p>{res.boat_name}</p>
                         </div>
@@ -144,6 +146,11 @@ const Tablelayout = (props: any) => {
                     <td>{res.route_name}</td>
                     <td>${res.price}</td>
                     <td>{moment(res.created_at).format("DD/MM/YYYY")}</td>
+                    <td> <button className=' d-flex gap-2 align-items-center btn p-0 border-0 text-dark' data-bs-toggle="modal" data-bs-target="#staticBackdrop" onMouseOver={() => props.setExtras(res?.inquiry_extra_amenity)}>
+                        {/* <HenceforthIcons.Email /> */}
+                        <span className='text-decoration-underline'>{henceforthValidations.BrazilianReal(res.inquiry_extra_amenity?.filter((res: any) => res.quantity > 0).map(((respo: any) => { return respo.price })).reduce((a: number, b: any) => a + b, 0))}</span>
+                        <HenceforthIcons.ChevronRight />
+                    </button></td>
                     <td>
                         <div className="boats d-flex gap-2 align-items-center">
                             {res.inquiry_mode == "whatsapp" ? <Fragment>

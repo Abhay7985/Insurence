@@ -50,7 +50,8 @@ const App = () => {
             <Route path="boat/:id/inquiry/edit/:type" element={<EditBoatDetails />} />
             <Route path="boat/:id/photos/edit" element={<EditImage />} />
             <Route path="boat/:id/amenities/edit" element={<EditAmenities />} />
-            <Route path="boat/:id/extraamenities/edit" element={<EditExtraAmenities />} />
+            <Route path="boat/:id/extra/edit" element={<EditExtraAmenities />} />
+            
 
             <Route path="calender" element={<ProviderCalender />} />
             <Route path="profile" element={<Profile />} />

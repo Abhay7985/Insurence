@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import { GlobalContext } from "../../context/Provider"
 import { RouteDataInterface } from "../../interfaces"
 import henceforthApi from "../../utils/henceforthApi"
+import henceforthValidations from "../../utils/henceforthValidations"
 
 
 const EditPriceBoat = (props: any) => {
@@ -181,7 +182,7 @@ const EditPriceBoat = (props: any) => {
                 <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1 mb-2">
                     <div className="listing-content" key={res.id}>
                         <h6 className='mb-2'>{res?.route}</h6>
-                        <p>${res?.price} <span className='fs-14'>or</span> {res?.installments} in ${res?.installment_price}</p>
+                        <p>{henceforthValidations.BrazilianReal(res?.price)} <span className='fs-14'>or</span> {res?.installments} in ${henceforthValidations.BrazilianReal(res?.installment_price)}</p>
                     </div>
                 </div>)}
     </div>

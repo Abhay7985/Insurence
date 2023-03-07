@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Pagination, Spin, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import { Select, } from 'antd';
@@ -8,20 +8,22 @@ import Tablelayout from '../Components/inquiry/TableLayout';
 import henceforthApi from '../utils/henceforthApi';
 import { GlobalContext } from '../context/Provider';
 import henceofrthEnums from '../utils/henceofrthEnums';
+import henceforthValidations from '../utils/henceforthValidations';
 
 const InquiryPage = () => {
     const match = useMatch('/inquiry/:type/:page')
     const navigate = useNavigate()
     const location = useLocation()
     const uRLSearchParams = new URLSearchParams(location.search)
+    const [extras,setExtras]=useState([])
     const { authState, Toast } = React.useContext(GlobalContext)
     const [inqieryData, setInquiryData] = React.useState({
         name: "",
         boat_name: "",
         email: "",
         phone: Number(),
-        id:Number(),
-        status:""
+        id: Number(),
+        status: ""
     })
     const [loading, setLoading] = React.useState(false)
     const [state, setState] = React.useState({
@@ -81,7 +83,7 @@ const InquiryPage = () => {
                 uRLSearchParams.toString()
             )
 
-            setState(apiRes.data)
+            setState(apiRes)
 
         } catch (error) {
             Toast.error(error)
@@ -94,18 +96,18 @@ const InquiryPage = () => {
         {
             key: 'all',
             label: `All`,
-            children: <Tablelayout {...state} setInquiryData={setInquiryData} initialise={initialise} />
+            children: <Tablelayout {...state} setExtras={setExtras} setInquiryData={setInquiryData} initialise={initialise} />
         },
         {
             key: 'resolved',
             label: `Resolved`,
-            children: <Tablelayout  {...state} setInquiryData={setInquiryData} initialise={initialise} />
+            children: <Tablelayout  {...state} setExtras={setExtras} setInquiryData={setInquiryData} initialise={initialise} />
 
         },
         {
             key: 'open',
             label: `Open`,
-            children: <Tablelayout  {...state} setInquiryData={setInquiryData} initialise={initialise} />
+            children: <Tablelayout  {...state} setExtras={setExtras} setInquiryData={setInquiryData} initialise={initialise} />
         },
     ];
 
@@ -171,7 +173,39 @@ const InquiryPage = () => {
                     </div>
                 </div>
             </section>
+            {/* <!-- Button trigger modal --> */}
+            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Launch static backdrop modal
+            </button>
 
+            {/* <!-- Modal --> */}
+            <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <div className='col-11 text-center ps-4'>
+                            <h1 className="modal-title fs-5" id="staticBackdropLabel">Extra's</h1>
+                            </div>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            {extras.length?extras.map((resp:any)=>resp.quantity ?<div key={resp.id} className='d-flex justify-content-between'>
+                                <span>{resp.extra_amenity}</span>
+                                <span>{resp.quantity}x in {henceforthValidations.BrazilianReal(resp.price)}</span>
+                            </div>:''):<div className='w-100 text-center'>No Extra's found</div>}
+                            {/* ... */}
+                        </div>
+                        <div className="modal-footer justify-content-between">
+                        {/* <div  className='d-flex justify-content-between'> */}
+                                <span className='fw-bold'>Total (USD)</span>
+                                <span className='fw-bold'>{henceforthValidations.BrazilianReal(extras.reduce((a:number,b:any)=>b.quantity>0&&a+b.price,0))}</span>
+                            {/* </div> */}
+                            {/* <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary">Understood</button> */}
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             {/* <!-- Modal --> */}
             <div className="modal fade" id="emailInquiryModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -186,7 +220,7 @@ const InquiryPage = () => {
                                 <div className="col-lg-6">
                                     <div className="inquiry-name">
                                         <h6 className='mb-2'>Name</h6>
-                                        <p>{inqieryData?.name ? inqieryData?.name :"Not Avaiable"  }</p>
+                                        <p>{inqieryData?.name ? inqieryData?.name : "Not Avaiable"}</p>
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
@@ -198,15 +232,15 @@ const InquiryPage = () => {
                                 <div className="col-lg-6">
                                     <div className="inquiry-name">
                                         <h6 className='mb-2'>Email</h6>
-                                        <p>{inqieryData?.email ? inqieryData?.email :"Not Avaiable" }</p>
+                                        <p>{inqieryData?.email ? inqieryData?.email : "Not Avaiable"}</p>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
                         <div className="modal-footer px-sm-4">
-                        
-                            <button type="button" className="btn btn-yellow w-100 py-2" data-bs-dismiss="modal"  onClick={()=>handleStatus(inqieryData.id,"resolved")} disabled={henceofrthEnums.InquiryStatus.resolved===inqieryData.status as any}>Resolve this Enquiry</button>
+
+                            <button type="button" className="btn btn-yellow w-100 py-2" data-bs-dismiss="modal" onClick={() => handleStatus(inqieryData.id, "resolved")} disabled={henceofrthEnums.InquiryStatus.resolved === inqieryData.status as any}>Resolve this Enquiry</button>
                         </div>
                     </div>
                 </div>

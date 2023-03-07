@@ -11,6 +11,7 @@ import { GlobalContext } from '../context/Provider';
 import HenceforthIcons from '../assets/icons/HenceforthIcons';
 import HenceforthGoogleMap from '../utils/henceforthGoogleMap';
 import { Image } from 'antd';
+import henceforthValidations from '../utils/henceforthValidations';
 
 const contentStyle: React.CSSProperties = {
     margin: 0,
@@ -256,7 +257,7 @@ const BoatDetails = () => {
                         {/* price-card */}
                         <div className="col-lg-6 col-xl-5 order-1 order-md-2">
                             <div className="price-card px-4 py-4 position-sticky" style={{top: "2rem"}}>
-                                <h4 className='mb-4 mt-1'>From ${state.minimum_price}</h4>
+                                <h4 className='mb-4 mt-1'>From {henceforthValidations.BrazilianReal(+state.minimum_price)}</h4>
                                 <div className="select-date mb-2">
                                     <DatePicker onChange={onChange1} placeholder='Add Date' />
                                 </div>
@@ -267,7 +268,7 @@ const BoatDetails = () => {
                                             <div className="price-list py-3 border-bottom" key={e?.id}>
                                                 <div className="price-list-title d-flex justify-content-between mb-2 flex-wrap">
                                                     <h6>{e?.date}</h6>
-                                                    <p className='fw-bold'>${e?.price}<span className='fw-600 fs-14 px-1'>or</span> {e?.installments}x in ${e?.installment_price}</p>
+                                                    <p className='fw-bold'>{henceforthValidations.BrazilianReal(e?.price)}<span className='fw-600 fs-14 px-1'>or</span> {e?.installments}x in ${henceforthValidations.BrazilianReal(e?.installment_price)}</p>
                                                 </div>
                                                 <div className="price-list-title d-flex justify-content-between">
                                                     <p className='fs-14 fw-600'>{e?.route}</p>

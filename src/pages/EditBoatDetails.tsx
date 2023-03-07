@@ -100,6 +100,7 @@ const EditBoatDetails = () => {
     }
 
     useEffect(() => {
+        // if(location.hash){ window.location.hash=""}
         initialise(true)
     }, [match?.params.id])
 
@@ -253,7 +254,7 @@ const EditBoatDetails = () => {
                                                                     <a href="#amenities_tab" className={`${location.hash === '#amenities_tab' ? 'active-tab' : ''} nav-link`}>Amenities</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="#extraamenities_tab" className={`${location.hash === '#extraamenities_tab' ? 'active-tab' : ''} nav-link`}>Extra Amenities</a>
+                                                                    <a href="#extraamenities_tab" className={`${location.hash === '#extraamenities_tab' ? 'active-tab' : ''} nav-link`}>Extra's</a>
                                                                 </li>
                                                                 <li>
                                                                     <a href="#location_tab" className={`${location.hash === '#location_tab' ? 'active-tab' : ''} nav-link`}>Location</a>
@@ -367,20 +368,20 @@ const EditBoatDetails = () => {
                                                 {state.name && 
                                                    <div className="Listing-basics bg-white Pricing mb-4" id='extraamenities_tab'>
                                                    <div className="photo-header d-flex justify-content-between mb-3">
-                                                       <h4>Extra Amenities</h4>
+                                                       <h4>Extra's</h4>
                                                    </div>
                                                    <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
                                                        <div className="listing-content">
-                                                           <h6 className='mb-2'>Extra Amenities</h6>
+                                                           <h6 className='mb-2'>Extra's</h6>
                                                            <div className="amenities-list d-flex gap-5">
                                                                <ul>
-                                                                   {state?.extra_amenity?.map((e: any) => <li>{e.extra_amenity}</li>)}
+                                                                   {state?.extra_amenity?.map((e: any) => <li className='text-capitalize'>{e.extra_amenity} - ${e.price}</li>)}
                                                                </ul>
                                                            </div>
                                                        </div>
                                                        <hr />
                                                        <div className="edit-photo">
-                                                           <Link to={`/boat/${match?.params.id}/extraamenities/edit`}>
+                                                           <Link to={`/boat/${match?.params.id}/extra/edit`}>
                                                                <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
                                                            </Link>
                                                        </div>
