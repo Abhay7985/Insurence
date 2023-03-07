@@ -10,6 +10,7 @@ import { boatListingData } from '../interfaces';
 import { GlobalContext } from '../context/Provider';
 import HenceforthIcons from '../assets/icons/HenceforthIcons';
 import henceofrthEnums from '../utils/henceofrthEnums';
+import henceforthValidations from '../utils/henceforthValidations';
 
 const BoatListing = () => {
     const navigate = useNavigate()
@@ -169,7 +170,7 @@ const BoatListing = () => {
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>&#36;{e?.price}</td>
+                                            <td>{henceforthValidations.BrazilianReal(e?.price)}</td>
                                             <td>{moment(e?.updated_at).format('MMMM Do')}</td>
                                             <td>
                                                 <ul className='d-flex gap-2'>

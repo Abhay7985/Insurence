@@ -16,6 +16,7 @@ import Slider from "react-slick";
 import PhotoSlider from './common/PhotoSlider';
 import henceofrthValidations from "../utils/henceforthValidations";
 import { message, Popconfirm } from 'antd';
+import henceforthValidations from '../utils/henceforthValidations';
 
 
 
@@ -375,7 +376,7 @@ const EditBoatDetails = () => {
                                                            <h6 className='mb-2'>Extra's</h6>
                                                            <div className="amenities-list d-flex gap-5">
                                                                <ul>
-                                                                   {state?.extra_amenity?.map((e: any) => <li className='text-capitalize'>{e.extra_amenity} - ${e.price}</li>)}
+                                                                   {state?.extra_amenity?.map((e: any) => <li className='text-capitalize'>{e.extra_amenity} - ${henceforthValidations.BrazilianReal(e.price)}</li>)}
                                                                </ul>
                                                            </div>
                                                        </div>

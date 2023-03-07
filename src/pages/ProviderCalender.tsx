@@ -10,6 +10,7 @@ import mim, { Dayjs } from 'dayjs';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../context/Provider';
 import CalendarSideBar from './CalenderSideBar';
+import henceforthValidations from '../utils/henceforthValidations';
 
 
 const ProviderCalender = () => {
@@ -50,9 +51,8 @@ const ProviderCalender = () => {
     return (
       <ul className="events" onClick={() => handleQuery("show_sidebar", "on")}>
         <li key={value.date()}>
-          <Badge status={'warning' as BadgeProps['status']} text={listDatas?.price ? <span className={moment().subtract(1,'day').valueOf()<=moment(value.toString()).valueOf()? '':'text-secondary'}>{listDatas?.price}</span> : <></>} />
-          <Badge status={'warning' as BadgeProps['status']} text={listDatas?.description ? <span className={moment().subtract(1,'day').valueOf()<=moment(value.toString()).valueOf() ? '' :'text-secondary'}>{listDatas?.description }</span> : <></>}/>
-
+          <Badge status={'warning' as BadgeProps['status']} text={listDatas?.price ? <span className={`${listDatas?.availability?'':'line-through-danger'}${moment().subtract(1,'day').valueOf()<=moment(value.toString()).valueOf()? '':'text-secondary'}`}>{henceforthValidations.BrazilianReal(listDatas?.price)}</span> : <></>} />
+          <Badge status={'warning' as BadgeProps['status']} text={listDatas?.description ? <span className={`${listDatas?.availability?'':'line-through-danger'}${moment().subtract(1,'day').valueOf()<=moment(value.toString()).valueOf() ? '' :'text-secondary'}`}>{listDatas?.description }</span> : <></>}/>
         </li>
         {/* ))} */}
       </ul>

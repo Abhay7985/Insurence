@@ -268,7 +268,7 @@ const BoatDetails = () => {
                                             <div className="price-list py-3 border-bottom" key={e?.id}>
                                                 <div className="price-list-title d-flex justify-content-between mb-2 flex-wrap">
                                                     <h6>{e?.date}</h6>
-                                                    <p className='fw-bold'>{henceforthValidations.BrazilianReal(e?.price)}<span className='fw-600 fs-14 px-1'>or</span> {e?.installments}x in ${henceforthValidations.BrazilianReal(e?.installment_price)}</p>
+                                                    <p className='fw-bold'>{henceforthValidations.BrazilianReal(e?.price)}<span className='fw-600 fs-14 px-1'>or</span> {e?.installments}x in {henceforthValidations.BrazilianReal(e?.installment_price)}</p>
                                                 </div>
                                                 <div className="price-list-title d-flex justify-content-between">
                                                     <p className='fs-14 fw-600'>{e?.route}</p>

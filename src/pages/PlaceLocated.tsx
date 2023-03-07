@@ -19,7 +19,7 @@ const defaultProps = {
     zoom: 11,
     city: ""
 };
-interface location {
+export interface location {
     data: {
         id: Number,
         location: { latitude: number, longitude: number },

@@ -38,3 +38,10 @@ html{
 div#root {
     height: 100%;
 }
+
+
+.line-through-danger{
+    color: #E53C3C;
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+}

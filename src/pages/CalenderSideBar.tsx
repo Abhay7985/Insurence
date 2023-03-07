@@ -8,6 +8,7 @@ import { GlobalContext } from '../context/Provider';
 import Spinner from './common/AntSpinner';
 import { Spin } from 'antd';
 import { avaiableprice } from '../interfaces';
+import henceforthValidations from '../utils/henceforthValidations';
 
 interface RouteDataInterface {
     id: number,
@@ -267,7 +268,7 @@ const CalendarSideBar = () => {
                                 return (
                                     <div className='mb-3'>
                                         <li>{res.route_name}</li>
-                                        <li>{res.price} or {res.installments}x in {res.installment_price} </li>
+                                        <li>{henceforthValidations.BrazilianReal(res.price)} or {res.installments}x in {henceforthValidations.BrazilianReal(res.installment_price)} </li>
                                     </div>
                                 )
                             })}

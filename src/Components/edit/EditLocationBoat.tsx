@@ -5,6 +5,7 @@ import henceforthApi from "../../utils/henceforthApi"
 import CountryCodeJson from '../../utils/CountryCode.json'
 import { NumberValidation } from "../../utils/henceforthValidations"
 import LanchaPlaces from './../../utils/LanchaPlaces.json'
+import { location } from "../../pages/PlaceLocated"
 
 const defaultProps = {
     center: {
@@ -17,6 +18,7 @@ const EditLocationBoat = (props: any) => {
     const { Toast } = React.useContext(GlobalContext)
     const placeInputRef = useRef(null as any);
     const [form, setForm] = React.useState(defaultProps)
+    const [address,setAddress]=useState({} as location)
     const [state, setState] = React.useState({
         id: 1,
         address1: "",
@@ -124,10 +126,10 @@ const EditLocationBoat = (props: any) => {
             items.street_number = address[street_number]?.long_name
         }
 
-        let latlng = new (window as any).google.maps.LatLng(
-            form.center.lat,
-            form.center.lng
-        )
+        // let latlng = new (window as any).google.maps.LatLng(
+        //     form.center.lat,
+        //     form.center.lng
+        // )
         let zoom = 12
         if (items?.country && items?.state && items?.city && items?.sublocality1 && (items?.sublocality2 || items?.route) && (items?.subpremise || items?.street_number)) zoom = 18
         if (items?.country && items?.state && items?.city && items?.sublocality1 && (items?.sublocality2 || items?.route) && items?.subpremise === undefined && items?.street_number === undefined) zoom = 18
@@ -148,13 +150,13 @@ const EditLocationBoat = (props: any) => {
         setState((state: any) => {
             return {
                 ...state,
-                address1: items?.full_address || state.address1,
-                address2: items?.street_number || state.address2,
-                flat: items?.street_number ? items?.street_number : items?.apartment_number,
-                city: cityName || items?.city || state.city,
-                state: items?.state || state.state,
-                postcode: items?.pin_code || state.postcode,
-                country: items?.country || state?.country,
+                address1: items?.full_address?items?.full_address:'' ,
+                address2: items?.street_number?items?.street_number:'' ,
+                flat: items?.street_number ? items?.street_number : items?.apartment_number?items?.apartment_number:'',
+                city: items?.city?items?.city:'' ,
+                state: items?.state?items?.state:'' ,
+                postcode: items?.pin_code?items?.pin_code:'' ,
+                country: items?.country?items?.country:'' ,
             }
         })
     }
@@ -207,10 +209,18 @@ const EditLocationBoat = (props: any) => {
         })
     }
 
-
+    const initaliseLocation = async () => {
+        try {
+            let apiRes = await henceforthApi.Location.getLoctaion()
+            setAddress(apiRes)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     useEffect(() => {
         if (isExpended) {
             initPlaceAPI()
+            initaliseLocation()
         }
     }, [isExpended])
 
@@ -248,30 +258,31 @@ const EditLocationBoat = (props: any) => {
                                     </div>
                                 </div>
 
-                                {state.city &&
+                                {/* {state.city && */}
                                     <div className="col-lg-6">
                                         <div className="address mb-3">
                                             <label className="form-label">City</label>
                                             {/* <input placeholder="Enter City" className="form-control" value={state.city} name="city" onChange={(e) => handleChange(e.target)} /> */}
                                             <Select
-                                                defaultValue={LanchaPlaces.findIndex((res) => res.name == state.city)>=0?LanchaPlaces.findIndex((res) => res.name == state.city):'Select'}
+                                                defaultValue="select"
+                                                value={state.city}
                                                 style={{ width: '100%' }}
                                                 onChange={(value) => {
                                                     setForm({
                                                         ...form,
                                                         center: {
                                                             ...form.center,
-                                                            lat: +LanchaPlaces[+value].lat ? +LanchaPlaces[+value].lat : defaultProps.center.lat,
-                                                            lng: +LanchaPlaces[+value].lng ? +LanchaPlaces[+value].lng : defaultProps.center.lng,
+                                                            lat: +address.data[+value].location.latitude ? +address.data[+value].location.latitude : defaultProps.center.lat,
+                                                            lng: +address.data[+value].location.longitude ? +address.data[+value].location.longitude : defaultProps.center.lng,
                                                         },
                                                         zoom: 12
                                                     })
-                                                    getLocationName(+LanchaPlaces[+value].lat, +LanchaPlaces[+value].lng, LanchaPlaces[+value].name,)
+                                                    getLocationName(address.data[+value].location.latitude, address.data[+value].location.longitude, '')
                                                 }}
-                                                options={LanchaPlaces.map((res, index) => { return { value: index, label: res.name } })}
+                                                options={address?.data?.map((res, index: number) => { return { value: index, label: res.location_name } })}
                                             />
                                         </div>
-                                    </div>}
+                                    </div>
                                 <div className="col-lg-6">
                                     <div className="address mb-3">
                                         <label className="form-label">State</label>
