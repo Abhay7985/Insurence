@@ -15,7 +15,7 @@ const InquiryPage = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const uRLSearchParams = new URLSearchParams(location.search)
-    const [extras,setExtras]=useState([])
+    const [extras, setExtras] = useState([])
     const { authState, Toast } = React.useContext(GlobalContext)
     const [inqieryData, setInquiryData] = React.useState({
         name: "",
@@ -184,21 +184,21 @@ const InquiryPage = () => {
                     <div className="modal-content">
                         <div className="modal-header">
                             <div className='col-11 text-center ps-4'>
-                            <h1 className="modal-title fs-5" id="staticBackdropLabel">Extra's</h1>
+                                <h1 className="modal-title fs-5" id="staticBackdropLabel">Extra's</h1>
                             </div>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            {extras.length?extras.map((resp:any)=>resp.quantity ?<div key={resp.id} className='d-flex justify-content-between'>
+                            {extras.length ? extras.map((resp: any) => resp.quantity ? <div key={resp.id} className='d-flex justify-content-between'>
                                 <span>{resp.extra_amenity}</span>
                                 <span>{resp.quantity}x in {henceforthValidations.BrazilianReal(resp.price)}</span>
-                            </div>:''):<div className='w-100 text-center'>No Extra's found</div>}
+                            </div> : '') : <div className='w-100 text-center'>No Extra's found</div>}
                             {/* ... */}
                         </div>
                         <div className="modal-footer justify-content-between">
-                        {/* <div  className='d-flex justify-content-between'> */}
-                                <span className='fw-bold'>Total (USD)</span>
-                                <span className='fw-bold'>{henceforthValidations.BrazilianReal(extras.reduce((a:number,b:any)=>b.quantity>0&&a+b.price,0))}</span>
+                            {/* <div  className='d-flex justify-content-between'> */}
+                            <span className='fw-bold'>Total (USD)</span>
+                            <span className='fw-bold'>{henceforthValidations.BrazilianReal(extras.filter((res: any) => res.quantity > 0).map(((respo: any) => { return respo.price })).reduce((a: number, b: any) => a + b, 0))}</span>
                             {/* </div> */}
                             {/* <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="button" className="btn btn-primary">Understood</button> */}

@@ -236,7 +236,7 @@ const CalendarSideBar = () => {
                                     <h5 className='mb-3'>{queryDate.format('ddd, DD MMM YYYY')}</h5> :
                                     <h5 className='mb-3'>Edit {queryDate.format('dddd')}</h5>}
                                 <div className="available d-flex justify-content-between align-items-center">
-                                    <p> Available</p>
+                                    <p> Availability</p>
                                     <div className="form-check form-switch">
                                         <input className="form-check-input form-check-toggle px-1" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked={uRLSearchParams.get("edit") == "date" ? state?.date_available : state?.day_available} onChange={(e) => onSubmit(e.target.checked, false, true)} />
                                     </div>

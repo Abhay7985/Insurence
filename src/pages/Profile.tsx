@@ -175,9 +175,9 @@ const Profile = () => {
                   <div className="user-info w-100">
                     <div className="label d-flex justify-content-between mb-2">
                       <label htmlFor="editemail" className='fw-bold text-dark-black'>Email</label><br />
-                      <div className="edit-user ps-4">
+                      {/* <div className="edit-user ps-4">
                         <button className='btn border-0 text-yellow fw-bold p-0 text-capitalize' onClick={onChangeEmailHide} >{emailShow === true ? "Cancel" : "Edit"}</button>
-                      </div>
+                      </div> */}
                     </div>
                     {emailShow === false ? authState.email : ""}
                     {/* edit-email */}

@@ -12,6 +12,7 @@ const API_ROOT = IS_STAGING ? STAGING_API_ROOT : LIVE_API_ROOT
 const BUCKET_ROOT = `https://lanchastaging.s3.sa-east-1.amazonaws.com/`;
 
 const API_FILE_ROOT_MEDIUM = `${BUCKET_ROOT}medium/`;
+const API_FILE_ROOT_THUMBNAIL = `${BUCKET_ROOT}thumbnail/`;
 const API_FILE_ROOT_ORIGINAL = `${BUCKET_ROOT}original/`;
 const API_FILE_ROOT_SMALL = `${BUCKET_ROOT}small/`;
 const API_FILE_ROOT_AUDIO = `${BUCKET_ROOT}audio/`;
@@ -198,6 +199,7 @@ const henceforthApi = {
   Subscribe,
   API_ROOT,
   API_FILE_ROOT_SMALL,
+  API_FILE_ROOT_THUMBNAIL,
   API_FILE_ROOT_MEDIUM,
   API_FILE_ROOT_ORIGINAL,
   API_FILE_ROOT_VIDEO,
