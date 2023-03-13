@@ -159,10 +159,6 @@ const BoatInfo = () => {
                                                 style={{ width: '12%' }}
                                                 options={[ { value: " feet", label: "feet" }, { value: " inches", label: "inches" }, ]}
                                             />
-                                            {/* <select className='col-1'>
-                                            <option value=" feet">feet</option>
-                                            <option value=" inches">inches</option>
-                                        </select> */}
                                         </div>
                                     </div>
                                 </div>

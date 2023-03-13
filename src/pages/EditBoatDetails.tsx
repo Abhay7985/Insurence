@@ -354,7 +354,7 @@ const EditBoatDetails = () => {
                                                             <h6 className='mb-2'>Amenities</h6>
                                                             <div className="amenities-list d-flex gap-5">
                                                                 <ul>
-                                                                    {state?.amenities?.map((e: any) => <li>{e.amenity}</li>)}
+                                                                    {state?.amenities.length?state?.amenities?.map((e: any) => <li>{e.amenity}</li>):<li>No Amenities found</li>}
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -376,7 +376,7 @@ const EditBoatDetails = () => {
                                                            <h6 className='mb-2'>Extra's</h6>
                                                            <div className="amenities-list d-flex gap-5">
                                                                <ul>
-                                                                   {state?.extra_amenity?.map((e: any) => <li className='text-capitalize'>{e.extra_amenity} - ${henceforthValidations.BrazilianReal(e.price)}</li>)}
+                                                                   {state?.extra_amenity.length?state?.extra_amenity?.map((e: any) => <li className='text-capitalize'>{e.extra_amenity} - ${henceforthValidations.BrazilianReal(e.price)}</li>):<li>No Extra's found</li>}
                                                                </ul>
                                                            </div>
                                                        </div>

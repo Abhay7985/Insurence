@@ -16,9 +16,10 @@ const EditInfoBoat = (props: any) => {
 
     const [categories_list, setCategoriesList] = React.useState([])
     const [manufactures_list, setManufactureresList] = React.useState([])
+    const [boatExtension, setBoatExtension] = React.useState(props.size.includes('feet') || props.size.includes('inches') ? props.size.split(" ")[1] : '')
 
     const handleChange = async ({ name, value }: any) => {
-        if(name === "size" && !NumberValidation(value)) return
+        if (name === "size" && !NumberValidation(value)) return
         setState((state: any) => {
             return {
                 ...state,
@@ -29,12 +30,13 @@ const EditInfoBoat = (props: any) => {
 
     const onSubmit = async (e: any) => {
         e.preventDefault()
+        if(!boatExtension) return Toast.error("please select feet/inches")
         const items = {
             boatinfo: {
                 category_id: state.category_id,
                 manufacturer_id: state.manufacturer_id,
                 model: state.model,
-                size: state.size,
+                size: (state.size.includes('feet') || state.size.includes('inches'))&&(props.size.split(" ")[1]===boatExtension&& props.size.split(" ")[0]===state.size)  ? state.size : `${state.size}${boatExtension.includes(" ")? boatExtension:` ${boatExtension}`}`,
             }
         }
         setLoading(true)
@@ -119,7 +121,17 @@ const EditInfoBoat = (props: any) => {
                             <div className="col-12">
                                 <div className="address mb-3">
                                     <label className="form-label">Size</label>
-                                    <Input placeholder="Size" value={state.size} name="size" onChange={(e) => handleChange(e.target)} />
+                                    <div className='d-flex'>
+                                        {/* <input type="text" className="form-control" id='input5' placeholder={`Enter size ${boatExtension?`(in${boatExtension})`:''}`} value={boatSize} onChange={(e) => { setBoatSize(e.target.value.replace(/[^.0-9]/g, "")) }} /> */}
+                                        <Input placeholder={`Enter size ${boatExtension?`(in${boatExtension})`:''}`} value={state.size.includes('feet') || state.size.includes('inches') ? state?.size?.split(" ")[0] : state.size} name="size" onChange={(e) => handleChange(e.target)} />
+                                        <Select
+                                            size="large"
+                                            value={boatExtension}
+                                            onChange={setBoatExtension}
+                                            style={{ width: '12%' }}
+                                            options={[{ value: " feet", label: "feet" }, { value: " inches", label: "inches" },]}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -129,10 +141,10 @@ const EditInfoBoat = (props: any) => {
                     </form> :
                     <div className="listing-content">
                         {/* <h6 className='mb-3'>Boat Detail</h6> */}
-                        <p className='mb-2'>Category: {state.category}</p>
-                        <p className='mb-2'>Manufacturer: {state.manufacturer}</p>
-                        <p className='mb-2'>Model: {state.model}</p>
-                        <p className='mb-2'>Size: {state.size} feet</p>
+                        <p className='mb-2'>Category: {props.category}</p>
+                        <p className='mb-2'>Manufacturer: {props.manufacturer}</p>
+                        <p className='mb-2'>Model: {props.model}</p>
+                        <p className='mb-2'>Size: {props.size.includes('feet') || props.size.includes('inches') ? props.size : `${props.size} feet`} </p>
 
                     </div>}
             </div>
