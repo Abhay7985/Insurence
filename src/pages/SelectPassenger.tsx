@@ -1,4 +1,4 @@
-import bannerImage from '../assets/images/image_two.png';
+import bannerImage from '../assets/images/image_two.webp';
 import increase from '../assets/icons/add_circle_outline.svg';
 import decrease from '../assets/icons/remove_circle_outline.svg';
 import { Link, useLocation, useNavigate } from 'react-router-dom';

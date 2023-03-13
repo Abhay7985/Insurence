@@ -1,7 +1,7 @@
 import { Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useMatch, useNavigate } from 'react-router-dom';
-import bannerImage from '../assets/images/image_six.png';
+import bannerImage from '../assets/images/image_six.webp';
 import BackNextLayout from '../Components/boat/BackNextLayout';
 import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';

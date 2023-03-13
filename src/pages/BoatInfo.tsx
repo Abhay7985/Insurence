@@ -1,4 +1,4 @@
-import bannerImage from '../assets/images/image_one.png';
+import bannerImage from '../assets/images/image_one.webp';
 import React, { useEffect, useState } from 'react';
 import type { SizeType } from 'antd/es/config-provider/SizeContext';
 import { Select, Space } from 'antd';

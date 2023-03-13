@@ -1,7 +1,7 @@
 import { Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useMatch, useNavigate } from 'react-router-dom';
-import bannerImage from '../assets/images/image_three.png';
+import bannerImage from '../assets/images/image_three.webp';
 import BackNextLayout from '../Components/boat/BackNextLayout';
 import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
@@ -97,7 +97,7 @@ const AmenitiesOffer = () => {
     return (
         <section className="Confirm-address-section h-100 px-2 px-md-0">
             <div className="container-fluid h-100">
-                <form className="row h-100 place-layout" onSubmit={onSubmit}>
+                <form className="row h-100" onSubmit={onSubmit}>
                     <div className="col-lg-6">
                         <Spin spinning={loading}>
                             <div className="banner-content h-100 d-flex flex-column ">
