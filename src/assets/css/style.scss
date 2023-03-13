@@ -41,10 +41,13 @@
 }
 
 // .banner-content {
-
-//     overflow-y: auto;
-//     overflow-x: hidden;
+//     overflow: hidden;
+//     overflow-y: scroll!important;
+//     height: 100% !important;
 // }
+.place-layout{
+    overflow-y: auto;
+}
 
 .banner-footer {
     padding: 20px 0;

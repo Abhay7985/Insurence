@@ -106,7 +106,7 @@ const AddPhotos = () => {
     return (
         <section className="Confirm-address-section h-100">
             <div className="container-fluid h-100">
-                <form className="row h-100" onSubmit={onSubmit}>
+                <form className="row h-100 place-layout" onSubmit={onSubmit}>
                     <div className="col-lg-6">
                         <Spin spinning={spinning}>
                             <div className="banner-content h-100 d-flex flex-column ">

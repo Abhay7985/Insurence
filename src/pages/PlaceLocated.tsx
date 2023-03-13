@@ -27,7 +27,8 @@ export interface location {
     }[]
 }
 
-
+var userMarker = null as any;
+var cityCircle = null as any;
 function PlaceLocated() {
 
     const navigate = useNavigate()
@@ -105,7 +106,27 @@ function PlaceLocated() {
         }
     }
 
-
+    const createMerker = (position: any, map: any, icon?: any) => {
+        return new (window as any).google.maps.Marker({
+            position,
+            map,
+            draggable: false,
+            label: ``,
+            icon: icon
+        });
+    }
+    const createCircle = (radius: number) => {
+        return new (window as any).google.maps.Circle({
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#FF0000",
+            fillOpacity: 0.35,
+            map: googleMapRef.current.map_,
+            center: userMarker.getPosition(),
+            radius,
+        });
+    }
     const getLocationName = async (lat: number, lng: number, cityName: string) => {
         debugger
         let address: any
@@ -113,11 +134,18 @@ function PlaceLocated() {
             lat,
             lng
         )
+        if (userMarker) {
+            userMarker.setMap(null)
+        } if (cityCircle) {
+            cityCircle.setMap(null)
+        }
         var geocoder = new (window as any).google.maps.Geocoder()
         geocoder.geocode({ latLng: latlng }, async (results: any, status: any) => {
             address = results[0].address_components
             setLoactionsFromLatlng(address, '', lat, lng, cityName)
         })
+        userMarker = createMerker(latlng, googleMapRef.current.map_)
+        cityCircle = createCircle(5*1000)
     }
 
     const setLoactionsFromLatlng = (address: Array<any>, formatAddress: string, lat: number, lng: number, cityName: string) => {
@@ -317,10 +345,10 @@ function PlaceLocated() {
     return (
         <section className="select-passenger-section h-100">
             <div className="container-fluid h-100">
-                <form className="row h-100" onSubmit={onSubmit} onKeyDown={onKeyDown}>
+                <form className={`row h-100 ${form.center.lng == defaultProps.center.lng?'':'place-layout'}`} onSubmit={onSubmit} onKeyDown={onKeyDown}>
                     <div className="col-lg-6">
                         <Spin spinning={loading} >
-                            <div className="banner-content h-100 d-flex flex-column ">
+                            <div className="banner-content d-flex flex-column ">
                                 <div className="row gy-2 justify-content-center justify-content-lg-end pb-5 pb-lg-0">
                                     <div className="col-11 col-lg-11">
                                         <h3 className='banner-title'>Where is your place located?</h3>

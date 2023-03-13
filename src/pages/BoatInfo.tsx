@@ -145,7 +145,7 @@ const BoatInfo = () => {
                                 </div>
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-2 mb-sm-3">
-                                        <label htmlFor="input5" className="form-label">Size</label>
+                                        <label htmlFor="input5" className="form-label">Feet</label>
                                         <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) =>{setBoatSize(e.target.value.replace(/[^.0-9]/g, ""))}} />
                                     </div>
                                 </div>
