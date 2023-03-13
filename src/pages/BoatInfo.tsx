@@ -21,13 +21,14 @@ const BoatInfo = () => {
     const [boatName, setBoatName] = useState('')
     const [boatModel, setBoatModel] = useState('')
     const [boatSize, setBoatSize] = useState('')
+    const [boatExtension, setBoatExtension] = useState('')
     const [category_id, setCategoryId] = useState("")
     const [manufacturer_id, setManufacturerId] = useState("")
     const { Toast } = React.useContext(GlobalContext)
 
     const [loading, setLoading] = React.useState(false)
-     
-    const [boatState , setboatState] = useState({
+
+    const [boatState, setboatState] = useState({
 
     })
 
@@ -38,7 +39,7 @@ const BoatInfo = () => {
         const uRLSearchParams = new URLSearchParams()
         uRLSearchParams.set("name", boatName)
         uRLSearchParams.set("model", boatModel)
-        uRLSearchParams.set("size", boatSize)
+        uRLSearchParams.set("size", boatSize+boatExtension)
         uRLSearchParams.set("category_id", category_id)
         uRLSearchParams.set("manufacturer_id", manufacturer_id)
 
@@ -58,6 +59,10 @@ const BoatInfo = () => {
             }
             else if (!boatSize) {
                 Toast.error("Enter Boat Size")
+
+            }
+            else if (!boatExtension) {
+                Toast.error("Please select feet/inches")
 
             }
             else {
@@ -145,8 +150,20 @@ const BoatInfo = () => {
                                 </div>
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-2 mb-sm-3">
-                                        <label htmlFor="input5" className="form-label">Feet</label>
-                                        <input type="text" className="form-control" id='input5' placeholder='Enter size (in feet)' value={boatSize} onChange={(e) =>{setBoatSize(e.target.value.replace(/[^.0-9]/g, ""))}} />
+                                        <label htmlFor="input5" className="form-label">Size</label>
+                                        <div className='d-flex'>
+                                            <input type="text" className="form-control" id='input5' placeholder={`Enter size ${boatExtension?`(in${boatExtension})`:''}`} value={boatSize} onChange={(e) => { setBoatSize(e.target.value.replace(/[^.0-9]/g, "")) }} />
+                                            <Select
+                                                size="large"
+                                                onChange={setBoatExtension}
+                                                style={{ width: '12%' }}
+                                                options={[ { value: " feet", label: "feet" }, { value: " inches", label: "inches" }, ]}
+                                            />
+                                            {/* <select className='col-1'>
+                                            <option value=" feet">feet</option>
+                                            <option value=" inches">inches</option>
+                                        </select> */}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
