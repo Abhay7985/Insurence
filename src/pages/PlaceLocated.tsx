@@ -372,7 +372,7 @@ function PlaceLocated() {
                                                 }}
                                                 options={address?.data?.map((res, index: number) => { return { value: index, label: res.location_name } })}
                                             />
-                                            {/* <input type="text" ref={placeInputRef} className="form-control" placeholder="Enter your address" onFocus={() => setInputFocused(true)} onBlur={() => setTimeout(() => setInputFocused(false), 100)} /> */}
+                                            <input type="text" ref={placeInputRef} className="form-control" placeholder="Enter your address" onFocus={() => setInputFocused(true)} onBlur={() => setTimeout(() => setInputFocused(false), 100)} />
 
                                             {inputFocued && <div className="location border mt-1 d-flex gap-3 align-items-center nav-link" onClick={requestCurrenctLocation}>
                                                 <div className="location-icon">
