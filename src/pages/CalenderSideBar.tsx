@@ -184,17 +184,6 @@ const CalendarSideBar = () => {
 
         }
     }
-    // React.useEffect(() => {
-    //     if (uRLSearchParams.has("edit")) {
-    //         const type = uRLSearchParams.get("edit")
-    //         if (type == "week") {
-    //             getweekPrice()
-    //         } else {
-    //             getDatePrice()
-    //         }
-    //     }
-
-    // }, [uRLSearchParams.get("edit")])
     React.useEffect(() => {
     
     }, [])

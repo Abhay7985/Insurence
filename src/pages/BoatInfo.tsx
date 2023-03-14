@@ -10,7 +10,7 @@ import { Spin } from 'antd';
 import BackNextLayout from '../Components/boat/BackNextLayout';
 
 const BoatInfo = () => {
-    const { authState } = React.useContext(GlobalContext)
+    const { authState,loading,setLoading } = React.useContext(GlobalContext)
     const navigate = useNavigate()
     const location = useLocation()
     const [size, setSize] = useState<SizeType>('middle')
@@ -21,12 +21,12 @@ const BoatInfo = () => {
     const [boatName, setBoatName] = useState('')
     const [boatModel, setBoatModel] = useState('')
     const [boatSize, setBoatSize] = useState('')
+
     const [boatExtension, setBoatExtension] = useState('')
     const [category_id, setCategoryId] = useState("")
     const [manufacturer_id, setManufacturerId] = useState("")
     const { Toast } = React.useContext(GlobalContext)
 
-    const [loading, setLoading] = React.useState(false)
 
     const [boatState, setboatState] = useState({
 
@@ -77,6 +77,7 @@ const BoatInfo = () => {
     }
 
     const initialise = async () => {
+        setLoading(true)
         try {
             const category = await henceforthApi.Boat.category()
             const manufacturer = await henceforthApi.Boat.manufacturer()
@@ -86,6 +87,8 @@ const BoatInfo = () => {
             })
         } catch (error) {
 
+        }finally{
+            setLoading(false)
         }
     }
 
@@ -119,6 +122,8 @@ const BoatInfo = () => {
                                                     size={size}
                                                     defaultValue={category_id}
                                                     onChange={setCategoryId}
+                                                    loading={loading}
+                                                    disabled={loading}
                                                     style={{ width: '100%' }}
                                                     options={[{ value: "", label: "Select category" }, ...state?.category?.map((res: any) => { return { value: res?.id, label: res.category } })]}
                                                 />
@@ -135,6 +140,8 @@ const BoatInfo = () => {
                                                     size={size}
                                                     defaultValue={manufacturer_id}
                                                     onChange={setManufacturerId}
+                                                    loading={loading}
+                                                    disabled={loading}
                                                     style={{ width: '100%' }}
                                                     options={[{ value: "", label: "Select manufacturer" }, ...state?.manufacturer?.map((res: any) => { return { value: res?.id, label: res.manufacturer } })]}
                                                 />
@@ -155,8 +162,9 @@ const BoatInfo = () => {
                                             <input type="text" className="form-control" id='input5' placeholder={`Enter size ${boatExtension?`(in${boatExtension})`:''}`} value={boatSize} onChange={(e) => { setBoatSize(e.target.value.replace(/[^.0-9]/g, "")) }} />
                                             <Select
                                                 size="large"
+                                                defaultValue="select"
                                                 onChange={setBoatExtension}
-                                                style={{ width: '12%' }}
+                                                style={{ width: '25%' }}
                                                 options={[ { value: " feet", label: "feet" }, { value: " inches", label: "inches" }, ]}
                                             />
                                         </div>

@@ -5,7 +5,7 @@ import { useLocation, useMatch, useNavigate } from 'react-router-dom';
 import BackNextLayout from '../Components/boat/BackNextLayout';
 import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
-import extras from "../assets/images/extras.png"
+import extras from "../assets/images/extras.webp"
 import henceforthValidations from '../utils/henceforthValidations';
 export interface amenities {
     id: number,

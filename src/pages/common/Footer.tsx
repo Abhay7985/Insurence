@@ -94,7 +94,7 @@ const Footer = () => {
                         <div className="col-6 col-sm-6 col-md-4 col-lg-2">
                             <ul>
                                 <li>
-                                    <a href="#" className="nav-link d-flex align-items-center gap-3">
+                                    <a href="https://www.facebook.com/lanchasalvador/" target="_blank" className="nav-link d-flex align-items-center gap-3">
                                         <div className="facebook-icon text-center ms-1">
                                             <HenceforthIcons.Facebook />
                                         </div>
@@ -102,7 +102,7 @@ const Footer = () => {
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" className="nav-link d-flex align-items-center gap-2">
+                                    <a href="https://www.instagram.com/lanchasalvador/" target="_blank" className="nav-link d-flex align-items-center gap-2">
                                         <HenceforthIcons.Instagram />
                                         <span className="ms-1">Instagram</span>
                                     </a>
@@ -113,13 +113,13 @@ const Footer = () => {
                         <div className="col-6 col-sm-6 col-md-4 col-lg-2">
                             <ul>
                                 <li>
-                                    <a href="#" className="nav-link d-flex align-items-center gap-3">
+                                    <a href="https://www.youtube.com/@LanchaSalvadorOficial/" target="_blank" className="nav-link d-flex align-items-center gap-3">
                                         <HenceforthIcons.Youtube />
                                         <span>Youtube</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" className="nav-link d-flex align-items-center gap-3">
+                                    <a href="https://www.tiktok.com/@lanchasalvador/" target="_blank" className="nav-link d-flex align-items-center gap-3">
                                         <HenceforthIcons.Tiktok />
                                         <span className="ms-1">Tiktok</span>
                                     </a>
