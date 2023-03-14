@@ -45,13 +45,14 @@ const FaqPage = () => {
                             </div>
 
                             <div className="col-12 py-4">
-                                {Array.isArray(state?.data) && state?.data.map((res: faqListing, index: number) => {
-                                    return <Collapse key={res.id} defaultActiveKey={[index]}>
-                                        <Panel header={res.title} key={index}>
+                                <Collapse accordion >
+                                    {Array.isArray(state?.data) && state?.data.map((res: faqListing, index: number) => {
+                                        return <Panel header={res.title} key={res.id}>
                                             <p dangerouslySetInnerHTML={{ __html: res.description }}></p>
                                         </Panel>
-                                    </Collapse>
-                                })}
+
+                                    })}
+                                </Collapse>
                             </div>
 
                         </div>
