@@ -4,10 +4,13 @@ import { useContext, useState } from 'react';
 import BoatImage from '../../assets/images/boat_one.png';
 import HenceforthIcons from '../../assets/icons/HenceforthIcons';
 import { GlobalContext } from '../../context/Provider';
+import henceforthApi from '../../utils/henceforthApi';
+import { useLocation, useMatch } from 'react-router-dom';
 const ShareBoat = (state: any) => {
     const [modal2Open, setModal2Open] = useState(false);
     const { Toast } = useContext(GlobalContext)
-
+    const match=useMatch("")
+    const location = useLocation()
     const copyText = (id: string, name: string) => {
         if (id) {
             navigator?.clipboard?.writeText(id)
@@ -42,10 +45,11 @@ const ShareBoat = (state: any) => {
                             <div className="col-12 py-2">
                                 <div className="share-boat d-flex align-items-center gap-3">
                                     <div className="share-boat-image">
-                                        <img src={BoatImage} alt='img' className='img-fluid' />
+                                        <img src={state.cover_image ? `${henceforthApi.API_FILE_ROOT_ORIGINAL}${state.cover_image}` : ""} alt="img" className='img-fluid' />
+                                        {/* <img src={BoatImage} alt='img' className='img-fluid' /> */}
                                     </div>
                                     <div className="share-boat-desc">
-                                        <p>Lorem ipsum dolor sit amet.</p>
+                                        <p>{state.name}</p>
                                     </div>
                                 </div>
                             </div>
@@ -60,39 +64,39 @@ const ShareBoat = (state: any) => {
                             </div>
                             <div className="col-md-6">
                                 <div className="social-button">
-                                    <button className='btn w-100 py-3 text-start'>
+                                    <a href={`mailto:info@example.com?subject=lanchasalvador&body=https://${typeof window !== "undefined" ? window?.location?.origin : ''}${window.location.pathname}:`} target="_blank" className='btn w-100 py-3 text-start'>
                                         <HenceforthIcons.ShareGmail />
                                         <span className='ms-2'>Email</span>
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
-                            <div className="col-md-6">
+                            {/* <div className="col-md-6">
                                 <div className="social-button">
                                     <button className='btn w-100 py-3 text-start'>
                                         <HenceforthIcons.ShareMessage />
                                         <span className='ms-2'>Messages</span>
                                     </button>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="col-md-6">
                                 <div className="social-button">
-                                    <button className='btn w-100 py-3 text-start'>
+                                    <a onClick={() => typeof window !== "undefined" ? (window as any).open(`https://wa.me/918602681564?text=Checkout this Boat on Lancha-salvador : ${`${typeof window !== "undefined" ? window?.location?.origin : ''}${window.location.pathname}`}`) : ""} className='btn w-100 py-3 text-start'>
                                         <HenceforthIcons.ShareWhatsApp />
                                         <span className='ms-2'>WhatsApp</span>
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="social-button">
-                                    <button className='btn w-100 py-3 text-start'>
+                                    <a href={`http://www.facebook.com/dialog/send?app_id=513057044091772&link=https://aluguel.provider.lanchasalvador.com.br${window.location.pathname}&redirect_uri=${typeof window !== "undefined" ? window?.location?.origin :""}${window.location.pathname}`} target="_blank" className='btn w-100 py-3 text-start'>
                                         <HenceforthIcons.ShareMessenger />
                                         <span className='ms-2'>Messenger</span>
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="social-button">
-                                    <a href='https://www.facebook.com/lanchasalvador/' target="_blank" className='btn w-100 py-3 text-start'>
+                                    <a href={`https://www.facebook.com/sharer/sharer.php?u=${typeof window !== "undefined" ? window?.location?.origin : ''}${window.location.pathname}`} target="_blank" className='btn w-100 py-3 text-start'>
                                         <HenceforthIcons.ShareFacebook />
                                         <span className='ms-2'>Facebook</span>
                                     </a>
@@ -100,10 +104,10 @@ const ShareBoat = (state: any) => {
                             </div>
                             <div className="col-md-6">
                                 <div className="social-button">
-                                    <button className='btn w-100 py-3 text-start'>
+                                    <a href={`https://www.twitter.com/share?url=https://${typeof window !== "undefined" ? window?.location?.origin : ''}${window.location.pathname}`} target="_blank" className='btn w-100 py-3 text-start'>
                                         <HenceforthIcons.ShareTwitter />
                                         <span className='ms-2'>Twitter</span>
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                             {/* <div className="col-md-6">
