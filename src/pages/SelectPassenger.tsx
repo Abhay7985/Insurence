@@ -85,7 +85,7 @@ const SelectPassenger = () => {
                                             <div className="add-btn">
                                                 <ul className='d-flex gap-1 align-items-center'>
                                                     <li>
-                                                        <button type='button' className='btn border-0' onClick={() => setPassengerDay(passengerDay - 1)} disabled={passengerDay === 1}>
+                                                        <button type='button' className='btn border-0' onClick={() => setPassengerDay(passengerDay - 1)} disabled={passengerDay === 0}>
                                                             <img src={decrease} alt="icon" />
                                                         </button>
                                                     </li>
@@ -108,7 +108,7 @@ const SelectPassenger = () => {
                                             <div className="add-btn">
                                                 <ul className='d-flex gap-1 align-items-center'>
                                                     <li>
-                                                        <button type='button' className='btn border-0' onClick={() => setPassengerNight(passengerNight - 1)} disabled={passengerNight === 1}>
+                                                        <button type='button' className='btn border-0' onClick={() => setPassengerNight(passengerNight - 1)} disabled={passengerNight === 0}>
                                                             <img src={decrease} alt="icon" />
                                                         </button>
                                                     </li>
@@ -131,7 +131,7 @@ const SelectPassenger = () => {
                                             <div className="add-btn">
                                                 <ul className='d-flex gap-1 align-items-center'>
                                                     <li>
-                                                        <button type='button' className='btn border-0' onClick={() => setBedrooms(bedrooms - 1)} disabled={bedrooms === 1}>
+                                                        <button type='button' className='btn border-0' onClick={() => setBedrooms(bedrooms - 1)} disabled={bedrooms === 0}>
                                                             <img src={decrease} alt="icon" />
                                                         </button>
                                                     </li>
@@ -154,7 +154,7 @@ const SelectPassenger = () => {
                                             <div className="add-btn">
                                                 <ul className='d-flex gap-1 align-items-center'>
                                                     <li>
-                                                        <button type='button' className='btn border-0' onClick={() => setBathrooms(bathrooms - 1)} disabled={bathrooms === 1}>
+                                                        <button type='button' className='btn border-0' onClick={() => setBathrooms(bathrooms - 1)} disabled={bathrooms === 0}>
                                                             <img src={decrease} alt="icon" />
                                                         </button>
                                                     </li>
