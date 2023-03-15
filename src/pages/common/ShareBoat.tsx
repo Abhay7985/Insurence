@@ -56,7 +56,7 @@ const ShareBoat = (state: any) => {
                             {/* Share link */}
                             <div className="col-md-6">
                                 <div className="social-button">
-                                    <button className='btn w-100 py-3 text-start' onClick={() => copyText(`${window.location.origin}/${state.id}`, "Link")}>
+                                    <button className='btn w-100 py-3 text-start' onClick={() => copyText(`${window.location.origin}/boat/${state.id}/inquiry`, "Link")}>
                                         <HenceforthIcons.ShareCopy />
                                         <span className='ms-2'>Copy Link</span>
                                     </button>
