@@ -12,6 +12,7 @@ import HenceforthIcons from '../assets/icons/HenceforthIcons';
 import HenceforthGoogleMap from '../utils/henceforthGoogleMap';
 import { Image } from 'antd';
 import henceforthValidations from '../utils/henceforthValidations';
+import ShareBoat from './common/ShareBoat';
 
 const contentStyle: React.CSSProperties = {
     margin: 0,
@@ -39,7 +40,7 @@ const BoatDetails = () => {
     const [Date, setDate] = useState("")
     const [Filter, setDateFilter] = useState({
         prices: [],
-        loading:false
+        loading: false
     })
     const [dateRes, setDateRes] = useState({
         prices: []
@@ -152,7 +153,7 @@ const BoatDetails = () => {
                     {/* banner-row */}
                     <div className="row">
                         <div className="col-12">
-                        <div className="boat-header d-flex justify-content-between">
+                            <div className="boat-header d-flex justify-content-between">
                                 <div className="title">
                                     <Link to={`/`}>
                                         <div className="left-arrow" role="button" >
@@ -162,10 +163,11 @@ const BoatDetails = () => {
                                     <h3 className='mt-4 mb-2'>{state.name}</h3>
                                     <p>{state.category} • {state?.address?.address1}</p>
                                 </div>
-                                <button className="btn border-0 p-0 " onClick={() => copyText(`${window.location.origin}/${state.id}`, "Link")} >
+                                {/* <button className="btn border-0 p-0 " onClick={() => copyText(`${window.location.origin}/${state.id}`, "Link")} >
                                     <HenceforthIcons.Share />
                                     <span role="button" className='text-decoration-none'> Share</span>
-                                </button>
+                                </button> */}
+                                <ShareBoat {...state} />
 
                             </div>
                         </div>
@@ -209,7 +211,7 @@ const BoatDetails = () => {
                                     <h4 className='mb-2'>Amenities</h4>
                                     <div className="aminities-list d-flex gap-5">
                                         <ul className='d-flex flex-wrap w-100 gap-2'>
-                                            {state?.amenities?.map((e: any, index: number) => <li key={index} className='fw-600 text-dark-black' style={{width:"32%"}}>{e?.amenity}</li>)}
+                                            {state?.amenities?.map((e: any, index: number) => <li key={index} className='fw-600 text-dark-black' style={{ width: "32%" }}>{e?.amenity}</li>)}
                                         </ul>
                                     </div>
                                 </div>
@@ -256,7 +258,7 @@ const BoatDetails = () => {
                         </div>
                         {/* price-card */}
                         <div className="col-lg-6 col-xl-5 order-1 order-md-2">
-                            <div className="price-card px-4 py-4 position-sticky" style={{top: "2rem"}}>
+                            <div className="price-card px-4 py-4 position-sticky" style={{ top: "2rem" }}>
                                 <h4 className='mb-4 mt-1'>From {henceforthValidations.BrazilianReal(+state.minimum_price)}</h4>
                                 <div className="select-date mb-2">
                                     <DatePicker onChange={onChange1} placeholder='Add Date' />

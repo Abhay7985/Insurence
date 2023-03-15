@@ -11,6 +11,7 @@ import { GlobalContext } from '../context/Provider';
 import HenceforthIcons from '../assets/icons/HenceforthIcons';
 import henceofrthEnums from '../utils/henceofrthEnums';
 import henceforthValidations from '../utils/henceforthValidations';
+import ShareBoat from './common/ShareBoat';
 
 const BoatListing = () => {
     const navigate = useNavigate()
@@ -133,7 +134,7 @@ const BoatListing = () => {
                                 </div>
                             </div>
                         </div>
-
+                        {/* <ShareBoat /> */}
                         {/* table */}
                         <div className="col-12 table-responsive">
                             <table className="table">
@@ -164,7 +165,7 @@ const BoatListing = () => {
                                                 <div className="status d-flex align-items-center gap-1">
                                                     <div className={`status-dot bg-${dotColor.find(res => res.status == e?.status)?.status}`}></div>
                                                     {/* <Badge color={dotColor.find(res => res.status == e?.status)?.color} /> */}
-                                                   
+
                                                     <div className="ms-1">
                                                         <p>{e?.status}</p>
                                                     </div>
