@@ -203,7 +203,7 @@ const BoatDetails = () => {
                         <div className="col-lg-6 col-xl-7 order-2 order-md-1">
                             <div className="morning-content">
                                 <div className="content-title border-bottom pb-4">
-                                    <h4 className='mb-2'>{state.size}-foot Manufacturer for up to  passengers</h4>
+                                    <h4 className='mb-2'>{state.size} Manufacturer for up to  passengers</h4>
                                     <p>{state.passenger_day} passengers day • {state.passenger_night} passengers overnight • {state.bedrooms} rooms • {state.bathrooms} bathrooms</p>
                                 </div>
                                 {/* aminities */}
@@ -211,7 +211,7 @@ const BoatDetails = () => {
                                     <h4 className='mb-2'>Amenities</h4>
                                     <div className="aminities-list d-flex gap-5">
                                         <ul className='d-flex flex-wrap w-100 gap-2'>
-                                            {state?.amenities?.map((e: any, index: number) => <li key={index} className='fw-600 text-dark-black' style={{ width: "32%" }}>{e?.amenity}</li>)}
+                                            {state?.amenities?.map((e: any, index: number) => <li key={index} className='fw-600 text-dark-black' style={{ width: "32%" }}><HenceforthIcons.AnchorIcon/> {e?.amenity}</li>)}
                                         </ul>
                                     </div>
                                 </div>
