@@ -210,6 +210,7 @@ const EditBoatDetails = () => {
                                     title="Delete the Details"
                                     description="Are you sure"
                                     okText="Yes"
+                                    placement="bottom"
                                     okType="danger"
                                     cancelText="No"
                                     onConfirm={() => {
