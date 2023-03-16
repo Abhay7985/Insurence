@@ -289,16 +289,16 @@ function PlaceLocated() {
                 Toast.error("Enter Street")
                 deleteQuery()
             }
-            else if (!state.city) {
-                Toast.error("Enter City Name")
-                deleteQuery()
-            }
+            // else if (!state.city) {
+            //     // Toast.error("Enter City Name")
+            //     deleteQuery()
+            // }
             else if (!state.state) {
                 Toast.error("Enter State Name")
             }
-            else if (!state.postCode) {
-                Toast.error("Enter PostCode")
-            }
+            // else if (!state.postCode) {
+            //     // Toast.error("Enter PostCode")
+            // }
             else if (!state.country) {
                 Toast.error("Enter Country")
                 deleteQuery()
