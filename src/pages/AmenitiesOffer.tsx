@@ -25,6 +25,7 @@ const AmenitiesOffer = () => {
     const handleChecked = (e: any) => {
         let prev = amenities;
         let value = e.target.value
+        
         let itemIndex = prev.indexOf(value);
         if (itemIndex !== -1) {
             prev.splice(itemIndex, 1);
@@ -93,6 +94,7 @@ const AmenitiesOffer = () => {
     useEffect(() => {
         handleAmenities()
     }, [])
+    console.log(amenities)
 
     return (
         <section className="Confirm-address-section h-100 px-2 px-md-0">

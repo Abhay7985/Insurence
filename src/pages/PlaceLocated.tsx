@@ -23,7 +23,8 @@ export interface location {
     data: {
         id: Number,
         location: { latitude: number, longitude: number },
-        location_name: string
+        location_name: string,
+        title:string
     }[]
 }
 
@@ -115,18 +116,18 @@ function PlaceLocated() {
             icon: icon
         });
     }
-    const createCircle = (radius: number) => {
-        return new (window as any).google.maps.Circle({
-            strokeColor: "#FF0000",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#FF0000",
-            fillOpacity: 0.35,
-            map: googleMapRef.current.map_,
-            center: userMarker.getPosition(),
-            radius,
-        });
-    }
+    // const createCircle = (radius: number) => {
+    //     return new (window as any).google.maps.Circle({
+    //         strokeColor: "#FF0000",
+    //         strokeOpacity: 0.8,
+    //         strokeWeight: 2,
+    //         fillColor: "#FF0000",
+    //         fillOpacity: 0.35,
+    //         map: googleMapRef.current.map_,
+    //         center: userMarker.getPosition(),
+    //         radius,
+    //     });
+    // }
     const getLocationName = async (lat: number, lng: number, cityName: string) => {
         debugger
         let address: any
@@ -145,7 +146,7 @@ function PlaceLocated() {
             setLoactionsFromLatlng(address, '', lat, lng, cityName)
         })
         userMarker = createMerker(latlng, googleMapRef.current.map_)
-        cityCircle = createCircle(5*1000)
+        // cityCircle = createCircle(5*1000)
     }
 
     const setLoactionsFromLatlng = (address: Array<any>, formatAddress: string, lat: number, lng: number, cityName: string) => {
@@ -370,7 +371,7 @@ function PlaceLocated() {
                                                     })
                                                     getLocationName(address.data[+value].location.latitude, address.data[+value].location.longitude, '')
                                                 }}
-                                                options={address?.data?.map((res, index: number) => { return { value: index, label: res.location_name } })}
+                                                options={address?.data?.map((res, index: number) => { return { value: index, label: res.title } })}
                                             />
                                             {/* <input type="text" ref={placeInputRef} className="form-control" placeholder="Enter your address" onFocus={() => setInputFocused(true)} onBlur={() => setTimeout(() => setInputFocused(false), 100)} /> */}
 
