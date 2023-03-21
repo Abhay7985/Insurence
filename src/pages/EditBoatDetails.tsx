@@ -27,10 +27,10 @@ const EditBoatDetails = () => {
     const location = useLocation()
     const { authState, Toast } = React.useContext(GlobalContext)
     const [loading, setLoading] = React.useState(false)
-
+    const [open, setOpen] = useState(false);
     const [state, setState] = useState({
         amenities: [],
-        extra_amenity:[],
+        extra_amenity: [],
         bathrooms: 0,
         bedrooms: 0,
         category_id: 0,
@@ -107,8 +107,9 @@ const EditBoatDetails = () => {
 
 
     const deleteListing = async (id: any) => {
-        setLoading(true)
         try {
+            setLoading(true)
+            setOpen(true);
 
             const apiRes = await henceforthApi.Boat.deleteBoat(id)
             Toast.success(apiRes.message)
@@ -116,7 +117,8 @@ const EditBoatDetails = () => {
         } catch (error) {
             Toast.error(error)
         } finally {
-            setLoading(false)
+            setOpen(false);
+            setLoading(false);
         }
 
     }
@@ -210,6 +212,8 @@ const EditBoatDetails = () => {
                                     title="Delete the Details"
                                     description="Are you sure"
                                     okText="Yes"
+                                    open={open}
+                                    okButtonProps={{ loading: loading }}
                                     placement="bottom"
                                     okType="danger"
                                     cancelText="No"
@@ -354,7 +358,7 @@ const EditBoatDetails = () => {
                                                             <h6 className='mb-2'>Amenities</h6>
                                                             <div className="amenities-list d-flex gap-5">
                                                                 <ul>
-                                                                    {state?.amenities.length?state?.amenities?.map((e: any) => <li>{e.amenity}</li>):<li>No Amenities found</li>}
+                                                                    {state?.amenities.length ? state?.amenities?.map((e: any) => <li>{e.amenity}</li>) : <li>No Amenities found</li>}
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -366,28 +370,28 @@ const EditBoatDetails = () => {
                                                         </div>
                                                     </div>
                                                 </div>}
-                                                {state.name && 
-                                                   <div className="Listing-basics bg-white Pricing mb-4" id='extraamenities_tab'>
-                                                   <div className="photo-header d-flex justify-content-between mb-3">
-                                                       <h4>Extra's</h4>
-                                                   </div>
-                                                   <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
-                                                       <div className="listing-content">
-                                                           <h6 className='mb-2'>Extra's</h6>
-                                                           <div className="amenities-list d-flex gap-5">
-                                                               <ul>
-                                                                   {state?.extra_amenity.length?state?.extra_amenity?.map((e: any) => <li className='text-capitalize'>{e.extra_amenity} - ${henceforthValidations.BrazilianReal(e.price)}</li>):<li>No Extra's found</li>}
-                                                               </ul>
-                                                           </div>
-                                                       </div>
-                                                       <hr />
-                                                       <div className="edit-photo">
-                                                           <Link to={`/boat/${match?.params.id}/extra/edit`}>
-                                                               <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
-                                                           </Link>
-                                                       </div>
-                                                   </div>
-                                               </div>}
+                                            {state.name &&
+                                                <div className="Listing-basics bg-white Pricing mb-4" id='extraamenities_tab'>
+                                                    <div className="photo-header d-flex justify-content-between mb-3">
+                                                        <h4>Extra's</h4>
+                                                    </div>
+                                                    <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
+                                                        <div className="listing-content">
+                                                            <h6 className='mb-2'>Extra's</h6>
+                                                            <div className="amenities-list d-flex gap-5">
+                                                                <ul>
+                                                                    {state?.extra_amenity.length ? state?.extra_amenity?.map((e: any) => <li className='text-capitalize'>{e.extra_amenity} - ${henceforthValidations.BrazilianReal(e.price)}</li>) : <li>No Extra's found</li>}
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <hr />
+                                                        <div className="edit-photo">
+                                                            <Link to={`/boat/${match?.params.id}/extra/edit`}>
+                                                                <button className='btn p-0 border-0 text-yellow fw-bold'>Edit</button>
+                                                            </Link>
+                                                        </div>
+                                                    </div>
+                                                </div>}
                                             {/* Location */}
                                             {state.name &&
                                                 <EditLocationBoat {...state.address} initialise={initialise} />
