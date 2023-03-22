@@ -91,12 +91,14 @@ const BoatListing = () => {
                     <div className="row gy-4">
                         <div className="col-12 mb-3">
                             <div className="boat-listing-header d-flex justify-content-between">
-                                <h2>{state.total == 1 ? `${state.total} Boat` : `${state.total} Boats`}</h2>
+                                <h2>{state.total == 1 ? `${state.total} Boat` : `${state.total} Barcos`}</h2>
                                 <div className="add-boat-btn">
                                     <Link to={`/boat/add/info`} className='nav-link'>
                                         <button className='btn btn-yellow d-flex align-items-center gap-2'>
                                             <img src={addIcon} alt="icon" className='img-fluid' height='15px' width="15px" />
-                                            <span>Add New Boat</span>
+                                            {/* <span>Add New Boat</span> */}
+                                            <span>Adicionar Novo Barco</span>
+
                                         </button>
                                     </Link>
                                 </div>
@@ -112,7 +114,7 @@ const BoatListing = () => {
                                         e.preventDefault();
                                         handleSearch('search', e.target.search.value);
                                     }}>
-                                        <input type="text" className="form-control rounded-pill px-5" name='search' placeholder="Search..." onChange={(e: any) => {
+                                        <input type="text" className="form-control rounded-pill px-5" name='search' placeholder="Buscar..." onChange={(e: any) => {
                                             if (!e.target.value) {
                                                 handleSearch(e.target.name, e.target.value);
                                             }
@@ -143,9 +145,11 @@ const BoatListing = () => {
                                         <th scope="col">SR. NO.</th>
                                         <th scope="col">BOATS</th>
                                         <th scope="col">STATUS</th>
-                                        <th scope="col">PRICE</th>
-                                        <th scope="col">LAST MODIFIED</th>
-                                        <th scope="col">ACTION</th>
+                                        {/* <th scope="col">PRICE</th> */}
+                                        <th scope="col">PREÇO</th>
+                                        {/* <th scope="col">LAST MODIFIED</th> */}
+                                        <th scope="col">ÚLTIMA MODIFICAÇÃO</th>
+                                        <th scope="col">AÇÃO</th>
                                     </tr>
                                 </thead>
                                 <tbody>

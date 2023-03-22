@@ -109,13 +109,15 @@ const BoatInfo = () => {
                                 </div>
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-2 mb-sm-3">
-                                        <label htmlFor="input1" className="form-label">Boat Name</label>
-                                        <input type="text" className="form-control" id='input1' placeholder='Enter boat name' value={boatName} onChange={(e) => setBoatName(e.target.value)} />
+                                        {/* <label htmlFor="input1" className="form-label">Boat Name</label> */}
+                                        <label htmlFor="input1" className="form-label">Nome da Embarcação</label>
+
+                                        <input type="text" className="form-control" id='input1' placeholder='Enter Insira o nome' value={boatName} onChange={(e) => setBoatName(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-2 mb-sm-3">
-                                        <label htmlFor="input2" className="form-label">Category</label>
+                                        <label htmlFor="input2" className="form-label">Categoria</label>
                                         <div className="category">
                                             <Space direction="vertical" style={{ width: '100%' }}>
                                                 <Select
@@ -125,7 +127,7 @@ const BoatInfo = () => {
                                                     loading={loading}
                                                     disabled={loading}
                                                     style={{ width: '100%' }}
-                                                    options={[{ value: "", label: "Select category" }, ...state?.category?.map((res: any) => { return { value: res?.id, label: res.category } })]}
+                                                    options={[{ value: "", label: "Selecione a categoria" }, ...state?.category?.map((res: any) => { return { value: res?.id, label: res.category } })]}
                                                 />
                                             </Space>
                                         </div>
@@ -133,7 +135,9 @@ const BoatInfo = () => {
                                 </div>
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-2 mb-sm-3">
-                                        <label htmlFor="input3" className="form-label">Manufacturer</label>
+                                        {/* <label htmlFor="input3" className="form-label">Manufacturer</label> */}
+                                        <label htmlFor="input3" className="form-label">Fabricante</label>
+
                                         <div className="category">
                                             <Space direction="vertical" style={{ width: '100%' }}  >
                                                 <Select
@@ -143,7 +147,7 @@ const BoatInfo = () => {
                                                     loading={loading}
                                                     disabled={loading}
                                                     style={{ width: '100%' }}
-                                                    options={[{ value: "", label: "Select manufacturer" }, ...state?.manufacturer?.map((res: any) => { return { value: res?.id, label: res.manufacturer } })]}
+                                                    options={[{ value: "", label: "Selecione o Fabricante" }, ...state?.manufacturer?.map((res: any) => { return { value: res?.id, label: res.manufacturer } })]}
                                                 />
                                             </Space>
                                         </div>
@@ -151,21 +155,21 @@ const BoatInfo = () => {
                                 </div>
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-2 mb-sm-3">
-                                        <label htmlFor="input4" className="form-label">Model</label>
-                                        <input type="text" className="form-control" id='input4' placeholder='Enter model' value={boatModel} onChange={(e) => setBoatModel(e.target.value)} />
+                                        <label htmlFor="input4" className="form-label">Modelo</label>
+                                        <input type="text" className="form-control" id='input4' placeholder='Selecione o Modelo' value={boatModel} onChange={(e) => setBoatModel(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-2 mb-sm-3">
-                                        <label htmlFor="input5" className="form-label">Size</label>
+                                        <label htmlFor="input5" className="form-label">Tamanho</label>
                                         <div className='d-flex'>
-                                            <input type="text" className="form-control" id='input5' placeholder={`Enter size ${boatExtension?`(in${boatExtension})`:''}`} value={boatSize} onChange={(e) => { setBoatSize(e.target.value.replace(/[^.0-9]/g, "")) }} />
+                                            <input type="text" className="form-control" id='input5' placeholder={`Insira Tamanho ${boatExtension?`(in${boatExtension})`:''}`} value={boatSize} onChange={(e) => { setBoatSize(e.target.value.replace(/[^.0-9]/g, "")) }} />
                                             <Select
                                                 size="large"
                                                 defaultValue="select"
                                                 onChange={setBoatExtension}
                                                 style={{ width: '25%' }}
-                                                options={[ { value: " feet", label: "feet" }, { value: " inches", label: "inches" }, ]}
+                                                options={[ { value: " feet", label: "pés" }, { value: " inches", label: "inches" }, ]}
                                             />
                                         </div>
                                     </div>

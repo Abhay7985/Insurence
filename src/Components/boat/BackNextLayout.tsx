@@ -5,10 +5,12 @@ const BackNextLayout = (props: TypeProps) => <div className="mx-0 row banner-foo
     <div className="col-12 col-lg-11 px-0">
         <ul className='d-flex justify-content-between'>
             <li>
-                <button type='button' onClick={() => window.history.back()} className='btn back-btn border-0'>Back</button>
+                {/* <button type='button' onClick={() => window.history.back()} className='btn back-btn border-0'>Back</button> */}
+                <button type='button' onClick={() => window.history.back()} className='btn back-btn border-0'>Anterior</button>
+
             </li>
             <li>
-                <button type='submit' className='btn btn-yellow px-3'>{props.buttonName || 'Next'}</button>
+                <button type='submit' className='btn btn-yellow px-3'>{props.buttonName || 'Próxima'}</button>
             </li>
         </ul>
     </div>
