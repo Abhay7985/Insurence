@@ -99,7 +99,7 @@ const actionComparison=uRLSearchParams.get("action") as string === "save_and_exi
                                         </div>
                                     </div>
                                     <div className="col-11 col-lg-11 mb-4">
-                                        <h4 className='mb-3'>Pets Allowed</h4>
+                                        <h4 className='mb-3'>permitido Pets</h4>
                                         <div className="form-check mb-2">
                                             <input className="form-check-input form-check-radio" type="radio" onChange={handleState} checked={state.pets_allowed == 1} value={1} name="pets_allowed" id="radio4" />
                                             <label className="form-check-label" htmlFor="radio4">

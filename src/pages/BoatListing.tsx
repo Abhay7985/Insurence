@@ -148,7 +148,7 @@ const BoatListing = () => {
                                         {/* <th scope="col">PRICE</th> */}
                                         <th scope="col">PREÇO</th>
                                         {/* <th scope="col">LAST MODIFIED</th> */}
-                                        <th scope="col">ÚLTIMA MODIFICAÇÃO</th>
+                                        <th scope="col">ÚLTIMA ATUALIZAÇÃO</th>
                                         <th scope="col">AÇÃO</th>
                                     </tr>
                                 </thead>
@@ -171,7 +171,7 @@ const BoatListing = () => {
                                                     {/* <Badge color={dotColor.find(res => res.status == e?.status)?.color} /> */}
 
                                                     <div className="ms-1">
-                                                        <p>{e?.status}</p>
+                                                        <p>{e?.status==="draft" ? "Rescunho":"Ativo" }</p>
                                                     </div>
                                                 </div>
                                             </td>
