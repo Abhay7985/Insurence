@@ -112,7 +112,7 @@ const BoatInfo = () => {
                                         {/* <label htmlFor="input1" className="form-label">Boat Name</label> */}
                                         <label htmlFor="input1" className="form-label">Nome da Embarcação</label>
 
-                                        <input type="text" className="form-control" id='input1' placeholder='Enter Insira o nome' value={boatName} onChange={(e) => setBoatName(e.target.value)} />
+                                        <input type="text" className="form-control" id='input1' placeholder='Insira o nome' value={boatName} onChange={(e) => setBoatName(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className="col-11 col-lg-11">
