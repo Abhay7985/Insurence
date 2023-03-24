@@ -109,7 +109,7 @@ const EditBoatDetails = () => {
     const deleteListing = async (id: any) => {
         try {
             setLoading(true)
-            setOpen(true);
+            
 
             const apiRes = await henceforthApi.Boat.deleteBoat(id)
             Toast.success(apiRes.message)
@@ -117,7 +117,7 @@ const EditBoatDetails = () => {
         } catch (error) {
             Toast.error(error)
         } finally {
-            setOpen(false);
+            // setOpen(false);
             setLoading(false);
         }
 
@@ -212,7 +212,7 @@ const EditBoatDetails = () => {
                                     title="Delete the Details"
                                     description="Are you sure"
                                     okText="Yes"
-                                    open={open}
+                                    // open={open}
                                     okButtonProps={{ loading: loading }}
                                     placement="bottom"
                                     okType="danger"

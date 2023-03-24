@@ -174,9 +174,9 @@ const InquiryPage = () => {
                 </div>
             </section>
             {/* <!-- Button trigger modal --> */}
-            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            {/* <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Launch static backdrop modal
-            </button>
+            </button> */}
 
             {/* <!-- Modal --> */}
             <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">

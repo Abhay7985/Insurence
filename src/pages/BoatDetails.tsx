@@ -203,7 +203,7 @@ const BoatDetails = () => {
                         <div className="col-lg-6 col-xl-7 order-2 order-md-1">
                             <div className="morning-content">
                                 <div className="content-title border-bottom pb-4">
-                                    <h4 className='mb-2'>{state.size} Manufacturer for up to  passengers</h4>
+                                    <h4 className='mb-2'>{state.size} Manufacturer for up to {state.passenger_day} passengers</h4>
                                     <p>{state.passenger_day} passengers day • {state.passenger_night} passengers overnight • {state.bedrooms} rooms • {state.bathrooms} bathrooms</p>
                                 </div>
                                 {/* aminities */}
