@@ -475,6 +475,10 @@
         }
     }
 }
+.active{
+    color: $primary-color !important;
+}
+
 
 .ant-tabs {
     .ant-tabs-ink-bar {

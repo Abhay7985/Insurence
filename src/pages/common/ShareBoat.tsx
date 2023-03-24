@@ -80,28 +80,28 @@ const ShareBoat = (state: any) => {
                             </div> */}
                             <div className="col-md-6">
                                 <div className="social-button">
-                                    <a onClick={() => typeof window !== "undefined" ? (window as any).open(`https://wa.me/918602681564?text=Checkout this Boat on Lancha-salvador : ${`${typeof window !== "undefined" ? window?.location?.origin : ''}${window.location.pathname}`}`) : ""} className='btn w-100 py-3 text-start'>
+                                    <a onClick={() => typeof window !== "undefined" ? (window as any).open(`https://wa.me/5571986641952?text=Checkout this Boat on Lancha-salvador : ${`${typeof window !== "undefined" ? window?.location?.origin : ''}${window.location.pathname}`}`) : ""} className='btn w-100 py-3 text-start'>
                                         <HenceforthIcons.ShareWhatsApp />
                                         <span className='ms-2'>WhatsApp</span>
                                     </a>
                                 </div>
                             </div>
-                            <div className="col-md-6">
+                            {/* <div className="col-md-6">
                                 <div className="social-button">
                                     <a href={`http://www.facebook.com/dialog/send?app_id=513057044091772&link=https://aluguel.provider.lanchasalvador.com.br${window.location.pathname}&redirect_uri=${typeof window !== "undefined" ? window?.location?.origin :""}${window.location.pathname}`} target="_blank" className='btn w-100 py-3 text-start'>
                                         <HenceforthIcons.ShareMessenger />
                                         <span className='ms-2'>Messenger</span>
                                     </a>
                                 </div>
-                            </div>
-                            <div className="col-md-6">
+                            </div> */}
+                            {/* <div className="col-md-6">
                                 <div className="social-button">
                                     <a href={`https://www.facebook.com/sharer/sharer.php?u=${typeof window !== "undefined" ? window?.location?.origin : ''}${window.location.pathname}`} target="_blank" className='btn w-100 py-3 text-start'>
                                         <HenceforthIcons.ShareFacebook />
                                         <span className='ms-2'>Facebook</span>
                                     </a>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="col-md-6">
                                 <div className="social-button">
                                     <a href={`https://www.twitter.com/share?url=https://${typeof window !== "undefined" ? window?.location?.origin : ''}${window.location.pathname}`} target="_blank" className='btn w-100 py-3 text-start'>

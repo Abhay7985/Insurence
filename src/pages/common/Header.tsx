@@ -69,13 +69,13 @@ const Header = () => {
                         {authState.access_token &&
                             <ul className='d-flex flex-column flex-lg-row flex-wrap align-items-center gap-3 gap-lg-5 mt-3 mt-lg-0'>
                                 <li>
-                                    <Link to='/' className='nav-link'>Boats</Link>
+                                    <Link to='/' className={`nav-link ${location.pathname=="/" ? "active":"" } `}>Boats</Link>
                                 </li>
                                 <li>
-                                    <Link to={`inquiry/all/1`} className='nav-link'>Inquiry</Link>
+                                    <Link to={`inquiry/all/1`} className={`nav-link${location.pathname.startsWith("/inquiry") ? " active":"" }`}>Inquiry</Link>
                                 </li>
                                 <li>
-                                    <Link to={`/calender?available_date=${moment().valueOf()}`} className='nav-link'>Calender</Link>
+                                    <Link to={`/calender?available_date=${moment().valueOf()}`} className={`nav-link ${location.pathname.startsWith("/calender") ? "active":"" }`}>Calender</Link>
                                 </li>
                                 <li>
                                     <Dropdown menu={{ items }}
