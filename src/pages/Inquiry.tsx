@@ -141,14 +141,15 @@ const InquiryPage = () => {
                             </div>
                         </div>
                         <div className="col-12">
-                            <div className="input-group mb-3 form-control p-0 rounded-pill w-auto">
-                                <span className="input-group-text bg-transparent border-0 pe-0" id="basic-addon1">
-                                    <img src={search} alt="icon" />
-                                </span>
+                            <div className="input-group mb-3 form-control p-0 rounded-pill w-100">
+                               
                                 <form onSubmit={(e: any) => {
                                     e.preventDefault();
                                     handleSearch('search', e.target.search.value);
-                                }}>
+                                }} className='w-100 d-flex'>
+                                     <span className="input-group-text bg-transparent border-0 pe-0" id="basic-addon1">
+                                    <img src={search} alt="icon" />
+                                </span>
                                     <input type="text" className="form-control border-0 rounded-pill" name='search' placeholder="Search..." onChange={(e: any) => {
                                         if (!e.target.value) {
                                             handleSearch(e.target.name, e.target.value);
