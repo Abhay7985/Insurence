@@ -227,7 +227,10 @@ const InquiryPage = () => {
                                 <div className="col-lg-6">
                                     <div className="inquiry-name">
                                         <h6 className='mb-2'>Phone No.</h6>
-                                        <p>{inqieryData.phone ? '+91' : ""}{inqieryData.phone ? inqieryData.phone : "Not Avaiable"}</p>
+                                        {/* <p>{inqieryData.phone ? '+55' : ""}{inqieryData.phone ? inqieryData.phone : "Not Avaiable"}</p> */}
+                                        <p>{inqieryData.phone ? inqieryData.phone : "Not Avaiable"}</p>
+                                        
+                                        {/* {inqieryData.phone ? '+55' : ""} */}
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
