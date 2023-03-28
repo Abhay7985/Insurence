@@ -9,6 +9,7 @@ import Spinner from './common/AntSpinner';
 import { Spin } from 'antd';
 import { avaiableprice } from '../interfaces';
 import henceforthValidations from '../utils/henceforthValidations';
+import henceforthDate from '../utils/henceforthDate';
 
 interface RouteDataInterface {
     id: number,
@@ -38,7 +39,6 @@ const CalendarSideBar = () => {
     })
 
     const queryDate = moment(Number(uRLSearchParams.get('available_date')))
-
     const handleQuery = (key: string, value: string) => {
         if (value) {
             uRLSearchParams.set(key, value)
@@ -157,7 +157,7 @@ const CalendarSideBar = () => {
 
         }
     }
-   
+
 
     const getSidebarValue = async (routes: Array<any>) => {
         try {
@@ -185,13 +185,12 @@ const CalendarSideBar = () => {
         }
     }
     React.useEffect(() => {
-    
+
     }, [])
     React.useEffect(() => {
         initialiseRoutes()
-         
-    }, [uRLSearchParams.get("edit"),uRLSearchParams.get("available_date")])
 
+    }, [uRLSearchParams.get("edit"), uRLSearchParams.get("available_date")])
     return (
         <div className="col-lg-3 px-0">
             <div className="sidebar-calender py-4">
@@ -209,8 +208,9 @@ const CalendarSideBar = () => {
                         </div>
 
                         <div className="edit-date border-bottom px-4 py-4">
+
                             <button className='btn border-0 p-0 d-flex justify-content-between w-100 align-items-center' onClick={() => handleQuery('edit', "week")}>
-                                <span>Edit {queryDate.format('dddd')}</span>
+                                <span>Edit {henceforthDate.getWeekName(queryDate.weekday())}</span>
                                 <HenceforthIcons.ChevronRight />
                             </button>
                         </div>
@@ -223,7 +223,7 @@ const CalendarSideBar = () => {
                             <div className="edit-tuesday-header py-4 border-bottom px-4">
                                 {uRLSearchParams.get("edit") == "date" ?
                                     <h5 className='mb-3'>{queryDate.format('ddd, DD MMM YYYY')}</h5> :
-                                    <h5 className='mb-3'>Edit {queryDate.format('dddd')}</h5>}
+                                    <h5 className='mb-3'>Edit {henceforthDate.getWeekName(queryDate.weekday())}</h5>}
                                 <div className="available d-flex justify-content-between align-items-center">
                                     <p> Availability</p>
                                     <div className="form-check form-switch">

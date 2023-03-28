@@ -11,7 +11,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../context/Provider';
 import CalendarSideBar from './CalenderSideBar';
 import henceforthValidations from '../utils/henceforthValidations';
-
+import locale from 'antd/locale/fr_FR';
+// import frFR from 'antd/locale/fr_FR';
 
 const ProviderCalender = () => {
   const { Toast } = React.useContext(GlobalContext)
@@ -118,6 +119,7 @@ const ProviderCalender = () => {
                 <div className="col-12">
                   <Calendar
                    dateCellRender={dateCellRender}
+                  //  locale={frFR}
                    disabledDate={(date) => {
                     if (date.endOf('d').valueOf() < Date.now()){return true;}return false;
                   }}  onSelect={(e: any) => handleQuery('available_date', `${moment(e.$d).valueOf()}`)}  />

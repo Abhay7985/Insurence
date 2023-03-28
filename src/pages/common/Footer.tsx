@@ -41,7 +41,8 @@ const Footer = () => {
                 <div className="container">
                     <div className="row gy-3 gy-sm-4 justify-content-lg-between">
                         <div className="col-md-12 text-center">
-                            <h5>Subscribe to our newsletter</h5>
+                            {/* <h5>Subscribe to our newsletter</h5> */}
+                            <h5>Receber promoções e novidades</h5>
                         </div>
                         <div className="col-lg-12">
                             <div className="row justify-content-center">
@@ -49,9 +50,9 @@ const Footer = () => {
                                     <div className="subscribe">
                                         <Form onFinish={onSubmit}>
                                             <div className="input-group mb-3 form-control p-0 rounded-pill">
-                                                <Input type="text" className="form-control border-0 rounded-pill" value={state} name="email" placeholder="Enter your email"
+                                                <Input type="text" className="form-control border-0 rounded-pill" value={state} name="email" placeholder="Seu Methor E-email"
                                                     onChange={(e: any) => setState(e.target.value)} />
-                                                <Button className="btn btn-yellow rounded-pill px-4 m-1 py-2 h-100" htmlType="submit" id="button-addon2">{loading ? <Spinner/>:"Subscribe" }</Button>
+                                                <Button className="btn btn-yellow rounded-pill px-4 m-1 py-2 h-100" htmlType="submit" id="button-addon2">{loading ? <Spinner/>:"Receber promoção" }</Button>
                                             </div>
                                         </Form>
                                     </div>
@@ -73,10 +74,12 @@ const Footer = () => {
                         <div className="col-6 col-sm-6 col-md-4 col-lg-2">
                             <ul>
                                 <li>
-                                    <Link to={henceofrthEnums.PageType.AboutUs} className="nav-link">About Us</Link>
+                                    {/* <Link to={henceofrthEnums.PageType.AboutUs} className="nav-link">About Us</Link> */}
+                                    <Link to={henceofrthEnums.PageType.AboutUs} className="nav-link">Nossa História</Link>
+
                                 </li>
                                 <li>
-                                    <Link to="/contact" className="nav-link" role="button">Contact Us</Link>
+                                    <Link to="/contact" className="nav-link" role="button">Fale com agente</Link>
                                 </li>
 
                             </ul>
@@ -84,7 +87,7 @@ const Footer = () => {
                         <div className="col-6 col-sm-6 col-md-4 col-lg-2">
                             <ul>
                                 <li>
-                                    <Link to={henceofrthEnums.PageType.Term} className="nav-link">Terms & Conditions</Link>
+                                    <Link to={henceofrthEnums.PageType.Term} className="nav-link">Termos e Condições</Link>
                                 </li>
                                 <li>
                                     <Link to={henceofrthEnums.PageType.Faq} className="nav-link">FAQs</Link>

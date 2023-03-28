@@ -8,6 +8,7 @@ import henceforthApi from '../utils/henceforthApi';
 import auth from './reducers/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import logoutSuccess from './actions/auth/logoutSuccess';
+import pt_BR from 'antd/locale/pt_BR';
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 type Function = () => void;
@@ -126,9 +127,9 @@ function GlobalProvider(props: GlobleContextProviderProps) {
                 isDarkMode, setIsDarkMode, ...props
             }}>
             <ConfigProvider
-                direction={locale == ar_EG ? 'rtl' : 'ltr'}
-                locale={locale}
-
+                // direction={locale == ar_EG ? 'rtl' : 'ltr'}
+                // locale={locale}
+                locale={pt_BR}
                 theme={{
                     algorithm: isDarkMode ? darkAlgorithm : defaultAlgorithm,
                     token: {
