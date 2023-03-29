@@ -124,7 +124,7 @@ const Tablelayout = (props: any) => {
         "PRICE",
         "DATE",
         "Extra's",
-        "ENQUIRY VIA",
+        // "ENQUIRY VIA",
         "STATUS",
         "ACTION"
     ]
@@ -151,7 +151,7 @@ const Tablelayout = (props: any) => {
                         <span className='text-decoration-underline'>{henceforthValidations.BrazilianReal(res.inquiry_extra_amenity?.filter((res: any) => res.quantity > 0).map(((respo: any) => { return respo.price })).reduce((a: number, b: any) => a + b, 0))}</span>
                         <HenceforthIcons.ChevronRight />
                     </button></td>
-                    <td>
+                    {/* <td>
                         <div className="boats d-flex gap-2 align-items-center">
                             {res.inquiry_mode == "whatsapp" ? <Fragment>
                                 <HenceforthIcons.Whatsapp />
@@ -161,10 +161,12 @@ const Tablelayout = (props: any) => {
                                     <HenceforthIcons.Email />
                                     <span className='text-decoration-underline'>{res.inquiry_mode}</span>
                                     <HenceforthIcons.ChevronRight />
-                                </button>}
+                                </button>
+                                
+                                }
 
                         </div>
-                    </td>
+                    </td> */}
                     <td>{res.status}</td>
                     <td>
                         <Dropdown menu={{ items: StatusItem(res), }}>

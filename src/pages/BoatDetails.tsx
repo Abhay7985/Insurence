@@ -183,7 +183,7 @@ const BoatDetails = () => {
                                         {(state?.photos?.filter((res: any) => res.image !== state.cover_image))?.slice(0, 4)?.map((res: any, index: number) =>
                                             <div className="col-6 ps-0">
                                                 <div className={`${index == 1 ? 'boat-group-image ' : index == 3 ? 'boat-group-image-last show-more-image ' : ''} boat-image-list`}>
-                                                    <img src={state.photos ? `${henceforthApi.API_FILE_ROOT_THUMBNAIL}${res.image}` : BannerImage} alt="img" className='img-fluid' onClick={() => handleImagePreview(res.image)} />
+                                                    <img src={state.photos ? `${henceforthApi.API_FILE_ROOT_MEDIUM}${res.image}` : BannerImage} alt="img" className='img-fluid' onClick={() => handleImagePreview(res.image)} />
                                                     {state.photos.length > 5 && <button className='btn border-0' onClick={() => handleImagePreview(state?.photos[5].image)}>+{state.photos.length - 5}</button>}
                                                 </div>
                                             </div>

@@ -14,11 +14,16 @@ const defaultProps = {
     },
     zoom: 11
 };
-const EditLocationBoat = (props: any) => {
+const EditLocationBoat = ({ ...props }: any) => {
     const { Toast } = React.useContext(GlobalContext)
     const placeInputRef = useRef(null as any);
     const [form, setForm] = React.useState(defaultProps)
-    const [address,setAddress]=useState({} as location)
+    const [locationId, setLocationId] = React.useState(0)
+    const [lat, setLat] = useState(0)
+    const [lng, setLng] = useState(0)
+    const [address, setAddress] = useState({
+        data: []
+    } as location)
     const [state, setState] = React.useState({
         id: 1,
         address1: "",
@@ -46,45 +51,66 @@ const EditLocationBoat = (props: any) => {
         })
 
     }
+    const initaliseLocation = async () => {
+        try {
+            let apiRes = await henceforthApi.Location.getLoctaion()
+            setAddress(apiRes)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const onSubmit = async (e: any) => {
         e.preventDefault()
         const items = {
-            address: {
-                address1: state.address1,
-                address2: state.address2,
-                city: state.city,
-                state: state.state,
-                postcode: state.postcode,
-                country: state.country,
+            // address: {
+            //     address1: state.address1,
+            //     address2: state.address2,
+            //     city: state.city,
+            //     state: state.state,
+            //     postcode: state.postcode,
+            //     country: state.country,
+            // }
+            location: {
+                location: {
+                    latitude: lat,
+                    longitude: lng
+                },
+                location_id: address?.data[+locationId]?.id
             }
         }
         setLoading(true)
         try {
-            if (!state.address1) {
-                return Toast.error("Please Enter Street Address")
-            }
-            if (!state.city.trim()) {
-                return Toast.error("Please Enter city ")
-            }
-            if (!state.state.trim()) {
-                return Toast.error("Please Enter State ")
-            }
-            if (!state.postcode.trim()) {
-                return Toast.error("Please Enter postcode ")
-            }
+            // if (!state.address1) {
+            //     return Toast.error("Please Enter Street Address")
+            // }
+            // if (!state.city.trim()) {
+            //     return Toast.error("Please Enter city ")
+            // }
+            // if (!state.state.trim()) {
+            //     return Toast.error("Please Enter State ")
+            // }
+            // if (!state.postcode.trim()) {
+            //     return Toast.error("Please Enter postcode ")
+            // }
 
 
-            if (state.address1 && state.city && state.state && state.postcode && state.country) {
-                const apiRes = await henceforthApi.Boat.edit(state.boat_id, items)
-                Toast.success(apiRes.message)
-                setIsExpended(false)
-                await props.initialise()
-            } else {
-                Toast.error("Enter Complete Address")
-            }
+            // if (state.address1 && state.city && state.state && state.postcode && state.country) {
+            //     const apiRes = await henceforthApi.Boat.edit(state.boat_id, items)
+            //     Toast.success(apiRes.message)
+            //     setIsExpended(false)
+            //     await props.initialise()
+            // } else {
+            //     Toast.error("Enter Complete Address")
+            // }
 
-        } catch (error) {
+            const apiRes = await henceforthApi.Boat.edit(state.id, items)
+            Toast.success(apiRes.message)
+            setIsExpended(false)
+            await props.initialise()
+        }
+
+        catch (error) {
             Toast.error(error)
         } finally {
             setLoading(false)
@@ -150,13 +176,13 @@ const EditLocationBoat = (props: any) => {
         setState((state: any) => {
             return {
                 ...state,
-                address1: items?.full_address?items?.full_address:'' ,
-                address2: items?.street_number?items?.street_number:'' ,
-                flat: items?.street_number ? items?.street_number : items?.apartment_number?items?.apartment_number:'',
-                city: items?.city?items?.city:'' ,
-                state: items?.state?items?.state:'' ,
-                postcode: items?.pin_code?items?.pin_code:'' ,
-                country: items?.country?items?.country:'' ,
+                address1: items?.full_address ? items?.full_address : '',
+                address2: items?.street_number ? items?.street_number : '',
+                flat: items?.street_number ? items?.street_number : items?.apartment_number ? items?.apartment_number : '',
+                city: items?.city ? items?.city : '',
+                state: items?.state ? items?.state : '',
+                postcode: items?.pin_code ? items?.pin_code : '',
+                country: items?.country ? items?.country : '',
             }
         })
     }
@@ -209,20 +235,21 @@ const EditLocationBoat = (props: any) => {
         })
     }
 
-    const initaliseLocation = async () => {
-        try {
-            let apiRes = await henceforthApi.Location.getLoctaion()
-            setAddress(apiRes)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+
     useEffect(() => {
         if (isExpended) {
             initPlaceAPI()
             initaliseLocation()
         }
     }, [isExpended])
+    useEffect(() => {
+        initaliseLocation()
+    }, [])
+    // console.log(props?.location_id?.find((res:any)=>res?.location_id))
+    // console.log(address.)
+    console.log('address', props)
+    console.log("lat", lat)
+    console.log("lng", lng)
 
     return <Spin spinning={loading} className='h-100' >
         <div className="Location bg-white Pricing mt-5" id='location_tab'>
@@ -231,65 +258,93 @@ const EditLocationBoat = (props: any) => {
             </div>
             <div className="photo-header d-flex justify-content-between border px-4 py-3 rounded-1">
                 <form className="listing-content w-100" onSubmit={onSubmit}>
-                    <div className="edit-location d-flex justify-content-between mb-2">
+                    <div className="edit-location mb-2">
+                        <div className="d-flex justify-content-between">
+
                         <h6>Address</h6>
                         <div className="edit-photo ps-4" >
                             {isExpended ?
                                 <button type="button" className='btn p-0 border-0 text-yellow fw-bold' onClick={() => { setIsExpended(false); setState(props) }}>Cancel</button> :
                                 <button type="button" className='btn p-0 border-0 text-yellow fw-bold' onClick={() => setIsExpended(true)}>Edit</button>}
                         </div>
+                        </div>
+                        {!isExpended&&<p>{props.location_title}</p>}
+
                     </div>
                     {isExpended ?
                         <div className="edit-input mt-3">
                             <div className="row">
                                 <div className="col-12">
                                     <div className="address mb-3">
-                                        <label htmlFor="ddd" className="form-label">Street address</label><br />
-                                        <input placeholder="House name/number +street /road" id="ddd" className="form-control" value={state.address1} name="address1" onChange={(e) => handleChange(e.target)} />
-                                        {/* <input type="text" ref={placeInputRef} /> */}
+                                        {/* <label htmlFor="ddd" className="form-label">Street address</label><br />
+                                        <input placeholder="House name/number +street /road" id="ddd" className="form-control" value={state.address1} name="address1" onChange={(e) => handleChange(e.target)} /> */}
+                                        {/* <label>Title</label> */}
+                                        <Select
+                                            defaultValue={props.location_title}
+                                            style={{ width: '100%' }}
+                                            onChange={(value) => {
+                                                setForm({
+                                                    ...form,
+                                                    center: {
+                                                        ...form.center,
+                                                        lat: +address.data[+value].location.latitude ? +address.data[+value].location.latitude : defaultProps.center.lat,
+                                                        lng: +address.data[+value].location.longitude ? +address.data[+value].location.longitude : defaultProps.center.lng,
+                                                    },
+                                                    zoom: 12
+                                                })
+                                                setLocationId(+value)
+                                                setLat(+address.data[+value].location.latitude)
+                                                setLng(+address.data[+value].location.longitude)
+                                                getLocationName(address.data[+value].location.latitude, address.data[+value].location.longitude, '')
+                                            }}
+                                            options={address?.data?.map((res, index: number) => { return { value: index, label: res.title } })}
+                                        />
+
+
+
                                     </div>
                                 </div>
 
 
-                                <div className="col-12">
+                                {/* <div className="col-12">
                                     <div className="address mb-3">
                                         <label htmlFor="input1" className="form-label">Flat, suite. (Optional)</label>
                                         <input placeholder="Flat, suite, building access code" className="form-control" id="input1" value={state.address2} name="address2" onChange={(e) => handleChange(e.target)} />
                                     </div>
-                                </div>
+                                </div> */}
 
                                 {/* {state.city && */}
-                                    <div className="col-lg-6">
-                                        <div className="address mb-3">
-                                            <label className="form-label">City</label>
-                                            {/* <input placeholder="Enter City" className="form-control" value={state.city} name="city" onChange={(e) => handleChange(e.target)} /> */}
-                                            <Select
-                                                defaultValue="select"
-                                                value={state.city}
-                                                style={{ width: '100%' }}
-                                                onChange={(value) => {
-                                                    setForm({
-                                                        ...form,
-                                                        center: {
-                                                            ...form.center,
-                                                            lat: +address.data[+value].location.latitude ? +address.data[+value].location.latitude : defaultProps.center.lat,
-                                                            lng: +address.data[+value].location.longitude ? +address.data[+value].location.longitude : defaultProps.center.lng,
-                                                        },
-                                                        zoom: 12
-                                                    })
-                                                    getLocationName(address.data[+value].location.latitude, address.data[+value].location.longitude, '')
-                                                }}
-                                                options={address?.data?.map((res, index: number) => { return { value: index, label: res.location_name } })}
-                                            />
-                                        </div>
+                                {/* <div className="col-lg-6">
+                                    <div className="address mb-3">
+                                        <label className="form-label">City</label>
+                                        <input placeholder="Enter City" className="form-control" value={state.city} name="city" onChange={(e) => handleChange(e.target)} />
+                                        <Select
+                                            defaultValue="select"
+                                            value={state.city}
+                                            style={{ width: '100%' }}
+                                            onChange={(value) => {
+                                                setForm({
+                                                    ...form,
+                                                    center: {
+                                                        ...form.center,
+                                                        lat: +address.data[+value].location.latitude ? +address.data[+value].location.latitude : defaultProps.center.lat,
+                                                        lng: +address.data[+value].location.longitude ? +address.data[+value].location.longitude : defaultProps.center.lng,
+                                                    },
+                                                    zoom: 12
+                                                })
+                                                getLocationName(address.data[+value].location.latitude, address.data[+value].location.longitude, '')
+                                            }}
+                                            options={address?.data?.map((res, index: number) => { return { value: index, label: res.location_name } })}
+                                        />
                                     </div>
-                                <div className="col-lg-6">
+                                </div> */}
+                                {/* <div className="col-lg-6">
                                     <div className="address mb-3">
                                         <label className="form-label">State</label>
                                         <input placeholder="Enter State" className="form-control" value={state.state} name="state" disabled />
                                     </div>
-                                </div>
-                                <div className="col-lg-6">
+                                </div> */}
+                                {/* <div className="col-lg-6">
                                     <div className="address mb-3">
                                         <label className="form-label">Postcode</label>
                                         <input placeholder="Enter Postcode" value={state.postcode} className="form-control" name="postcode" onKeyPress={(e) => {
@@ -298,7 +353,7 @@ const EditLocationBoat = (props: any) => {
                                             }
                                         }} disabled />
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="col-lg-6">
                                     {/* <div className="address mb-3">
                                         <label className="form-label">Country</label>
@@ -316,10 +371,10 @@ const EditLocationBoat = (props: any) => {
                                             />
                                         </div>
                                     </div> */}
-                                    <div className="address mb-3">
+                                    {/* <div className="address mb-3">
                                         <label className="form-label">Country</label>
                                         <input placeholder="Enter Country" className="form-control" value={state.country} name="state" disabled />
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                             <div className="save-btn pt-2">

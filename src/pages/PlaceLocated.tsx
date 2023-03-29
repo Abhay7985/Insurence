@@ -24,7 +24,7 @@ export interface location {
         id: Number,
         location: { latitude: number, longitude: number },
         location_name: string,
-        title:string
+        title: string,
     }[]
 }
 
@@ -39,10 +39,12 @@ function PlaceLocated() {
     const placeInputRef = useRef(null as any);
     const googleMapRef = useRef() as any
     const { Toast } = React.useContext(GlobalContext)
-    const [inputFocued, setInputFocused] = React.useState(false)
+    const [locationId, setLocationId] = React.useState(0)
     const [loading, setLoading] = React.useState(false)
     const [form, setForm] = React.useState(defaultProps)
-    const [address, setAddress] = useState({} as location)
+    const [address, setAddress] = useState({
+        data: []
+    } as location)
     const [state, setState] = useState({
         street: "",
         flat: "",
@@ -88,24 +90,24 @@ function PlaceLocated() {
         }
     }
 
-    const requestCurrenctLocation = () => {
-        console.log('requestCurrenctLocation called');
-        try {
-            navigator.geolocation.getCurrentPosition((successCallback) => {
-                console.log("Latitude is :", successCallback.coords.latitude);
-                console.log("Longitude is :", successCallback.coords.longitude);
+    // const requestCurrenctLocation = () => {
+    //     console.log('requestCurrenctLocation called');
+    //     try {
+    //         navigator.geolocation.getCurrentPosition((successCallback) => {
+    //             console.log("Latitude is :", successCallback.coords.latitude);
+    //             console.log("Longitude is :", successCallback.coords.longitude);
 
-                getLocationName(successCallback.coords.latitude, successCallback.coords.longitude, "")
-            }, (errorCallback) => {
-                console.log('errorCallback', errorCallback.message);
+    //             getLocationName(successCallback.coords.latitude, successCallback.coords.longitude, "")
+    //         }, (errorCallback) => {
+    //             console.log('errorCallback', errorCallback.message);
 
-            });
+    //         });
 
-        } catch (error) {
-            console.log('requestCurrenctLocation error', error);
+    //     } catch (error) {
+    //         console.log('requestCurrenctLocation error', error);
 
-        }
-    }
+    //     }
+    // }
 
     const createMerker = (position: any, map: any, icon?: any) => {
         return new (window as any).google.maps.Marker({
@@ -129,7 +131,6 @@ function PlaceLocated() {
     //     });
     // }
     const getLocationName = async (lat: number, lng: number, cityName: string) => {
-        debugger
         let address: any
         let latlng = new (window as any).google.maps.LatLng(
             lat,
@@ -150,7 +151,6 @@ function PlaceLocated() {
     }
 
     const setLoactionsFromLatlng = (address: Array<any>, formatAddress: string, lat: number, lng: number, cityName: string) => {
-        debugger
         let items: any = {}
         if (Array.isArray(address) && address.length > 0) {
             let zipIndex = address.findIndex(res => res.types.includes("postal_code"))
@@ -268,28 +268,30 @@ function PlaceLocated() {
                     latitude: form.center.lat,
                     longitude: form.center.lng,
                 },
-                boat_id: match?.params.id
+                boat_id: match?.params.id,
+                location_id: address.data[+locationId].id
             },
-            address: {
-                address1: state.street,
-                address2: state.flat,
-                city: state.city,
-                state: state.state,
-                postcode: state.postCode,
-                country: state.country,
-                show_location: state.showLocation,
-                boat_id: match?.params.id
-            }
+            // address: {
+            //     address1: state.street,
+            //     address2: state.flat,
+            //     city: state.city,
+            //     state: state.state,
+            //     postcode: state.postCode,
+            //     country: state.country,
+            //     show_location: state.showLocation,
+            //     boat_id: match?.params.id
+            // }
         }
         try {
             if (!form.center.lat && !form.center.lng) {
                 Toast.error("Enter Location")
                 deleteQuery()
 
-            } else if (!state.street) {
-                Toast.error("Enter Street")
-                deleteQuery()
             }
+            //  else if (!state.street) {
+            //     Toast.error("Enter Street")
+            //     deleteQuery()
+            // }
             // else if (!state.city) {
             //     // Toast.error("Enter City Name")
             //     deleteQuery()
@@ -319,7 +321,7 @@ function PlaceLocated() {
         } catch (error: any) {
             // Toast.error(error)
             deleteQuery()
-            if (error.response.body.message.address1) return Toast.error(`Please Enter Street`)
+            // if (error.response.body.message.address1) return Toast.error(`Please Enter Street`)
             if (error.response.body.message.city) return Toast.error(error.response.body.message.city[0])
             if (error.response.body.message.country) return Toast.error(error.response.body.message.country[0])
             if (error.response.body.message.postcode) return Toast.error(error.response.body.message.postcode[0])
@@ -341,12 +343,12 @@ function PlaceLocated() {
     useEffect(() => {
         initaliseLocation()
     }, [])
-    console.log(address)
+    console.log('address', address?.data[locationId]?.id || '')
 
     return (
         <section className="select-passenger-section h-100">
             <div className="container-fluid h-100">
-                <form className={`row h-100 ${form.center.lng == defaultProps.center.lng?'':'place-layout'}`} onSubmit={onSubmit} onKeyDown={onKeyDown}>
+                <form className={`row h-100 ${form.center.lng == defaultProps.center.lng ? '' : 'place-layout'}`} onSubmit={onSubmit} onKeyDown={onKeyDown}>
                     <div className="col-lg-6">
                         <Spin spinning={loading} >
                             <div className="banner-content d-flex flex-column ">
@@ -354,61 +356,54 @@ function PlaceLocated() {
                                     <div className="col-11 col-lg-11">
                                         <h3 className='banner-title'>Where is your place located?</h3>
                                     </div>
-                                    {form.center.lng == defaultProps.center.lng ? <Fragment>
-                                        <div className="col-11 col-lg-11">
-                                            <Select
-                                                defaultValue="select"
-                                                style={{ width: '100%' }}
-                                                onChange={(value) => {
-                                                    setForm({
-                                                        ...form,
-                                                        center: {
-                                                            ...form.center,
-                                                            lat: +address.data[+value].location.latitude ? +address.data[+value].location.latitude : defaultProps.center.lat,
-                                                            lng: +address.data[+value].location.longitude ? +address.data[+value].location.longitude : defaultProps.center.lng,
-                                                        },
-                                                        zoom: 12
-                                                    })
-                                                    getLocationName(address.data[+value].location.latitude, address.data[+value].location.longitude, '')
-                                                }}
-                                                options={address?.data?.map((res, index: number) => { return { value: index, label: res.title } })}
-                                            />
-                                            {/* <input type="text" ref={placeInputRef} className="form-control" placeholder="Enter your address" onFocus={() => setInputFocused(true)} onBlur={() => setTimeout(() => setInputFocused(false), 100)} /> */}
 
-                                            {inputFocued && <div className="location border mt-1 d-flex gap-3 align-items-center nav-link" onClick={requestCurrenctLocation}>
+                                    <div className="col-11 col-lg-11">
+                                        <Select
+                                            defaultValue="select"
+                                            style={{ width: '100%' }}
+                                            onChange={(value) => {
+                                                setForm({
+                                                    ...form,
+                                                    center: {
+                                                        ...form.center,
+                                                        lat: +address.data[+value].location.latitude ? +address.data[+value].location.latitude : defaultProps.center.lat,
+                                                        lng: +address.data[+value].location.longitude ? +address.data[+value].location.longitude : defaultProps.center.lng,
+                                                    },
+                                                    zoom: 12
+                                                })
+                                                setLocationId(+value)
+                                                getLocationName(address.data[+value].location.latitude, address.data[+value].location.longitude, '')
+                                            }}
+                                            options={address?.data?.map((res, index: number) => { return { value: index, label: res.title } })}
+                                        />
+                                        {/* <input type="text" ref={placeInputRef} className="form-control" placeholder="Enter your address" onFocus={() => setInputFocused(true)} onBlur={() => setTimeout(() => setInputFocused(false), 100)} /> */}
+
+                                        {/* {inputFocued && <div className="location border mt-1 d-flex gap-3 align-items-center nav-link" onClick={requestCurrenctLocation}>
                                                 <div className="location-icon">
                                                     <img src={locationIcon} alt="icon" className="img-fluid" />
                                                 </div>
                                                 <p>Use my current location</p>
-                                            </div>}
-                                        </div></Fragment> : <Fragment>
-                                        <div className="col-11 col-lg-11">
+                                            </div>} */}
+                                    </div>
+                                    {/* <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input1" className="form-label">Street</label>
                                                 <input type="text" className="form-control" id='input1' value={state.street} placeholder='Enter street' name="street" onChange={handleState} />
                                             </div>
-                                        </div>
-                                        <div className="col-11 col-lg-11">
+                                        </div> */}
+                                    {/* <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input4" className="form-label">Flat, Suite, etc. (optional)</label>
                                                 <input type="text" className="form-control" id='input4' placeholder='Enter flat, suite, etc.' value={state.flat} name="flat" onChange={handleState} />
                                             </div>
-                                        </div>
-                                        {/* <div className="col-11 col-lg-11">
-                                            <div className="mb-2 mb-sm-3">
-                                                <label htmlFor="input5" className="form-label">City</label>
-                                                <input type="text" className="form-control" id='input5' placeholder='Enter City' value={state.city} name="city" disabled />
-                                            </div>
                                         </div> */}
-
-                                        <div className="col-11 col-lg-11">
+                                    {/* <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input5" className="form-label">State </label>
                                                 <input type="text" className="form-control" id='input5' placeholder='Enter State' name="state" value={state.state} disabled />
                                             </div>
-                                        </div>
-
-                                        <div className="col-11 col-lg-11">
+                                        </div> */}
+                                    {/* <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input5" className="form-label">Postcode </label>
                                                 <input type="text" className="form-control" id='input5' placeholder='Enter postcode' value={state.postCode}
@@ -418,47 +413,15 @@ function PlaceLocated() {
                                                         }
                                                     }} name="postCode" disabled />
                                             </div>
-                                        </div>
+                                        </div> */}
 
-                                        <div className="col-11 col-lg-11">
+                                    {/* <div className="col-11 col-lg-11">
                                             <div className="mb-2 mb-sm-3">
                                                 <label htmlFor="input5" className="form-label">Country</label>
                                                 <input type="text" className="form-control" id='input5' placeholder='Enter State' name="state" value={state.country} disabled />
                                             </div>
-                                        </div>
-
-                                        {/* <div className="col-11 col-lg-11">
-                                            <div className="mb-5">
-                                                <label htmlFor="input2" className="form-label">Country / Region</label>
-                                                <div className="category">
-                                                    <Space direction="vertical" style={{ width: '100%' }}>
-                                                        <Select
-                                                            showSearch
-                                                            size={'middle'}
-                                                            defaultValue={state.country ? state.country : "Enter country / region"}
-                                                            value={state.country}
-                                                            onChange={handleChange}
-                                                            style={{ width: '100%' }}
-                                                            autoClearSearchValue={true}
-                                                            options={CountryCodeJson.map((res) => { return { value: res.name, label: res.name } })}
-
-                                                        />
-                                                    </Space>
-                                                </div>
-                                            </div>
                                         </div> */}
-                                        {/* <div className="col-11 col-lg-11">
-                                            <div className="mb-3 d-flex justify-content-between align-items-start">
-                                                <div className="specific-location">
-                                                    <h4 className='mb-2'>Show your specific location</h4>
-                                                    <p>Make it clear to guests where your place is located. <a href="#">We'll only share your address after they've made a reservation.</a></p>
-                                                </div>
-                                                <div className="form-check form-switch ps-sm-5">
-                                                    <Switch size="small" defaultChecked onChange={onChange} />
-                                                </div>
-                                            </div>
-                                        </div> */}
-                                    </Fragment>}
+
                                 </div>
                             </div>
                         </Spin>
@@ -466,9 +429,7 @@ function PlaceLocated() {
                         <BackNextLayout />
                     </div>
                     <div className="col-lg-6 pe-lg-0 d-none d-lg-block">
-                        {/* <div className="banner-image border">
-                                <img src={bannerImage} alt="" />
-                            </div> */}
+
                         <div style={{ height: '100vh', width: '50%', position: 'fixed' }}>
                             <HenceforthGoogleMap
                                 ref={googleMapRef}

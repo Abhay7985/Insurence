@@ -117,7 +117,7 @@ const Boat = {
     requests.del(`provider/boats/${id}`),
   boatAmenities: () =>
     requests.get(`provider/boat-amenities`),
-  extraAmenities:()=>
+  extraAmenities: () =>
     requests.get(`provider/extra-amenities`),
   imageUpload: (key: string, file: any) =>
     requests.file(`provider/upload-image`, key, file),
@@ -154,8 +154,8 @@ const Admin = {
 const social = {
   socialContent: (title: string) => requests.get(`show-pages/${title}`)
 }
-const Location={
-  getLoctaion:()=>requests.get('provider/boat-locations')
+const Location = {
+  getLoctaion: () => requests.get('provider/boat-locations')
 }
 const Common = {
   faq: () => requests.get(`faq`),
@@ -181,7 +181,8 @@ const FILES = {
   audio: (filename: string) => filename?.startsWith('http') ? filename : `${API_FILE_ROOT_AUDIO}${filename}`,
   video: (filename: string) => filename?.startsWith('http') ? filename : `${API_FILE_ROOT_VIDEO}${filename}`,
   imageOriginal: (filename: string, placeholder: any) => filename ? filename?.startsWith('http') ? filename : `${API_FILE_ROOT_ORIGINAL}${filename}` : placeholder,
-  imageMedium: (filename: string) => filename?.startsWith('http') ? filename : `${API_FILE_ROOT_MEDIUM}${filename}`,
+  imageMedium: (filename: string, placeholder: any) => filename ? filename?.startsWith('http') ? filename : `${API_FILE_ROOT_MEDIUM}${filename}` : placeholder,
+  // imageMedium: (filename: string) => filename?.startsWith('http') ? filename : `${API_FILE_ROOT_MEDIUM}${filename}`,
   imageSmall: (filename: string) => filename?.startsWith('http') ? filename : `${API_FILE_ROOT_SMALL}${filename}`,
 }
 

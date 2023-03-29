@@ -126,7 +126,7 @@ const InquiryPage = () => {
                 <div className="container">
                     <div className="row gy-4">
                         <div className="col-12">
-                            <div className="title d-flex justify-content-between align-items-center">
+                            {/* <div className="title d-flex justify-content-between align-items-center">
                                 <h2>Inquiry</h2>
                                 <Select
                                     defaultValue=""
@@ -138,7 +138,7 @@ const InquiryPage = () => {
                                         { value: 'email', label: 'Email' },
                                     ]}
                                 />
-                            </div>
+                            </div> */}
                         </div>
                         <div className="col-12">
                             <div className="input-group mb-3 form-control p-0 rounded-pill w-100">

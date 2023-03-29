@@ -44,6 +44,7 @@ const EditBoatDetails = () => {
         passenger_day: "",
         passenger_night: "",
         pets_allowed: 0,
+        location_title:"",
         photos: [],
         prices: [],
         rules: "",
@@ -52,6 +53,7 @@ const EditBoatDetails = () => {
         status: "",
         step: "",
         updated_at: "",
+        location_id:0,
         address: {
             id: 0,
             address1: "",
@@ -183,6 +185,7 @@ const EditBoatDetails = () => {
             }
         ]
     };
+    console.log(state.location_title)
     return (
         <section className='morning-panormic-listing py-5' >
             <div className="container">
@@ -393,8 +396,9 @@ const EditBoatDetails = () => {
                                                     </div>
                                                 </div>}
                                             {/* Location */}
-                                            {state.name &&
-                                                <EditLocationBoat {...state.address} initialise={initialise} />
+                                            {state.location_title &&
+                                                
+                                                <EditLocationBoat {...state} initialise={initialise} />
                                             }
                                             {/* Boat & passengers */}
                                             {state.name &&
