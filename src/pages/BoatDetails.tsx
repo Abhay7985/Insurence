@@ -161,7 +161,7 @@ const BoatDetails = () => {
                                         </div>
                                     </Link>
                                     <h3 className='mt-4 mb-2'>{state.name}</h3>
-                                    <p>{state.category} • {state?.address?.address1}</p>
+                                    {/* <p>{state.category} • {state?.address?.address1}</p> */}
                                 </div>
                                 {/* <button className="btn border-0 p-0 " onClick={() => copyText(`${window.location.origin}/${state.id}`, "Link")} >
                                     <HenceforthIcons.Share />
@@ -203,15 +203,15 @@ const BoatDetails = () => {
                         <div className="col-lg-6 col-xl-7 order-2 order-md-1">
                             <div className="morning-content">
                                 <div className="content-title border-bottom pb-4">
-                                    <h4 className='mb-2'>{state.size} Manufacturer for up to {state.passenger_day} passengers</h4>
-                                    <p>{state.passenger_day} passengers day • {state.passenger_night} passengers overnight • {state.bedrooms} rooms • {state.bathrooms} bathrooms</p>
+                                    <h4 className='mb-2'>{state.size} Manufacturer  Até {state.passenger_day} passageiros</h4>
+                                    <p>{state.passenger_day} passageiros day • {state.passenger_night} passageiros overnight • {state.bedrooms} rooms • {state.bathrooms} bathrooms</p>
                                 </div>
                                 {/* aminities */}
                                 <div className="aminities border-bottom py-3 py-sm-4">
                                     <h4 className='mb-2'>Amenities</h4>
                                     <div className="aminities-list d-flex gap-5">
                                         <ul className='d-flex flex-wrap w-100 gap-2'>
-                                            {state?.amenities?.map((e: any, index: number) => <li key={index} className='fw-600 text-dark-black' style={{ width: "32%" }}><HenceforthIcons.AnchorIcon/> {e?.amenity}</li>)}
+                                            {state?.amenities?.map((e: any, index: number) => <li key={index} className='fw-600 text-dark-black' style={{ width: "32%" }}><HenceforthIcons.AnchorIcon /> {e?.amenity}</li>)}
                                         </ul>
                                     </div>
                                 </div>
@@ -259,9 +259,9 @@ const BoatDetails = () => {
                         {/* price-card */}
                         <div className="col-lg-6 col-xl-5 order-1 order-md-2">
                             <div className="price-card px-4 py-4 position-sticky" style={{ top: "2rem" }}>
-                                <h4 className='mb-4 mt-1'>From {henceforthValidations.BrazilianReal(+state.minimum_price)}</h4>
+                                <h4 className='mb-4 mt-1'>A partir de {henceforthValidations.BrazilianReal(+state.minimum_price)}</h4>
                                 <div className="select-date mb-2">
-                                    <DatePicker onChange={onChange1} placeholder='Add Date' />
+                                    <DatePicker onChange={onChange1} placeholder='Selecione a data' />
                                 </div>
                                 {/* price-list-1 */}
                                 {Filter?.prices?.map((e: any, index: number) => {
@@ -275,7 +275,7 @@ const BoatDetails = () => {
                                                 <div className="price-list-title d-flex justify-content-between">
                                                     <p className='fs-14 fw-600'>{e?.route}</p>
                                                     <div className="choose-btn align-self-end">
-                                                        <button className='btn btn-yellow fs-14 py-0'>Choose</button>
+                                                        <button className='btn btn-yellow fs-14 py-0'>Quero Esse</button>
                                                     </div>
                                                 </div>
                                             </div>
