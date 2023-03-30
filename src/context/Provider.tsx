@@ -31,7 +31,9 @@ interface CommonContextType {
 
 // toast.error((typeof error?.response?.body?.error_description === "string") ? error?.response?.body?.error_description : JSON.stringify(error?.response?.body?.error_description))
 export const GlobalContext = createContext({} as CommonContextType);
-export const NEXT_PUBLIC_GOOGLE_API_KEY = "AIzaSyDL3YG2rrntEN8bLoQtln4K26PeNiBklDU"
+// export const NEXT_PUBLIC_GOOGLE_API_KEY = "AIzaSyDL3YG2rrntEN8bLoQtln4K26PeNiBklDU"
+export const NEXT_PUBLIC_GOOGLE_API_KEY = "AIzaSyDVdb4xBePI0hgBsb1A36UnSn7LDVHRl_8"
+
 export const downloadFile = (file_path: String) => {
     var a: any = document.createElement('a') as HTMLElement;
     a.href = file_path;
