@@ -144,7 +144,7 @@ const Tablelayout = (props: any) => {
                         </div>
                     </td>
                     <td>{res.route_name}</td>
-                    <td>{henceforthValidations.BrazilianReal(res.price)}</td>
+                    <td>{henceforthValidations.BrazilianReal(res.installments!==0?res.installments:res.price)}</td>
                     <td>{moment(res.created_at).format("DD/MM/YYYY")}</td>
                     <td> <button className=' d-flex gap-2 align-items-center btn p-0 border-0 text-dark' data-bs-toggle="modal" data-bs-target="#staticBackdrop" onMouseOver={() => props.setExtras(res?.inquiry_extra_amenity)}>
                         {/* <HenceforthIcons.Email /> */}
