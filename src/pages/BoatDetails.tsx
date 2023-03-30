@@ -60,6 +60,7 @@ const BoatDetails = () => {
         manufacturer: "",
         manufacturer_id: "",
         minimum_price: "",
+        location_title:"",
         model: "",
         name: "",
         passenger_day: "",
@@ -162,6 +163,7 @@ const BoatDetails = () => {
                                     </Link>
                                     <h3 className='mt-4 mb-2'>{state.name}</h3>
                                     {/* <p>{state.category} • {state?.address?.address1}</p> */}
+                                    <p>{state.location_title}</p>
                                 </div>
                                 {/* <button className="btn border-0 p-0 " onClick={() => copyText(`${window.location.origin}/${state.id}`, "Link")} >
                                     <HenceforthIcons.Share />
