@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pagination, Spin, Tabs } from 'antd';
+import { Button, Modal, Pagination, Spin, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import { Select, } from 'antd';
 import search from '../assets/icons/search.svg'
@@ -119,6 +119,8 @@ const InquiryPage = () => {
 
     console.log(inqieryData)
 
+
+
     return (
         <Spin spinning={loading} className='h-100' >
             {/* inquiry section */}
@@ -213,7 +215,7 @@ const InquiryPage = () => {
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h6 className="modal-title w-100 text-center" id="exampleModalLabel">Enquire via Email</h6>
+                            <h6 className="modal-title w-100 text-center" id="exampleModalLabel">Enquire</h6>
                             <button type="button" className="btn-close fs-12 shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body px-sm-4 py-4">
@@ -249,6 +251,7 @@ const InquiryPage = () => {
                     </div>
                 </div>
             </div>
+
         </Spin>
     )
 }

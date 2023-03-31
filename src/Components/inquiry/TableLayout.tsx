@@ -2,14 +2,21 @@ import TableHeading from "../TableHeading"
 import boatImage from '../../assets/images/boat_four.png'
 import HenceforthIcons from '../../assets/icons/HenceforthIcons';
 import moment from "moment";
-import React, { Fragment } from "react";
-import { Badge, Dropdown, MenuProps, Spin } from "antd";
+import React, { Fragment, useState } from "react";
+import { Badge, Button, Dropdown, MenuProps, Modal, Spin } from "antd";
 import henceofrthEnums from "../../utils/henceofrthEnums";
 import henceforthApi from "../../utils/henceforthApi";
 import { GlobalContext } from "../../context/Provider";
 import { useMatch } from "react-router-dom";
 import henceforthValidations from "../../utils/henceforthValidations";
+
+
+
+
+
 const Tablelayout = (props: any) => {
+    const [modal2Open, setModal2Open] = useState(false);
+
     const match = useMatch('/inquiry/:type/:page')
 
     const { authState, Toast } = React.useContext(GlobalContext)
@@ -144,7 +151,7 @@ const Tablelayout = (props: any) => {
                         </div>
                     </td>
                     <td>{res.route_name}</td>
-                    <td>{henceforthValidations.BrazilianReal(res.installments!==0?res.installments:res.price)}</td>
+                    <td>{henceforthValidations.BrazilianReal(res.installments !== 0 ? res.installments : res.price)}</td>
                     <td>{moment(res.created_at).format("DD/MM/YYYY")}</td>
                     <td> <button className=' d-flex gap-2 align-items-center btn p-0 border-0 text-dark' data-bs-toggle="modal" data-bs-target="#staticBackdrop" onMouseOver={() => props.setExtras(res?.inquiry_extra_amenity)}>
                         {/* <HenceforthIcons.Email /> */}
@@ -169,13 +176,37 @@ const Tablelayout = (props: any) => {
                     </td> */}
                     <td>{res.status}</td>
                     <td>
-                        <Dropdown menu={{ items: StatusItem(res), }}>
-                            <button className='btn border-0 p-0'><HenceforthIcons.ThreeDot /></button>
-                        </Dropdown>
+                        <ul className="d-flex align-items-center gap-2">
+                            <li>
+                                <Dropdown menu={{ items: StatusItem(res), }}>
+                                    <button className='btn border-0 p-0'><HenceforthIcons.ThreeDot /></button>
+                                </Dropdown>
+                            </li>
+                            <li>
+                                <button className="border-0 h-100 p-0 rounded-circle" data-bs-toggle="modal" data-bs-target="#emailInquiryModal"
+                                 onMouseOver={() => props.setInquiryData(res)}><HenceforthIcons.Info /></button>
+                            </li>
+                        </ul>
+
+
                     </td>
                 </tr>
+
             )}
         </TableHeading>
+        <Modal
+            title=""
+            centered
+            open={modal2Open}
+            onOk={() => setModal2Open(false)}
+            onCancel={() => setModal2Open(false)}
+        >
+            <h6>Name:</h6><p></p>
+            <h6>email:</h6><p></p>
+            <h6>phone:</h6><p></p>
+            <h6>inquiry_mode:</h6><p></p>
+            {/* <p>some contents...</p> */}
+        </Modal>
     </Spin>
 }
 export default Tablelayout
