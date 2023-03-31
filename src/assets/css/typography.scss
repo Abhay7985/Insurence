@@ -84,7 +84,13 @@ p {
         text-transform: capitalize;
     }
 }
-
+.inquiry-name{
+    p{
+        &::first-letter {
+            text-transform: lowercase;
+        }
+    }
+}
 .rounded {
     border-radius: $radius !important;
 }

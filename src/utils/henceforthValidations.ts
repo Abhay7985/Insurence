@@ -102,6 +102,11 @@ const showPrice = (price: number) => {
 const  capFirst=(str:string) =>{
     return str[0].toUpperCase() + str.slice(1);
 }
+const  smallFirst=(str:string) =>{
+    let val = str
+    str?.toLowerCase()
+    return val;
+}
 const BrazilianReal = (val: number) => {
     let int = Number.isInteger(val % 1)
     if (int) {
@@ -127,6 +132,7 @@ const henceforthValidations = {
     MobileNumberWithInValidation,
     FoodLicenseValidation,
     DrugLicenseValidation,
+    smallFirst,
     GstValidation,
     AddressValidation,
     PincodeValidation,

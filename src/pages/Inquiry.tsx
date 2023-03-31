@@ -238,7 +238,7 @@ const InquiryPage = () => {
                                 <div className="col-lg-6">
                                     <div className="inquiry-name">
                                         <h6 className='mb-2'>Email</h6>
-                                        <p>{inqieryData?.email ? inqieryData?.email : "Not Avaiable"}</p>
+                                        <p>{ inqieryData?.email?.toLowerCase() || "Not Avaiable"}</p>
                                     </div>
                                 </div>
                             </div>
