@@ -206,7 +206,7 @@ const BoatDetails = () => {
                             <div className="morning-content">
                                 <div className="content-title border-bottom pb-4">
                                     <h4 className='mb-2'>{state.size} Manufacturer  Até {state.passenger_day} passageiros</h4>
-                                    <p>{state.passenger_day} passageiros day • {state.passenger_night} passageiros overnight • {state.bedrooms} rooms • {state.bathrooms} bathrooms</p>
+                                    <p>{state.passenger_day} passageiros day • {state.passenger_night} passageiros pernoite • {state.bedrooms} Quarto • {state.bathrooms} Banheiro</p>
                                 </div>
                                 {/* aminities */}
                                 <div className="aminities border-bottom py-3 py-sm-4">
