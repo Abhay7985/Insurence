@@ -183,7 +183,7 @@ const Tablelayout = (props: any) => {
                                 </Dropdown>
                             </li>
                             <li>
-                                <button className="border-0 h-100 p-0 rounded-circle" data-bs-toggle="modal" data-bs-target="#emailInquiryModal"
+                                <button className="border-0 h-100 p-0 rounded-circle" title="information" data-bs-toggle="modal" data-bs-target="#emailInquiryModal"
                                  onMouseOver={() => props.setInquiryData(res)}><HenceforthIcons.Info /></button>
                             </li>
                         </ul>
