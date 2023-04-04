@@ -152,7 +152,7 @@ const Tablelayout = (props: any) => {
                     </td>
                     <td>{res.route_name}</td>
                     <td>{henceforthValidations.BrazilianReal(res.installments !== 0 ? res.installments : res.price)}</td>
-                    <td>{moment(res.created_at).format("DD/MM/YYYY")}</td>
+                    <td>{moment(res.inquiry_date).format("DD/MM/YYYY")}</td>
                     <td> <button className=' d-flex gap-2 align-items-center btn p-0 border-0 text-dark' data-bs-toggle="modal" data-bs-target="#staticBackdrop" onMouseOver={() => props.setExtras(res?.inquiry_extra_amenity)}>
                         {/* <HenceforthIcons.Email /> */}
                         <span className='text-decoration-underline'>{henceforthValidations.BrazilianReal(res.inquiry_extra_amenity?.filter((res: any) => res.quantity > 0).map(((respo: any) => { return respo.price })).reduce((a: number, b: any) => a + b, 0))}</span>
@@ -184,7 +184,7 @@ const Tablelayout = (props: any) => {
                             </li>
                             <li>
                                 <button className="border-0 h-100 p-0 rounded-circle" title="information" data-bs-toggle="modal" data-bs-target="#emailInquiryModal"
-                                 onMouseOver={() => props.setInquiryData(res)}><HenceforthIcons.Info /></button>
+                                    onMouseOver={() => props.setInquiryData(res)}><HenceforthIcons.Info /></button>
                             </li>
                         </ul>
 

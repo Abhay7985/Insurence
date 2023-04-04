@@ -28,7 +28,7 @@ const Contact = () => {
             <Select
                 showSearch
                 value={country}
-                defaultValue="+91"
+                defaultValue="+55"
                 onChange={(e: any) => setCountry(e)} >
                 {CountryCode.map((res: CountryCodeType) => <Option value={res.dial_code} key={res.dial_code}>{res.dial_code}</Option>)}
             </Select>
@@ -63,7 +63,7 @@ const Contact = () => {
             form.resetFields()
             setLoading(false)
 
-            
+
         }
     }
     return (
@@ -77,7 +77,7 @@ const Contact = () => {
                         {/* title */}
                         <div className="col-12">
                             <div className="text-center">
-                                <h1 className='contact-title'>Contact Us</h1>
+                                <h1 className='contact-title'>Contato</h1>
                             </div>
                         </div>
                     </div>
@@ -92,7 +92,7 @@ const Contact = () => {
                         <div className="col-md-6 col-lg-5">
                             <Form form={form} onFinish={handleSubmit} className="contact-form">
                                 <div className="mb-3">
-                                    <label htmlFor="" className='form-label'>Name</label>
+                                    <label htmlFor="" className='form-label'>Nome</label>
                                     <Form.Item
                                         name="name"
                                         rules={[
@@ -103,12 +103,12 @@ const Contact = () => {
                                         ]}
                                         hasFeedback
                                     >
-                                        <Input placeholder="Enter name" />
+                                        <Input placeholder="Seu nome" />
                                     </Form.Item>
                                     {/* <Input placeholder='Enter name' /> */}
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="" className='form-label'>Email</label>
+                                    <label htmlFor="" className='form-label'>E-mail</label>
                                     <Form.Item
                                         name="email"
                                         rules={[
@@ -123,22 +123,22 @@ const Contact = () => {
                                         ]}
                                         hasFeedback
                                     >
-                                        <Input placeholder='Enter Email' />
+                                        <Input placeholder='Seu e-mail' />
                                     </Form.Item>
 
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="" className='form-label'>Phone</label>
+                                    <label htmlFor="" className='form-label'>Telefone</label>
                                     <Form.Item
                                         name="phone"
                                         rules={[{ required: true, message: 'Please input your phone number!' }]}
                                     >
                                         <Input addonBefore={prefixSelector}
-                                            style={{ width: '100%' }} placeholder='Enter phone number' className='phone-input' />
+                                            style={{ width: '100%' }} placeholder='Seu telefone' className='phone-input' />
                                     </Form.Item>
                                 </div>
                                 <div className="mb-4">
-                                    <label htmlFor="" className='form-label'>Message</label>
+                                    <label htmlFor="" className='form-label'>Mensagem</label>
                                     <Form.Item name="message"
                                         rules={[
                                             {
@@ -147,11 +147,11 @@ const Contact = () => {
                                             },
                                         ]}
                                         hasFeedback >
-                                        <TextArea rows={4} placeholder="Write your message" />
+                                        <TextArea rows={4} placeholder="Escreva aqui mensagem" />
                                     </Form.Item>
                                 </div>
                                 <div className="contact-btn">
-                                    <button className='btn btn-yellow px-4 py-2' type="submit" disabled={loading}>{loading ? <Spinner/> :"Submit"}</button>
+                                    <button className='btn btn-yellow px-4 py-2' type="submit" disabled={loading}>{loading ? <Spinner /> : "Enviar"}</button>
                                 </div>
                             </Form>
                         </div>
