@@ -147,7 +147,7 @@ const Contact = () => {
                                             },
                                         ]}
                                         hasFeedback >
-                                        <TextArea rows={4} placeholder="Escreva aqui mensagem" />
+                                        <TextArea rows={4} placeholder="Escreva aqui sua mensagem" />
                                     </Form.Item>
                                 </div>
                                 <div className="contact-btn">
