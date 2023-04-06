@@ -225,13 +225,13 @@ const BoatDetails = () => {
                                             <div className="pet-image">
                                                 <img src={petIcon} alt="icon" className='img-fluid' />
                                             </div>
-                                            <p className='text-dark-black'>Pets are {state?.pets_allowed === 0 ? 'not allowed' : "allowed"}</p>
+                                            <p className='text-dark-black'>Pets are {state?.pets_allowed === 0 ? 'Não allowed' : "allowed"}</p>
                                         </li>
                                         <li className='d-flex gap-3 align-items-center'>
                                             <div className="smoking">
                                                 <img src={smoking} alt="icon" className='img-fluid' />
                                             </div>
-                                            <p className='text-dark-black'>Smoking is {state?.smoking_allowed === 0 ? 'not allowed' : "allowed"}</p>
+                                            <p className='text-dark-black'>Smoking is {state?.smoking_allowed === 0 ? 'Não allowed' : "allowed"}</p>
                                         </li>
                                         <li>
                                             <p>{state?.rules}</p>
