@@ -5,6 +5,7 @@ import bannerImage from '../assets/images/image_five.webp';
 import BackNextLayout from '../Components/boat/BackNextLayout';
 import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
+import ReactQuill from 'react-quill';
 
 const SafetyQuestions = () => {
     const navigate = useNavigate()
@@ -12,6 +13,7 @@ const SafetyQuestions = () => {
     const match = useMatch(`boat/:id/safety-question`)
     const uRLSearchParams = new URLSearchParams(location.search)
     const { Toast } = React.useContext(GlobalContext)
+    const [description, setDesciption] = useState<string>("");
     const [spinning, setSpinning] = React.useState(false)
 
     const [state, setState] = useState({
@@ -20,14 +22,16 @@ const SafetyQuestions = () => {
         rules: ""
 
     })
-const actionComparison=uRLSearchParams.get("action") as string === "save_and_exit"
+    const actionComparison = uRLSearchParams.get("action") as string === "save_and_exit"
     const handleState = (e: any) => {
         setState({
             ...state,
             [e.target.name]: e.target.value
         })
     }
-
+    const onEditorStateChange = (e: string) => {
+        setDesciption(e);
+    };
     const saveAndExit = async (b: boolean) => {
         setSpinning(true)
         let items = {
@@ -35,12 +39,12 @@ const actionComparison=uRLSearchParams.get("action") as string === "save_and_exi
                 boat_id: match?.params.id,
                 smoking_allowed: Number(state.smoking_allowed),
                 pets_allowed: Number(state.pets_allowed),
-                rules: state.rules
+                rules: description
             }
         }
         try {
-            if(!state.rules){
-               return Toast.error("Enter Rules and Security")
+            if (!description) {
+                return Toast.error("Enter Rules and Security")
             }
             let res = await henceforthApi.Boat.create(items)
             Toast.success(res.message)
@@ -94,7 +98,7 @@ const actionComparison=uRLSearchParams.get("action") as string === "save_and_exi
                                         <div className="form-check">
                                             <input className="form-check-input form-check-radio" type="radio" onChange={handleState} checked={state.smoking_allowed == 0} value={0} name="smoking_allowed" id="radio2" />
                                             <label className="form-check-label" htmlFor="radio2">
-                                            Não
+                                                Não
                                             </label>
                                         </div>
                                     </div>
@@ -103,13 +107,13 @@ const actionComparison=uRLSearchParams.get("action") as string === "save_and_exi
                                         <div className="form-check mb-2">
                                             <input className="form-check-input form-check-radio" type="radio" onChange={handleState} checked={state.pets_allowed == 1} value={1} name="pets_allowed" id="radio4" />
                                             <label className="form-check-label" htmlFor="radio4">
-                                            Sim
+                                                Sim
                                             </label>
                                         </div>
                                         <div className="form-check">
                                             <input className="form-check-input form-check-radio" type="radio" onChange={handleState} checked={state.pets_allowed == 0} value={0} name="pets_allowed" id="radio5" />
                                             <label className="form-check-label" htmlFor="radio5">
-                                            Não
+                                                Não
                                             </label>
                                         </div>
                                     </div>
@@ -118,8 +122,22 @@ const actionComparison=uRLSearchParams.get("action") as string === "save_and_exi
                                         <h4 className='mb-2'>Regras e segurança</h4>
 
                                         <p className='mb-3'>regras da embarcação.</p>
+                                        <div
+                                            style={{
+                                                background: "white",
+                                            }}
+                                        >
+                                            <ReactQuill
+                                                theme="snow"
+                                                style={{ height: 100 }}
+                                                placeholder="Escreva aqui"
+                                                onChange={onEditorStateChange}
+                                                value={description}
+                                            />
+                                        </div>
                                         <div className="form-floating">
-                                            <textarea className="text-area" placeholder="Escreva aqui" onChange={(e: any) => setState({ ...state, rules: e.target.value })}></textarea>
+
+                                            {/* <textarea className="text-area" placeholder="Escreva aqui" onChange={(e: any) => setState({ ...state, rules: e.target.value })}></textarea> */}
                                             {/* <label htmlFor="floatingTextarea">Type here...</label> */}
                                         </div>
                                     </div>

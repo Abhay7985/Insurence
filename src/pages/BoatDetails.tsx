@@ -234,7 +234,7 @@ const BoatDetails = () => {
                                             <p className='text-dark-black'>Smoking is {state?.smoking_allowed === 0 ? 'Não allowed' : "allowed"}</p>
                                         </li>
                                         <li>
-                                            <p>{state?.rules}</p>
+                                            <p dangerouslySetInnerHTML={{ __html: state?.rules }}></p>
                                         </li>
                                     </ul>
 
