@@ -20,7 +20,7 @@ const SocialPage = () => {
     const { type } = useParams()
     const { authState, Toast } = useContext(GlobalContext)
 
-    const page = type == "term" ? "term-conditions" : type == "aboutUs" ? "about-us" : "";
+    const page = type == "term" ? "term-conditions" : type == "aboutUs" ? "Nossa História" : "";
     const [state, setState] = useState({} as socialDetails)
     const [loading, setLoading] = useState(false)
 
