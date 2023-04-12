@@ -20,7 +20,7 @@ const SocialPage = () => {
     const { type } = useParams()
     const { authState, Toast } = useContext(GlobalContext)
 
-    const page = type == "term" ? "term-conditions" : type == "aboutUs" ? "Nossa História" : "";
+    const page = type == "term" ? "Termos e Condições" : type == "aboutUs" ? "Nossa História" : "";
     const [state, setState] = useState({} as socialDetails)
     const [loading, setLoading] = useState(false)
 
@@ -30,7 +30,7 @@ const SocialPage = () => {
             let apiRes = await henceforthApi.social.socialContent(String(page))
             setState(apiRes.data)
         } catch (error) {
-            Toast.error(error)
+            // Toast.error(error)
         } finally {
             setLoading(false)
         }
