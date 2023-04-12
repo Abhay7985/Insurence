@@ -19,8 +19,10 @@ const SocialPage = () => {
     const match = useMatch(":type")
     const { type } = useParams()
     const { authState, Toast } = useContext(GlobalContext)
+    
+    const page = type == "term" ? "term-conditions" : type == "aboutUs" ? "about-us" : "";
+    const title= type == "term" ? "Termos e Condições" : type == "aboutUs" ? "Nossa História" :""  
 
-    const page = type == "term" ? "Termos e Condições" : type == "aboutUs" ? "Nossa História" : "";
     const [state, setState] = useState({} as socialDetails)
     const [loading, setLoading] = useState(false)
 
@@ -48,12 +50,12 @@ const SocialPage = () => {
                     <div className='common-card mb-4 border-0 card-spacing p-0'>
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <h2 className="fw-semibold mb-4">{page}</h2>
+                                        <h2 className="fw-semibold mb-4">{title}</h2>
                               
                                             <div className="social-image mb-4">
                                                 <img src={state.image ? `${henceforthApi.FILES.imageOriginal(state.image, "")}` : ""} className="w-100" alt='img' />
                                             </div>
-                                            <p>{state.description ? state.description : "Not Data Found"}</p>
+                                            <p dangerouslySetInnerHTML={{ __html: state.description}}></p>
                                         </div>
                                 
                                 </div>

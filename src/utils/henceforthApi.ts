@@ -152,7 +152,8 @@ const Admin = {
     requests.get(`provider/boat-routes`),
 }
 const social = {
-  socialContent: (title: string) => requests.get(`show-pages/${title}`)
+  socialContent: (title: string) =>
+    requests.get(`show-pages/${title}`)
 }
 const Location = {
   getLoctaion: () => requests.get('provider/boat-locations')
