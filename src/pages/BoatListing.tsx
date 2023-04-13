@@ -171,7 +171,7 @@ const BoatListing = () => {
                                                     {/* <Badge color={dotColor.find(res => res.status == e?.status)?.color} /> */}
 
                                                     <div className="ms-1">
-                                                        <p>{e?.status==="draft" ? "Rescunho":"Ativo" }</p>
+                                                        <p className='m-0'>{e?.status==="draft" ? "Rescunho":"Ativo" }</p>
                                                     </div>
                                                 </div>
                                             </td>
