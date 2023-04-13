@@ -127,7 +127,7 @@ const Tablelayout = (props: any) => {
     const headings = [
         "SR. NO.",
         "BOAT NAME",
-        "Inquiry ID",
+        "INQUIRY ID",
         "ROUTE",
         "PRICE",
         "DATE",
