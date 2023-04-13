@@ -110,16 +110,16 @@ const Tablelayout = (props: any) => {
                 ],
 
             },
-            {
-                key: '2',
-                label: (
-                    <span>
-                        Delete Inquiry
-                    </span>
-                ),
-                onClick: () => onDelete(res.id),
+            // {
+            //     key: '2',
+            //     label: (
+            //         <span>
+            //             Delete Inquiry
+            //         </span>
+            //     ),
+            //     onClick: () => onDelete(res.id),
 
-            }
+            // }
 
         ]
     }
