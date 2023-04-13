@@ -158,7 +158,7 @@ const Tablelayout = (props: any) => {
                     <td>{moment(res.inquiry_date).format("DD/MM/YYYY")}</td>
                     <td> <button className=' d-flex gap-2 align-items-center btn p-0 border-0 text-dark' data-bs-toggle="modal" data-bs-target="#staticBackdrop" onMouseOver={() => props.setExtras(res?.inquiry_extra_amenity)}>
                         {/* <HenceforthIcons.Email /> */}
-                        <span className='text-decoration-underline'>{henceforthValidations.BrazilianReal(res.inquiry_extra_amenity?.filter((res: any) => res.quantity > 0).map(((respo: any) => { return respo.price })).reduce((a: number, b: any) => a + b, 0))}</span>
+                        <span className='text-decoration-underline'>{henceforthValidations.BrazilianReal(res.inquiry_extra_amenity?.filter((res: any) => res.quantity > 0).map(((respo: any) => { return respo.quantity*respo.price })).reduce((a: number, b: any) => a + b, 0))}</span>
                         <HenceforthIcons.ChevronRight />
                     </button></td>
                     {/* <td>
