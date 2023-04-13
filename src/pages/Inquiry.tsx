@@ -201,7 +201,9 @@ const InquiryPage = () => {
                         <div className="modal-footer justify-content-between">
                             {/* <div  className='d-flex justify-content-between'> */}
                             <span className='fw-bold'>Total (USD)</span>
-                            <span className='fw-bold'>{henceforthValidations.BrazilianReal(extras.filter((res: any) => res.quantity > 0).map(((respo: any) => { return respo.price })).reduce((a: number, b: any) => a + b, 0))}</span>
+                            {/* <span className='fw-bold'> </span> */}
+                            <span className='fw-bold'>{henceforthValidations.BrazilianReal(extras.filter((res: any) => 
+                            res.quantity > 0).map(((respo: any) => { return respo.price*respo.quantity })).reduce((a: number, b: any) => a + b, 0))}</span>
                             {/* </div> */}
                             {/* <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="button" className="btn btn-primary">Understood</button> */}
