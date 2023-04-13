@@ -100,7 +100,7 @@ const showPrice = (price: number) => {
     return parts
 }
 const  capFirst=(str:string) =>{
-    return str[0].toUpperCase() + str.slice(1);
+    return str[0]?.toUpperCase() + str.slice(1);
 }
 const  smallFirst=(str:string) =>{
     let val = str

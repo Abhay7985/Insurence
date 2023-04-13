@@ -223,7 +223,7 @@ const InquiryPage = () => {
                                 <div className="col-lg-6">
                                     <div className="inquiry-name">
                                         <h6 className='mb-2'>Name</h6>
-                                        <p>{inqieryData?.name ? inqieryData?.name : "Not Avaiable"}</p>
+                                        <p>{henceforthValidations?.capFirst(inqieryData?.name) || "Not Avaiable"}</p>
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
