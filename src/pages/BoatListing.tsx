@@ -127,10 +127,10 @@ const BoatListing = () => {
                                         style={{ width: 150 }}
                                         onChange={handleChange}
                                         options={[
-                                            { value: '', label: 'All' },
-                                            { value: 'listed', label: 'Listed' },
-                                            { value: 'unlisted', label: 'Unlisted' },
-                                            { value: 'draft', label: 'Draft' },
+                                            { value: '', label: 'Todos' },
+                                            { value: 'listed', label: 'Listada' },
+                                            { value: 'unlisted', label: 'não-listado' },
+                                            { value: 'draft', label: 'rascunho' },
                                         ]}
                                     />
                                 </div>
