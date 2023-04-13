@@ -240,7 +240,7 @@ const InquiryPage = () => {
                                 <div className="col-lg-6">
                                     <div className="inquiry-name">
                                         <h6 className='mb-2'>Email</h6>
-                                        <p>{ inqieryData?.email?.toLowerCase() || "Not Avaiable"}</p>
+                                        <span className='inquiry-email'>{ inqieryData?.email?.toLowerCase() || "Not Avaiable"}</span>
                                     </div>
                                 </div>
                             </div>
