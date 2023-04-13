@@ -127,6 +127,7 @@ const Tablelayout = (props: any) => {
     const headings = [
         "SR. NO.",
         "BOAT NAME",
+        "Inquiry ID",
         "ROUTE",
         "PRICE",
         "DATE",
@@ -142,6 +143,7 @@ const Tablelayout = (props: any) => {
             {Array.isArray(props?.data) && props?.data?.map((res: any, index: number) =>
                 <tr>
                     <th>{Number(match?.params.page) == 0 ? index + 1 : (Number(match?.params.page) - 1) * props.per_page + (index + 1)}</th>
+
                     <td>
                         <div className="boats d-flex gap-2 align-items-center">
                             <div className="boat-image">
@@ -150,6 +152,7 @@ const Tablelayout = (props: any) => {
                             <p>{res.boat_name}</p>
                         </div>
                     </td>
+                    <td>{res.id || "Not Avaiable"}</td>
                     <td>{res.route_name}</td>
                     <td>{henceforthValidations.BrazilianReal(res.installments !== 0 ? `${res.price}x${res.installments}` : res.price)}</td>
                     <td>{moment(res.inquiry_date).format("DD/MM/YYYY")}</td>
