@@ -5,7 +5,8 @@ import bannerImage from '../assets/images/image_five.webp';
 import BackNextLayout from '../Components/boat/BackNextLayout';
 import { GlobalContext } from '../context/Provider';
 import henceforthApi from '../utils/henceforthApi';
-import ReactQuill from 'react-quill';
+// import ReactQuill from 'react-quill';
+var ReactQuill = require('react-quill');
 
 const SafetyQuestions = () => {
     const navigate = useNavigate()

@@ -21,7 +21,7 @@ const SelectPassenger = () => {
     const [bathrooms, setBathrooms] = React.useState(10)
     const [loading, setLoading] = React.useState(false)
 
-    const actionComparison=uRLSearchParams.get("action") as string === "save_and_exit"
+    const actionComparison = uRLSearchParams.get("action") as string === "save_and_exit"
     const saveAndExit = async (b: boolean) => {
         const items = {
             boat: {
@@ -85,7 +85,7 @@ const SelectPassenger = () => {
                                             <div className="add-btn">
                                                 <ul className='d-flex gap-1 align-items-center'>
                                                     <li>
-                                                        <button type='button' className='btn border-0' onClick={() => setPassengerDay(passengerDay - 1)} disabled={passengerDay === 0}>
+                                                        <button type='button' className='btn border-0' onClick={() => setPassengerDay(passengerDay - 1)} disabled={passengerDay === 1}>
                                                             <img src={decrease} alt="icon" />
                                                         </button>
                                                     </li>
@@ -94,7 +94,7 @@ const SelectPassenger = () => {
                                                         {/* <input type="text" className='form-control' value={passengerDay} /> */}
                                                     </li>
                                                     <li>
-                                                        <button type='button' className='btn border-0' onClick={() => setPassengerDay(passengerDay + 1)} >
+                                                        <button type='button' className='btn border-0' onClick={() => setPassengerDay(passengerDay + 1)} disabled={passengerDay === 10} >
                                                             <img src={increase} alt="icon" />
                                                         </button>
                                                     </li>
@@ -117,7 +117,7 @@ const SelectPassenger = () => {
                                                         {/* <input type="text" className='form-control' value={passengerNight} /> */}
                                                     </li>
                                                     <li>
-                                                        <button type='button' className='btn border-0' onClick={() => setPassengerNight(passengerNight + 1)} >
+                                                        <button type='button' className='btn border-0' onClick={() => setPassengerNight(passengerNight + 1)} disabled={passengerNight === 10} >
                                                             <img src={increase} alt="icon" />
                                                         </button>
                                                     </li>
@@ -140,7 +140,7 @@ const SelectPassenger = () => {
                                                         {/* <input type="text" className='form-control' value={bedrooms} /> */}
                                                     </li>
                                                     <li>
-                                                        <button type='button' className='btn border-0' onClick={() => setBedrooms(bedrooms + 1)}>
+                                                        <button type='button' className='btn border-0' onClick={() => setBedrooms(bedrooms + 1)} disabled={bedrooms === 10} >
                                                             <img src={increase} alt="icon" />
                                                         </button>
                                                     </li>
@@ -163,7 +163,7 @@ const SelectPassenger = () => {
                                                         {/* <input type="text" className='form-control' value={bathrooms} /> */}
                                                     </li>
                                                     <li>
-                                                        <button type='button' className='btn border-0' onClick={() => setBathrooms(bathrooms + 1)}>
+                                                        <button type='button' className='btn border-0' onClick={() => setBathrooms(bathrooms + 1)} disabled={bathrooms === 10} >
                                                             <img src={increase} alt="icon" />
                                                         </button>
                                                     </li>
