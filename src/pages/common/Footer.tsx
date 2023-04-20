@@ -8,6 +8,7 @@ import { error } from "console";
 import Spinner from "./AntSpinner";
 import { Link } from "react-router-dom";
 import henceofrthEnums from "../../utils/henceofrthEnums";
+import logo from '../../assets/images/lancha_logo_2_white.svg'
 
 const Footer = () => {
     const { Toast, loading, setLoading } = useContext(GlobalContext)
@@ -21,7 +22,7 @@ const Footer = () => {
         }
         try {
             if (!state.trim()) {
-               return Toast.error("Please Enter Email")
+                return Toast.error("Please Enter Email")
             }
             let apiRes = await henceforthApi.Subscribe.subscribe(item)
             Toast.success(apiRes.message)
@@ -52,7 +53,7 @@ const Footer = () => {
                                             <div className="input-group mb-3 form-control p-0 rounded-pill">
                                                 <Input type="text" className="form-control border-0 rounded-pill" value={state} name="email" placeholder="Seu Methor E-email"
                                                     onChange={(e: any) => setState(e.target.value)} />
-                                                <Button className="btn btn-yellow rounded-pill px-4 m-1 py-2 h-100" htmlType="submit" id="button-addon2">{loading ? <Spinner/>:"Receber promoção" }</Button>
+                                                <Button className="btn btn-yellow rounded-pill px-4 m-1 py-2 h-100" htmlType="submit" id="button-addon2">{loading ? <Spinner /> : "Receber promoção"}</Button>
                                             </div>
                                         </Form>
                                     </div>
@@ -64,8 +65,8 @@ const Footer = () => {
                             <ul >
                                 <li>
                                     <div className="footer-logo">
-                                        <a href="#"> <HenceforthIcons.FooterLogo /></a>
-
+                                        {/* <a href="#"> <HenceforthIcons.FooterLogo /></a> */}
+                                        <a href="#"> <img src={logo} style={{ width: "220px", height: "80px" }} /></a>
                                     </div>
                                 </li>
 
