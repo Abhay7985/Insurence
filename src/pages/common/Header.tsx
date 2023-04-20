@@ -6,6 +6,7 @@ import React from "react";
 import placeholder from '../../assets/images/placeholder.png'
 import { Button, Divider, Dropdown, MenuProps, Avatar } from "antd";
 import henceforthApi from '../../utils/henceforthApi';
+import Headerlogo from '../../assets/images/lancha_logo_2.svg'
 import moment from 'moment';
 
 const Header = () => {
@@ -58,7 +59,8 @@ const Header = () => {
         <div className="container">
             <nav className="navbar navbar-expand-lg py-0">
                 <Link className="navbar-brand" to={`/`}>
-                    <img src={logo} alt="img" className='img-fluid' />
+                    <img src={Headerlogo} alt="img" style={{ width: "300px", height: "80px" }} className='img-fluid' />
+                    {/* <img src={logo} style={{ width: "300px", height: "150px" }} */}
                 </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -69,13 +71,13 @@ const Header = () => {
                         {authState.access_token &&
                             <ul className='d-flex flex-column flex-lg-row flex-wrap align-items-center gap-3 gap-lg-5 mt-3 mt-lg-0'>
                                 <li>
-                                    <Link to='/' className={`nav-link ${location.pathname=="/" ? "active":"" } `}>Boats</Link>
+                                    <Link to='/' className={`nav-link ${location.pathname == "/" ? "active" : ""} `}>Boats</Link>
                                 </li>
                                 <li>
-                                    <Link to={`inquiry/all/1`} className={`nav-link${location.pathname.startsWith("/inquiry") ? " active":"" }`}>Inquiry</Link>
+                                    <Link to={`inquiry/all/1`} className={`nav-link${location.pathname.startsWith("/inquiry") ? " active" : ""}`}>Inquiry</Link>
                                 </li>
                                 <li>
-                                    <Link to={`/calender?available_date=${moment().valueOf()}`} className={`nav-link ${location.pathname.startsWith("/calender") ? "active":"" }`}>Calender</Link>
+                                    <Link to={`/calender?available_date=${moment().valueOf()}`} className={`nav-link ${location.pathname.startsWith("/calender") ? "active" : ""}`}>Calender</Link>
                                 </li>
                                 <li>
                                     <Dropdown menu={{ items }}
