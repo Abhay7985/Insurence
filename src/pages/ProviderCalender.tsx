@@ -21,7 +21,7 @@ const ProviderCalender = () => {
   const location = useLocation()
   const uRLSearchParams = new URLSearchParams(location.search);
   const [state, setState] = useState({
-    data: [] as any
+    data: []
   })
 
 
@@ -35,8 +35,8 @@ const ProviderCalender = () => {
 
   const initialiseBoatLists = async () => {
     try {
-      let apiRes = await henceforthApi.Boat.getBoatListing("")
-      setState(apiRes.data)
+      let apiRes = await henceforthApi.Boat.getBoatListingCalender()
+      setState(apiRes)
 
     } catch (error) {
       console.log(error)
@@ -52,8 +52,8 @@ const ProviderCalender = () => {
     return (
       <ul className="events" onClick={() => handleQuery("show_sidebar", "on")}>
         <li key={value.date()}>
-          <Badge status={'warning' as BadgeProps['status']} text={listDatas?.price ? <span className={`${listDatas?.availability?'':'line-through-danger'}${moment().subtract(1,'day').valueOf()<=moment(value.toString()).valueOf()? '':'text-secondary'}`}>{henceforthValidations.BrazilianReal(listDatas?.price)}</span> : <></>} />
-          <Badge status={'warning' as BadgeProps['status']} text={listDatas?.description ? <span className={`${listDatas?.availability?'':'line-through-danger'}${moment().subtract(1,'day').valueOf()<=moment(value.toString()).valueOf() ? '' :'text-secondary'}`}>{listDatas?.description }</span> : <></>}/>
+          <Badge status={'warning' as BadgeProps['status']} text={listDatas?.price ? <span className={`${listDatas?.availability ? '' : 'line-through-danger'}${moment().subtract(1, 'day').valueOf() <= moment(value.toString()).valueOf() ? '' : 'text-secondary'}`}>{henceforthValidations.BrazilianReal(listDatas?.price)}</span> : <></>} />
+          <Badge status={'warning' as BadgeProps['status']} text={listDatas?.description ? <span className={`${listDatas?.availability ? '' : 'line-through-danger'}${moment().subtract(1, 'day').valueOf() <= moment(value.toString()).valueOf() ? '' : 'text-secondary'}`}>{listDatas?.description}</span> : <></>} />
         </li>
         {/* ))} */}
       </ul>
@@ -73,7 +73,7 @@ const ProviderCalender = () => {
     if (boat_id) {
       setLoading(true)
       try {
-        let apiRes = await henceforthApi.Calender.dateCalender(boat_id, queryDate.month()+1, queryDate.year(),)
+        let apiRes = await henceforthApi.Calender.dateCalender(boat_id, queryDate.month() + 1, queryDate.year(),)
         getListedData(apiRes)
       } catch (error) {
 
@@ -88,7 +88,7 @@ const ProviderCalender = () => {
   }, [])
   React.useEffect(() => {
     initialiseCalendarData()
-  }, [uRLSearchParams.get("boat_id"), uRLSearchParams.get("available_date"),uRLSearchParams.get("edit")])
+  }, [uRLSearchParams.get("boat_id"), uRLSearchParams.get("available_date"), uRLSearchParams.get("edit")])
   return (
     <Spin spinning={loading}>
       {/* Calender-section */}
@@ -108,7 +108,7 @@ const ProviderCalender = () => {
                     />
                     <div className="edit-pricing px-sm-4">
                       <button className='btn text-yellow p-0 border-0 text-decoration-underline text-nowrap fw-bold d-flex align-items-center' disabled={!uRLSearchParams.has("boat_id")}>
-                        <Link to={`/boat/${uRLSearchParams.get("boat_id")}/inquiry/edit/price#price_tab`}  className='text-yellow'>
+                        <Link to={`/boat/${uRLSearchParams.get("boat_id")}/inquiry/edit/price#price_tab`} className='text-yellow'>
                           <HenceforthIcons.EditPencil />
                           <span>Edit pricing & availability</span>
                         </Link>
@@ -118,11 +118,11 @@ const ProviderCalender = () => {
                 </div>
                 <div className="col-12">
                   <Calendar
-                   dateCellRender={dateCellRender}
-                  //  locale={frFR}
-                   disabledDate={(date) => {
-                    if (date.endOf('d').valueOf() < Date.now()){return true;}return false;
-                  }}  onSelect={(e: any) => handleQuery('available_date', `${moment(e.$d).valueOf()}`)}  />
+                    dateCellRender={dateCellRender}
+                    //  locale={frFR}
+                    disabledDate={(date) => {
+                      if (date.endOf('d').valueOf() < Date.now()) { return true; } return false;
+                    }} onSelect={(e: any) => handleQuery('available_date', `${moment(e.$d).valueOf()}`)} />
                 </div>
               </div>
             </div>

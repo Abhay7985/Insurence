@@ -122,7 +122,9 @@ const Boat = {
   imageUpload: (key: string, file: any) =>
     requests.file(`provider/upload-image`, key, file),
   filerDate: (id: any, priceing_date: any) =>
-    requests.get(`boat-details/${id}/prices${priceing_date !== 0 ? `?priceing_date=${priceing_date}` : ""}`)
+    requests.get(`boat-details/${id}/prices${priceing_date !== 0 ? `?priceing_date=${priceing_date}` : ""}`),
+  getBoatListingCalender: () =>
+    requests.get(`boat-listing-calendar`)
 }
 const Subscribe = {
   subscribe: (item: any) => requests.post(`subscribe`, item)
