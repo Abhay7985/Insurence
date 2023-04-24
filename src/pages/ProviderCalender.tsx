@@ -104,7 +104,7 @@ const ProviderCalender = () => {
                       value={uRLSearchParams.get("boat_id") || ""}
                       style={{ width: '100%' }}
                       onChange={(value) => handleQuery('boat_id', value)}
-                      options={[{ value: "", label: "Select manufacturer" }, ...state?.data?.map((res: any) => { return { value: `${res?.id}`, label: res.name } })]}
+                      options={[{ value: "", label: "Select boats" }, ...state?.data?.map((res: any) => { return { value: `${res?.id}`, label: res.name } })]}
                     />
                     <div className="edit-pricing px-sm-4">
                       <button className='btn text-yellow p-0 border-0 text-decoration-underline text-nowrap fw-bold d-flex align-items-center' disabled={!uRLSearchParams.has("boat_id")}>

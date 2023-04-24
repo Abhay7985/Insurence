@@ -109,6 +109,11 @@ const InquiryPage = () => {
             label: `Open`,
             children: <Tablelayout  {...state} setExtras={setExtras} setInquiryData={setInquiryData} initialise={initialise} />
         },
+        {
+            key: 'cancel',
+            label: `Cancel`,
+            children: <Tablelayout  {...state} setExtras={setExtras} setInquiryData={setInquiryData} initialise={initialise} />
+        },
     ];
 
 
@@ -144,14 +149,14 @@ const InquiryPage = () => {
                         </div>
                         <div className="col-12">
                             <div className="input-group mb-3 form-control p-0 rounded-pill w-100">
-                               
+
                                 <form onSubmit={(e: any) => {
                                     e.preventDefault();
                                     handleSearch('search', e.target.search.value);
                                 }} className='w-100 d-flex'>
-                                     <span className="input-group-text bg-transparent border-0 pe-0" id="basic-addon1">
-                                    <img src={search} alt="icon" />
-                                </span>
+                                    <span className="input-group-text bg-transparent border-0 pe-0" id="basic-addon1">
+                                        <img src={search} alt="icon" />
+                                    </span>
                                     <input type="text" className="form-control border-0 rounded-pill" name='search' placeholder="Search..." onChange={(e: any) => {
                                         if (!e.target.value) {
                                             handleSearch(e.target.name, e.target.value);
@@ -202,8 +207,8 @@ const InquiryPage = () => {
                             {/* <div  className='d-flex justify-content-between'> */}
                             <span className='fw-bold'>Total (USD)</span>
                             {/* <span className='fw-bold'> </span> */}
-                            <span className='fw-bold'>{henceforthValidations.BrazilianReal(extras.filter((res: any) => 
-                            res.quantity > 0).map(((respo: any) => { return respo.price*respo.quantity })).reduce((a: number, b: any) => a + b, 0))}</span>
+                            <span className='fw-bold'>{henceforthValidations.BrazilianReal(extras.filter((res: any) =>
+                                res.quantity > 0).map(((respo: any) => { return respo.price * respo.quantity })).reduce((a: number, b: any) => a + b, 0))}</span>
                             {/* </div> */}
                             {/* <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="button" className="btn btn-primary">Understood</button> */}
@@ -233,14 +238,14 @@ const InquiryPage = () => {
                                         <h6 className='mb-2'>Phone No.</h6>
                                         {/* <p>{inqieryData.phone ? '+55' : ""}{inqieryData.phone ? inqieryData.phone : "Not Avaiable"}</p> */}
                                         <p>{inqieryData.phone ? inqieryData.phone : "Not Avaiable"}</p>
-                                        
+
                                         {/* {inqieryData.phone ? '+55' : ""} */}
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
                                     <div className="inquiry-name">
                                         <h6 className='mb-2'>Email</h6>
-                                        <span className='inquiry-email'>{ inqieryData?.email?.toLowerCase() || "Not Avaiable"}</span>
+                                        <span className='inquiry-email'>{inqieryData?.email?.toLowerCase() || "Not Avaiable"}</span>
                                     </div>
                                 </div>
                             </div>
