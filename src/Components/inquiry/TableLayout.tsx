@@ -49,7 +49,14 @@ const Tablelayout = (props: any) => {
             setLoading(false)
         }
     }
-
+    const items = {
+        1: 'Lancha Salvador',
+        2: 'RR Nautica',
+        3: 'Giro Lancha',
+    } as any;
+    const getType = (branch_type: number) => {
+        return items[branch_type] || 'N/A'
+    };
     const StatusItem = (res: any) => {
         return [
             {
@@ -130,6 +137,7 @@ const Tablelayout = (props: any) => {
         "INQUIRY ID",
         "ROUTE",
         "PRICE",
+        "Type",
         "DATE",
         "Extra's",
         // "ENQUIRY VIA",
@@ -155,10 +163,14 @@ const Tablelayout = (props: any) => {
                     <td>{res.id || "Not Avaiable"}</td>
                     <td>{res.route_name}</td>
                     <td>{henceforthValidations.BrazilianReal(res.installments !== 0 ? `${res.price}x${res.installments}` : res.price)}</td>
+                    <td>
+                        <span className={`text-capitalize text`}>
+                            {getType(res?.branch_type)}</span>
+                    </td>
                     <td>{moment(res.inquiry_date).format("DD/MM/YYYY")}</td>
                     <td> <button className=' d-flex gap-2 align-items-center btn p-0 border-0 text-dark' data-bs-toggle="modal" data-bs-target="#staticBackdrop" onMouseOver={() => props.setExtras(res?.inquiry_extra_amenity)}>
                         {/* <HenceforthIcons.Email /> */}
-                        <span className='text-decoration-underline'>{henceforthValidations.BrazilianReal(res.inquiry_extra_amenity?.filter((res: any) => res.quantity > 0).map(((respo: any) => { return respo.quantity*respo.price })).reduce((a: number, b: any) => a + b, 0))}</span>
+                        <span className='text-decoration-underline'>{henceforthValidations.BrazilianReal(res.inquiry_extra_amenity?.filter((res: any) => res.quantity > 0).map(((respo: any) => { return respo.quantity * respo.price })).reduce((a: number, b: any) => a + b, 0))}</span>
                         <HenceforthIcons.ChevronRight />
                     </button></td>
                     {/* <td>

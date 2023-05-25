@@ -15,6 +15,7 @@ const EditInfoBoat = (props: any) => {
     const [loading, setLoading] = React.useState(false)
 
     const [categories_list, setCategoriesList] = React.useState([])
+    const [branch_list, setBranchList] = React.useState([])
     const [manufactures_list, setManufactureresList] = React.useState([])
     const [boatExtension, setBoatExtension] = React.useState(props.size.includes('feet') || props.size.includes('inches') ? props.size.split(" ")[1] : '')
 
@@ -30,18 +31,19 @@ const EditInfoBoat = (props: any) => {
 
     const onSubmit = async (e: any) => {
         e.preventDefault()
-        if(!boatExtension) return Toast.error("please select feet/inches")
+        if (!boatExtension) return Toast.error("please select feet/inches")
         const items = {
             boatinfo: {
                 category_id: state.category_id,
                 manufacturer_id: state.manufacturer_id,
+                branch_type: state.branch_type,
                 model: state.model,
-                size: (state.size.includes('feet') || state.size.includes('inches'))&&(props.size.split(" ")[1]===boatExtension&& props.size.split(" ")[0]===state.size)  ? state.size : `${state.size}${boatExtension.includes(" ")? boatExtension:` ${boatExtension}`}`,
+                size: (state.size.includes('feet') || state.size.includes('inches')) && (props.size.split(" ")[1] === boatExtension && props.size.split(" ")[0] === state.size) ? state.size : `${state.size}${boatExtension.includes(" ") ? boatExtension : ` ${boatExtension}`}`,
             }
         }
         setLoading(true)
         try {
-            if (state.category_id && state.manufacturer_id && state.model.trim() && state.size.trim()) {
+            if (state.category_id && state.manufacturer_id && state.branch_type && state.model.trim() && state.size.trim()) {
                 const apiRes = await henceforthApi.Boat.edit(state.id, items)
                 Toast.success(apiRes.message)
                 setIsExpended(false)
@@ -85,6 +87,25 @@ const EditInfoBoat = (props: any) => {
                         <div className="row">
                             <div className="col-12">
                                 <div className="address mb-3">
+                                    <label className="form-label">Branch</label>
+                                    <div className="select">
+                                        <Select
+                                            defaultValue={state.branch_type}
+                                            className='w-100'
+                                            onChange={(branch_type) => handleChange({ name: 'branch_type', value: branch_type })}
+                                            // options={branch_list?.map((res: any) => { return { value: res?.id, label: res.branch_type } })}
+                                            options={[
+                                                { value: '1', label: 'Lancha Salvador' },
+                                                { value: '2', label: 'RR Nautica' },
+                                                { value: '3', label: 'GiroLancha' },
+                                                // { value: 'disabled', label: 'Disabled', disabled: true },
+                                            ]}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-12">
+                                <div className="address mb-3">
                                     <label className="form-label">Category</label>
                                     <div className="select">
                                         <Select
@@ -123,7 +144,7 @@ const EditInfoBoat = (props: any) => {
                                     <label className="form-label">Size</label>
                                     <div className='d-flex'>
                                         {/* <input type="text" className="form-control" id='input5' placeholder={`Enter size ${boatExtension?`(in${boatExtension})`:''}`} value={boatSize} onChange={(e) => { setBoatSize(e.target.value.replace(/[^.0-9]/g, "")) }} /> */}
-                                        <Input placeholder={`Enter size ${boatExtension?`(in${boatExtension})`:''}`} value={state.size.includes('feet') || state.size.includes('inches') ? state?.size?.split(" ")[0] : state.size} name="size" onChange={(e) => handleChange(e.target)} />
+                                        <Input placeholder={`Enter size ${boatExtension ? `(in${boatExtension})` : ''}`} value={state.size.includes('feet') || state.size.includes('inches') ? state?.size?.split(" ")[0] : state.size} name="size" onChange={(e) => handleChange(e.target)} />
                                         <Select
                                             size="large"
                                             value={boatExtension}

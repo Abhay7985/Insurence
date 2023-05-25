@@ -39,12 +39,13 @@ const EditBoatDetails = () => {
         id: "",
         location: "",
         manufacturer_id: "",
+        branch_type: "",
         model: "",
         name: "",
         passenger_day: "",
         passenger_night: "",
         pets_allowed: 0,
-        location_title:"",
+        location_title: "",
         photos: [],
         prices: [],
         rules: "",
@@ -53,7 +54,7 @@ const EditBoatDetails = () => {
         status: "",
         step: "",
         updated_at: "",
-        location_id:0,
+        location_id: 0,
         address: {
             id: 0,
             address1: "",
@@ -111,7 +112,7 @@ const EditBoatDetails = () => {
     const deleteListing = async (id: any) => {
         try {
             setLoading(true)
-            
+
 
             const apiRes = await henceforthApi.Boat.deleteBoat(id)
             Toast.success(apiRes.message)
@@ -397,7 +398,7 @@ const EditBoatDetails = () => {
                                                 </div>}
                                             {/* Location */}
                                             {state.location_title &&
-                                                
+
                                                 <EditLocationBoat {...state} initialise={initialise} />
                                             }
                                             {/* Boat & passengers */}

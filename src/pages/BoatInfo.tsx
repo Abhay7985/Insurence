@@ -10,7 +10,7 @@ import { Spin } from 'antd';
 import BackNextLayout from '../Components/boat/BackNextLayout';
 
 const BoatInfo = () => {
-    const { authState,loading,setLoading } = React.useContext(GlobalContext)
+    const { authState, loading, setLoading } = React.useContext(GlobalContext)
     const navigate = useNavigate()
     const location = useLocation()
     const [size, setSize] = useState<SizeType>('middle')
@@ -25,6 +25,7 @@ const BoatInfo = () => {
     const [boatExtension, setBoatExtension] = useState('')
     const [category_id, setCategoryId] = useState("")
     const [manufacturer_id, setManufacturerId] = useState("")
+    const [branch_type, setBranch_type] = useState("")
     const { Toast } = React.useContext(GlobalContext)
 
 
@@ -38,8 +39,9 @@ const BoatInfo = () => {
         e.preventDefault()
         const uRLSearchParams = new URLSearchParams()
         uRLSearchParams.set("name", boatName)
+        uRLSearchParams.set("branch_type", branch_type)
         uRLSearchParams.set("model", boatModel)
-        uRLSearchParams.set("size", boatSize+boatExtension)
+        uRLSearchParams.set("size", boatSize + boatExtension)
         uRLSearchParams.set("category_id", category_id)
         uRLSearchParams.set("manufacturer_id", manufacturer_id)
 
@@ -48,6 +50,10 @@ const BoatInfo = () => {
                 Toast.error('Enter Boat Name')
             } else if (!category_id) {
                 Toast.error("Enter Category")
+
+            }
+            else if (!branch_type.trim()) {
+                Toast.error("Enter Domain Type")
 
             }
             else if (!manufacturer_id) {
@@ -75,6 +81,7 @@ const BoatInfo = () => {
 
         }
     }
+    console.log(branch_type);
 
     const initialise = async () => {
         setLoading(true)
@@ -87,11 +94,13 @@ const BoatInfo = () => {
             })
         } catch (error) {
 
-        }finally{
+        } finally {
             setLoading(false)
         }
     }
-
+    const handleChange = (value: string) => {
+        console.log(`selected ${value}`);
+    };
     useEffect(() => {
         initialise()
     }, [])
@@ -111,8 +120,31 @@ const BoatInfo = () => {
                                     <div className="mb-2 mb-sm-3">
                                         {/* <label htmlFor="input1" className="form-label">Boat Name</label> */}
                                         <label htmlFor="input1" className="form-label">Nome da Embarcação</label>
-
                                         <input type="text" className="form-control" id='input1' placeholder='Insira o nome' value={boatName} onChange={(e) => setBoatName(e.target.value)} />
+                                    </div>
+                                </div>
+                                <div className="col-11 col-lg-11">
+                                    <div className="mb-2 mb-sm-3">
+                                        <label htmlFor="input3" className="form-label">Domain Type</label>
+                                        <div className="branch_type">
+                                            <Space direction="vertical" style={{ width: '100%' }}  >
+                                                <Select
+                                                    value={branch_type}
+                                                    size={size}
+                                                    style={{ width: '100%' }}
+                                                    loading={loading}
+                                                    disabled={loading}
+                                                    onChange={(e) => setBranch_type(e)}
+                                                    options={[
+                                                        { value: '', label: 'Selecione a Domain' },
+                                                        { value: '1', label: 'Lancha Salvador' },
+                                                        { value: '2', label: 'RR Nautica' },
+                                                        { value: '3', label: 'GiroLancha' },
+                                                        // { value: 'disabled', label: 'Disabled', disabled: true },
+                                                    ]}
+                                                />
+                                            </Space>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="col-11 col-lg-11">
@@ -133,6 +165,7 @@ const BoatInfo = () => {
                                         </div>
                                     </div>
                                 </div>
+
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-2 mb-sm-3">
                                         {/* <label htmlFor="input3" className="form-label">Manufacturer</label> */}
@@ -163,13 +196,13 @@ const BoatInfo = () => {
                                     <div className="mb-2 mb-sm-3">
                                         <label htmlFor="input5" className="form-label">Tamanho</label>
                                         <div className='d-flex'>
-                                            <input type="text" className="form-control" id='input5' placeholder={`Insira Tamanho ${boatExtension?`(in${boatExtension})`:''}`} value={boatSize} onChange={(e) => { setBoatSize(e.target.value.replace(/[^.0-9]/g, "")) }} />
+                                            <input type="text" className="form-control" id='input5' placeholder={`Insira Tamanho ${boatExtension ? `(in${boatExtension})` : ''}`} value={boatSize} onChange={(e) => { setBoatSize(e.target.value.replace(/[^.0-9]/g, "")) }} />
                                             <Select
                                                 size="large"
                                                 defaultValue="select"
                                                 onChange={setBoatExtension}
                                                 style={{ width: '25%' }}
-                                                options={[ { value: " feet", label: "pés" }, { value: " inches", label: "inches" }, ]}
+                                                options={[{ value: " feet", label: "pés" }, { value: " inches", label: "inches" },]}
                                             />
                                         </div>
                                     </div>

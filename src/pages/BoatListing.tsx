@@ -78,6 +78,15 @@ const BoatListing = () => {
         boatListing()
     }, [urlSearchParams.toString(), urlSearchParams.get('search')])
 
+    const items = {
+        1: 'Lancha Salvador',
+        2: 'RR Nautica',
+        3: 'Giro Lancha',
+    } as any;
+
+    const getType = (branch_type: number) => {
+        return items[branch_type] || 'N/A'
+    };
     let dotColor = [
         { status: henceofrthEnums.OrderStatus.draft, color: henceofrthEnums.OrderColor.draft },
         { status: henceofrthEnums.OrderStatus.listed, color: henceofrthEnums.OrderColor.listed },
@@ -147,6 +156,7 @@ const BoatListing = () => {
                                         <th scope="col">STATUS</th>
                                         {/* <th scope="col">PRICE</th> */}
                                         <th scope="col">PREÇO</th>
+                                        <th scope="col">Type</th>
                                         {/* <th scope="col">LAST MODIFIED</th> */}
                                         <th scope="col">ÚLTIMA ATUALIZAÇÃO</th>
                                         <th scope="col">AÇÃO</th>
@@ -171,11 +181,15 @@ const BoatListing = () => {
                                                     {/* <Badge color={dotColor.find(res => res.status == e?.status)?.color} /> */}
 
                                                     <div className="ms-1">
-                                                        <p className='m-0'>{e?.status==="draft" ? "Rescunho":"Ativo" }</p>
+                                                        <p className='m-0'>{e?.status === "draft" ? "Rescunho" : "Ativo"}</p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>{henceforthValidations.BrazilianReal(e?.price)}</td>
+                                            <td>
+                                                <span className={`text-capitalize text`}>
+                                                    {getType(e?.branch_type)}</span>
+                                            </td>
                                             <td>{moment(e?.updated_at).format('MMMM Do')}</td>
                                             <td>
                                                 <ul className='d-flex gap-2'>
