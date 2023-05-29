@@ -123,7 +123,7 @@ const BoatInfo = () => {
                                         <input type="text" className="form-control" id='input1' placeholder='Insira o nome' value={boatName} onChange={(e) => setBoatName(e.target.value)} />
                                     </div>
                                 </div>
-                                <div className="col-11 col-lg-11">
+                                {/* <div className="col-11 col-lg-11">
                                     <div className="mb-2 mb-sm-3">
                                         <label htmlFor="input3" className="form-label">Domain Type</label>
                                         <div className="branch_type">
@@ -146,7 +146,7 @@ const BoatInfo = () => {
                                             </Space>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="col-11 col-lg-11">
                                     <div className="mb-2 mb-sm-3">
                                         <label htmlFor="input2" className="form-label">Categoria</label>

@@ -156,7 +156,7 @@ const BoatListing = () => {
                                         <th scope="col">STATUS</th>
                                         {/* <th scope="col">PRICE</th> */}
                                         <th scope="col">PREÇO</th>
-                                        <th scope="col">Type</th>
+                                        {/* <th scope="col">Type</th> */}
                                         {/* <th scope="col">LAST MODIFIED</th> */}
                                         <th scope="col">ÚLTIMA ATUALIZAÇÃO</th>
                                         <th scope="col">AÇÃO</th>
@@ -186,10 +186,10 @@ const BoatListing = () => {
                                                 </div>
                                             </td>
                                             <td>{henceforthValidations.BrazilianReal(e?.price)}</td>
-                                            <td>
+                                            {/* <td>
                                                 <span className={`text-capitalize text`}>
                                                     {getType(e?.branch_type)}</span>
-                                            </td>
+                                            </td> */}
                                             <td>{moment(e?.updated_at).format('MMMM Do')}</td>
                                             <td>
                                                 <ul className='d-flex gap-2'>
