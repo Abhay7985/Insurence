@@ -28,7 +28,7 @@ const SelectPassenger = () => {
                 name: uRLSearchParams.get("name"),
                 category_id: uRLSearchParams.get("category_id"),
                 manufacturer_id: uRLSearchParams.get("manufacturer_id"),
-                branch_type: uRLSearchParams.get("branch_type"),
+                // branch_type: uRLSearchParams.get("branch_type"),
                 model: uRLSearchParams.get("model"),
                 size: uRLSearchParams.get("size"),
                 passenger_day: passengerDay,

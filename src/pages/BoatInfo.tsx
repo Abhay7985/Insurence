@@ -39,7 +39,7 @@ const BoatInfo = () => {
         e.preventDefault()
         const uRLSearchParams = new URLSearchParams()
         uRLSearchParams.set("name", boatName)
-        uRLSearchParams.set("branch_type", branch_type)
+        // uRLSearchParams.set("branch_type", branch_type)
         uRLSearchParams.set("model", boatModel)
         uRLSearchParams.set("size", boatSize + boatExtension)
         uRLSearchParams.set("category_id", category_id)
@@ -52,10 +52,10 @@ const BoatInfo = () => {
                 Toast.error("Enter Category")
 
             }
-            else if (!branch_type.trim()) {
-                Toast.error("Enter Domain Type")
+            // else if (!branch_type.trim()) {
+            //     Toast.error("Enter Domain Type")
 
-            }
+            // }
             else if (!manufacturer_id) {
                 Toast.error("Enter manufacturer")
 
