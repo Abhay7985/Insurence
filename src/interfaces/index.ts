@@ -14,6 +14,7 @@ export interface UserInfoInterface {
 }
 export interface RouteDataInterface {
     id: number,
+    available?:number,
     route_name: string,
     selected?: boolean,
     price?: number,

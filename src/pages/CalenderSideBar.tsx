@@ -13,6 +13,7 @@ import henceforthDate from '../utils/henceforthDate';
 
 interface RouteDataInterface {
     id: number,
+    available?:number,
     route_name: string,
     selected?: boolean,
     price?: number,
@@ -169,7 +170,7 @@ const CalendarSideBar = () => {
                     rowData.push({
                         id: element.id,
                         route_name: element.route_name,
-                        selected: true,
+                        selected:!!findData?.available,
                         installment_price: findData.installment_price,
                         installments: findData.installments,
                         price: findData.price
@@ -191,6 +192,8 @@ const CalendarSideBar = () => {
         initialiseRoutes()
 
     }, [uRLSearchParams.get("edit"), uRLSearchParams.get("available_date")])
+    console.log('routeDatas',routeDatas);
+    
     return (
         <div className="col-lg-3 px-0">
             <div className="sidebar-calender py-4">
