@@ -257,12 +257,15 @@ const CalendarSideBar = () => {
                         <p className='fs-16 mb-3'>Available</p>
                         <ul>
                             {state?.prices?.map((res: avaiableprice) => {
-                                return (
+                                if(res.available){
+
+                                    return (
+                                
                                     <div className='mb-3'>
                                         <li>{res.route_name}</li>
                                         <li>{henceforthValidations.BrazilianReal(res.price)} or {res.installments}x in {henceforthValidations.BrazilianReal(res.installment_price)} </li>
                                     </div>
-                                )
+                                )}
                             })}
 
                         </ul>

@@ -144,5 +144,6 @@ export interface avaiableprice{
     route_name:string,
     price:number,
     installments:number,
+    available:number,
     installment_price:number
 }
