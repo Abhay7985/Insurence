@@ -17,6 +17,7 @@ import PhotoSlider from './common/PhotoSlider';
 import henceofrthValidations from "../utils/henceforthValidations";
 import { message, Popconfirm } from 'antd';
 import henceforthValidations from '../utils/henceforthValidations';
+import moment from 'moment';
 
 
 
@@ -108,7 +109,8 @@ const EditBoatDetails = () => {
         initialise(true)
     }, [match?.params.id])
 
-
+   console.log("state",state);
+   
     const deleteListing = async (id: any) => {
         try {
             setLoading(true)
@@ -186,7 +188,6 @@ const EditBoatDetails = () => {
             }
         ]
     };
-    console.log(state.location_title)
     return (
         <section className='morning-panormic-listing py-5' >
             <div className="container">
@@ -293,7 +294,7 @@ const EditBoatDetails = () => {
                                                                 <a href="#price_tab" className={`${location.hash === '#price_tab' ? 'active-tab' : ''} nav-link`}>Pricing</a>
                                                             </li>
                                                             <li>
-                                                                <Link to={`/calender`} className="nav-link">Calender availability</Link>
+                                                                <a href='#calender_tab' className={`${location.hash === '#calender_tab' ? 'active-tab' : ''} nav-link`}>Calender availability</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -353,7 +354,7 @@ const EditBoatDetails = () => {
                                             {/* Amenities */}
                                             {state.name &&
 
-                                                <div className="Listing-basics bg-white Pricing mb-4">
+                                                <div className="Listing-basics bg-white Pricing mb-4"> 
                                                     <div className="photo-header d-flex justify-content-between mb-3">
                                                         <h4>Amenities</h4>
                                                     </div>
@@ -420,13 +421,11 @@ const EditBoatDetails = () => {
                                             {state.name && state.prices &&
                                                 <EditPriceBoat {...state} initialise={initialise} />
                                             }
-
-
-                                            <div className="Calender-availability bg-white p-4 ">
-                                                <div className="photo-header d-flex justify-content-between mb-3 flex-wrap">
+                                            <div className="Calender-availability bg-white p-4 " id='calender_tab' style={{ scrollMarginTop: '11rem' }}>
+                                                <div className="photo-header d-flex justify-content-between mb-3 flex-wrap" >
                                                     <h4>Calender availability</h4>
-                                                    <div className="edit-photo">
-                                                        <Link to={`/calender?boat_id=${match.params.id}`}>
+                                                    <div className="edit-photo"  >
+                                                        <Link to={`/calender?boat_id=${match.params.id}&available_date=${moment().valueOf()}&show_sidebar=on`}>
                                                             <button className='btn p-0 border-0 text-yellow fw-bold'>Open calender</button>
                                                         </Link>
                                                     </div>

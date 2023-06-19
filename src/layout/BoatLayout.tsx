@@ -4,7 +4,7 @@ import Header from "../pages/common/Header";
 
 const BoatLayout = () => {
     return (
-        <div className="layout-wrapper d-flex flex-column h-100">
+        <div className="layout-wrapper d-flex flex-column h-100 overflow-auto">
             <header className="sticky-top" style={{ zIndex: 10 }}>
                 <BoatHeader />
             </header>

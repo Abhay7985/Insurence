@@ -130,7 +130,7 @@ const EditPriceBoat = (props: any) => {
     }, [])
 
 
-    return <div className="Pricing bg-white mb-4" id="price_tab">
+    return <div className="Pricing bg-white mb-4" id="price_tab" style={{ scrollMarginTop: '11rem' }}>
         <div className="photo-header d-flex justify-content-between mb-3 flex-wrap">
             <h4>Pricing</h4>
             <div className="edit-photo ps-4" >
