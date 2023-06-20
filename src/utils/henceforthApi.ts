@@ -3,7 +3,7 @@ const SuperagentPromise = require('superagent-promise');
 const superagent = SuperagentPromise(_superagent, global.Promise);
 
 const API_BASE_URL = `lanchasalvador.com.br/api/`
-const IS_STAGING = (window.origin.includes('staging') || window.origin.includes('localhost'));
+const IS_STAGING = (window.origin.includes('staging') || window.origin.includes('127.0.0.1'));
 const LIVE_API_ROOT = `https://aluguel.backend.${API_BASE_URL}`;
 const STAGING_API_ROOT = `https://staging.api.${API_BASE_URL}`;
 
@@ -137,7 +137,12 @@ const Calender = {
   getDatePrice: (id: string, available_date: string) => requests.get(`provider/boat-price-date/${id}?available_date=${available_date}`),
 
   editWeekPrice: (id: string, item: any) => requests.put(`provider/boat-price-weekday/${id}`, item),
-  editDatePrice: (id: string, item: any) => requests.put(`provider/boat-price-date/${id}`, item)
+  editDatePrice: (id: string, item: any) => requests.put(`provider/boat-price-date/${id}`, item),
+
+  switchDatePrice:(type:string,id:string,item:any)=>requests.put(`provider/boat-${type}-switch/${id}`,item),
+  switchDayPrice:(id:string,item:any)=>requests.put(`provider/boat-day-switch/${id}`,item)
+
+
 }
 // boat-routes
 

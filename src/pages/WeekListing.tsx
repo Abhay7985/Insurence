@@ -6,7 +6,7 @@ const Weeklisting = (props: RouteDataInterface) => {
 
   return <div className="col-12">
     <div className="form-check">
-      <input className="form-check-input" type="checkbox" checked={props.selected} id={`route_name` + props.route_name}
+      <input className="form-check-input" type="checkbox" checked={!!props.selected} id={`route_name` + props.route_name}
         onChange={(e) => props.handleChange(e.target.name, e.target.checked)} />
       <label className="form-check-label" htmlFor={`route_name` + props.route_name}>
         {props.route_name}

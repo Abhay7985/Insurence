@@ -13,7 +13,7 @@ import henceforthDate from '../utils/henceforthDate';
 
 interface RouteDataInterface {
     id: number,
-    available?:number,
+    available?: number,
     route_name: string,
     selected?: boolean,
     price?: number,
@@ -34,9 +34,7 @@ const CalendarSideBar = () => {
 
     const [state, setState] = React.useState({
         prices: [],
-        date_available: false,
-        day_available: false,
-
+        available: false
     })
 
     const queryDate = moment(Number(uRLSearchParams.get('available_date')))
@@ -54,6 +52,9 @@ const CalendarSideBar = () => {
     }
 
     const handleChange = async (name: string, value: any, index: number) => {
+
+        console.log('debugger');
+
         if (name === "price" && isNaN(value)) return
         if (name === "installments" && isNaN(value)) return
         if (name === "installment_price" && isNaN(value)) return
@@ -67,87 +68,88 @@ const CalendarSideBar = () => {
     }
     const getBoatPrice = async () => {
         const date = queryDate.format("YYYY/MM/DD")
+        const queryDate1 = moment(Number(uRLSearchParams.get('available_date')))
+        console.log(date, "date");
 
-        let apiRes = await henceforthApi.Calender.viewPrice(uRLSearchParams.get("boat_id") as string, date)
+        let apiRes: any
+        if (uRLSearchParams.get('edit') === 'date') {
+            apiRes = await henceforthApi.Calender.getDatePrice(uRLSearchParams.get("boat_id") as string, date)
+        } else if (uRLSearchParams.get('edit') === 'week') {
+            apiRes = await henceforthApi.Calender.getWeekPrice(uRLSearchParams.get("boat_id") as string, queryDate1.weekday() as any)
+        } else {
+            apiRes = await henceforthApi.Calender.viewPrice(uRLSearchParams.get("boat_id") as string, date)
+        }
         setState({
             ...state,
             prices: apiRes.data,
-            date_available: apiRes?.date_available,
-            day_available: apiRes?.day_available,
+            available: apiRes.holiday === 1 ? false : true,
         })
         return apiRes
     }
 
-    const onSubmit = async (b: boolean, isOpen: boolean, isSpinning: boolean) => {
+    // console.log(queryDate1.weekday(),"queryDate1.weekday")
 
-        const queryDate = moment(Number(uRLSearchParams.get('available_date')))
-        console.log(String(queryDate.weekday()))
-        const items = {
-            available: b,
-            route_prices: routeDatas.filter(((res: any) => res.selected == true)).map((res: any) => {
-                return {
-                    route_id: res.id,
-                    price: Number(res.price),
-                    installments: Number(res.installments),
-                    installment_price: Number(res.installment_price)
-                }
-            })
-        } as any
-        if (uRLSearchParams.get("edit") == "date") {
-            items.available_date = queryDate.format('YYYY/MM/DD')
-        } else {
-            items.available_day = queryDate.weekday()
-        }
-        const data = items.route_prices
-        if (data.length) {
-            let _is_true = true
-            data.forEach((element: any) => {
-                if (!element.price) {
-                    _is_true = false
-                    Toast.error(`Please enter price`)
-                    // Toast.error(`Please enter price of ${element.route_name}`)
-                    return
-                }
-                if (!element.installments) {
-                    _is_true = false
-                    Toast.error(`Please enter installments`)
-                    // Toast.error(`Please enter installments of ${element.route_name}`)
-                    return
-                }
-                if (!element.installment_price) {
-                    _is_true = false
-                    Toast.error(`Please enter installment price`)
-                    // Toast.error(`Please enter installment price of ${element.route_name}`)
-                    return
-                }
-            });
-            if (_is_true) {
-                try {
-                    setLoading(true)
-                    setSpinningCheckbox(isSpinning)
-                    let apiRes: any
-                    if (uRLSearchParams.get("edit") == "date") {
-                        apiRes = await henceforthApi.Calender.editDatePrice(uRLSearchParams.get("boat_id") as string, items)
-                    } else {
-                        apiRes = await henceforthApi.Calender.editWeekPrice(uRLSearchParams.get("boat_id") as string, items)
-                    }
-                    getBoatPrice()
-                    Toast.success(apiRes.message)
-                    if (isOpen) {
-                        handleQuery("edit", "")
-                    } else {
-                        // await getBoatPrice()
-                    }
+    const onSubmit = async (b: boolean, isOpen: boolean, isSpinning: boolean, run: string) => {
+        let items = {} as any
+        try {
+            if (run !== 'switch') {
 
-                } catch (error) {
-                    Toast.error(error)
-                } finally {
-                    setLoading(false)
-                    setSpinningCheckbox(false)
+                const routePrices = routeDatas.filter(((res: any) => res.selected == true))
+                const queryDate = moment(Number(uRLSearchParams.get('available_date')))
+                items = {
+                    available: b,
+                    route_prices: routePrices?.length ? routePrices.map((res: any) => {
+                        return {
+                            route_id: res.id,
+                            price: Number(res.price),
+                            installments: Number(res.installments),
+                            installment_price: Number(res.installment_price)
+                        }
+                    }) : null
+                } as any
+                if (uRLSearchParams.get("edit") == "date") {
+                    items.available_date = queryDate.format('YYYY/MM/DD')
+                } else {
+                    items.available_day = queryDate.weekday()
+                }
+                const data = items?.route_prices
+                if (Array.isArray(data) && data.length) {
+                    data.forEach((element: any) => {
+                        if (!element.price) throw `Please enter price`
+                        if (!element.installments) throw `Please enter installments`
+                        if (!element.installment_price) throw `Please enter`
+                    });
                 }
             }
-        } else {
+            setLoading(true)
+            setSpinningCheckbox(isSpinning)
+            let apiRes: any
+            const check = uRLSearchParams.get("edit") == "date"
+            if (run === 'switch') {
+                items[`available_${check ? 'date' : 'day'}`] = check ? queryDate.format('YYYY/MM/DD') : queryDate.weekday()
+                items['holiday'] = b === false?1:0
+                apiRes = await henceforthApi.Calender.switchDatePrice(check ? 'date' : 'day', uRLSearchParams.get("boat_id") as string, items)
+            }
+            else if (check) {
+                apiRes = await henceforthApi.Calender.editDatePrice(uRLSearchParams.get("boat_id") as string, items)
+            } else {
+                apiRes = await henceforthApi.Calender.editWeekPrice(uRLSearchParams.get("boat_id") as string, items)
+            }
+            getBoatPrice()
+            Toast.success(apiRes.message)
+            if (isOpen) {
+                handleQuery("edit", "")
+            } else {
+                // await getBoatPrice()
+            }
+
+        } catch (error) {
+            Toast.error(error)
+        } finally {
+            setLoading(false)
+            setSpinningCheckbox(false)
         }
+        // }
     }
 
     const initialiseRoutes = async () => {
@@ -170,7 +172,7 @@ const CalendarSideBar = () => {
                     rowData.push({
                         id: element.id,
                         route_name: element.route_name,
-                        selected:!!findData?.available,
+                        selected: !!findData?.available,
                         installment_price: findData.installment_price,
                         installments: findData.installments,
                         price: findData.price
@@ -179,7 +181,8 @@ const CalendarSideBar = () => {
                     rowData.push(element)
                 }
             });
-            setRouteData(rowData)
+            console.log('rowData', rowData);
+            setRouteData([...rowData])
 
         } catch (error) {
 
@@ -192,8 +195,8 @@ const CalendarSideBar = () => {
         initialiseRoutes()
 
     }, [uRLSearchParams.get("edit"), uRLSearchParams.get("available_date")])
-    console.log('routeDatas',routeDatas);
-    
+    console.log('routeDatas', routeDatas);
+
     return (
         <div className="col-lg-3 px-0">
             <div className="sidebar-calender py-4">
@@ -230,7 +233,7 @@ const CalendarSideBar = () => {
                                 <div className="available d-flex justify-content-between align-items-center">
                                     <p> Availability</p>
                                     <div className="form-check form-switch">
-                                        <input className="form-check-input form-check-toggle px-1" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked={uRLSearchParams.get("edit") == "date" ? state?.date_available : state?.day_available} onChange={(e) => onSubmit(e.target.checked, false, true)} />
+                                        <input className="form-check-input form-check-toggle px-1" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked={state?.available} onChange={(e) => onSubmit(e.target.checked, false, true, "switch")} />
                                     </div>
                                 </div>
                             </div>
@@ -244,7 +247,7 @@ const CalendarSideBar = () => {
 
                                 })}
                                 <div className="col-12">
-                                    <button className='btn btn-yellow px-4 rounded-2' disabled={loading} onClick={() => onSubmit(uRLSearchParams.get("edit") == "date" ? state?.date_available : state?.day_available, true, false)}>{loading ? <Spinner /> : "Done"}</button>
+                                    <button className='btn btn-yellow px-4 rounded-2' disabled={loading} onClick={() => onSubmit(state?.available, true, false, "done")}>{loading ? <Spinner /> : "Done"}</button>
                                 </div>
 
                             </div>
@@ -257,15 +260,16 @@ const CalendarSideBar = () => {
                         <p className='fs-16 mb-3'>Available</p>
                         <ul>
                             {state?.prices?.map((res: avaiableprice) => {
-                                if(res.available){
+                                if (res.available) {
 
                                     return (
-                                
-                                    <div className='mb-3'>
-                                        <li>{res.route_name}</li>
-                                        <li>{henceforthValidations.BrazilianReal(res.price)} or {res.installments}x in {henceforthValidations.BrazilianReal(res.installment_price)} </li>
-                                    </div>
-                                )}
+
+                                        <div className='mb-3'>
+                                            <li>{res.route_name}</li>
+                                            <li>{henceforthValidations.BrazilianReal(res.price)} or {res.installments}x in {henceforthValidations.BrazilianReal(res.installment_price)} </li>
+                                        </div>
+                                    )
+                                }
                             })}
 
                         </ul>
