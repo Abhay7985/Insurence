@@ -281,6 +281,8 @@
 
 .boat-calender {
     border-right: 1px solid $light-gray;
+    height: 100vh;
+    overflow-y: auto;
 
     @media (max-width:991px) {
         border-right: none;

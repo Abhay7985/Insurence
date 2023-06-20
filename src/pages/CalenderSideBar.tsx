@@ -83,6 +83,7 @@ const CalendarSideBar = () => {
             ...state,
             prices: apiRes.data,
             available: apiRes.holiday === 1 ? false : true,
+            
         })
         return apiRes
     }
@@ -260,7 +261,7 @@ const CalendarSideBar = () => {
                         <p className='fs-16 mb-3'>Available</p>
                         <ul>
                             {state?.prices?.map((res: avaiableprice) => {
-                                if (res.available) {
+                                // if (res.available) {
 
                                     return (
 
@@ -269,7 +270,7 @@ const CalendarSideBar = () => {
                                             <li>{henceforthValidations.BrazilianReal(res.price)} or {res.installments}x in {henceforthValidations.BrazilianReal(res.installment_price)} </li>
                                         </div>
                                     )
-                                }
+                                // }
                             })}
 
                         </ul>

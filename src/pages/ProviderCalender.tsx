@@ -96,7 +96,7 @@ const ProviderCalender = () => {
         <div className="container-fluid">
           <div className="row bg-white">
             {/* calender */}
-            <div className="col-lg-9 px-0 boat-calender py-5">
+            <div className="col-lg-9 boat-calender py-5">
               <div className="row">
                 <div className="col-12">
                   <div className="select-date px-sm-4 d-flex justify-content-between align-items-center flex-wrap flex-md-nowrap gap-2">
