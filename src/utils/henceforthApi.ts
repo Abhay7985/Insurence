@@ -139,8 +139,8 @@ const Calender = {
   editWeekPrice: (id: string, item: any) => requests.put(`provider/boat-price-weekday/${id}`, item),
   editDatePrice: (id: string, item: any) => requests.put(`provider/boat-price-date/${id}`, item),
 
-  switchDatePrice:(type:string,id:string,item:any)=>requests.put(`provider/boat-${type}-switch/${id}`,item),
-  switchDayPrice:(id:string,item:any)=>requests.put(`provider/boat-day-switch/${id}`,item)
+  switchDatePrice: (type: string, id: string, item: any) => requests.put(`provider/boat-${type}-switch/${id}`, item),
+  switchDayPrice: (id: string, item: any) => requests.put(`provider/boat-day-switch/${id}`, item)
 
 
 }
@@ -149,6 +149,10 @@ const Calender = {
 const Inquiry = {
   pagination: (status: string, page: string, search: any) =>
     requests.get(`provider/inquiry?page=${page}${status ? `&status=${status}` : ''}${search ? `&${search}` : ''}`),
+  getexport: (start_date: any, end_date: any) =>
+    requests.get(
+      `provider/inquiries/export?${start_date ? `&start_date=${start_date}` : ""}${end_date ? `&end_date=${end_date}` : ""}`
+    ),
   inquiryStatus: (id: any, items: any) =>
     requests.put(`provider/inquiry/${id}`, items),
   deleteInquiry: (id: any) => requests.del(`provider/inquiry/${id}`)

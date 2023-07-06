@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Button, Modal, Pagination, Spin, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import { Select, } from 'antd';
@@ -9,6 +9,8 @@ import henceforthApi from '../utils/henceforthApi';
 import { GlobalContext } from '../context/Provider';
 import henceofrthEnums from '../utils/henceofrthEnums';
 import henceforthValidations from '../utils/henceforthValidations';
+import moment from 'moment';
+import DownloadFileModal from './common/download-file-modal';
 
 const InquiryPage = () => {
     const match = useMatch('/inquiry/:type/:page')
@@ -123,8 +125,78 @@ const InquiryPage = () => {
     }, [match?.params.type, match?.params.page, uRLSearchParams.get('inquiry_mode'), uRLSearchParams.get('search')])
 
     console.log(inqieryData)
+    const exportData = async (startDate: number, endDate: number) => {
+        try {
+            const apiRes = await henceforthApi.Inquiry.getexport(moment(startDate).format("YYYY/MM/DD"), moment(endDate).format("YYYY/MM/DD"))
+            const data = apiRes.data
+            const rows = [
+                [
+                    "Sr.no",
+                    "BOAT NAME",
+                    "INQUIRY ID",
+                    "ROUTE",
+                    "PRICE",
+                    // "TYPE",
+                    // "Extra's",
+                ],
+            ];
+            if (Array.isArray(data)) {
+                data.map((res: any, index: any) => {
+                    rows.push([
+                        index + 1,
+                        res.boat_name,
+                        res.id,
+                        res.route_name,
+                        res.price,
+                        // res.type,
+                        // res.inquiry_extra_amenity,
+                    ])
+                })
+            }
+            // debugger
+            let csvContent =
+                "data:text/csv;charset=utf-8," +
+                rows.map((e) => e.join(",")).join("\n");
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `user_${moment().valueOf()}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            let closeModal = document.getElementById("closeModal");
+            if (closeModal) {
+                closeModal.click();
+            }
+            // debugger
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const operations = <Button>Extra Action</Button>;
 
+    const OperationsSlot: Record<PositionType, React.ReactNode> = {
+        right: <div className='download-export-box text-center mb-1'>
+            <label className='mb-1 fs-14 form-label fw-semibold'>Export File</label>
+            <div className="export-button">
+                <button className="btn btn-white py-1 px-3 fs-12 fw-600 border" type="button" data-bs-toggle="modal" data-bs-target="#fileDownloadModal"> <i className='fa fa-cloud-download me-2'></i>.csv</button>
+            </div>
+        </div>,
+    };
 
+    const options = ['right'];
+
+    type PositionType = 'right';
+
+    const [position, setPosition] = useState<PositionType[]>(['right']);
+
+    const slot = useMemo(() => {
+        if (position.length === 0) return null;
+
+        return position.reduce(
+            (acc, direction) => ({ ...acc, [direction]: OperationsSlot[direction] }),
+            {},
+        );
+    }, [position]);
 
     return (
         <Spin spinning={loading} className='h-100' >
@@ -150,6 +222,7 @@ const InquiryPage = () => {
                         <div className="col-12">
                             <div className="input-group mb-3 form-control p-0 rounded-pill w-100">
 
+
                                 <form onSubmit={(e: any) => {
                                     e.preventDefault();
                                     handleSearch('search', e.target.search.value);
@@ -163,11 +236,25 @@ const InquiryPage = () => {
                                         }
                                     }} />
                                 </form>
+
                                 {/* <input type="text" className="form-control border-0 ps-0 rounded-pill" placeholder="Search..." /> */}
                             </div>
                         </div>
                         <div className="col-12">
-                            <Tabs defaultActiveKey={match?.params.type} items={items} onChange={(e) => filternavigate(e, 0)} />
+                            {/* <div className="col-xxl-1 col-md-12">
+                                <div className='d-flex gap-3 justify-content-md-end'>
+                                    <div className='download-export-box'>
+                                        <label className='mb-1 form-label fw-semibold'>Export File</label>
+                                        <div className="export-button">
+                                            <button className="btn btn-white" type="button" data-bs-toggle="modal" data-bs-target="#fileDownloadModal"> <i className='fa fa-cloud-download me-2'></i>.csv</button>
+                                            <Button type="primary" htmlType="button"
+                                        onClick={() => setExportModal(true)}
+                                        ><span className='ms-1'>Export</span></Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> */}
+                            <Tabs defaultActiveKey={match?.params.type} items={items} tabBarExtraContent={slot} onChange={(e) => filternavigate(e, 0)} />
                         </div>
                         <div className="pagination justify-content-center">
                             <Pagination
@@ -258,6 +345,9 @@ const InquiryPage = () => {
                     </div>
                 </div>
             </div>
+            <DownloadFileModal
+                exportData={exportData}
+            />
 
         </Spin>
     )
