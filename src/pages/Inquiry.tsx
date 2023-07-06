@@ -176,11 +176,10 @@ const InquiryPage = () => {
 
     const OperationsSlot: Record<PositionType, React.ReactNode> = {
         right: <div className='download-export-box text-center mb-1'>
-            <label className='mb-1 fs-14 form-label fw-semibold'>Export File</label>
             <div className="export-button">
-                <button className="btn btn-white py-1 px-3 fs-12 fw-600 border" type="button" data-bs-toggle="modal" data-bs-target="#fileDownloadModal"> <i className='fa fa-cloud-download me-2'></i>.csv</button>
+                <Button type="primary" data-bs-toggle="modal" data-bs-target="#fileDownloadModal"><i className="fa-solid fa-download me-2"></i>Export</Button>
             </div>
-        </div>,
+        </div >,
     };
 
     const options = ['right'];

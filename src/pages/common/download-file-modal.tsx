@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import moment from 'moment'
 import Spinner from './AntSpinner';
+import { Button } from 'antd';
 // import Spinner from '../BootstrapCompo';
 const DownloadFileModal = ({ exportData }: any) => {
     const [startDate, setStartDate] = useState(moment().subtract(10, 'days').toDate().getTime())
@@ -31,19 +32,19 @@ const DownloadFileModal = ({ exportData }: any) => {
                                 {/* from Date  */}
                                 <div className="col-md-6">
                                     <label htmlFor="" className='fw-semibold'>From Date</label>
-                                    <input type="date" name='start_date' className='form-control rounded-0' value={moment(startDate).format('YYYY-MM-DD')} onChange={(e) => setStartDate(e.target.valueAsNumber)} />
+                                    <input type="date" name='start_date' className='form-control' value={moment(startDate).format('YYYY-MM-DD')} onChange={(e) => setStartDate(e.target.valueAsNumber)} />
                                 </div>
                                 {/* To date  */}
                                 <div className="col-md-6">
                                     <label htmlFor="" className='fw-semibold'>To Date</label>
-                                    <input type="date" name='start_date' className='form-control rounded-0' max={moment().format("YYYY-MM-DD")} value={moment(endDate).format('YYYY-MM-DD')} onChange={(e) => setEndDate(e.target.valueAsNumber)} />
+                                    <input type="date" name='start_date' className='form-control' max={moment().format("YYYY-MM-DD")} value={moment(endDate).format('YYYY-MM-DD')} onChange={(e) => setEndDate(e.target.valueAsNumber)} />
                                 </div>
                             </div>
                         </div>
                         {/* Downoad Button  */}
                         <div className="modal-footer d-inline-flex flex-nowrap">
-                            <button type="button" className="btn btn-white bg-danger text-white m-0 me-3 w-50" data-bs-dismiss="modal" disabled={loading}>Cancel</button>
-                            <button className='btn btn-theme m-0 w-50' type='button' onClick={exportNow} disabled={loading}>{loading ? <Spinner /> : <span><i className='fa fa-cloud-download me-2'></i>Download</span>}</button>
+                            <Button type="primary" danger size='large' block className="m-0 me-3" data-bs-dismiss="modal" disabled={loading}>Cancel</Button>
+                            <Button block size='large' type='primary' onClick={exportNow} disabled={loading}>{loading ? <Spinner /> : <span><i className='fa fa-cloud-download me-2'></i>Download</span>}</Button>
                         </div>
                     </div>
                 </div>
