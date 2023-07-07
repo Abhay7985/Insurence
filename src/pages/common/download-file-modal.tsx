@@ -43,7 +43,7 @@ const DownloadFileModal = ({ exportData }: any) => {
                         </div>
                         {/* Downoad Button  */}
                         <div className="modal-footer d-inline-flex flex-nowrap">
-                            <Button type="primary" danger size='large' block className="m-0 me-3" data-bs-dismiss="modal" disabled={loading}>Cancel</Button>
+                            <Button type="primary" danger size='large' block className="m-0 me-3" data-bs-dismiss="modal" >Cancel</Button>
                             <Button block size='large' type='primary' onClick={exportNow} disabled={loading}>{loading ? <Spinner /> : <span><i className='fa fa-cloud-download me-2'></i>Download</span>}</Button>
                         </div>
                     </div>
