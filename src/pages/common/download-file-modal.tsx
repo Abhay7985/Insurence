@@ -37,7 +37,7 @@ const DownloadFileModal = ({ exportData }: any) => {
                                 {/* To date  */}
                                 <div className="col-md-6">
                                     <label htmlFor="" className='fw-semibold'>To Date</label>
-                                    <input type="date" name='start_date' className='form-control' value={moment(endDate).format('YYYY-MM-DD')} onChange={(e) => setEndDate(e.target.valueAsNumber)} />
+                                    <input type="date" name='start_date' className='form-control' max={moment().add(6, 'months').format("YYYY-MM-DD")} value={moment(endDate).format('YYYY-MM-DD')} onChange={(e) => setEndDate(e.target.valueAsNumber)} />
                                 </div>
                             </div>
                         </div>
