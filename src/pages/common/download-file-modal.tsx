@@ -11,7 +11,7 @@ const DownloadFileModal = ({ exportData }: any) => {
 
     const exportNow = async () => {
         setLoading(true)
-        await exportData(startDate, endDate)
+        await exportData(startDate, endDate, setStartDate)
         setLoading(false)
         btnRef?.current.click()
     }
@@ -44,7 +44,7 @@ const DownloadFileModal = ({ exportData }: any) => {
                         {/* Downoad Button  */}
                         <div className="modal-footer d-inline-flex flex-nowrap">
                             <Button type="primary" danger size='large' block className="m-0 me-3" data-bs-dismiss="modal" >Cancel</Button>
-                            <Button block size='large' type='primary' onClick={exportNow} disabled={loading}>{loading ? <Spinner /> : <span><i className='fa fa-cloud-download me-2'></i>Download</span>}</Button>
+                            <Button block size='large' type='primary' onClick={exportNow} >{loading ? <Spinner /> : <span><i className='fa fa-cloud-download me-2'></i>Download</span>}</Button>
                         </div>
                     </div>
                 </div>
