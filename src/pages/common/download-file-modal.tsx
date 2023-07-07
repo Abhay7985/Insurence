@@ -11,7 +11,7 @@ const DownloadFileModal = ({ exportData }: any) => {
 
     const exportNow = async () => {
         setLoading(true)
-        await exportData(startDate, endDate)
+        await exportData(startDate, endDate, setStartDate)
         setLoading(false)
         btnRef?.current.click()
     }
@@ -37,14 +37,14 @@ const DownloadFileModal = ({ exportData }: any) => {
                                 {/* To date  */}
                                 <div className="col-md-6">
                                     <label htmlFor="" className='fw-semibold'>To Date</label>
-                                    <input type="date" name='start_date' className='form-control' max={moment().add(6, 'months').format("YYYY-MM-DD")} value={moment(endDate).format('YYYY-MM-DD')} onChange={(e) => setEndDate(e.target.valueAsNumber)} />
+                                    <input type="date" name='start_date' className='form-control' max={moment().format("YYYY-MM-DD")} value={moment(endDate).format('YYYY-MM-DD')} onChange={(e) => setEndDate(e.target.valueAsNumber)} />
                                 </div>
                             </div>
                         </div>
                         {/* Downoad Button  */}
                         <div className="modal-footer d-inline-flex flex-nowrap">
                             <Button type="primary" danger size='large' block className="m-0 me-3" data-bs-dismiss="modal" >Cancel</Button>
-                            <Button block size='large' type='primary' onClick={exportNow} disabled={loading}>{loading ? <Spinner /> : <span><i className='fa fa-cloud-download me-2'></i>Download</span>}</Button>
+                            <Button block size='large' type='primary' onClick={exportNow} >{loading ? <Spinner /> : <span><i className='fa fa-cloud-download me-2'></i>Download</span>}</Button>
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,8 @@ import henceofrthEnums from '../utils/henceofrthEnums';
 import henceforthValidations from '../utils/henceforthValidations';
 import moment from 'moment';
 import DownloadFileModal from './common/download-file-modal';
-
+import dayjs from "dayjs"
+import Item from 'antd/es/list/Item';
 const InquiryPage = () => {
     const match = useMatch('/inquiry/:type/:page')
     const navigate = useNavigate()
@@ -119,16 +120,17 @@ const InquiryPage = () => {
     ];
 
 
-
     React.useEffect(() => {
         initialise()
     }, [match?.params.type, match?.params.page, uRLSearchParams.get('inquiry_mode'), uRLSearchParams.get('search')])
 
     console.log(inqieryData)
-    const exportData = async (startDate: number, endDate: number) => {
+    const exportData = async (startDate: number, endDate: number, setStartDate: any) => {
         try {
             const apiRes = await henceforthApi.Inquiry.getexport(moment(startDate).format("YYYY/MM/DD"), moment(endDate).format("YYYY/MM/DD"))
             const data = apiRes.data
+            setStartDate(moment().subtract(10, 'days').toDate().getTime())
+
             const rows = [
                 [
                     "Sr.no",
@@ -136,8 +138,11 @@ const InquiryPage = () => {
                     "INQUIRY ID",
                     "ROUTE",
                     "PRICE",
-                    // "TYPE",
-                    // "Extra's",
+                    "TYPE",
+                    "DATE",
+                    "Extra's",
+                    "STATUS",
+
                 ],
             ];
             if (Array.isArray(data)) {
@@ -148,8 +153,11 @@ const InquiryPage = () => {
                         res.id,
                         res.route_name,
                         res.price,
-                        // res.type,
-                        // res.inquiry_extra_amenity,
+                        res.branch_type == 1 ? "Lancha Salvador" : res.branch_type == 2 ? "RR Nautica" : "Giro Lancha",
+                        dayjs(res.created_at).format("DD/MM/YYYY"),
+                        res.inquiry_extra_amenity.map((item: any) => { return item?.price }),
+                        // (res.inquiry_extra_amenity?.filter((res: any) => res.quantity > 0).map(((respo: any) => { return respo.quantity * respo.price })).reduce((a: number, b: any) => a + b, 0)),
+                        res.status,
                     ])
                 })
             }
