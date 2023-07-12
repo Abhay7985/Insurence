@@ -32,7 +32,7 @@ const DownloadFileModal = ({ exportData }: any) => {
                                 {/* from Date  */}
                                 <div className="col-md-6">
                                     <label htmlFor="" className='fw-semibold'>From Date</label>
-                                    <input type="date" name='start_date' className='form-control' onKeyDown={(e) => e.preventDefault()} value={moment(startDate).format('YYYY-MM-DD')} onChange={(e) => setStartDate(e.target.valueAsNumber)} />
+                                    <input type="date" name='start_date' className='form-control' max={moment().format("YYYY-MM-DD")} value={moment(startDate).format('YYYY-MM-DD')} onChange={(e) => setStartDate(e.target.valueAsNumber)} />
                                 </div>
                                 {/* To date  */}
                                 <div className="col-md-6">
