@@ -156,8 +156,8 @@ const InquiryPage = () => {
                         res.price,
                         res.branch_type == 1 ? "Lancha Salvador" : res.branch_type == 2 ? "RR Nautica" : "Giro Lancha",
                         dayjs(res.inquiry_date).format("DD/MM/YYYY"),
-                        res.inquiry_extra_amenity.map((item: any) => { return item?.price }),
-                        // (res.inquiry_extra_amenity?.filter((res: any) => res.quantity > 0).map(((respo: any) => { return respo.quantity * respo.price })).reduce((a: number, b: any) => a + b, 0)),
+                        // res.inquiry_extra_amenity.map((item: any) => { return item?.price }),
+                        (res.inquiry_extra_amenity?.filter((res: any) => res.quantity > 0).map(((respo: any) => { return respo.quantity * respo.price })).reduce((a: number, b: any) => a + b, 0)),
                         res.status,
                     ])
                 })
