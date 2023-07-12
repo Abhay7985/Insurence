@@ -137,9 +137,9 @@ const Tablelayout = (props: any) => {
         "INQUIRY ID",
         "ROUTE",
         "PRICE",
-        "Type",
+        "TYPE",
         "DATE",
-        "Extra's",
+        "EXTRA'S",
         // "ENQUIRY VIA",
         "STATUS",
         "ACTION"
