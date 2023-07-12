@@ -128,7 +128,7 @@ const InquiryPage = () => {
     const exportData = async (startDate: number, endDate: number, setStartDate: any) => {
         try {
             const apiRes = await henceforthApi.Inquiry.getexport(moment(startDate).format("YYYY/MM/DD"), moment(endDate).format("YYYY/MM/DD"))
-            const data = apiRes.data
+            const data = apiRes
             setStartDate(moment().subtract(10, 'days').toDate().getTime())
 
             const rows = [
