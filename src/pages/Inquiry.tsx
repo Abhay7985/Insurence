@@ -133,7 +133,7 @@ const InquiryPage = () => {
 
             const rows = [
                 [
-                    "Sr.no",
+                    "SR.NO",
                     "BOAT NAME",
                     "INQUIRY ID",
                     "ROUTE",
