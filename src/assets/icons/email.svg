@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-  <g id="email" transform="translate(-16 -16)">
-    <circle id="Ellipse_344" data-name="Ellipse 344" cx="10" cy="10" r="10" transform="translate(16 16)" fill="#ff5a54"/>
-    <path id="Path_52084" data-name="Path 52084" d="M136.706,165.022a10,10,0,0,1-9.193,9.2l-6.142-6.142a.7.7,0,0,1-.256-.542V161.05l1.749,1.011-1.569-1.569a.7.7,0,0,1,.523-.234h9.835a.7.7,0,0,1,.523.234Z" transform="translate(-100.735 -138.247)" fill="#db3a3c" fill-rule="evenodd"/>
-    <path id="Path_52085" data-name="Path 52085" d="M132.355,161.049l-5.473,3.166a.285.285,0,0,1-.29,0l-5.477-3.167v6.484a.7.7,0,0,0,.7.7h9.835a.7.7,0,0,0,.7-.7Zm-10.538-.791h9.835a.7.7,0,0,1,.523.234l-5.44,3.147-5.441-3.146A.7.7,0,0,1,121.818,160.258Z" transform="translate(-100.735 -138.247)" fill="#fff" fill-rule="evenodd"/>
-  </g>
-</svg>

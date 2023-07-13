@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="112" height="112" viewBox="0 0 112 112">
-  <g id="exact_location" transform="translate(-664 -1371)">
-    <circle id="Ellipse_18" data-name="Ellipse 18" cx="56" cy="56" r="56" transform="translate(664 1371)" fill="#ff9100" opacity="0.096"/>
-    <circle id="Ellipse_19" data-name="Ellipse 19" cx="27" cy="27" r="27" transform="translate(693 1400)" fill="#ff9100"/>
-    <path id="location-pin" d="M13.5,0A10.55,10.55,0,0,0,3,10.576c0,8.287,9.513,16.843,9.918,17.2a.877.877,0,0,0,1.164,0c.4-.36,9.918-8.917,9.918-17.2A10.55,10.55,0,0,0,13.5,0Zm0,16.333A5.833,5.833,0,1,1,19.333,10.5,5.84,5.84,0,0,1,13.5,16.333Z" transform="translate(707 1413)" fill="#fff"/>
-  </g>
-</svg>

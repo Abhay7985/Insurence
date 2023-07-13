@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-  <g id="unfill_checkbox" transform="translate(-140 -243)">
-    <rect id="Rectangle_1037" data-name="Rectangle 1037" width="18" height="18" rx="2" transform="translate(140 243)" fill="#ff9100"/>
-    <g id="check-mark-black-outline" transform="translate(144 237.557)">
-      <path id="Path_52090" data-name="Path 52090" d="M9.959,11.537l-6.2,6.2a.14.14,0,0,1-.2,0L.041,14.216a.14.14,0,0,1,0-.2L.9,13.163a.14.14,0,0,1,.2,0L3.66,15.73l5.246-5.246a.14.14,0,0,1,.2,0l.855.855A.14.14,0,0,1,9.959,11.537Z" transform="translate(0 0)" fill="#fff"/>
-    </g>
-  </g>
-</svg>
