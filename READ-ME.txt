@@ -4,6 +4,10 @@
 
   =>  Template License : https://htmlcodex.com/license (or read the LICENSE.txt file)
 
+<<<<<<< HEAD
   =>  Template Author  : Abhay
+=======
+  =>  Template Author  :  Designed By Abhay
+>>>>>>> 4cf840ab920f7d669ad238b514b0a84dd9ad68c0
 
   =>  Author Website   : https://htmlcodex.com
