@@ -1,13 +1,7 @@
   =>  Template Name    : Insure - Insurance HTML Template
 
-  =>  Template Link    : https://htmlcodex.com/insurance-html-template
+  =>  Template Link    : https://abhay.com/insurance-html-template
 
-  =>  Template License : https://htmlcodex.com/license (or read the LICENSE.txt file)
+  =>  Template License : https://abhay.com/license (or read the LICENSE.txt file)
 
-<<<<<<< HEAD
-  =>  Template Author  : Abhay
-=======
   =>  Template Author  :  Designed By Abhay
->>>>>>> 4cf840ab920f7d669ad238b514b0a84dd9ad68c0
-
-  =>  Author Website   : https://htmlcodex.com
