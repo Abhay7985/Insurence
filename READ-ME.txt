@@ -4,6 +4,6 @@
 
   =>  Template License : https://htmlcodex.com/license (or read the LICENSE.txt file)
 
-  =>  Template Author  : Abhay
+  =>  Template Author  :  Designed By Abhay
 
   =>  Author Website   : https://htmlcodex.com
